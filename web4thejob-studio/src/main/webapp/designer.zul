@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
+<?script type="text/javascript" src="/js/designer.js"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <include src="include/topbar.zul"/>
+
+    <window id="designer" sclass="w4tjstudio-designer" vflex="true">
+        <!--<panelchildren>-->
+        <borderlayout vflex="true">
+            <west width="250px" splittable="true" collapsible="true">
+                <tabbox vflex="true">
+                    <tabs>
+                        <tab label="Widgets"/>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel style="overflow:auto">
+                            <include src="include/templates.zul"/>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+            </west>
+            <center>
+                <tabbox vflex="true">
+                    <tabs>
+                        <tab label="Canvas" iconSclass="z-icon-coffee"/>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel>
+                            <div vflex="true" hflex="true"
+                                 style="margin:1px;padding:8px;box-shadow:inset 0 0 7px gray;">
+                                <iframe id="canvasHolder" scrolling="false" src="include/canvas.zul" vflex="true"
+                                        hflex="true" style="box-shadow: 0 0 5px black;"/>
+                            </div>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+
+            </center>
+            <east width="150px" splittable="true" collapsible="true"/>
+        </borderlayout>
+        <!--</panelchildren>-->
+    </window>
+
+    <script type="text/javascript" defer="true">
+        w4tjStudioDesigner.init();
+    </script>
+
+    <style>
+        .w4tjstudio-designer * {font-size:14px !important}
+        .w4tjstudio-designer a {text-decoration: none !important}
+    </style>
+</zk>

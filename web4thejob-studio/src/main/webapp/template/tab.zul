@@ -1,0 +1,15 @@
+<zk>
+
+    <!--arg.parent=tabs    -->
+
+    <tab label="Tab ${arg.parent.children.size()}"/>
+
+    <zscript>
+        <![CDATA[
+        Tabpanel tabpanel=new Tabpanel();
+        tabpanel.setParent(arg.get("parent").tabbox.tabpanels);
+        tabpanel.setAttribute("$$template$$",true);
+    ]]>
+    </zscript>
+
+</zk>

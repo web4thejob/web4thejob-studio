@@ -1,0 +1,6 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <toolbar>
+        <toolbarbutton label="Button 1"/>
+        <toolbarbutton label="Button 2"/>
+    </toolbar>
+</zk>

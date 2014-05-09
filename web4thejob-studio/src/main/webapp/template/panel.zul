@@ -1,0 +1,5 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <panel vflex="true">
+        <panelchildren/>
+    </panel>
+</zk>

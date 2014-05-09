@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Web4thejob Canvas" contentType="text/html;charset=UTF-8"?>
+<?script type="text/javascript" src="/js/canvas.js"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window id="canvas" vflex="true" hflex="true" apply="org.web4thejob.studio.CanvasController">
+
+    </window>
+
+    <script type="text/javascript" defer="true">
+        w4tjStudioCanvas.init();
+    </script>
+
+</zk>

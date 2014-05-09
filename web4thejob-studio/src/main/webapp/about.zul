@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="About Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="favicon.ico"?>
+<?style type="text/css" href="/css/studio.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <include src="include/topbar.zul"/>
+    <zk xmlns="http://www.zkoss.org/2005/zk/native">
+        <style>
+            .new-feature {font-size: 9px;color:red;}
+            .icon-margin {margin-right:5px;color: #428bca;}
+            .icon-list {padding-left:20px}
+            .code {font-family: monospace}
+        </style>
+        <div class="container">
+            <h2 id="about_about">About</h2>
+            <p>Web4thejob Studio has been initially incepted as an add-on for
+                <a href="http://web4thejob.org">Web4thejob Framework CE</a>. It's mission was to
+                provide web4thejob developers with an easy and visually-driven way to design custom panels on top of the
+                <a href="http://wiki.web4thejob.org/miscel/why_web4thejob#the_agile_development_lifecycle">automated UI
+                    /UX engine of the framework</a>.
+            </p>
+            <p>Going forward though, Web4thejob Studio has gradually evolved to a stand-alone product useful not only
+                to web4thejob
+                developers but to any member of the ZK community. Therefore, we decided to open up the product as a
+                free
+                service to all ZK developers and enthusiasts.
+            </p>
+            <h2>Usage</h2>
+            <p>Using Web4thejob Studio is pretty straightforward: you create and modify zul pages
+                seamlessly by using three supplementary ways:
+            </p>
+            <ol>
+                <li>By dragging &amp; dropping widgets on the canvas</li>
+                <li>By dragging &amp; dropping widgets on the outline tree</li>
+                <li>By editing the zul code directly</li>
+            </ol>
+            <p>When you are done designing your page you can copy/paste the zul code to your project for further
+                development. Alternatively you can proceed to
+                <a href="http://zkfiddle.org/">ZK Fiddler</a>
+                to experiment some more.
+            </p>
+            <h2 id="about_features">Features</h2>
+            <div class="icon-list">
+                <p><i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets on Canvas or Outline tabs
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Edit zul manually in ZUL tab with auto-complete support
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Edit the attributes of widgets using drop-down lists,
+                    literals or EL expressions
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Edit the server and client side events of widgets with
+                    syntax highlighting
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Double-click on widgets containing captions and labels
+                    to
+                    edit their values directly
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Right-click on widgets to get a context-menu
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets in Outline tab to rearrange
+                    them
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Use the BACK and FORWARD buttons of your browser to
+                    traverse the development timeline
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Use Bootstrap v3 classes
+                    <a target="_blank" href="http://www.zkoss.org/zk-bootstrap/">
+                        <i class="z-icon-arrow-circle-right"></i>
+                    </a>
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Position widgets absolutely by dragging them
+                    <small>
+                        <ol>
+                            <li>Set
+                                <code>position:absolute</code>
+                                in
+                                <span class="mono">style</span>
+                                attribute
+                            </li>
+                            <li>Ctrl+Click once on the widget and release</li>
+                            <li>Click and drag to the desired position</li>
+                            <li>Repeat steps 2 and 3 for moving again</li>
+                        </ol>
+                        <p>Alternatively, you can (a) do step 1 and then set
+                            <span class="mono">top</span>
+                            and
+                            <span class="mono">left</span>
+                            attributes (e.g. 20px and 130px respectively), or (b) forget all the above and use the
+                            <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Layouts/Absolutelayout">
+                                Absolutelayout
+                            </a>
+                            widget.
+                        </p>
+                    </small>
+                </p>
+            </div>
+            <h2 id="about_credits">Credits</h2>
+            <p>Web4thejob Studio has been designed and developed by
+                <strong>Veniamin Isaias</strong>
+                (
+                <a href="http://gr.linkedin.com/in/veniaminisaias/">
+                    <i class="z-icon-linkedin"/>
+                </a>
+                <a href="https://twitter.com/bissaias">
+                    <i class="z-icon-twitter"/>
+                </a>
+                ) and
+                <strong>George Tetzaloglou</strong>
+                (
+                <a href="http://gr.linkedin.com/pub/george-tetzaloglou/6/58a/bab">
+                    <i class="z-icon-linkedin"/>
+                </a>
+                ). Feel free to contact us should you have any request or business idea.
+            </p>
+            <p>Apart from
+                <a target="_blank" href="http://www.zkoss.org/">ZK</a>,
+                our work has been greatly assisted by the following amazing projects:
+            </p>
+            <ul>
+                <li>
+                    <a target="_blank" href="http://jquery.com/">JQuery</a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://jqueryui.com/">JQuery UI</a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://codemirror.net/">Codemirror</a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>
+                </li>
+            </ul>
+            <h2 id="about_license">License</h2>
+            <p>
+                This work is licensed under a<a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">
+                Creative Commons Attribution-NoDerivatives 4.0 International License</a>.
+            </p>
+            <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">
+                <img alt="Creative Commons License" style="border-width:0"
+                     src="http://i.creativecommons.org/l/by-nd/4.0/88x31.png"/>
+            </a>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    </zk>
+</zk>
