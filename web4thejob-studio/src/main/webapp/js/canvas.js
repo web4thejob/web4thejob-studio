@@ -16,12 +16,15 @@ var w4tjStudioCanvas = {
         }));
 
         this.makeWidgetsDroppable();
+        this.monitorActivity();
     },
 
     makeWidgetsDroppable: function() {
-        $('$canvas').find('*').andSelf().on('drop', function(e) {
+        $('$canvas').find('*').andSelf()
+        .on('drop', function(e) {
             e.stopPropagation();
             e.preventDefault();
+            jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
 
             var dragged=e.originalEvent.dataTransfer.getData('text');
             var dropped=zk(e.target).$();
@@ -34,13 +37,67 @@ var w4tjStudioCanvas = {
             }
         })
         .on('dragover',function(e){
+            e.stopPropagation();
             e.preventDefault();
+            var wgt = zk(e.target).$();
+            if (wgt) {
+                //unhover others first
+                jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+                jq(wgt).addClass("w4tjstudio-hovered");
+            }
         })
         .on('dragleave',function(e){
-            e.preventDefault();
+            if (zk(e.target).$()) {
+                jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+            }
         });
-    }
+    },
 
+    monitorActivity: function() {
+        jq("$canvas").undelegate("*", "click"); //reset
+        jq("$canvas").delegate("*", "click", function (e) {
+            var wgt = zk(this).$();
+            if (wgt) { //select
+                if (e.target == this && !jq(wgt.$n()).is(".selected")) {
+                    w4tjStudioCanvas.select(wgt.$n());
+                }
+            }
+        });
+
+    },
+
+    select: function (e) {
+        var uuid;
+        jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
+        if (jq(e).length > 0) { //from client
+            uuid = zk(e).$().uuid;
+            zAu.send(new zk.Event(zk("$canvas").$(), "onWidgetSelected", {
+                target: uuid
+            }));
+
+        } else if (jq("#" + e).length > 0) { //from server
+            uuid = e;
+            //jq("#"+e).addClass("w4tj-selected");
+        }
+
+        if (!uuid) return;
+        this.tojqo(uuid).addClass("w4tjstudio-selected");
+    },
+
+    //fine tunes selection for the real zk widget (e.g. with borderlayout regions)
+    tojqo: function(uuid){
+        var jqo = jq("#" + uuid + ">*[id$='-real']");
+        if (jqo.length > 0) {
+            return jqo;
+        }
+
+        jqo=jq("#" + uuid);
+        if (jqo.length > 0) {
+           return jqo;
+       }
+
+       return null;
+   }
 
 
 }

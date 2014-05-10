@@ -1,8 +1,9 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.support;
 
 /**
  * Created by Veniamin on 9/5/2014.
  */
 public class StudioUtil {
     public static final String ATTR_PAIRED_DESKTOP_ID = "paired-desktop-id";
+    public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
 }

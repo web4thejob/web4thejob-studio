@@ -1,21 +1,21 @@
 package org.web4thejob.studio;
 
+import org.web4thejob.studio.base.AbstractController;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.sys.WebAppCtrl;
 
 import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
-import static org.web4thejob.studio.StudioUtil.ATTR_PAIRED_DESKTOP_ID;
+import static org.web4thejob.studio.support.StudioUtil.ATTR_PAIRED_DESKTOP_ID;
 
 /**
  * Created by Veniamin on 9/5/2014.
  */
-public class CanvasController extends SelectorComposer<Component> {
+public class CanvasController extends AbstractController {
 
 
     @Listen("onPairedWithDesigner=#canvas")
@@ -42,5 +42,12 @@ public class CanvasController extends SelectorComposer<Component> {
             Component parent = Executions.getCurrent().getDesktop().getComponentByUuid(parentUuid);
             Executions.getCurrent().createComponents(templatePath, parent, null);
         }
+    }
+
+    @Listen("onWidgetSelected=#canvas")
+    public void onWidgetSelected(Event event) {
+        String target = (String) ((Map) event.getData()).get("target");
+        notNull(target);
+
     }
 }

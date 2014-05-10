@@ -14,4 +14,10 @@
         w4tjStudioCanvas.init();
     </script>
 
+    <style>
+        .w4tjstudio-selected {border: 1px solid #428bca !important;}
+        .w4tjstudio-hovered {border: 1px solid orange !important;}
+
+    </style>
+
 </zk>
