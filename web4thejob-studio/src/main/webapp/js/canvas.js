@@ -8,7 +8,7 @@ var w4tjStudioCanvas = {
     },
 
     init: function() {
-        this._desktopId=zk("$canvas").$().desktop.id;
+        this._desktopId=zk.Desktop.$().id;
         var designerDesktopId=top.w4tjStudioDesigner.desktopId;
 
         zAu.send(new zk.Event(zk("$canvas").$(), "onPairedWithDesigner", {
@@ -71,7 +71,10 @@ var w4tjStudioCanvas = {
         jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
         if (jq(e).length > 0) { //from client
             uuid = zk(e).$().uuid;
-            zAu.send(new zk.Event(zk("$canvas").$(), "onWidgetSelected", {
+//            zAu.send(new zk.Event(zk("$canvas").$(), "onWidgetSelected", {
+//                target: uuid
+//            }));
+            zAu.send(new zk.Event(top.w4tjStudioDesigner.designer, "onWidgetSelected", {
                 target: uuid
             }));
 

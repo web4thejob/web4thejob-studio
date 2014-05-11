@@ -7,8 +7,17 @@ var w4tjStudioDesigner = {
         return this._desktopId;
     },
 
+    _designer: undefined,
+    get designer() {
+        if (!this._designer) {
+            this.init();
+        }
+        return this._designer;
+    },
+
     init: function() {
-        this._desktopId=zk('$designer').$().desktop.id;
+        this._designer=zk('$designer').$();
+        this._desktopId=zk.Desktop.$().id;
         this.makeTemplatesDraggable();
     },
 

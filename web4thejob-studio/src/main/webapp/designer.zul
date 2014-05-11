@@ -8,7 +8,7 @@
 
     <include src="include/topbar.zul"/>
 
-    <window id="designer" sclass="w4tjstudio-designer" vflex="true">
+    <window id="designer" sclass="w4tjstudio-designer" vflex="true" apply="org.web4thejob.studio.DesignerController">
         <!--<panelchildren>-->
         <borderlayout vflex="true">
             <west width="250px" splittable="true" collapsible="true">
