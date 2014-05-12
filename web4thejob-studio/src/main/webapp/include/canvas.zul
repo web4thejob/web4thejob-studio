@@ -15,6 +15,7 @@
     </script>
 
     <style>
+        body {padding:0px}
         .w4tjstudio-selected {border: 1px solid #428bca !important;}
         .w4tjstudio-hovered {border: 1px solid orange !important;}
 
