@@ -71,12 +71,7 @@ var w4tjStudioCanvas = {
         jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
         if (jq(e).length > 0) { //from client
             uuid = zk(e).$().uuid;
-//            zAu.send(new zk.Event(zk("$canvas").$(), "onWidgetSelected", {
-//                target: uuid
-//            }));
-            zAu.send(new zk.Event(top.w4tjStudioDesigner.designer, "onWidgetSelected", {
-                target: uuid
-            }));
+            zAu.send(new zk.Event(zk("$canvas").$(), "onWidgetSelected", {target: uuid}));
 
         } else if (jq("#" + e).length > 0) { //from server
             uuid = e;
@@ -100,6 +95,14 @@ var w4tjStudioCanvas = {
        }
 
        return null;
+   },
+
+   //inter-frame communication
+   sendToDesigner: function(name,data) {
+        top.w4tjStudioDesigner.sendEvent(name,data);
+   },
+   sendEvent: function(name,data){
+       zAu.send(new zk.Event(zk("$canvas").$(), name, data));
    }
 
 

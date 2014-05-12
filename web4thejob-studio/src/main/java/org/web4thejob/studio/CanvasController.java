@@ -1,12 +1,14 @@
 package org.web4thejob.studio;
 
 import org.web4thejob.studio.base.AbstractController;
+import org.zkoss.json.JSONValue;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.sys.WebAppCtrl;
+import org.zkoss.zk.ui.util.Clients;
 
 import java.util.Map;
 
@@ -63,12 +65,15 @@ public class CanvasController extends AbstractController {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
 
+        Clients.evalJavaScript("w4tjStudioCanvas.sendToDesigner('" + event.getName() + "'," + JSONValue.toJSONString(event.getData()) + ")");
 //        Desktop designerDesktop= (Desktop) Executions.getCurrent().getDesktop().getAttribute
 //                (ATTR_PAIRED_DESKTOP);
-//        designerDesktop.enableServerPush(true);
-//        Executions.getCurrent().getDesktop().enableServerPush(true);
-//        Executions.activate(designerDesktop);
-//        queue.publish(event);
-//        Executions.deactivate(designerDesktop);
+//        for (Component c:designerDesktop.getComponents()){
+//            if ("designer".equals(c.getId())){
+//                ((Window)c).setVisible(false);
+//                break;
+//            }
+//        }
+
     }
 }

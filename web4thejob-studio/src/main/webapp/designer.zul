@@ -8,8 +8,9 @@
 
     <include src="include/topbar.zul"/>
 
-    <window id="designer" sclass="w4tjstudio-designer" vflex="true" apply="org.web4thejob.studio.DesignerController">
-        <!--<panelchildren>-->
+    <window id="designer" sclass="w4tjstudio-designer" vflex="true" apply="org.web4thejob.studio.DesignerController"
+            contentStyle="overflow:visible">
+    <!--<panelchildren>-->
         <borderlayout vflex="true">
             <west width="250px" splittable="true" collapsible="true">
                 <tabbox vflex="true">
@@ -24,9 +25,31 @@
                 </tabbox>
             </west>
             <center>
-                <tabbox vflex="true">
+                <tabbox id="views" vflex="true">
+
+
+                    <!--
+                                            <div xmlns="http://www.zkoss.org/2005/zk/native" class="btn-group btn-xs">
+                                                <button type="button" class="btn btn-default btn-xs">
+                                                    <i class="z-icon-refresh"/> Actions
+                                                 </button>
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                            </div>
+                                            <div xmlns="http://www.zkoss.org/2005/zk/native" class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-xs"><i class="z-icon-refresh"/> Parse zul</button>
+                                                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                            </div>
+                    -->
+
                     <tabs>
                         <tab label="Canvas" iconSclass="z-icon-coffee"/>
+                        <tab label="Code" iconSclass="z-icon-coffee"/>
                     </tabs>
                     <tabpanels>
                         <tabpanel>
@@ -52,5 +75,10 @@
     <style>
         .w4tjstudio-designer * {font-size:14px !important}
         .w4tjstudio-designer a {text-decoration: none !important}
+
+        .mild-shadow {
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </zk>

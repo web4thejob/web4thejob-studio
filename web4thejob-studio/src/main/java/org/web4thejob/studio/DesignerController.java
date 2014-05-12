@@ -1,16 +1,19 @@
 package org.web4thejob.studio;
 
 import org.web4thejob.studio.base.AbstractController;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Desktop;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Window;
 
 import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.ControllerEnum.CANVAS_CONTROLLER;
+import static org.web4thejob.studio.support.StudioUtil.ATTR_PAIRED_DESKTOP;
 
 /**
  * Created by Veniamin on 10/5/2014.
@@ -33,15 +36,10 @@ public class DesignerController extends AbstractController {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
 
-        ((Window) event.getTarget()).getChildren().clear();
-
-//        Desktop designerDesktop= (Desktop) Executions.getCurrent().getDesktop().getAttribute
-//                (ATTR_PAIRED_DESKTOP);
-//        designerDesktop.enableServerPush(true);
-//        Executions.getCurrent().getDesktop().enableServerPush(true);
-//        Executions.activate(designerDesktop);
-//        queue.publish(event);
-//        Executions.deactivate(designerDesktop);
+        Desktop canvasDesktop = (Desktop) Executions.getCurrent().getDesktop().getAttribute(ATTR_PAIRED_DESKTOP);
+        Component comp = canvasDesktop.getComponentByUuid(target);
+        Clients.evalJavaScript("w4tjStudioDesigner.alert('alert-danger','" + Executions.getCurrent().getDesktop() +
+                "','" + comp.getWidgetClass() + "',true)");//  showNotification( + " "+ );
     }
 
     private class EventQueueHandler implements EventListener<Event> {
