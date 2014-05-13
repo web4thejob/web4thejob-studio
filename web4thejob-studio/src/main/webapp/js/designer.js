@@ -76,7 +76,6 @@ var w4tjStudioDesigner = {
         </button> \
         <button type="button" class="btn btn-default btn-xs toolbar-actions-dropdown"> \
         <span class="caret"></span> \
-        <span class="sr-only">Toggle Dropdown</span> \
         </button> \
         </div> \
         <div class="btn-group btn-xs" style="padding-left:0px"> \
@@ -85,7 +84,6 @@ var w4tjStudioDesigner = {
         </button> \
         <button type="button" class="btn btn-primary btn-xs toolbar-parsezul-dropdown"> \
         <span class="caret"></span> \
-        <span class="sr-only">Toggle Dropdown</span> \
         </button> \
         </div> \
         </div>';

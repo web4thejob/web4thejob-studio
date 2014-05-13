@@ -55,7 +55,7 @@
     </script>
 
     <style>
-        .w4tjstudio-designer * {font-size:14px !important}
+        .w4tjstudio-designer * {font-size:14px !important;}
         .w4tjstudio-designer a {text-decoration: none !important}
 
         .mild-shadow {
@@ -76,7 +76,7 @@
         position: absolute;
         text-align: center;
         margin: 0 auto;
-        top: 8px;
+        top: 9px;
         right: 0px;
         left: 0px;
         z-index: -1;
@@ -102,5 +102,8 @@
         }
 
         .custom-menupopup {left:auto !important}
+
+        /* ff bug */
+        .designer-toolbar .btn {height: 26px}
     </style>
 </zk>
