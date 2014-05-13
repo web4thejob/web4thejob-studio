@@ -67,7 +67,12 @@
         </div>
     </zk>
 
+    <style>
+        .tooltip-inner {font-size:12px !important;font-weight:100}
+    </style>
     <script type="text/javascript" defer="true">
+        jq("#nav-top-navbar a").attr("data-toggle","tooltip").attr("data-placement","bottom").tooltip();
+
         jq('#nav-top-navbar li').removeClass('active');
 
         if (window.location.pathname.indexOf('about.zul')>0) {

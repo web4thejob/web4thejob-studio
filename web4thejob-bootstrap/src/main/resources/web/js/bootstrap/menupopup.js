@@ -10,7 +10,7 @@
 Copyright (C) 2013 Potix Corporation. All Rights Reserved.
 */
 zk.afterLoad('zul.menu', function () {
-	var _menupopup = {}
+	var _menupopup = {},
 		_menupopupMolds = {};
 
 zk.override(zul.menu.Menupopup.molds, _menupopupMolds, {
@@ -47,6 +47,17 @@ zk.override(zul.menu.Menupopup.prototype, _menupopup, {
 		} else 
 			return _menupopup.open.apply(this, arguments);
 	}
+/*
+	 _posInfo: function (ref, offset, position, opts) {
+            var r=this.$super('_posInfo',ref, offset, position, opts);
+
+            if (r.dim && jq.isArray(offset) && typeof offset[0]=='string') {
+                r.dim.left=offset[0];
+            }
+
+            return r;
+     }
+*/
 });
 
 var _menuseparator = {};

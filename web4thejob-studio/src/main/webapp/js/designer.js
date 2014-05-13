@@ -20,10 +20,8 @@ var w4tjStudioDesigner = {
         this._desktopId=zk.Desktop.$().id;
         this.makeTemplatesDraggable();
 
-        //bs tooltip example
-        jq("#nav-top-navbar a").attr("data-toggle","tooltip").attr("data-placement","bottom").tooltip();
-
         this.buildToolbar();
+        this.fileName='Untitled';
     },
 
     makeTemplatesDraggable: function() {
@@ -40,7 +38,7 @@ var w4tjStudioDesigner = {
     alert: function(clazz,title,message,autoclosable){
         var id=zk.Desktop.nextUuid() + '-alert';
         jq('body').css('overflow','hidden');
-        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:10000;min-width:200px" class="alert '+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+title+'</strong> '+message+'.</div>';
+        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:10000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+title+'</strong> '+message+'.</div>';
         id='#'+id;
         jq('body').append(a);
 
@@ -57,7 +55,7 @@ var w4tjStudioDesigner = {
 
         if (autoclosable)
             setTimeout(function(){
-                jq(id).animate({left:'-200px',opacity:0},500);
+                jq(id).animate({left:'-200px',opacity:0},500,null,function(){jq(id).remove()});
             },5000);
 
     },
@@ -71,20 +69,57 @@ var w4tjStudioDesigner = {
     },
 
     buildToolbar: function(){
-        var a='<div class="z-toolbar z-toolbar-tabs"> \
-        <div class="btn-group btn-xs"> \
-        <button type="button" class="btn btn-default btn-xs"> \
-        <i class="z-icon-refresh"/> Actions \
+        var e='<div class="designer-toolbar"> \
+        <div class="btn-group btn-xs" style="padding-right:0px"> \
+        <button type="button" class="btn btn-default btn-xs toolbar-actions"> \
+        <i class="z-icon-gear"/> Actions \
         </button> \
-        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"> \
+        <button type="button" class="btn btn-default btn-xs toolbar-actions-dropdown"> \
+        <span class="caret"></span> \
+        <span class="sr-only">Toggle Dropdown</span> \
+        </button> \
+        </div> \
+        <div class="btn-group btn-xs" style="padding-left:0px"> \
+        <button type="button" class="btn btn-primary btn-xs toolbar-parsezul"> \
+        <i class="z-icon-refresh"/> Parse zul \
+        </button> \
+        <button type="button" class="btn btn-primary btn-xs toolbar-parsezul-dropdown"> \
         <span class="caret"></span> \
         <span class="sr-only">Toggle Dropdown</span> \
         </button> \
         </div> \
         </div>';
-        jq('$views').append(a);
-    }
+        jq('$views').append(e);
 
+        var actionsHandler=function() {
+            var $group=jq(jq('.designer-toolbar .toolbar-actions').parent());
+            var p=$group.offset();
+            var w=$group.outerWidth()+2;
+            var h=$group.height();
+            var r=jq(window).width() - (p.left + w);
+            zAu.send(new zk.Event(zk("$designer").$(), "onActionsClicked",{top:p.top+h,right:r}));
+        }
+        jq('.designer-toolbar .toolbar-actions').click(actionsHandler);
+        jq('.designer-toolbar .toolbar-actions-dropdown').click(actionsHandler);
+    },
+
+    _fileName: 'Untitled',
+    get fileName() {
+        return this._fileName;
+    },
+    set fileName(fileName) {
+        this._fileName=fileName;
+
+        var e=jq('$views').find('.designer-file .label');
+        if (!e.length) {
+            jq('$views').append('<div class="designer-file"><span class="label label-default"/></div>');
+            e=jq('$views').find('.designer-file .label');
+        }
+        jq(e).empty();
+        jq(e).text(this._fileName);
+        jq(e).prepend('<span style="margin-right:5px">&#xf111;</span>');
+        jq(e).append('<span style="margin-left:5px">&#xf111;</span>');
+     }
 
 
 }

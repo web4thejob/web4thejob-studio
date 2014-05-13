@@ -2,6 +2,7 @@ package org.web4thejob.studio.support;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.util.Clients;
 
 /**
  * Created by Veniamin on 9/5/2014.
@@ -18,4 +19,9 @@ public class StudioUtil {
         return Executions.getCurrent().getDesktop().getComponentByUuid(uuid);
     }
 
+    public static void showNotification(String clazz, String title, String message, boolean autoclose) {
+        Clients.evalJavaScript("top.w4tjStudioDesigner.alert('" + clazz + "','" + title +
+                "','" + message + "'," + Boolean.valueOf(autoclose).toString() + ")");
+
+    }
 }

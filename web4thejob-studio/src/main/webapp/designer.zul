@@ -10,7 +10,7 @@
 
     <window id="designer" sclass="w4tjstudio-designer" vflex="true" apply="org.web4thejob.studio.DesignerController"
             contentStyle="overflow:visible">
-    <!--<panelchildren>-->
+        <!--<panelchildren>-->
         <borderlayout vflex="true">
             <west width="250px" splittable="true" collapsible="true">
                 <tabbox vflex="true">
@@ -26,30 +26,10 @@
             </west>
             <center>
                 <tabbox id="views" vflex="true">
-
-
-                    <!--
-                                            <div xmlns="http://www.zkoss.org/2005/zk/native" class="btn-group btn-xs">
-                                                <button type="button" class="btn btn-default btn-xs">
-                                                    <i class="z-icon-refresh"/> Actions
-                                                 </button>
-                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                            </div>
-                                            <div xmlns="http://www.zkoss.org/2005/zk/native" class="btn-group">
-                                                <button type="button" class="btn btn-primary btn-xs"><i class="z-icon-refresh"/> Parse zul</button>
-                                                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                            </div>
-                    -->
-
                     <tabs>
                         <tab label="Canvas" iconSclass="z-icon-coffee"/>
-                        <tab label="Code" iconSclass="z-icon-coffee"/>
+                        <tab label="Outline" iconSclass="z-icon-sitemap"/>
+                        <tab label="ZUL" iconSclass="z-icon-code"/>
                     </tabs>
                     <tabpanels>
                         <tabpanel>
@@ -59,6 +39,8 @@
                                         hflex="true" style="box-shadow: 0 0 5px black;"/>
                             </div>
                         </tabpanel>
+                        <tabpanel></tabpanel>
+                        <tabpanel></tabpanel>
                     </tabpanels>
                 </tabbox>
 
@@ -80,5 +62,45 @@
         -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
         }
+
+        .designer-toolbar {
+        position: absolute;
+        top: 3px;
+        right: 0px;
+        }
+
+        /* --------------------------------------------------
+        File name
+        ----------------------------------------------------- */
+        .designer-file {
+        position: absolute;
+        text-align: center;
+        margin: 0 auto;
+        top: 8px;
+        right: 0px;
+        left: 0px;
+        z-index: -1;
+        }
+
+        .designer-file > span{
+        border-radius: 0.75em;
+        font-weight: 100;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .designer-file > span > span {
+        font-family: FontAwesome;
+        font-size: 5px !important;
+        vertical-align: middle;
+        }
+
+        .z-tab:hover, .z-tab-selected {
+        border-top-width: 2px;
+        border-top-color: orange;
+        padding-top: 0px;
+        }
+
+        .custom-menupopup {left:auto !important}
     </style>
 </zk>
