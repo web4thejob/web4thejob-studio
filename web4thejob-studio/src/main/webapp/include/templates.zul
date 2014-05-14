@@ -65,244 +65,130 @@
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Window" hflex="true" image="/img/zul/window.png" ca:template="window.zul">
-                        <custom-attributes template="window.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Panel" hflex="true" image="/img/zul/panel.png" ca:template=".zul">
-                        <custom-attributes template="panel.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Window" hflex="true" image="/img/zul/window.png" ca:template="window.zul"/>
+                    <toolbarbutton label="Panel" hflex="true" image="/img/zul/panel.png" ca:template="panel.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Tabbox" hflex="true" image="/img/zul/tabbox.png" ca:template=".zul">
-                        <custom-attributes template="tabbox.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Tab" hflex="true" image="/img/zul/tab.png" ca:template=".zul">
-                        <custom-attributes template="tab.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Tabbox" hflex="true" image="/img/zul/tabbox.png" ca:template="tabbox.zul"/>
+                    <toolbarbutton label="Tab" hflex="true" image="/img/zul/tab.png" ca:template="tab.zul/"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Caption" hflex="true" image="/img/zul/caption.png" ca:template=".zul">
-                        <custom-attributes template="caption.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Groupbox" hflex="true" image="/img/zul/groupbox.png" ca:template=".zul">
-                        <custom-attributes template="groupbox.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Div" hflex="true" image="/img/zul/div.png" ca:template=".zul">
-                        <custom-attributes template="div.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Span" hflex="true" image="/img/zul/span.png" ca:template=".zul">
-                        <custom-attributes template="span.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Idspace" hflex="true" image="/img/zul/zk.png" ca:template=".zul">
-                        <custom-attributes template="idspace.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Caption" hflex="true" image="/img/zul/caption.png" ca:template="caption.zul"/>
+                    <toolbarbutton label="Groupbox" hflex="true" image="/img/zul/groupbox.png"
+                                   ca:template="groupbox.zul"/>
+                    <toolbarbutton label="Div" hflex="true" image="/img/zul/div.png" ca:template="div.zul/"/>
+                    <toolbarbutton label="Span" hflex="true" image="/img/zul/span.png" ca:template="span.zul"/>
+                    <toolbarbutton label="Idspace" hflex="true" image="/img/zul/zk.png" ca:template="idspace.zul"/>
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
                     <toolbarbutton label="Borderlayout" hflex="true" image="/img/zul/borderlayout.png"
-                                   ca:template=".zul">
-                        <custom-attributes template="borderlayout.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="North" hflex="true" image="/img/zul/north.png" ca:template=".zul">
-                        <custom-attributes template="north.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="South" hflex="true" image="/img/zul/south.png" ca:template=".zul">
-                        <custom-attributes template="south.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Center" hflex="true" image="/img/zul/center.png" ca:template=".zul">
-                        <custom-attributes template="center.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="West" hflex="true" image="/img/zul/west.png" ca:template=".zul">
-                        <custom-attributes template="west.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="East" hflex="true" image="/img/zul/east.png" ca:template=".zul">
-                        <custom-attributes template="east.zul"/>
-                    </toolbarbutton>
+                                   ca:template="borderlayout.zul"/>
+                    <toolbarbutton label="North" hflex="true" image="/img/zul/north.png" ca:template="north.zul"/>
+                    <toolbarbutton label="South" hflex="true" image="/img/zul/south.png" ca:template="south.zul"/>
+                    <toolbarbutton label="Center" hflex="true" image="/img/zul/center.png" ca:template="center.zul"/>
+                    <toolbarbutton label="West" hflex="true" image="/img/zul/west.png" ca:template="west.zul"/>
+                    <toolbarbutton label="East" hflex="true" image="/img/zul/east.png" ca:template="east.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Hbox" hflex="true" image="/img/zul/hbox.png" ca:template=".zul">
-                        <custom-attributes template="hbox.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Vbox" hflex="true" image="/img/zul/vbox.png" ca:template=".zul">
-                        <custom-attributes template="vbox.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Hlayout" hflex="true" image="/img/zul/hlayout.png" ca:template=".zul">
-                        <custom-attributes template="hlayout.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Vlayout" hflex="true" image="/img/zul/vlayout.png" ca:template=".zul">
-                        <custom-attributes template="vlayout.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Hbox" hflex="true" image="/img/zul/hbox.png" ca:template="hbox.zul"/>
+                    <toolbarbutton label="Vbox" hflex="true" image="/img/zul/vbox.png" ca:template="vbox.zul"/>
+                    <toolbarbutton label="Hlayout" hflex="true" image="/img/zul/hlayout.png" ca:template="hlayout.zul"/>
+                    <toolbarbutton label="Vlayout" hflex="true" image="/img/zul/vlayout.png" ca:template="vlayout.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Absolutelayout" hflex="true" image="/img/zul/zk.png" ca:template=".zul">
-                        <custom-attributes template="absolutelayout.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Absolutechildren" hflex="true" image="/img/zul/zk.png" ca:template=".zul">
-                        <custom-attributes template="absolutechildren.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Absolutelayout" hflex="true" image="/img/zul/zk.png"
+                                   ca:template="absolutelayout.zul"/>
+                    <toolbarbutton label="Absolutechildren" hflex="true" image="/img/zul/zk.png"
+                                   ca:template="absolutechildren.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Anchorlayout" hflex="true" image="/img/zul/zk.png" ca:template=".zul">
-                        <custom-attributes template="anchorlayout.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Anchorchildren" hflex="true" image="/img/zul/zk.png" ca:template=".zul">
-                        <custom-attributes template="anchorchildren.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Anchorlayout" hflex="true" image="/img/zul/zk.png"
+                                   ca:template="anchorlayout.zul"/>
+                    <toolbarbutton label="Anchorchildren" hflex="true" image="/img/zul/zk.png"
+                                   ca:template="anchorchildren.zul"/>
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Grid" hflex="true" image="/img/zul/grid.png" ca:template=".zul">
-                        <custom-attributes template="grid.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Auxhead" hflex="true" image="/img/zul/auxhead.png" ca:template=".zul">
-                        <custom-attributes template="auxhead.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Auxheader" hflex="true" image="/img/zul/auxheader.png" ca:template=".zul">
-                        <custom-attributes template="auxheader.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Frozen" hflex="true" image="/img/zul/frozen.png" ca:template=".zul">
-                        <custom-attributes template="frozen.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Columns" hflex="true" image="/img/zul/columns.png" ca:template=".zul">
-                        <custom-attributes template="columns.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Rows" hflex="true" image="/img/zul/rows.png" ca:template=".zul">
-                        <custom-attributes template="rows.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Row" hflex="true" image="/img/zul/row.png" ca:template=".zul">
-                        <custom-attributes template="row.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Column" hflex="true" image="/img/zul/column.png" ca:template=".zul">
-                        <custom-attributes template="column.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Foot" hflex="true" image="/img/zul/foot.png" ca:template=".zul">
-                        <custom-attributes template="foot.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Footer" hflex="true" image="/img/zul/footer.png" ca:template=".zul">
-                        <custom-attributes template="footer.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Cell" hflex="true" image="/img/zul/cell.png" ca:template=".zul">
-                        <custom-attributes template="cell.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Grid" hflex="true" image="/img/zul/grid.png" ca:template="grid.zul"/>
+                    <toolbarbutton label="Auxhead" hflex="true" image="/img/zul/auxhead.png" ca:template="auxhead.zul"/>
+                    <toolbarbutton label="Auxheader" hflex="true" image="/img/zul/auxheader.png"
+                                   ca:template="auxheader.zul"/>
+                    <toolbarbutton label="Frozen" hflex="true" image="/img/zul/frozen.png" ca:template="frozen.zul"/>
+                    <toolbarbutton label="Columns" hflex="true" image="/img/zul/columns.png" ca:template="columns.zul"/>
+                    <toolbarbutton label="Rows" hflex="true" image="/img/zul/rows.png" ca:template="rows.zul"/>
+                    <toolbarbutton label="Row" hflex="true" image="/img/zul/row.png" ca:template="row.zul"/>
+                    <toolbarbutton label="Column" hflex="true" image="/img/zul/column.png" ca:template="column.zul"/>
+                    <toolbarbutton label="Foot" hflex="true" image="/img/zul/foot.png" ca:template="foot.zul"/>
+                    <toolbarbutton label="Footer" hflex="true" image="/img/zul/footer.png" ca:template="footer.zul"/>
+                    <toolbarbutton label="Cell" hflex="true" image="/img/zul/cell.png" ca:template="cell.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Listbox" hflex="true" image="/img/zul/listbox.png" ca:template=".zul">
-                        <custom-attributes template="listbox.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Auxhead" hflex="true" image="/img/zul/auxhead.png" ca:template=".zul">
-                        <custom-attributes template="auxhead.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Auxheader" hflex="true" image="/img/zul/auxheader.png" ca:template=".zul">
-                        <custom-attributes template="auxheader.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Frozen" hflex="true" image="/img/zul/frozen.png" ca:template=".zul">
-                        <custom-attributes template="frozen.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Listhead" hflex="true" image="/img/zul/listhead.png" ca:template=".zul">
-                        <custom-attributes template="listhead.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Listheader" hflex="true" image="/img/zul/listheader.png" ca:template=".zul">
-                        <custom-attributes template="listheader.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Listfoot" hflex="true" image="/img/zul/listfoot.png" ca:template=".zul">
-                        <custom-attributes template="listfoot.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Listfooter" hflex="true" image="/img/zul/listfooter.png" ca:template=".zul">
-                        <custom-attributes template="listfooter.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Listitem" hflex="true" image="/img/zul/listitem.png" ca:template=".zul">
-                        <custom-attributes template="listitem.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Listcell" hflex="true" image="/img/zul/listcell.png" ca:template=".zul">
-                        <custom-attributes template="listcell.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Listbox" hflex="true" image="/img/zul/listbox.png" ca:template="listbox.zul"/>
+                    <toolbarbutton label="Auxhead" hflex="true" image="/img/zul/auxhead.png" ca:template="auxhead.zul"/>
+                    <toolbarbutton label="Auxheader" hflex="true" image="/img/zul/auxheader.png"
+                                   ca:template="auxheader.zul"/>
+                    <toolbarbutton label="Frozen" hflex="true" image="/img/zul/frozen.png" ca:template="frozen.zul"/>
+                    <toolbarbutton label="Listhead" hflex="true" image="/img/zul/listhead.png"
+                                   ca:template="listhead.zul"/>
+                    <toolbarbutton label="Listheader" hflex="true" image="/img/zul/listheader.png"
+                                   ca:template="listheader.zul"/>
+                    <toolbarbutton label="Listfoot" hflex="true" image="/img/zul/listfoot.png"
+                                   ca:template="listfoot.zul"/>
+                    <toolbarbutton label="Listfooter" hflex="true" image="/img/zul/listfooter.png"
+                                   ca:template="listfooter.zul"/>
+                    <toolbarbutton label="Listitem" hflex="true" image="/img/zul/listitem.png"
+                                   ca:template="listitem.zul"/>
+                    <toolbarbutton label="Listcell" hflex="true" image="/img/zul/listcell.png"
+                                   ca:template="listcell.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Tree" hflex="true" image="/img/zul/tree.png" ca:template=".zul">
-                        <custom-attributes template="tree.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Treecols" hflex="true" image="/img/zul/treecols.png" ca:template=".zul">
-                        <custom-attributes template="treecols.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Treecol" hflex="true" image="/img/zul/treecol.png" ca:template=".zul">
-                        <custom-attributes template="treecol.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Tree" hflex="true" image="/img/zul/tree.png" ca:template="tree.zul"/>
+                    <toolbarbutton label="Treecols" hflex="true" image="/img/zul/treecols.png"
+                                   ca:template="treecols.zul"/>
+                    <toolbarbutton label="Treecol" hflex="true" image="/img/zul/treecol.png" ca:template="treecol.zul"/>
                     <toolbarbutton label="Treechildren" hflex="true" image="/img/zul/treechildren.png"
-                                   ca:template=".zul">
-                        <custom-attributes template="treechildren.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Treerow" hflex="true" image="/img/zul/treerow.png" ca:template=".zul">
-                        <custom-attributes template="treerow.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Treeitem" hflex="true" image="/img/zul/treeitem.png" ca:template=".zul">
-                        <custom-attributes template="treeitem.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Treecell" hflex="true" image="/img/zul/treecell.png" ca:template=".zul">
-                        <custom-attributes template="treecell.zul"/>
-                    </toolbarbutton>
+                                   ca:template="treechildren.zul"/>
+                    <toolbarbutton label="Treerow" hflex="true" image="/img/zul/treerow.png" ca:template="treerow.zul"/>
+                    <toolbarbutton label="Treeitem" hflex="true" image="/img/zul/treeitem.png"
+                                   ca:template="treeitem.zul"/>
+                    <toolbarbutton label="Treecell" hflex="true" image="/img/zul/treecell.png"
+                                   ca:template="treecell.zul"/>
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Menubar" hflex="true" image="/img/zul/menubar.png" ca:template=".zul">
-                        <custom-attributes template="menubar.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Menu" hflex="true" image="/img/zul/menu.png" ca:template=".zul">
-                        <custom-attributes template="menu.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Menuitem" hflex="true" image="/img/zul/menuitem.png" ca:template=".zul">
-                        <custom-attributes template="menuitem.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Menupopup" hflex="true" image="/img/zul/menupopup.png" ca:template=".zul">
-                        <custom-attributes template="menupopup.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Menubar" hflex="true" image="/img/zul/menubar.png" ca:template="menubar.zul"/>
+                    <toolbarbutton label="Menu" hflex="true" image="/img/zul/menu.png" ca:template="menu.zul"/>
+                    <toolbarbutton label="Menuitem" hflex="true" image="/img/zul/menuitem.png"
+                                   ca:template="menuitem.zul"/>
+                    <toolbarbutton label="Menupopup" hflex="true" image="/img/zul/menupopup.png"
+                                   ca:template="menupopup.zul"/>
                     <toolbarbutton label="Menuseparator" hflex="true" image="/img/zul/menuseparator.png"
-                                   ca:template=".zul">
-                        <custom-attributes template="menuseparator.zul"/>
-                    </toolbarbutton>
+                                   ca:template="menuseparator.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Toolbar" hflex="true" image="/img/zul/toolbar.png" ca:template=".zul">
-                        <custom-attributes template="toolbar.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Toolbar" hflex="true" image="/img/zul/toolbar.png" ca:template="toolbar.zul"/>
                     <toolbarbutton label="Toolbarbutton" hflex="true" image="/img/zul/toolbarbutton.png"
-                                   ca:template=".zul">
-                        <custom-attributes template="toolbarbutton.zul"/>
-                    </toolbarbutton>
+                                   ca:template="toolbarbutton.zul"/>
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="CK Editor" hflex="true" image="/img/zul/ckeditor.jpg">
-                        <custom-attributes template="ckeditor.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Calendars" hflex="true" image="/img/zul/calendar.png" ca:template=".zul">
-                        <custom-attributes template="calendars.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="CK Editor" hflex="true" image="/img/zul/ckeditor.jpg"
+                                   ca:template="ckeditor.zul"/>
+                    <toolbarbutton label="Calendars" hflex="true" image="/img/zul/calendar.png"
+                                   ca:template="calendars.zul"/>
 
-                    <toolbarbutton label="Html" hflex="true" image="/img/zul/html.png" ca:template=".zul">
-                        <custom-attributes template="html.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Iframe" hflex="true" image="/img/zul/iframe.png" ca:template=".zul">
-                        <custom-attributes template="iframe.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Popup" hflex="true" image="/img/zul/popup.png" ca:template=".zul">
-                        <custom-attributes template="popup.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Html" hflex="true" image="/img/zul/html.png" ca:template="html.zul"/>
+                    <toolbarbutton label="Iframe" hflex="true" image="/img/zul/iframe.png" ca:template="iframe.zul"/>
+                    <toolbarbutton label="Popup" hflex="true" image="/img/zul/popup.png" ca:template="popup.zul"/>
 
-                    <toolbarbutton label="Separator" hflex="true" image="/img/zul/separator.png" ca:template=".zul">
-                        <custom-attributes template="separator.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Space" hflex="true" image="/img/zul/space.png" ca:template=".zul">
-                        <custom-attributes template="space.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Timer" hflex="true" image="/img/zul/timer.png" ca:template=".zul">
-                        <custom-attributes template="timer.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="Separator" hflex="true" image="/img/zul/separator.png"
+                                   ca:template="separator.zul"/>
+                    <toolbarbutton label="Space" hflex="true" image="/img/zul/space.png" ca:template="space.zul"/>
+                    <toolbarbutton label="Timer" hflex="true" image="/img/zul/timer.png" ca:template="timer.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Script" hflex="true" image="/img/zul/script.png" ca:template=".zul">
-                        <custom-attributes template="script.zul"/>
-                    </toolbarbutton>
-                    <toolbarbutton label="Style" hflex="true" image="/img/zul/style.png" ca:template=".zul">
-                        <custom-attributes template="style.zul"/>
-                    </toolbarbutton>
+                    <toolbarbutton label="ZScript" hflex="true" image="/img/zul/zscript.png" ca:template="zscript.zul"/>
+                    <toolbarbutton label="Script" hflex="true" image="/img/zul/script.png" ca:template="script.zul"/>
+                    <toolbarbutton label="Style" hflex="true" image="/img/zul/style.png" ca:template="style.zul"/>
 
                 </vlayout>
             </tabpanel>
