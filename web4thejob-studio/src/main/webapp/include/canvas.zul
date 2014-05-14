@@ -6,7 +6,8 @@
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
-    <window id="canvas" vflex="true" hflex="true" apply="org.web4thejob.studio.CanvasController">
+    <window id="canvas" vflex="true" hflex="true" contentStyle="overflow:auto"
+            apply="org.web4thejob.studio.CanvasController">
 
     </window>
 

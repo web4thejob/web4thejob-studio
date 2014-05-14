@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:c="http://www.zkoss.org/2005/zk/client"
+    xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <panel vflex="true" apply="org.web4thejob.studio.CodeController">
+        <panelchildren>
+            <textbox id="zulBox" multiline="true">
+                <attribute c:name="bind_">
+                    <![CDATA[
+                        function (a, b, c) {
+                            this.$bind_(a, b, c);
+                            var wgt = this;
+                            myCodeMirror = CodeMirror.fromTextArea(this.$n(),
+                                    {mode: 'xml',
+                                    lineNumbers: true,
+                                    matchTags: {bothTags: true},
+                                    autoCloseTags: true,
+                                    extraKeys: {"'<'": completeAfter,
+                                                "'/'": completeIfAfterLt,
+                                                "' '": completeIfInTag,
+                                                "'='": completeIfInTag,
+                                                'Ctrl-Space': function(cm) {CodeMirror.showHint(cm, CodeMirror.hint.xml, {schemaInfo: tags});},
+                                                'Ctrl-J': 'toMatchingTag'
+                                               }
+                                        }
+                                    );
+
+                            wgt.set("codemirror",myCodeMirror);
+                            myCodeMirror.on('change', function () {
+                                jq(".splash").remove();
+                                var val = myCodeMirror.getValue();
+                                var txt = wgt.$n().value;
+                                if (val!=txt){
+                                    wgt.$n().value = val;
+                                    wgt.fire('onChange', {value: val}, {toServer: true});
+                                }
+                            });
+                        }
+                    ]]>
+                </attribute>
+                <attribute c:name="setValue">
+                    <![CDATA[
+                        function (a, b) {
+                            this.$setValue(a, b);
+                            if (this.get("codemirror")){
+                                this.get("codemirror").setValue(a);
+                            }
+                        }
+                    ]]>
+                </attribute>
+            </textbox>
+        </panelchildren>
+    </panel>
+</zk>

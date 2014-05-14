@@ -2,6 +2,22 @@
 <?page title="Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 <?script type="text/javascript" src="/js/designer.js"?>
 
+<!--CODE MIRROR-->
+<?style type="text/css" href="/codemirror/lib/codemirror.css"?>
+<?style type="text/css" href="/codemirror/addon/hint/show-hint.css"?>
+<?script  type="text/javascript" src="/codemirror/lib/codemirror.js"?>
+<?script  type="text/javascript" src="/js/zul-hints.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/hint/show-hint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/hint/xml-hint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/fold/xml-fold.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/edit/matchtags.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/edit/closetag.js"?>
+<?script  type="text/javascript" src="/codemirror/mode/xml/xml.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/edit/matchbrackets.js"?>
+<?script  type="text/javascript" src="/codemirror/mode/javascript/javascript.js"?>
+<?script  type="text/javascript" src="/codemirror/mode/clike/clike.js"?>
+
+
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
@@ -39,8 +55,11 @@
                                         hflex="true" style="box-shadow: 0 0 5px black;"/>
                             </div>
                         </tabpanel>
-                        <tabpanel></tabpanel>
-                        <tabpanel></tabpanel>
+                        <tabpanel>
+                        </tabpanel>
+                        <tabpanel>
+                            <include src="include/code.zul"/>
+                        </tabpanel>
                     </tabpanels>
                 </tabbox>
 

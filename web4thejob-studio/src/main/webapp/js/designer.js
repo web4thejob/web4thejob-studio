@@ -38,7 +38,7 @@ var w4tjStudioDesigner = {
     alert: function(clazz,title,message,autoclosable){
         var id=zk.Desktop.nextUuid() + '-alert';
         jq('body').css('overflow','hidden');
-        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:10000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+title+'</strong> '+message+'.</div>';
+        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:10000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+zUtl.encodeXML(title)+'</strong> '+zUtl.encodeXML(message)+'.</div>';
         id='#'+id;
         jq('body').append(a);
 
@@ -66,6 +66,9 @@ var w4tjStudioDesigner = {
     },
     sendEvent: function(name,data){
         zAu.send(new zk.Event(zk("$designer").$(), name, data));
+    },
+    clearCanvasBusy: function(uuid) {
+        frames[zk("$canvasHolder").$().uuid].zAu.cmd0.clearBusy(uuid);
     },
 
     buildToolbar: function(){
