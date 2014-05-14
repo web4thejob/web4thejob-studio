@@ -51,6 +51,11 @@ public class CodeController extends AbstractController {
             Attribute a = ((Element) nodes.get(i)).getAttribute("label");
             a.detach();
         }
+        nodes = document.query("//zul:tabbox[@selectedIndex]", xpathContext);
+        for (int i = 0; i < nodes.size(); i++) {
+            Attribute a = ((Element) nodes.get(i)).getAttribute("selectedIndex");
+            a.detach();
+        }
 
     }
 
@@ -80,7 +85,7 @@ public class CodeController extends AbstractController {
             try {
                 document = parser.build(zulBox.getValue(), null);
             } catch (ParsingException e) {
-                showError(e);
+                //showError(e);
                 throw new RuntimeException(e);
             } catch (Exception e) {
                 throw new RuntimeException(e);

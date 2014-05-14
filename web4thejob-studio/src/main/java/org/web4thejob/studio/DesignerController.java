@@ -7,20 +7,27 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Iframe;
 import org.zkoss.zul.Menuitem;
 import org.zkoss.zul.Menupopup;
 
+import java.util.Date;
 import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.ControllerEnum.DESIGNER_CONTROLLER;
-import static org.web4thejob.studio.support.StudioUtil.clearCanvasBusy;
-import static org.web4thejob.studio.support.StudioUtil.showNotification;
+import static org.web4thejob.studio.MessageEnum.*;
+import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
+
+    @Wire
+    private Iframe canvasHolder;
 
     @Override
     public ControllerEnum getId() {
@@ -63,13 +70,49 @@ public class DesignerController extends AbstractController {
     @Listen("onCanvasAddition=#designer")
     public void onCanvasAddition(Event event) {
         showNotification("success", event.getName(), JSONValue.toJSONString(event.getData()), true);
-        pubish(MessageEnum.COMPONENT_ADDED, event.getData());
+        pubish(COMPONENT_ADDED, event.getData());
         clearCanvasBusy(null);
     }
 
     @Listen("onCanvasReady=#designer")
     public void onCanvasReady(Event event) {
-        //pubish(MessageEnum.RESET);
+        Clients.clearBusy();
+        clearAlerts();
+
+        String message = (String) event.getData();
+        if (message == null) return;
+        if (EVALUATE_CODE == valueOf(message)) {
+            pubish(CODE_EVAL_SUCCEDED);
+        }
     }
 
+    @Listen("onCanvasFailed=#designer")
+    public void onCanvasFailed(Event event) {
+        Clients.clearBusy();
+        clearAlerts();
+
+        showError((String) event.getData(), false);
+        pubish(CODE_EVAL_FAILED);
+    }
+
+    @Override
+    protected void process(Message message) {
+        switch (message.getId()) {
+            case EVALUATE_CODE:
+                canvasHolder.setSrc("include/canvas.zul?m=" + message.getId().name() + "&t=" + new Date().getTime());
+                break;
+            case CODE_EVAL_SUCCEDED:
+                Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    @Listen("onParseZulClicked=#designer")
+    public void onParseZulClicked() {
+        pubish(EVALUATE_CODE);
+    }
 }

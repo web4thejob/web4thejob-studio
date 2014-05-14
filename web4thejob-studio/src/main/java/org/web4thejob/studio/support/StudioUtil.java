@@ -17,10 +17,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.Clients;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
+import java.util.*;
 
 import static org.springframework.util.Assert.isTrue;
 import static org.springframework.util.Assert.notNull;
@@ -71,12 +68,21 @@ public abstract class StudioUtil {
                 ")");
     }
 
+    public static void clearAlerts() {
+        Clients.evalJavaScript("top.w4tjStudioDesigner.clearAlerts()");
+    }
+
+
     public static void showError(Exception e) {
         showError(e, false);
     }
 
     public static void showError(Exception e, boolean autoclosable) {
         showNotification("danger", "Ooops!", e.getMessage(), autoclosable);
+    }
+
+    public static void showError(String message, boolean autoclosable) {
+        showNotification("danger", "Ooops!", message, autoclosable);
     }
 
     public static void sendToDesigner(String eventName, Object data) {
@@ -102,10 +108,10 @@ public abstract class StudioUtil {
 
     private static <T extends Controller> T getController(ControllerEnum id) {
         Desktop desktop;
-        if (!(isCanvasDesktop() && id == CANVAS_CONTROLLER)) {
-            desktop = getPairedDesktop();
-        } else {
+        if (id == CANVAS_CONTROLLER && isCanvasDesktop() || (id != CANVAS_CONTROLLER && !isCanvasDesktop())) {
             desktop = Executions.getCurrent().getDesktop();
+        } else {
+            desktop = getPairedDesktop();
         }
 
         SortedMap<ControllerEnum, Controller> controllers = cast(desktop.getAttribute(ATTR_STUDIO_CONTROLLERS));
@@ -195,4 +201,16 @@ public abstract class StudioUtil {
         return "attribute".equals(tag) || "custom-attributes".equals(tag);
     }
 
+    public static String getQueryParam(String query, String param) {
+        if (query == null) return null;
+        notNull(param);
+        StringTokenizer tokenizer = new StringTokenizer(query, "&", false);
+        while (tokenizer.hasMoreElements()) {
+            String token = tokenizer.nextToken().trim();
+            if (token.startsWith(param) && token.contains("=")) {
+                return token.split("=")[1];
+            }
+        }
+        return null;
+    }
 }

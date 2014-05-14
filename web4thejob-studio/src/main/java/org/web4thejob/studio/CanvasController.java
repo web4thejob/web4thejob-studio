@@ -73,12 +73,13 @@ public class CanvasController extends AbstractController {
         designerDesktop.setAttribute(ATTR_PAIRED_DESKTOP, canvasDesktop);
         designerDesktop.setAttribute(ATTR_CANVAS_UUID, canvas.getUuid());
 
+        String message = getQueryParam(Executions.getCurrent().getDesktop().getQueryString(), "m");
         try {
             refresh();
-            sendToDesigner("onCanvasReady", null);
+            sendToDesigner("onCanvasReady", message);
         } catch (Exception e) {
             e.printStackTrace();
-            showError(e, false);
+            sendToDesigner("onCanvasFailed", e.getMessage());
         }
 
     }

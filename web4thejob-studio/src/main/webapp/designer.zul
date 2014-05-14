@@ -19,6 +19,7 @@
 
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:c="http://www.zkoss.org/2005/zk/client"
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
@@ -45,7 +46,9 @@
                     <tabs>
                         <tab label="Canvas" iconSclass="z-icon-coffee"/>
                         <tab label="Outline" iconSclass="z-icon-sitemap"/>
-                        <tab label="ZUL" iconSclass="z-icon-code"/>
+                        <tab label="ZUL" iconSclass="z-icon-code">
+                            <attribute c:name="onSelect">if (myCodeMirror) myCodeMirror.refresh();</attribute>
+                        </tab>
                     </tabs>
                     <tabpanels>
                         <tabpanel>
@@ -124,5 +127,23 @@
 
         /* ff bug */
         .designer-toolbar .btn {height: 26px}
+
+        .code-succeeded-effect {
+        vertical-align:middle;
+        font-size: 1000px;
+        opacity: 0.1;
+        background-color:transparent;
+        font-family: FontAwesome;
+        color: #51E73C;
+        position: absolute;
+        text-align: center;
+        margin: 0 auto;
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+        z-index: 10000;
+        text-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </zk>

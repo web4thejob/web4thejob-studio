@@ -1,3 +1,5 @@
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <menubar/>
+    <menubar>
+        <menu label="Menu 1"/>
+    </menubar>
 </zk>

@@ -34,8 +34,14 @@ var w4tjStudioDesigner = {
         });
     },
 
+    clearAlerts: function(){
+        jq('.alert').alert('close');
+    },
 
     alert: function(clazz,title,message,autoclosable){
+        zAu.cmd0.clearBusy();
+        this.clearAlerts();
+
         var id=zk.Desktop.nextUuid() + '-alert';
         jq('body').css('overflow','hidden');
         var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:10000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+zUtl.encodeXML(title)+'</strong> '+zUtl.encodeXML(message)+'.</div>';
@@ -102,6 +108,12 @@ var w4tjStudioDesigner = {
         }
         jq('.designer-toolbar .toolbar-actions').click(actionsHandler);
         jq('.designer-toolbar .toolbar-actions-dropdown').click(actionsHandler);
+
+        jq('.designer-toolbar .toolbar-parsezul').click(function(){
+            zAu.cmd0.showBusy("Parsing your zul...");
+            zAu.send(new zk.Event(zk("$designer").$(), "onParseZulClicked"));
+        });
+
     },
 
     _fileName: 'Untitled',
@@ -120,6 +132,14 @@ var w4tjStudioDesigner = {
         jq(e).text(this._fileName);
         jq(e).prepend('<span style="margin-right:5px">&#xf111;</span>');
         jq(e).append('<span style="margin-left:5px">&#xf111;</span>');
+     },
+
+     codeSuccessEffect: function() {
+        jq('body').css('overflow','hidden');
+        jq('body').append('<span class="code-succeeded-effect">&#xf164</span>');
+        var wgt=jq('.code-succeeded-effect');
+        wgt.animate({fontSize:200, opacity:1,top:'+150'},500);
+        setTimeout(function(){wgt.remove()},1000);
      }
 
 
