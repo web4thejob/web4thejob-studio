@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <panel border="normal" vflex="true">
+        <panelchildren style="overflow:auto">
+            <tree id="outline" vflex="true" apply="org.web4thejob.studio.OutlineController" style="border:0px">
+                <treechildren/>
+            </tree>
+        </panelchildren>
+    </panel>
+
+
+</zk>

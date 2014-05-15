@@ -57,8 +57,9 @@ public abstract class StudioUtil {
 
 
     public static void showNotification(String clazz, String title, String message, boolean autoclose) {
+        String m = message.replaceAll("'", "\"");
         Clients.evalJavaScript("top.w4tjStudioDesigner.alert('" + clazz + "','" + title +
-                "','" + message + "'," + Boolean.valueOf(autoclose).toString() + ")");
+                "','" + m + "'," + Boolean.valueOf(autoclose).toString() + ")");
 
     }
 
@@ -106,6 +107,14 @@ public abstract class StudioUtil {
         return (Desktop) Executions.getCurrent().getDesktop().getAttribute(ATTR_PAIRED_DESKTOP);
     }
 
+
+    public static TreeSet<Controller> getLocalControllers() {
+        SortedMap<ControllerEnum, Controller> controllers = cast(Executions.getCurrent().getDesktop().getAttribute
+                (ATTR_STUDIO_CONTROLLERS));
+        notNull(controllers, "called to early");
+        return new TreeSet<>(controllers.values());
+    }
+
     private static <T extends Controller> T getController(ControllerEnum id) {
         Desktop desktop;
         if (id == CANVAS_CONTROLLER && isCanvasDesktop() || (id != CANVAS_CONTROLLER && !isCanvasDesktop())) {
@@ -148,8 +157,7 @@ public abstract class StudioUtil {
     }
 
     public static Element getElementByUuid(final String uuid) {
-        return ((Element) ((CodeController) getController(CODE_CONTROLLER)).getCode().getRootElement().query
-                ("descendant-or-self::*[@uuid='" + uuid + "']").get(0));
+        return (Element) (getCode().getRootElement().query("descendant-or-self::*[@uuid='" + uuid + "']").get(0));
     }
 
     public static boolean isDefaultValueForProperty(Component instance, String propertyName, String value,
@@ -213,4 +221,137 @@ public abstract class StudioUtil {
         }
         return null;
     }
+
+    public static String describeElement(Element element) {
+        boolean script = element.getLocalName().equals("attribute");
+
+        StringBuilder sb = new StringBuilder();
+
+        String specialStyle = null;
+        if (!script) {
+            if (element.getAttributeValue("uuid") == null) {
+                specialStyle = "w4tjstudio-element-skipped";
+            } else if ("false".equals(element.getAttributeValue("visible"))) {
+                specialStyle = "w4tjstudio-element-hidden";
+            }
+        } else {
+            if (element.getParent() != null) {
+                Element parent = (Element) element.getParent();
+                if (parent.getAttributeValue("uuid") == null) {
+                    specialStyle = "w4tjstudio-element-skipped";
+                } else if ("false".equals(parent.getAttributeValue("visible"))) {
+                    specialStyle = "w4tjstudio-element-hidden";
+                }
+            }
+        }
+
+        if (specialStyle != null) {
+            sb.append("<span class=\"").append(specialStyle).append("\">");
+        }
+
+
+        sb.append(element.getLocalName()).append(" [");
+        if (!script) {
+            if (element.getAttributeValue("id") != null) {
+                sb.append(element.getAttributeValue("id"));
+            } else if (element.getAttributeValue("uuid") != null) {
+                sb.append("#").append(element.getAttributeValue("uuid"));
+            }
+        } else {
+            if (element.getAttributeValue("name") != null) {
+                sb.append("<span style=\"font-family:monospace\">");
+                sb.append(element.getAttributeValue("name")).append("@server");
+                sb.append("</span>");
+            } else if (element.getAttributeValue("name", "http://www.zkoss.org/2005/zk/client") != null) {
+                sb.append("<span style=\"font-family:monospace\">");
+                sb.append(element.getAttributeValue("name", "http://www.zkoss.org/2005/zk/client")).append("@client");
+                sb.append("</span>");
+            }
+        }
+        sb.append("]");
+
+        if (element.getAttributeValue("label") != null || element.getAttributeValue("value") != null) {
+            sb.append(": ").append("<span style=\"color:").append((specialStyle != null ? "inherit" : "#428bca"))
+                    .append(";font-style:italic;font-weight:bold;\">");
+
+            String value;
+            if (element.getAttributeValue("label") != null) {
+                value = element.getAttributeValue("label");
+            } else {
+                value = element.getAttributeValue("value");
+            }
+
+
+            //EL expressions
+            if (specialStyle == null) {
+                String nval = "";
+                String t1 = "${", t2 = "}";
+                if (value.contains(t1)) {
+                    int p1 = value.indexOf(t1);
+                    int p2 = value.indexOf(t2);
+                    if (p2 > p1) {
+                        nval = "<code>" + value.substring(p1, p2 + 1) + "</code>";
+                        if (p1 > 0) {
+                            nval = value.substring(0, p1 - 1) + nval;
+                        }
+                        if (p2 < value.length() - 1) {
+                            nval = nval + value.substring(p2 + 1);
+                        }
+                        value = nval;
+                    }
+                }
+            }
+
+            //Bind expressions
+            if (specialStyle == null) {
+                String nval = "";
+                String t1 = null, t2 = null;
+                for (int j = 1; j <= 3; j++) {
+                    switch (j) {
+                        case 1:
+                            t1 = "@bind(";
+                            t2 = ")";
+                            break;
+                        case 2:
+                            t1 = "@load(";
+                            t2 = ")";
+                            break;
+                        case 3:
+                            t1 = "@save(";
+                            t2 = ")";
+                            break;
+                    }
+                    if (value.contains(t1)) {
+                        int p1 = value.indexOf(t1);
+                        int p2 = value.indexOf(t2);
+                        if (p2 > p1) {
+                            nval = "<span class=\"label label-success z-label mono\">" + value.substring(p1,
+                                    p2 + 1) + "</span>";
+                            if (p1 > 0) {
+                                nval = value.substring(0, p1 - 1) + nval;
+                            }
+                            if (p2 < value.length() - 1) {
+                                nval = nval + value.substring(p2 + 1);
+                            }
+                            value = nval;
+                        }
+                    }
+                }
+            }
+/*
+            if (value.length() > 30) {
+                value = value.substring(0, 29) + "...";
+            }
+*/
+            sb.append(value).append("</span>");
+
+        }
+
+        if (element.getAttributeValue("uuid") == null) {
+            sb.append("</span");
+        }
+
+        return sb.toString();
+    }
+
 }

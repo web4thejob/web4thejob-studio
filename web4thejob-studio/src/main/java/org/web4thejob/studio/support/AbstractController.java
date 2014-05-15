@@ -1,4 +1,4 @@
-package org.web4thejob.studio.base;
+package org.web4thejob.studio.support;
 
 import org.web4thejob.studio.Controller;
 import org.web4thejob.studio.ControllerEnum;
@@ -6,23 +6,18 @@ import org.web4thejob.studio.Message;
 import org.web4thejob.studio.MessageEnum;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.EventQueue;
-import org.zkoss.zk.ui.event.EventQueues;
 import org.zkoss.zk.ui.select.SelectorComposer;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import static org.web4thejob.studio.support.StudioUtil.ATTR_STUDIO_CONTROLLERS;
+import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.zkoss.lang.Generics.cast;
 
 /**
  * Created by Veniamin on 10/5/2014.
  */
 public abstract class AbstractController extends SelectorComposer<Component> implements Controller {
-    private final EventQueue<EventWrapper> pipeline = EventQueues.lookup("studio-pipeline", EventQueues.DESKTOP, true);
-    private final EventWrapperListener EVENT_WRAPPER_LISTENER = new EventWrapperListener();
 
     private static void register(Controller controller) {
         synchronized (Executions.getCurrent().getDesktop()) {
@@ -41,21 +36,51 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         register(this);
-        pipeline.subscribe(EVENT_WRAPPER_LISTENER);
         init();
     }
 
-    protected void pubish(MessageEnum msgid, Object data) {
-        //marshall message to event
-        pipeline.publish(new EventWrapper(this, "on" + msgid.name(), null, data));
+    @Override
+    public void publish(MessageEnum id) {
+        publish(id, null);
     }
 
-    protected void pubish(MessageEnum msgid) {
-        //marshall message to event
-        pipeline.publish(new EventWrapper(this, "on" + msgid.name(), null, null));
+    @Override
+    public void publish(MessageEnum id, Object data) {
+        Message message = new Message(id, this, data);
+
+        try {
+            for (Controller controller : getLocalControllers()) {
+                if (message.isStopPropagation()) break;
+                controller.process(message);
+            }
+
+            if (MessageEnum.EVALUATE_ZUL == id) {
+                //ZUL_EVAL_SUCCEEDED will come from the onCanvasReady event
+            } else if (MessageEnum.EVALUATE_XML == id) {
+                publish(MessageEnum.XML_EVAL_SUCCEEDED, data);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            message.setStopPropagation(true);
+
+            if (MessageEnum.EVALUATE_ZUL == id) {
+                publish(MessageEnum.ZUL_EVAL_FAILED, e);
+                //ZUL_EVAL_FAILED will come from the onCanvasReady event
+                //however I add this here in case the code breaks prior to
+                //calling canvasHolder.setSrc
+            } else if (MessageEnum.EVALUATE_XML == id) {
+                publish(MessageEnum.XML_EVAL_FAILED, e);
+            } else {
+                showError(e);
+            }
+
+        }
     }
 
-    protected void process(Message message) {
+    @Override
+    public void process(Message message) {
         //override
     }
 
@@ -68,15 +93,6 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
     @Override
     public int compareTo(Controller o) {
         return this.getId().compareTo(o.getId());
-    }
-
-    private class EventWrapperListener implements EventListener<EventWrapper> {
-
-        @Override
-        public void onEvent(EventWrapper event) throws Exception {
-            MessageEnum id = MessageEnum.valueOf(event.getName().substring(2)); //exclude "on"
-            process(new Message(id, event.getSender(), event.getData()));
-        }
     }
 
 

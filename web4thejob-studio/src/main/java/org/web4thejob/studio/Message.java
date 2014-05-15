@@ -10,11 +10,13 @@ import static org.zkoss.lang.Generics.cast;
 public class Message {
     private final MessageEnum id;
     private final Controller sender;
-    private Object data;
+    private final Object data;
+    private boolean stopPropagation;
 
     public Message(MessageEnum id, Controller sender) {
         this.id = id;
         this.sender = sender;
+        this.data = null;
     }
 
     public Message(MessageEnum id, Controller sender, Object data) {
@@ -43,4 +45,11 @@ public class Message {
         return cast(((Map) data).get(key));
     }
 
+    public boolean isStopPropagation() {
+        return stopPropagation;
+    }
+
+    public void setStopPropagation(boolean stopPropagation) {
+        this.stopPropagation = stopPropagation;
+    }
 }

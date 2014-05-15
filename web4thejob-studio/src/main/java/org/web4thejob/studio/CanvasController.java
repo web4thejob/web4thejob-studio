@@ -3,7 +3,7 @@ package org.web4thejob.studio;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
-import org.web4thejob.studio.base.AbstractController;
+import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.json.JSONValue;
@@ -79,7 +79,10 @@ public class CanvasController extends AbstractController {
             sendToDesigner("onCanvasReady", message);
         } catch (Exception e) {
             e.printStackTrace();
-            sendToDesigner("onCanvasFailed", e.getMessage());
+            Map<String, String> data = new HashMap<>();
+            data.put("message", message);
+            data.put("exception", (e.getMessage() != null ? e.getMessage() : e.toString()));
+            sendToDesigner("onCanvasFailed", data);
         }
 
     }

@@ -2,7 +2,7 @@ package org.web4thejob.studio;
 
 import nu.xom.*;
 import org.apache.commons.lang.ClassUtils;
-import org.web4thejob.studio.base.AbstractController;
+import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -59,6 +59,10 @@ public class CodeController extends AbstractController {
 
     }
 
+    /**
+     * This is the most important controller and thus it should init itself.
+     * All other dependent controllers should wait for the {@code RESET} message.
+     */
     @Override
     protected void init() {
         super.init();
@@ -71,7 +75,6 @@ public class CodeController extends AbstractController {
     }
 
     public void reset() {
-//        hideErrors();
         Element zk = new Element("zk", ZUL_NS);
         zk.addNamespaceDeclaration("client", CLIENT_NAMESPACE);
         document = new Document(zk);
@@ -84,14 +87,10 @@ public class CodeController extends AbstractController {
             Builder parser = new Builder(false);
             try {
                 document = parser.build(zulBox.getValue(), null);
-            } catch (ParsingException e) {
-                //showError(e);
-                throw new RuntimeException(e);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             changed = false;
-//            addBookmark();
         }
         return document;
     }
@@ -122,8 +121,8 @@ public class CodeController extends AbstractController {
     @Listen("onChange=#zulBox;")
     public void codeChanged() {
         if (!changed) {
-            pubish(COMPONENT_SELECTED);
-            pubish(CODE_CHANGED);
+            publish(COMPONENT_SELECTED);
+            publish(CODE_CHANGED);
         }
         changed = true;
     }
@@ -198,7 +197,7 @@ public class CodeController extends AbstractController {
     }
 
     @Override
-    protected void process(Message message) {
+    public void process(Message message) {
         switch (message.getId()) {
             case COMPONENT_ADDED:
                 includeComponent(message.getData(String.class));
@@ -213,12 +212,14 @@ public class CodeController extends AbstractController {
                 print();
                 //addBookmark();
                 break;
-            case CODE_EVAL_FAILED:
+            case EVALUATE_XML:
+                getCode(); //will throw error if it fails
+            case XML_EVAL_FAILED:
                 //displayErrors((Exception) message.getDefaultParam());
                 break;
-            case CODE_EVAL_SUCCEDED:
+            case XML_EVAL_SUCCEEDED:
                 //hideErrors();
-                print();
+//                print();
 //                addBookmark();
                 break;
             case SET_BOOKMARK:

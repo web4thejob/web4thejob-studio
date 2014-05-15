@@ -39,12 +39,12 @@ var w4tjStudioDesigner = {
     },
 
     alert: function(clazz,title,message,autoclosable){
-        zAu.cmd0.clearBusy();
+//        zAu.cmd0.clearBusy();
         this.clearAlerts();
 
         var id=zk.Desktop.nextUuid() + '-alert';
         jq('body').css('overflow','hidden');
-        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:10000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+zUtl.encodeXML(title)+'</strong> '+zUtl.encodeXML(message)+'.</div>';
+        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:50000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+zUtl.encodeXML(title)+'</strong> '+zUtl.encodeXML(message)+'.</div>';
         id='#'+id;
         jq('body').append(a);
 
@@ -74,7 +74,13 @@ var w4tjStudioDesigner = {
         zAu.send(new zk.Event(zk("$designer").$(), name, data));
     },
     clearCanvasBusy: function(uuid) {
-        frames[zk("$canvasHolder").$().uuid].zAu.cmd0.clearBusy(uuid);
+        var f=frames['canvasHolder'];
+        if (!f) {
+            f=frames[zk("$canvasHolder").$().uuid];
+        }
+        if (f) {
+            f.zAu.cmd0.clearBusy(uuid);
+        }
     },
 
     buildToolbar: function(){
@@ -140,6 +146,18 @@ var w4tjStudioDesigner = {
         var wgt=jq('.code-succeeded-effect');
         wgt.animate({fontSize:200, opacity:1,top:'+150'},500);
         setTimeout(function(){wgt.remove()},1000);
+     },
+
+     monitorCanvasHealth: function() {
+        var f=frames[zk("$canvasHolder").$().uuid];
+        if (f) {
+            setTimeout(function(){
+                if (jq("#zk_showBusy").length) {
+                    w4tjStudioDesigner.alert('warning','Too long',"Canvas is taking too long to parse. Are you sure your there aren't any javascript errors?",true);
+                    zAu.send(new zk.Event(zk("$designer").$(), "onCanvasHang"));
+                }
+            },5000); //5sec tolerance
+        }
      }
 
 
