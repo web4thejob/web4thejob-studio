@@ -9,7 +9,7 @@
         <custom-attributes properties="/properties"/>
 
         <n:div n:class="well well-sm bs-adaptor"
-               style="margin-bottom:1px;padding:8px;min-height:33px;border-radius:0px">
+               style="margin-bottom:1px;padding:8px;min-height:31px;border-radius:0px">
             <html id="editorSelection" zclass="z-label" style="font-size:14px"/>
         </n:div>
 

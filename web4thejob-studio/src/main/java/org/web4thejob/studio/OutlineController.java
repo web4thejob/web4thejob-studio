@@ -120,19 +120,17 @@ public class OutlineController extends AbstractController {
                 reset();
                 selection = null;
                 break;
-            case EVALUATE_XML:
-//                refresh();
+            case ZUL_EVAL_SUCCEEDED:
+                refresh();
                 break;
             case COMPONENT_DETACHED:
                 removeItem((Element) message.getData());
                 break;
-            case DESCRIPTION_CHANGED:
-                Treeitem item = getTreeitemByElement((Element) message.getData());
-                ((Html) item.getTreerow().getFirstChild().getFirstChild()).setContent(describeElement((Element)
-                        message.getData()));
-                break;
             case XML_EVAL_FAILED:
-//                outline.clear();
+                outline.clear();
+                break;
+            case ZUL_EVAL_FAILED:
+                outline.clear();
                 break;
         }
     }

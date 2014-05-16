@@ -19,17 +19,18 @@ import org.zkoss.zul.impl.InputElement;
 import java.util.*;
 
 import static org.web4thejob.studio.ControllerEnum.PROPERTY_EDITOR_CONTROLLER;
+import static org.web4thejob.studio.MessageEnum.ATTRIBUTE_CHANGED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.web4thejob.studio.support.ZulXsdUtil.*;
+import static org.zkoss.lang.Generics.cast;
 
 /**
  * Created by e36132 on 16/5/2014.
  */
 public class PropertyEditorController extends AbstractController {
-    private static final SaveProperties SAVE_CHANGES_HANDLER = new SaveProperties();
     private static final OnOKHandler OK_HANDLER = new OnOKHandler();
     private static final OnCodeEditorHandler CODE_EDITOR_HANDLER = new OnCodeEditorHandler();
-
+    private final SaveProperties SAVE_CHANGES_HANDLER = new SaveProperties();
     @Wire
     private Tabpanel properties;
     @Wire
@@ -69,11 +70,6 @@ public class PropertyEditorController extends AbstractController {
                 break;
             case RESET:
                 clear();
-                break;
-            case DESCRIPTION_CHANGED:
-                if (message.getData().equals(selection)) {
-                    editorSelection.setContent(describeElement(selection));
-                }
                 break;
             case XML_EVAL_FAILED:
                 clear();
@@ -239,7 +235,7 @@ public class PropertyEditorController extends AbstractController {
 
     private void refreshComponentProperties(SortedMap<String, SortedSet<Element>> propsMap) {
         ComponentDefinition componentDefinition = getDefinitionByTag(selection.getLocalName());
-        Class<? extends Component> clazz = (Class<? extends Component>) componentDefinition.getImplementationClass();
+        Class<? extends Component> clazz = cast(componentDefinition.getImplementationClass());
         List<Row> bindings = new ArrayList<>(1);
 
 
@@ -256,7 +252,7 @@ public class PropertyEditorController extends AbstractController {
                 String propertyName = property.getAttributeValue("name");
                 String type = property.getAttributeValue("type");
                 boolean isBoolean = "booleanType".equals(type);
-//                if (isBannedProperty(clazz, propertyName, isBoolean) || isEvent(propertyName)) continue;
+                if (isEvent(propertyName)) continue;
 
                 Object val = null;
                 Attribute attribute = selection.getAttribute(propertyName);
@@ -397,92 +393,13 @@ public class PropertyEditorController extends AbstractController {
                 Element attached = (Element) child.getAttribute("element");
                 if (attached != null && element.getLocalName().equals(attached.getLocalName()) && propertyName.equals
                         (child.getAttribute
-                        ("property"))) {
+                                ("property"))) {
                     editor[0] = (InputElement) child;
                 }
             }
         });
 
         return editor[0];
-    }
-
-    private static class SaveProperties implements EventListener<InputEvent> {
-        @Override
-        @SuppressWarnings("unchecked")
-        public void onEvent(InputEvent event) throws Exception {
-            Element selected = (Element) event.getTarget().getAttribute("element");
-            String propertyName = event.getTarget().getAttribute("property").toString();
-            String uuid = selected.getAttributeValue("uuid");
-            ComponentDefinition componentDefinition = (ComponentDefinition) getDefinitionByTag(selected.getLocalName
-                    ()).clone();
-            Class<? extends Component> clazz = (Class<? extends Component>) componentDefinition
-                    .getImplementationClass();
-            Component component = null;
-            if (uuid != null) {
-                component = getCanvasComponentByUuid(uuid);
-            }
-
-            String value = event.getValue();
-            Object previousValue = event.getPreviousValue();
-
-            if (value != null) {
-                value = value.trim();
-            } else {
-                value = "";
-            }
-
-            boolean isBoolean = "booleanType".equals(getTypeOfAttribute(selected.getLocalName(),
-                    propertyName));
-            boolean hasEL = value.contains("${") || value.contains("#{") || value.contains("@") || value.length() ==
-                    0; //when value.length==0 we need to re-parse code after property cleanup
-            boolean hasXul = !hasProperty(clazz, propertyName, isBoolean);
-            if (component != null && !(hasXul || hasEL)) {
-                try {
-                    componentDefinition.addProperty(propertyName, value);
-                    componentDefinition.applyProperties(component);
-                } catch (Exception e) {
-//                    invokeSetter(event.getTarget(), "value", new Object[]{previousValue});
-                    throw e;
-                }
-            }
-
-
-            boolean isDefaultValue = component != null && isDefaultValueForProperty(component, propertyName, value,
-                    isBoolean);
-
-
-            Attribute attribute = selected.getAttribute(propertyName);
-            if (attribute == null && value.length() > 0) {
-                selected.addAttribute(new Attribute(propertyName, value));
-            } else if (attribute != null && (value.length() == 0 || isDefaultValue)) {
-                selected.removeAttribute(attribute);
-            } else if (attribute != null && value.length() > 0) {
-
-                if (value.equals(attribute.getValue())) return;
-
-                if (!isDefaultValue) {
-                    attribute.setValue(value);
-                } else {
-                    selected.removeAttribute(attribute);
-                }
-            }
-            Clients.evalJavaScript("w4tjDesigner.highlight('" + event.getTarget().getParent().getUuid() + "');" +
-                    "decoratePropertyCaptions();");
-
-//            getCodeController().print();
-//            DesignerUtil.propagateMessage(new MessageImpl(getPropertyEditorController(),
-//                    MessageEnum.SET_BOOKMARK));
-
-//            if (hasXul || hasEL) {
-//                DesignerUtil.propagateMessage(new MessageImpl(getPropertyEditorController(),
-//                        MessageEnum.EVALUATE_CODE));
-//            } else if (propertyName.equals("value") || propertyName.equals("label") || propertyName.equals
-// ("visible")) {
-//                DesignerUtil.propagateMessage(new MessageImpl(getPropertyEditorController(),
-//                        MessageEnum.DESCRIPTION_CHANGED, selected));
-//            }
-
-        }
     }
 
     private static class OnOKHandler implements EventListener<KeyEvent> {
@@ -503,6 +420,55 @@ public class PropertyEditorController extends AbstractController {
             args.put("element", event.getTarget().getAttribute("element"));
             args.put("property", event.getTarget().getAttribute("property"));
             Executions.createComponents("includes/eventeditor.zul", null, args);
+        }
+    }
+
+    private class SaveProperties implements EventListener<InputEvent> {
+        @Override
+        public void onEvent(InputEvent event) throws Exception {
+            Element selected = (Element) event.getTarget().getAttribute("element");
+            String propertyName = event.getTarget().getAttribute("property").toString();
+            String uuid = selected.getAttributeValue("uuid");
+            Component component = null;
+            if (uuid != null) {
+                component = getCanvasComponentByUuid(uuid);
+            }
+
+            String value = event.getValue();
+            Object previousValue = event.getPreviousValue();
+
+            if (value != null) {
+                value = value.trim();
+            } else {
+                value = "";
+            }
+
+            boolean isBoolean = "booleanType".equals(getTypeOfAttribute(selected.getLocalName(), propertyName));
+            boolean isDefaultValue = component != null && isDefaultValueForProperty(component, propertyName, value,
+                    isBoolean);
+
+
+            Attribute attribute = selected.getAttribute(propertyName);
+            if (attribute == null && value.length() > 0) {
+                selected.addAttribute(new Attribute(propertyName, value));
+            } else if (attribute != null && (value.length() == 0 || isDefaultValue)) {
+                selected.removeAttribute(attribute);
+            } else if (attribute != null && value.length() > 0) {
+
+                if (value.equals(attribute.getValue())) return;
+
+                if (!isDefaultValue) {
+                    attribute.setValue(value);
+                } else {
+                    selected.removeAttribute(attribute);
+                }
+            }
+
+            publish(ATTRIBUTE_CHANGED);
+
+//            Clients.evalJavaScript("w4tjDesigner.highlight('" + event.getTarget().getParent().getUuid() + "');" +
+//                    "decoratePropertyCaptions();");
+
         }
     }
 

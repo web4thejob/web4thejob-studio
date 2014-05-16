@@ -1,5 +1,6 @@
 package org.web4thejob.studio;
 
+import nu.xom.Element;
 import org.web4thejob.studio.support.AbstractController;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -70,31 +71,31 @@ public class DesignerController extends AbstractController {
     @Listen("onCanvasAddition=#designer")
     public void onCanvasAddition(Event event) {
         publish(COMPONENT_ADDED, event.getData());
+        publish(COMPONENT_SELECTED, getElementByUuid((String) event.getData()));
         clearCanvasBusy(null);
     }
 
-    @Listen("onCanvasReady=#designer")
-    public void onCanvasReady(Event event) {
+    @Listen("onCanvasSucceeded=#designer")
+    public void onCanvasSucceeded(Event event) {
         Clients.clearBusy();
         clearAlerts();
 
-        String message = (String) event.getData();
+        Map<String, String> data = cast(event.getData());
+        String message = data.get("message");
+        String hint = data.get("hint");
+
         if (message == null) {
+            //this is the initial canvas load
             publish(RESET);
         } else {
             MessageEnum id = MessageEnum.valueOf(message);
             switch (id) {
                 case EVALUATE_ZUL:
-                    publish(ZUL_EVAL_SUCCEEDED);
+                    publish(ZUL_EVAL_SUCCEEDED, hint);
                     break;
             }
 
         }
-
-        //this is a message execution
-//        if (EVALUATE_XML == valueOf(message)) {
-//            pubish(XML_EVAL_SUCCEDED);
-//        }
     }
 
     @Listen("onCanvasFailed=#designer")
@@ -103,13 +104,11 @@ public class DesignerController extends AbstractController {
         clearAlerts();
 
         Map<String, String> data = cast(event.getData());
-        showError(data.get("exception"), false);
-
         String message = data.get("message");
         MessageEnum id = MessageEnum.valueOf(message);
         switch (id) {
             case EVALUATE_ZUL:
-                publish(ZUL_EVAL_FAILED);
+                publish(ZUL_EVAL_FAILED, data.get("exception"));
                 break;
         }
     }
@@ -117,10 +116,24 @@ public class DesignerController extends AbstractController {
     @Override
     public void process(Message message) {
         switch (message.getId()) {
+            case ATTRIBUTE_CHANGED:
+                Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
+                canvasHolder.setSrc("include/canvas.zul?m=" + EVALUATE_ZUL + "&h=" + ATTRIBUTE_CHANGED + "&t=" + new
+                        Date().getTime());
+                break;
+            case EVALUATE_ZUL:
+                Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
+                canvasHolder.setSrc("include/canvas.zul?m=" + EVALUATE_ZUL + "&t=" + new Date().getTime());
+                break;
+            case XML_EVAL_SUCCEEDED:
+                publish(EVALUATE_ZUL);
+                break;
             case ZUL_EVAL_SUCCEEDED:
                 canvasView.setDisabled(false);
                 outlineView.setDisabled(false);
-                Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
+                if (message.getData() == null) { //no hint, parse zul was clicked
+                    Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
+                }
                 break;
             case XML_EVAL_FAILED:
                 canvasView.setDisabled(true);
@@ -129,17 +142,31 @@ public class DesignerController extends AbstractController {
                 clearAlerts();
                 showError((Exception) message.getData(), false);
                 break;
-            case XML_EVAL_SUCCEEDED:
-                publish(EVALUATE_ZUL);
-                break;
-            case EVALUATE_ZUL:
-                Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
-                canvasHolder.setSrc("include/canvas.zul?m=" + EVALUATE_ZUL + "&t=" + new Date().getTime());
+            case ZUL_EVAL_FAILED:
+                if (!codeView.isSelected()) {
+                    codeView.setSelected(true);
+                    Clients.evalJavaScript("if (myCodeMirror) myCodeMirror.refresh()"); //setSelected does not
+                    // trigger onSelect on client ?!?
+                }
+                canvasView.setDisabled(true);
+                outlineView.setDisabled(true);
+                if (message.getData() != null) {
+                    showError((String) message.getData(), false);
+                }
+                publish(COMPONENT_SELECTED); //deselect
                 break;
             case CODE_CHANGED:
+                codeView.setSelected(true);
                 canvasView.setDisabled(true);
                 outlineView.setDisabled(true);
                 break;
+            case COMPONENT_SELECTED:
+                if (message.getData() != null)
+                    Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget('" + ((Element) message.getData())
+                            .getAttributeValue("uuid") + "')");
+                else
+                    Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget()");
+
             default:
                 break;
         }
@@ -155,8 +182,6 @@ public class DesignerController extends AbstractController {
     @Listen("onCanvasHang=#designer")
     public void onCanvasHang() {
         Clients.clearBusy();
-        codeView.setSelected(true);
-        canvasView.setDisabled(true);
-        outlineView.setDisabled(true);
+        publish(ZUL_EVAL_FAILED);
     }
 }

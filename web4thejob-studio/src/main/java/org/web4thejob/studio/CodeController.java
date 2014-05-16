@@ -205,12 +205,11 @@ public class CodeController extends AbstractController {
                 break;
             case EVALUATE_XML:
                 getCode(); //will throw error if it fails
-            case XML_EVAL_FAILED:
-                //displayErrors((Exception) message.getDefaultParam());
+            case ZUL_EVAL_FAILED:
+                print();
                 break;
-            case XML_EVAL_SUCCEEDED:
-                //hideErrors();
-//                print();
+            case ATTRIBUTE_CHANGED:
+                print();
 //                addBookmark();
                 break;
             case SET_BOOKMARK:

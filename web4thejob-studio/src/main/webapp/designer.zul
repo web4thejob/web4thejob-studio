@@ -110,6 +110,7 @@
         right: 0px;
         left: 0px;
         z-index: -1;
+        font-family: monospace
         }
 
         .designer-file > span{

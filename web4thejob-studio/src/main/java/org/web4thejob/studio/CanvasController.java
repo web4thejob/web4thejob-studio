@@ -68,16 +68,22 @@ public class CanvasController extends AbstractController {
         designerDesktop.setAttribute(ATTR_PAIRED_DESKTOP, canvasDesktop);
         designerDesktop.setAttribute(ATTR_CANVAS_UUID, canvas.getUuid());
 
+        String result = "";
         String message = getQueryParam(Executions.getCurrent().getDesktop().getQueryString(), "m");
+        String hint = getQueryParam(Executions.getCurrent().getDesktop().getQueryString(), "h");
+        Map<String, String> data = new HashMap<>();
         try {
             refresh();
-            sendToDesigner("onCanvasReady", message);
+            data.put("message", message);
+            data.put("hint", hint);
+            result = "onCanvasSucceeded";
         } catch (Exception e) {
             e.printStackTrace();
-            Map<String, String> data = new HashMap<>();
             data.put("message", message);
             data.put("exception", (e.getMessage() != null ? e.getMessage() : e.toString()));
-            sendToDesigner("onCanvasFailed", data);
+            result = "onCanvasFailed";
+        } finally {
+            sendToDesigner(result, data);
         }
 
     }
@@ -149,15 +155,6 @@ public class CanvasController extends AbstractController {
                 child.addAttribute(new Attribute("uuid", target.getUuid()));
             }
         });
-
-/*
-        if (selection != null && selection.getAttributeValue("uuid") != null) {
-            Clients.evalJavaScript("w4tjDesigner.select('" + selection.getAttributeValue("uuid") + "')");
-        } else {
-            Clients.evalJavaScript("w4tjDesigner.select(undefined)");
-        }
-        Clients.evalJavaScript("w4tjDesigner.refreshCanvasDroppable()");
-*/
     }
 
 

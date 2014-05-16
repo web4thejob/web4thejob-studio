@@ -73,19 +73,26 @@ var w4tjStudioDesigner = {
 
     //inter-frame communication
     sendToCanvas: function(name,data) {
-        frames[zk("$canvasHolder").$().uuid].w4tjStudioCanvas.sendEvent(name,data);
+        this.getCanvasFrame().w4tjStudioCanvas.sendEvent(name,data);
     },
     sendEvent: function(name,data){
         zAu.send(new zk.Event(zk("$designer").$(), name, data));
     },
     clearCanvasBusy: function(uuid) {
-        var f=frames['canvasHolder'];
-        if (!f) {
-            f=frames[zk("$canvasHolder").$().uuid];
-        }
+        var f=this.getCanvasFrame();
         if (f) {
             f.zAu.cmd0.clearBusy(uuid);
         }
+    },
+    selectCanvasWidget: function(w){
+        this.getCanvasFrame().w4tjStudioCanvas.select(w);
+    },
+    getCanvasFrame: function() {
+        var f=frames['canvasHolder']; //good for ff
+        if (!f) {
+            f=frames[zk("$canvasHolder").$().uuid]; //good for others
+        }
+        return f;
     },
 
     buildToolbar: function(){
@@ -154,7 +161,7 @@ var w4tjStudioDesigner = {
      },
 
      monitorCanvasHealth: function() {
-        var f=frames[zk("$canvasHolder").$().uuid];
+        var f=this.getCanvasFrame();
         if (f) {
             setTimeout(function(){
                 if (jq("#zk_showBusy").length) {
