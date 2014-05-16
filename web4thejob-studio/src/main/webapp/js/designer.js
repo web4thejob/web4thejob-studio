@@ -38,13 +38,18 @@ var w4tjStudioDesigner = {
         jq('.alert').alert('close');
     },
 
-    alert: function(clazz,title,message,autoclosable){
+    alert: function(clazz,title,message,autoclosable,encoded){
 //        zAu.cmd0.clearBusy();
         this.clearAlerts();
 
+        if (!encoded) {
+            title=zUtl.encodeXML(title);
+            message=zUtl.encodeXML(message);
+        }
+
         var id=zk.Desktop.nextUuid() + '-alert';
         jq('body').css('overflow','hidden');
-        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:50000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+zUtl.encodeXML(title)+'</strong> '+zUtl.encodeXML(message)+'.</div>';
+        var a='<div id="'+id+'" style="white-space:nowrap;position:absolute;top:70%;left:'+jq(window).width()+'px;z-index:50000;min-width:200px" class="alert alert-'+clazz+' alert-dismissable mild-shadow"><button type="button" class="close" aria-hidden="true">&times;</button><strong>'+title+'</strong>: '+message+'</div>';
         id='#'+id;
         jq('body').append(a);
 
@@ -153,11 +158,37 @@ var w4tjStudioDesigner = {
         if (f) {
             setTimeout(function(){
                 if (jq("#zk_showBusy").length) {
-                    w4tjStudioDesigner.alert('warning','Too long',"Canvas is taking too long to parse. Are you sure your there aren't any javascript errors?",true);
+                    w4tjStudioDesigner.alert('warning','Too long',"Parsing has been cancelled because it was taking too long.</br> Are you sure your there aren't any javascript errors? Please check and retry.",true,true);
                     zAu.send(new zk.Event(zk("$designer").$(), "onCanvasHang"));
                 }
-            },5000); //5sec tolerance
+            },5000); //5sec tolerance, TODO: make this user configured
         }
+     },
+
+     decoratePropertyCaptions: function() {
+         jq("$properties .badge").remove();
+         jq("$properties .z-caption-content").css("float","left"); //needed for FF
+         jq("$properties .z-groupbox").each(function(){
+             var $this=jq(this);
+             var count=$this.find(".z-row").length;
+             var $caption=$this.find(".z-caption");
+
+             var val = 0;
+             var inputs = $this.find("input");
+             for (var i=0; i < inputs.length; i++){
+                 if ($(inputs[i]).val()) {
+                     val++;
+                 }
+             }
+             val=val + $this.find(".label-success").length;
+             if (val>0){
+                 $caption.append('<span class="badge badge-caption">' + val + '</span>');
+                 var $badge=jq($caption.find(".badge"));
+                 $badge.css("color","#3a87ad");
+                 $badge.css("background-color","#d9edf7");
+                 $badge.attr("title",val + " out of " + count + " attribute(s) are set").attr("data-toggle","tooltip").attr("data-placement","auto left").tooltip();;
+             }
+         })
      }
 
 

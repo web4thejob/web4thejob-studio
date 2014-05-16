@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <hbox vflex="true" hflex="true" pack="center" align="start" style="text-align:center">
+        <label sclass="no-current-selection" value="No current selection. Select a widget to edit it's events."/>
+    </hbox>
+
+    <style>
+        .no-current-selection {font-style:italic;color:#aaa}
+    </style>
+</zk>

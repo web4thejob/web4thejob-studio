@@ -1,9 +1,6 @@
 package org.web4thejob.studio;
 
 import org.web4thejob.studio.support.AbstractController;
-import org.web4thejob.studio.support.StudioUtil;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -49,10 +46,7 @@ public class DesignerController extends AbstractController {
     public void onWidgetSelected(Event event) throws InterruptedException {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
-
-        Desktop canvasDesktop = StudioUtil.getPairedDesktop();
-        Component comp = canvasDesktop.getComponentByUuid(target);
-//        showNotification("success", event.getName(), comp.getUuid(), true);
+        publish(COMPONENT_SELECTED, getElementByUuid(target));
     }
 
     @Listen("onActionsClicked=#designer")

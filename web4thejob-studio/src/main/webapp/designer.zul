@@ -29,8 +29,8 @@
             contentStyle="overflow:visible">
         <!--<panelchildren>-->
         <borderlayout vflex="true">
-            <west width="250px" splittable="true" collapsible="true">
-                <tabbox vflex="true">
+            <west width="200px" splittable="true" collapsible="true">
+            <tabbox vflex="true">
                     <tabs>
                         <tab label="Widgets"/>
                     </tabs>
@@ -69,7 +69,9 @@
                 </tabbox>
 
             </center>
-            <east width="150px" splittable="true" collapsible="true"/>
+            <east width="300px" splittable="true" collapsible="true">
+                <include src="include/propertyeditor.zul"/>
+            </east>
         </borderlayout>
         <!--</panelchildren>-->
     </window>
@@ -79,6 +81,7 @@
     </script>
 
     <style>
+        .mono {font-family: monospace, Courier, Courier New; font-style:normal}
         .w4tjstudio-designer * {font-size:14px !important;}
         .w4tjstudio-designer a {text-decoration: none !important}
 

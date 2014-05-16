@@ -1,9 +1,6 @@
 package org.web4thejob.studio.support;
 
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Nodes;
+import nu.xom.*;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.MethodInvoker;
 import org.springframework.util.StringUtils;
@@ -14,6 +11,8 @@ import org.zkoss.json.JSONValue;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.metainfo.ComponentDefinition;
+import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
 import java.lang.reflect.InvocationTargetException;
@@ -79,7 +78,7 @@ public abstract class StudioUtil {
     }
 
     public static void showError(Exception e, boolean autoclosable) {
-        showNotification("danger", "Ooops!", e.getMessage(), autoclosable);
+        showNotification("danger", "Ooops!", (e.getMessage() != null ? e.getMessage() : e.toString()), autoclosable);
     }
 
     public static void showError(String message, boolean autoclosable) {
@@ -353,5 +352,29 @@ public abstract class StudioUtil {
 
         return sb.toString();
     }
+
+    public static ComponentDefinition getDefinitionByTag(String tag) {
+        for (LanguageDefinition languageDefinition : LanguageDefinition.getByDeviceType("ajax")) {
+            ComponentDefinition componentDefinition = languageDefinition.getComponentDefinitionIfAny(tag);
+            if (componentDefinition != null) {
+                return componentDefinition;
+            }
+        }
+        return null;
+    }
+
+    public static Node getEventCodeNode(Element element, String eventName, boolean isServerSide) {
+        Nodes nodes;
+        if (isServerSide) {
+            nodes = element.query("child::*[@name='" + eventName + "']");
+        } else {
+            nodes = element.query("child::*[@client:name='" + eventName + "']", new XPathContext("client",
+                    LanguageDefinition.CLIENT_NAMESPACE));
+        }
+        if (nodes.size() != 1) return null;
+
+        return nodes.get(0);
+    }
+
 
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:n="http://www.zkoss.org/2005/zk/native"
+    xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <vlayout id="propeditor" vflex="true" apply="org.web4thejob.studio.PropertyEditorController">
+        <custom-attributes properties="/properties"/>
+
+        <n:div n:class="well well-sm bs-adaptor"
+               style="margin-bottom:1px;padding:8px;min-height:33px;border-radius:0px">
+            <html id="editorSelection" zclass="z-label" style="font-size:14px"/>
+        </n:div>
+
+        <tabbox vflex="true" hflex="true" sclass="bs-adaptor">
+            <tabs>
+                <tab label="Attributes" iconSclass="z-icon-tags" sclass="bs-fonts"/>
+                <tab label="Events" iconSclass="z-icon-bolt" sclass="bs-fonts"/>
+            </tabs>
+            <tabpanels>
+                <tabpanel id="properties" style="overflow:auto"/>
+                <tabpanel id="events" style="overflow:auto"/>
+            </tabpanels>
+        </tabbox>
+    </vlayout>
+
+    <style>
+        .badge-caption {float: right; margin-top: 4px;}
+        code {background-color:transparent}
+        .z-row .z-label {font-family: monospace}
+    </style>
+
+</zk>

@@ -68,6 +68,12 @@
     </zk>
 
     <style>
+        #nav-discussion .badge {
+        font-size: 10px;
+        vertical-align: top;
+        padding: 3px 5px;
+        }
+
         .tooltip-inner {font-size:12px !important;font-weight:100}
     </style>
     <script type="text/javascript" defer="true">

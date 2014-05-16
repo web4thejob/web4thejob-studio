@@ -144,6 +144,29 @@ public abstract class ZulXsdUtil {
         return nodes.size() == 1;
     }
 
+    public static String getXPath(Element element) {
+        if (element == null) return null;
+        Node parent = element.getParent();
+        if (parent == null || !(parent instanceof Element)) {
+            return "/zul:" + element.getLocalName();
+        }
+        return getXPath((Element) parent) + "/zul:" + element.getLocalName() + "[" + getOccurenceOfChild((Element)
+                parent, element) + "]";
+    }
+
+    private static int getOccurenceOfChild(Element parent, Element child) {
+        int occurence = 0;
+        for (int i = 0; i < parent.getChildElements().size(); i++) {
+            if (parent.getChildElements().get(i).getLocalName().equals(child.getLocalName())) {
+                occurence++;
+            }
+            if (parent.getChildElements().get(i).equals(child)) {
+                return occurence;
+            }
+        }
+        return 0;
+    }
+
     private static class XsdDocumentBuilder {
 
         Document build() {
