@@ -69,7 +69,6 @@ public class DesignerController extends AbstractController {
 
     @Listen("onCanvasAddition=#designer")
     public void onCanvasAddition(Event event) {
-//        showNotification("success", event.getName(), JSONValue.toJSONString(event.getData()), true);
         publish(COMPONENT_ADDED, event.getData());
         clearCanvasBusy(null);
     }

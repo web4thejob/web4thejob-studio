@@ -6,7 +6,6 @@ import nu.xom.Element;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.StudioUtil;
-import org.zkoss.json.JSONValue;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
@@ -50,10 +49,6 @@ public class CanvasController extends AbstractController {
     @Override
     public ControllerEnum getId() {
         return CANVAS_CONTROLLER;
-    }
-
-    public String getCanvasUuid() {
-        return canvas.getUuid();
     }
 
     @Listen("onPairedWithDesigner=#canvas")
@@ -102,8 +97,6 @@ public class CanvasController extends AbstractController {
                 args.put("parent", parent);
                 Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
                 if (target != null) {
-                    Map<String, String> opts = new HashMap<>(1);
-                    opts.put("target", target.getUuid());
                     StudioUtil.sendToDesigner("onCanvasAddition", target.getUuid());
                 }
             } catch (Exception e) {
@@ -118,14 +111,13 @@ public class CanvasController extends AbstractController {
     public void onWidgetSelected(Event event) throws InterruptedException {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
-
-        Clients.evalJavaScript("w4tjStudioCanvas.sendToDesigner('" + event.getName() + "'," +
-                "" + JSONValue.toJSONString(event.getData()) + ")");
+        StudioUtil.sendToDesigner(event.getName(), event.getData());
     }
 
     private void refresh() throws Exception {
-        //clear();
         final Document doc = getCode();
+        if (doc == null) return;
+
         cleanUUIDs(doc.getRootElement());
         doc.getRootElement().addAttribute(new Attribute("uuid", canvas.getUuid()));
 
@@ -167,4 +159,6 @@ public class CanvasController extends AbstractController {
         Clients.evalJavaScript("w4tjDesigner.refreshCanvasDroppable()");
 */
     }
+
+
 }

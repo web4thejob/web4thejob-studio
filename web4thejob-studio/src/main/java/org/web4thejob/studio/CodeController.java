@@ -59,16 +59,6 @@ public class CodeController extends AbstractController {
 
     }
 
-    /**
-     * This is the most important controller and thus it should init itself.
-     * All other dependent controllers should wait for the {@code RESET} message.
-     */
-    @Override
-    protected void init() {
-        super.init();
-        reset();
-    }
-
     @Override
     public ControllerEnum getId() {
         return ControllerEnum.CODE_CONTROLLER;
@@ -76,6 +66,7 @@ public class CodeController extends AbstractController {
 
     public void reset() {
         Element zk = new Element("zk", ZUL_NS);
+        zk.addAttribute(new Attribute("uuid", getCanvasUuid()));
         zk.addNamespaceDeclaration("client", CLIENT_NAMESPACE);
         document = new Document(zk);
         changed = false;
@@ -230,4 +221,5 @@ public class CodeController extends AbstractController {
                 break;
         }
     }
+
 }

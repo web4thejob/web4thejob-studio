@@ -5,10 +5,7 @@ import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.DropEvent;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.MouseEvent;
+import org.zkoss.zk.ui.event.*;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
@@ -26,9 +23,16 @@ import static org.web4thejob.studio.support.StudioUtil.*;
  * Created by e36132 on 15/5/2014.
  */
 public class OutlineController extends AbstractController {
+    private static OutlineClickHandler outlineClickHandler;
+
     @Wire
     private Tree outline;
     private Element selection;
+
+
+    {
+        outlineClickHandler = new OutlineClickHandler();
+    }
 
     private static Treeitem findTreeitemParent(Component child) {
         if (child == null) return null;
@@ -96,7 +100,7 @@ public class OutlineController extends AbstractController {
         item.setValue(element);
         item.setDraggable("true");
         item.setDroppable("true");
-//        item.addEventListener(Events.ON_CLICK, outlineDesignStart);
+        item.addEventListener(Events.ON_CLICK, outlineClickHandler);
 //        item.addEventListener(Events.ON_DROP, droppableHandler);
 
         return item;
@@ -193,7 +197,7 @@ public class OutlineController extends AbstractController {
 
         root.setParent(outline.getTreechildren());
         root.setValue(zk);
-//        root.addEventListener(Events.ON_CLICK, outlineDesignStart);
+        root.addEventListener(Events.ON_CLICK, outlineClickHandler);
 //        root.addEventListener(Events.ON_DROP, droppableHandler);
         root.setDroppable("true");
         //Clients.evalJavaScript("w4tjDesigner.refreshOutlineDroppable();");
@@ -228,7 +232,7 @@ public class OutlineController extends AbstractController {
         }
     }
 
-    private class OutlineDesignStart implements EventListener<MouseEvent> {
+    private class OutlineClickHandler implements EventListener<MouseEvent> {
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
