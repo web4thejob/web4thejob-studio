@@ -20,7 +20,7 @@ var w4tjStudioCanvas = {
     },
 
     makeWidgetsDroppable: function() {
-        $('$canvas').find('*').andSelf()
+        jq('$canvas').find('*').andSelf()
         .on('drop', function(e) {
             e.stopPropagation();
             e.preventDefault();

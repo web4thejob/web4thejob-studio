@@ -5,18 +5,17 @@ import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.*;
-import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.event.DropEvent;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.web4thejob.studio.ControllerEnum.OUTLINE_CONTROLLER;
 import static org.web4thejob.studio.MessageEnum.COMPONENT_SELECTED;
-import static org.web4thejob.studio.MessageEnum.SET_BOOKMARK;
 import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
@@ -24,6 +23,7 @@ import static org.web4thejob.studio.support.StudioUtil.*;
  */
 public class OutlineController extends AbstractController {
     private static OutlineClickHandler outlineClickHandler;
+    private static DroppableHandler droppableHandler;
 
     @Wire
     private Tree outline;
@@ -32,6 +32,7 @@ public class OutlineController extends AbstractController {
 
     {
         outlineClickHandler = new OutlineClickHandler();
+        droppableHandler = new DroppableHandler();
     }
 
     private static Treeitem findTreeitemParent(Component child) {
@@ -49,25 +50,6 @@ public class OutlineController extends AbstractController {
         return OUTLINE_CONTROLLER;
     }
 
-    @Listen("onDesigneStart=#outline")
-    public void onDesigneStart(Event event) throws IOException {
-        String template = ((Map) event.getData()).get("templateUUID").toString();
-        Component treeRow = getCanvasComponentByUuid(((Map) event.getData()).get("parent").toString());
-        Element element = ((Treeitem) treeRow.getParent()).getValue();
-        String uuid = element.getAttributeValue("uuid");
-        if (template != null) {
-            if (uuid != null) {
-                Map<String, String> data = new HashMap<>();
-                data.put("templateUUID", template);
-                data.put("parent", uuid);
-                Event dummy = new Event("onDesigneStart", null, data);
-//                getCanvasController().onDesigneStart(dummy);
-            } else {
-                //Clients.wrongValue(event.getTarget(), "Cannot add children to an uninitialized component.");
-            }
-        }
-    }
-
     public void refresh() {
         reset();
         Element zk = getCode().getRootElement();
@@ -81,7 +63,10 @@ public class OutlineController extends AbstractController {
 
     private Treeitem toTreeitem(Element element) {
         Treeitem item = new Treeitem();
-        new Treerow().setParent(item);
+        Treerow treerow = new Treerow();
+        treerow.setParent(item);
+        //Supports the d 'n d of templates in outline view in the same way as in canvas
+        treerow.setWidgetAttribute("canvas-uuid", element.getAttributeValue("uuid"));
 
         Treecell cell = new Treecell();
         cell.setStyle("white-space: nowrap;");
@@ -101,7 +86,7 @@ public class OutlineController extends AbstractController {
         item.setDraggable("true");
         item.setDroppable("true");
         item.addEventListener(Events.ON_CLICK, outlineClickHandler);
-//        item.addEventListener(Events.ON_DROP, droppableHandler);
+        item.addEventListener(Events.ON_DROP, droppableHandler);
 
         return item;
     }
@@ -114,7 +99,6 @@ public class OutlineController extends AbstractController {
                 break;
             case COMPONENT_ADDED:
                 includeComponent(getElementByUuid((String) message.getData()));
-//                Events.echoEvent("onDesignEnd", outline, null);
                 break;
             case RESET:
                 reset();
@@ -157,7 +141,6 @@ public class OutlineController extends AbstractController {
                 }
             }
         });
-
     }
 
     private Treeitem getTreeitemByElement(Element element) {
@@ -185,7 +168,10 @@ public class OutlineController extends AbstractController {
         outline.clear();
         Element zk = getCode().getRootElement();
         Treeitem root = new Treeitem();
-        new Treerow().setParent(root);
+        Treerow treerow = new Treerow();
+        treerow.setParent(root);
+        //Supports the d 'n d of templates in outline view in the same way as in canvas
+        treerow.setWidgetAttribute("canvas-uuid", zk.getAttributeValue("uuid"));
         Treecell cell = new Treecell();
         cell.setParent(root.getTreerow());
         Html html = new Html("Canvas");
@@ -196,9 +182,8 @@ public class OutlineController extends AbstractController {
         root.setParent(outline.getTreechildren());
         root.setValue(zk);
         root.addEventListener(Events.ON_CLICK, outlineClickHandler);
-//        root.addEventListener(Events.ON_DROP, droppableHandler);
+        root.addEventListener(Events.ON_DROP, droppableHandler);
         root.setDroppable("true");
-        //Clients.evalJavaScript("w4tjDesigner.refreshOutlineDroppable();");
     }
 
     private class DroppableHandler implements EventListener<DropEvent> {
@@ -210,23 +195,23 @@ public class OutlineController extends AbstractController {
             Element dropped = ((Treeitem) event.getTarget()).getValue();
             if (dropped.getAttributeValue("uuid") == null) return;
 
-            Component draggedComp = getCanvasComponentByUuid(dragged.getAttributeValue("uuid"));
-            Component droppedComp = getCanvasComponentByUuid(dropped.getAttributeValue("uuid"));
-            if (droppedComp.equals(draggedComp.getParent())) return;
-            draggedComp.setParent(droppedComp);
-
-            dragged.detach();
-            dropped.appendChild(dragged);
-
-            Treeitem draggedItem = (Treeitem) event.getDragged();
-            Treeitem droppedItem = (Treeitem) event.getTarget();
-            if (droppedItem.getTreechildren() == null) {
-                new Treechildren().setParent(droppedItem);
-            }
-            draggedItem.setParent(droppedItem.getTreechildren());
-            draggedItem.setSelected(true);
-
-            publish(SET_BOOKMARK);
+//            Component draggedComp = getCanvasComponentByUuid(dragged.getAttributeValue("uuid"));
+//            Component droppedComp = getCanvasComponentByUuid(dropped.getAttributeValue("uuid"));
+//            if (droppedComp.equals(draggedComp.getParent())) return;
+//            draggedComp.setParent(droppedComp);
+//
+//            dragged.detach();
+//            dropped.appendChild(dragged);
+//
+//            Treeitem draggedItem = (Treeitem) event.getDragged();
+//            Treeitem droppedItem = (Treeitem) event.getTarget();
+//            if (droppedItem.getTreechildren() == null) {
+//                new Treechildren().setParent(droppedItem);
+//            }
+//            draggedItem.setParent(droppedItem.getTreechildren());
+//            draggedItem.setSelected(true);
+//
+//            publish(SET_BOOKMARK);
         }
     }
 
