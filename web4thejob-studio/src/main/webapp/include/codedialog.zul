@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns:c="client" xmlns="http://www.zkoss.org/2005/zul">
+
+    <window id="editorWindow" width="70%" height="60%" border="none" sizable="true"
+            mode="modal" maximizable="true" apply="org.web4thejob.studio.CodeDialogController"
+            style="box-shadow: 0 0 7px black;">
+        <vlayout vflex="true">
+            <panel id="editorPanel" vflex="true" mold="bs" sclass=""
+                   style="margin-bottom: 0px;" closable="true" maximizable="true">
+                <attribute name="onClose">
+                    editorWindow.detach();
+                </attribute>
+                <attribute name="onMaximize">
+                    editorWindow.setMaximized(self.maximized);
+                </attribute>
+                <panelchildren>
+                    <vlayout vflex="true" width="300px" hflex="true">
+                        <div vflex="true">
+                            <textbox id="editor" multiline="true">
+                                <attribute c:name="bind_">
+                                    <![CDATA[
+                                    function (a, b, c) {
+                                        this.$bind_(a, b, c);
+                                        var wgt = this;
+                                        eventEditor = CodeMirror.fromTextArea(this.$n(),{mode: "${arg.side=='server'?'text/x-java':'javascript'}",
+                                                                                        lineNumbers: true,
+                                                                                        matchBrackets: true});
+
+                                        wgt.set("codemirror",eventEditor);
+                                        eventEditor.on("change", function () {
+                                            var val = eventEditor.getValue();
+                                            var txt = wgt.$n().value;
+                                            if (val!=txt){
+                                                wgt.$n().value = val;
+                                                wgt.fire('onChange', {value: val}, {toServer: true});
+                                            }
+                                        });
+                                    }
+                                ]]>
+                                </attribute>
+                                <attribute c:name="setValue">
+                                    <![CDATA[
+                                        function (a, b) {
+                                            this.$setValue(a, b);
+                                            if (this.get("codemirror")){
+                                                this.get("codemirror").setValue(a);
+                                            }
+                                        }
+                                    ]]>
+                                </attribute>
+                            </textbox>
+                        </div>
+
+
+                    </vlayout>
+                </panelchildren>
+
+            </panel>
+            <hbox height="40px" hflex="true" pack="end" align="center" spacing="8px">
+                <button id="btnCancel" width="100px" label="Cancel" mold="bs" sclass="btn-default btn-sm">
+                    <attribute name="onClick">editorWindow.detach();</attribute>
+                </button>
+                <button id="btnOK" width="100px" label="OK" iconSclass="z-icon-save" mold="bs"
+                        sclass="btn-primary btn-sm"/>
+            </hbox>
+        </vlayout>
+    </window>
+
+    <style>
+        .panel-maximize:hover,.panel-close:hover {cursor:pointer;text-decoration:none}
+
+    </style>
+</zk>
+
+

@@ -419,7 +419,7 @@ public class PropertyEditorController extends AbstractController {
             args.put("side", event.getTarget().getAttribute("side"));
             args.put("element", event.getTarget().getAttribute("element"));
             args.put("property", event.getTarget().getAttribute("property"));
-            Executions.createComponents("includes/eventeditor.zul", null, args);
+            Executions.createComponents("include/codedialog.zul", null, args);
         }
     }
 
