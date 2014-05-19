@@ -5,17 +5,39 @@
 <!--CODE MIRROR-->
 <?style type="text/css" href="/codemirror/lib/codemirror.css"?>
 <?style type="text/css" href="/codemirror/addon/hint/show-hint.css"?>
+<?style type="text/css" href="/codemirror/addon/fold/foldgutter.css"?>
+
 <?script  type="text/javascript" src="/codemirror/lib/codemirror.js"?>
-<?script  type="text/javascript" src="/js/zul-hints.js"?>
+
 <?script  type="text/javascript" src="/codemirror/addon/hint/show-hint.js"?>
 <?script  type="text/javascript" src="/codemirror/addon/hint/xml-hint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/hint/html-hint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/hint/javascript-hint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/hint/css-hint.js"?>
+<?script  type="text/javascript" src="/js/zul-hints.js"?>
+
+<?script  type="text/javascript" src="/codemirror/addon/fold/foldcode.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/fold/foldgutter.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/fold/brace-fold.js"?>
 <?script  type="text/javascript" src="/codemirror/addon/fold/xml-fold.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/fold/comment-fold.js"?>
+
 <?script  type="text/javascript" src="/codemirror/addon/edit/matchtags.js"?>
 <?script  type="text/javascript" src="/codemirror/addon/edit/closetag.js"?>
-<?script  type="text/javascript" src="/codemirror/mode/xml/xml.js"?>
 <?script  type="text/javascript" src="/codemirror/addon/edit/matchbrackets.js"?>
+
+<?script  type="text/javascript" src="/codemirror/addon/mode/multiplex.js"?>
+
+<!--
+<?script  type="text/javascript" src="/codemirror/addon/lint/lint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/lint/javascript-lint.js"?>
+<?script  type="text/javascript" src="/codemirror/addon/lint/css-lint.js"?>
+-->
+
+<?script  type="text/javascript" src="/codemirror/mode/xml/xml.js"?>
 <?script  type="text/javascript" src="/codemirror/mode/javascript/javascript.js"?>
 <?script  type="text/javascript" src="/codemirror/mode/clike/clike.js"?>
+<?script  type="text/javascript" src="/codemirror/mode/css/css.js"?>
 
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

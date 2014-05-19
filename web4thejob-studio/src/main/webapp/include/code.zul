@@ -13,11 +13,25 @@
                         function (a, b, c) {
                             this.$bind_(a, b, c);
                             var wgt = this;
+
+
+                            CodeMirror.defineMode("multi", function(config) {
+                              return CodeMirror.multiplexingMode(
+                                CodeMirror.getMode(config, 'xml'),
+                                {open: "<script>", close: "</script>", mode: CodeMirror.getMode(config, "javascript")},
+                                {open: "<style>", close: "</style>", mode: CodeMirror.getMode(config, "css")}
+                              );
+                            });
+
                             myCodeMirror = CodeMirror.fromTextArea(this.$n(),
-                                    {mode: 'xml',
+                                    {mode: 'multi',
                                     lineNumbers: true,
+                                    lineWrapping: true,
+                                    foldGutter: true,
+                                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                                     matchTags: {bothTags: true},
                                     autoCloseTags: true,
+                                    lint: true,
                                     extraKeys: {"'<'": completeAfter,
                                                 "'/'": completeIfAfterLt,
                                                 "' '": completeIfInTag,
