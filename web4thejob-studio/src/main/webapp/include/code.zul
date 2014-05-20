@@ -18,15 +18,18 @@
                             CodeMirror.defineMode("multi", function(config) {
                               return CodeMirror.multiplexingMode(
                                 CodeMirror.getMode(config, 'xml'),
-                                {open: "<script>", close: "</script>", mode: CodeMirror.getMode(config, "javascript")},
-                                {open: "<style>", close: "</style>", mode: CodeMirror.getMode(config, "css")}
+                                {open: /<script.*>/, close: /<\/script>/, mode: CodeMirror.getMode(config, "javascript")},
+                                {open: /<html.*>/, close: /<\/html>/, mode: CodeMirror.getMode(config, "text/html")},
+                                {open: /<style.*>/, close: /<\/style>/, mode: CodeMirror.getMode(config, "css")},
+                                {open: /<zscript.*>/, close: /<\/zscript>/, mode: CodeMirror.getMode(config, "text/x-java")},
+                                {open: /<attribute\s+.*:name="\w+">/, close: /<\/attribute>/, mode: CodeMirror.getMode(config, "javascript")},
+                                {open: /<attribute\s+name="\w+">/, close: /<\/attribute>/, mode: CodeMirror.getMode(config, "text/x-java")}
                               );
                             });
 
                             myCodeMirror = CodeMirror.fromTextArea(this.$n(),
                                     {mode: 'multi',
                                     lineNumbers: true,
-                                    lineWrapping: true,
                                     foldGutter: true,
                                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                                     matchTags: {bothTags: true},

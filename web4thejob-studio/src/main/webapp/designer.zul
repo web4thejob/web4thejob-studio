@@ -39,6 +39,9 @@
 <?script  type="text/javascript" src="/codemirror/mode/clike/clike.js"?>
 <?script  type="text/javascript" src="/codemirror/mode/css/css.js"?>
 
+<?script  type="text/javascript" src="/js/beautify.js"?>
+<?script  type="text/javascript" src="/js/beautify-css.js"?>
+<?script  type="text/javascript" src="/js/beautify-html.js"?>
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:c="http://www.zkoss.org/2005/zk/client"

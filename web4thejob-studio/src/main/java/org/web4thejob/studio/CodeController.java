@@ -4,6 +4,7 @@ import nu.xom.*;
 import org.apache.commons.lang.ClassUtils;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
+import org.web4thejob.studio.support.MultiplexSerializer;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -93,10 +94,10 @@ public class CodeController extends AbstractController {
 
         final Serializer serializer;
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            serializer = new Serializer(out, "UTF-8");
+            serializer = new MultiplexSerializer(out);
             serializer.setIndent(2);
             serializer.write(doc);
-            serializer.setMaxLength(120);
+//            serializer.setMaxLength(120);
             serializer.flush();
 
             String zul = out.toString("UTF-8");

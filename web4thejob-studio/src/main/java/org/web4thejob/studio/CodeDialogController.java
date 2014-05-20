@@ -74,7 +74,7 @@ public class CodeDialogController extends AbstractController {
         isServerSide = "server".equals(side);
         codeBlock = (Element) getEventCodeNode(element, eventName, isServerSide);
         if (codeBlock != null) {
-            editor.setValue(codeBlock.getValue());
+            editor.setValue(codeBlock.getValue().trim());
         }
 
         editorPanel.setTitle("<strong class=\"label label-primary\" style=\"font-size:120%;font-family:monospace\">"
@@ -97,7 +97,7 @@ public class CodeDialogController extends AbstractController {
                     if (codeBlock != null) codeBlock.detach();
                 } else {
 
-                    Text cdata = new Text(editor.getValue());
+                    Text cdata = new Text(editor.getValue().trim());
                     if (codeBlock != null) {
                         codeBlock.removeChildren();
                     } else {

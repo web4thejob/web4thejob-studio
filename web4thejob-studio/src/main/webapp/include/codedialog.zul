@@ -57,6 +57,14 @@
 
             </panel>
             <hbox height="40px" hflex="true" pack="end" align="center" spacing="8px">
+                <button id="btnBeautify" width="100px" label="Beautify" mold="bs" sclass="btn-default btn-sm">
+                    <attribute c:name="onClick">
+                        var wgt=zk('$editor').$();
+                        var s=wgt.get("codemirror").getValue();
+                        s=js_beautify(s);
+                        wgt.get("codemirror").setValue(s);
+                    </attribute>
+                </button>
                 <button id="btnCancel" width="100px" label="Cancel" mold="bs" sclass="btn-default btn-sm">
                     <attribute name="onClick">editorWindow.detach();</attribute>
                 </button>
