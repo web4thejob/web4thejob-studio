@@ -18,12 +18,12 @@
                             CodeMirror.defineMode("multi", function(config) {
                               return CodeMirror.multiplexingMode(
                                 CodeMirror.getMode(config, 'xml'),
-                                {open: /<script.*>/, close: /<\/script>/, mode: CodeMirror.getMode(config, "javascript")},
-                                {open: /<html.*>/, close: /<\/html>/, mode: CodeMirror.getMode(config, "text/html")},
-                                {open: /<style.*>/, close: /<\/style>/, mode: CodeMirror.getMode(config, "css")},
-                                {open: /<zscript.*>/, close: /<\/zscript>/, mode: CodeMirror.getMode(config, "text/x-java")},
-                                {open: /<attribute\s+.*:name="\w+">/, close: /<\/attribute>/, mode: CodeMirror.getMode(config, "javascript")},
-                                {open: /<attribute\s+name="\w+">/, close: /<\/attribute>/, mode: CodeMirror.getMode(config, "text/x-java")}
+                                {open: /<script\s*.*>/, close: /<\/script>/, mode: CodeMirror.getMode(config, "javascript"), delimStyle: "code-block"},
+                                {open: /<html\s*.*>/, close: /<\/html>/, mode: CodeMirror.getMode(config, "text/html"), delimStyle: "code-block"},
+                                {open: /<style\s*.*>/, close: /<\/style>/, mode: CodeMirror.getMode(config, "css"), delimStyle: "code-block"},
+                                {open: /<zscript\s*.*>/, close: /<\/zscript>/, mode: CodeMirror.getMode(config, "text/x-java"), delimStyle: "code-block"},
+                                {open: /<attribute\s+.*:name="\w+">/, close: /<\/attribute>/, mode: CodeMirror.getMode(config, "javascript"), delimStyle: "code-block"},
+                                {open: /<attribute\s+name="\w+">/, close: /<\/attribute>/, mode: CodeMirror.getMode(config, "text/x-java"), delimStyle: "code-block"}
                               );
                             });
 
@@ -71,4 +71,8 @@
             </textbox>
         </panelchildren>
     </panel>
+
+    <style>
+        .cm-code-block {font-style: italic; color: rgb(202, 0, 195);}
+    </style>
 </zk>

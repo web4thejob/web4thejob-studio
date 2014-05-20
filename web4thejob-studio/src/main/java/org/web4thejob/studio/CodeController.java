@@ -206,6 +206,10 @@ public class CodeController extends AbstractController {
                 break;
             case EVALUATE_XML:
                 getCode(); //will throw error if it fails
+                break;
+            case ZUL_EVAL_SUCCEEDED:
+                print();
+                break;
             case ZUL_EVAL_FAILED:
                 print();
                 break;

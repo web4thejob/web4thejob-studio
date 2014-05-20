@@ -1,8 +1,6 @@
 package org.web4thejob.studio;
 
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
+import nu.xom.*;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.StudioUtil;
@@ -16,10 +14,7 @@ import org.zkoss.zk.ui.sys.WebAppCtrl;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.ControllerEnum.CANVAS_CONTROLLER;
@@ -32,6 +27,26 @@ public class CanvasController extends AbstractController {
 
     @Wire
     private Window canvas;
+
+    private static void clearWitespaces(Element element) {
+        for (int i = 0; i < element.getChildElements().size(); i++) {
+            Element child = element.getChildElements().get(i);
+            if (isEventElement(child.getLocalName())) {
+                for (int j = 0; j < child.getChildCount(); j++) {
+                    Node node = child.getChild(j);
+                    if (node instanceof Text) {
+                        String value = node.getValue();
+                        StringBuilder sb = new StringBuilder();
+                        StringTokenizer tokenizer = new StringTokenizer(value, "\n");
+                        while (tokenizer.hasMoreTokens()) {
+                            sb.append(tokenizer.nextToken().trim());
+                        }
+                        ((Text) node).setValue(sb.toString());
+                    }
+                }
+            }
+        }
+    }
 
     private static void clearIndiChildren(Element element) {
         List<Element> toDetachList = new ArrayList<>(element.getChildElements().size());
@@ -140,6 +155,7 @@ public class CanvasController extends AbstractController {
                 if (params.get("parent") == null) return;
                 if (child.equals(doc.getRootElement())) return;
                 if (isEventElement(child.getLocalName())) return;
+                clearWitespaces(child);
 
                 Element clone = (Element) child.copy();
                 clearIndiChildren(clone);

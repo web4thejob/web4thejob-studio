@@ -129,12 +129,6 @@ if (autoclosable)
           jq('.designer-toolbar .toolbar-actions-dropdown').click(actionsHandler);
 
           jq('.designer-toolbar .toolbar-parsezul').click(function(){
-
-            var s=zk('$zulBox').$().get('codemirror').getValue();
-            s=html_beautify(s);
-            zk('$zulBox').$().get('codemirror').setValue(s);
-
-
             zAu.cmd0.showBusy("Parsing your zul...");
             zAu.send(new zk.Event(zk("$designer").$(), "onParseZulClicked"));
           });

@@ -1709,6 +1709,9 @@
     } else if (typeof global !== "undefined") {
         // If we don't even have window, try global.
         global.js_beautify = js_beautify;
+    } else {
+        // Else attach to this (works for nashorn)
+        this.js_beautify = js_beautify;
     }
 
 }());

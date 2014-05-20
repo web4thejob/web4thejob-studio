@@ -52,4 +52,11 @@ public class Message {
     public void setStopPropagation(boolean stopPropagation) {
         this.stopPropagation = stopPropagation;
     }
+
+    @Override
+    public String toString() {
+        return id.name();
+    }
+
+
 }
