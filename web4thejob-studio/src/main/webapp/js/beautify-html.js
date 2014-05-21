@@ -840,6 +840,11 @@
         global.html_beautify = function(html_source, options) {
             return style_html(html_source, options, global.js_beautify, global.css_beautify);
         };
+    } else {
+        // Else attach to this (works for nashorn)
+        this.html_beautify = function(html_source, options) {
+             return style_html(html_source, options, this.js_beautify, this.css_beautify);
+         };
     }
 
 }());

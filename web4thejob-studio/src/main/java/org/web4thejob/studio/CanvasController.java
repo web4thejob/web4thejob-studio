@@ -28,10 +28,13 @@ public class CanvasController extends AbstractController {
     @Wire
     private Window canvas;
 
+    /**
+     * Clears white space for all code blocks so that pretty formatting can work recursively.
+     */
     private static void clearWitespaces(Element element) {
         for (int i = 0; i < element.getChildElements().size(); i++) {
             Element child = element.getChildElements().get(i);
-            if (isEventElement(child.getLocalName())) {
+            if (isCodeElement(child)) {
                 for (int j = 0; j < child.getChildCount(); j++) {
                     Node node = child.getChild(j);
                     if (node instanceof Text) {
@@ -52,7 +55,7 @@ public class CanvasController extends AbstractController {
         List<Element> toDetachList = new ArrayList<>(element.getChildElements().size());
         for (int i = 0; i < element.getChildElements().size(); i++) {
             Element child = element.getChildElements().get(i);
-            if (isEventElement(child.getLocalName())) continue;
+            if (isEventOrAttributeElement(child)) continue;
             toDetachList.add(child);
         }
 
@@ -154,7 +157,7 @@ public class CanvasController extends AbstractController {
             public void onChild(Element child, Map<String, Object> params) {
                 if (params.get("parent") == null) return;
                 if (child.equals(doc.getRootElement())) return;
-                if (isEventElement(child.getLocalName())) return;
+                if (isEventOrAttributeElement(child)) return;
                 clearWitespaces(child);
 
                 Element clone = (Element) child.copy();

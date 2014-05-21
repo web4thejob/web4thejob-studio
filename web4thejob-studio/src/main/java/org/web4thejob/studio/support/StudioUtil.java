@@ -204,8 +204,18 @@ public abstract class StudioUtil {
         }
     }
 
-    public static boolean isEventElement(String tag) {
-        return "attribute".equals(tag) || "custom-attributes".equals(tag);
+    public static boolean isEventOrAttributeElement(Element element) {
+        return isEventElement(element) || "custom-attributes".equals(element.getLocalName());
+    }
+
+    public static boolean isEventElement(Element element) {
+        return "attribute".equals(element.getLocalName());
+    }
+
+    public static boolean isCodeElement(Element element) {
+        String tagname = element.getLocalName();
+        return "attribute".equals(tagname) || "script".equals(tagname) || "zscript".equals(tagname) || "style".equals
+                (tagname) || "html".equals(tagname);
     }
 
     public static String getQueryParam(String query, String param) {

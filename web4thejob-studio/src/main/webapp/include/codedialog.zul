@@ -56,20 +56,24 @@
                 </panelchildren>
 
             </panel>
-            <hbox height="40px" hflex="true" pack="end" align="center" spacing="8px">
-                <button id="btnBeautify" width="100px" label="Beautify" mold="bs" sclass="btn-default btn-sm">
-                    <attribute c:name="onClick">
-                        var wgt=zk('$editor').$();
-                        var s=wgt.get("codemirror").getValue();
-                        s=js_beautify(s);
-                        wgt.get("codemirror").setValue(s);
-                    </attribute>
-                </button>
-                <button id="btnCancel" width="100px" label="Cancel" mold="bs" sclass="btn-default btn-sm">
-                    <attribute name="onClick">editorWindow.detach();</attribute>
-                </button>
-                <button id="btnOK" width="100px" label="OK" iconSclass="z-icon-save" mold="bs"
-                        sclass="btn-primary btn-sm"/>
+            <hbox height="40px" hflex="true" align="center">
+                <hbox hflex="1" pack="start" spacing="8px">
+                    <button id="btnBeautify" width="100px" label="Beautify" mold="bs" sclass="btn-success btn-sm">
+                        <attribute c:name="onClick">
+                            var wgt=zk('$editor').$();
+                            var s=wgt.get("codemirror").getValue();
+                            s=js_beautify(s);
+                            wgt.get("codemirror").setValue(s);
+                        </attribute>
+                    </button>
+                </hbox>
+                <hbox hflex="1" pack="end" spacing="8px">
+                    <button id="btnCancel" width="100px" label="Cancel" mold="bs" sclass="btn-default btn-sm">
+                        <attribute name="onClick">editorWindow.detach();</attribute>
+                    </button>
+                    <button id="btnOK" width="100px" label="OK" iconSclass="z-icon-save" mold="bs"
+                            sclass="btn-primary btn-sm"/>
+                </hbox>
             </hbox>
         </vlayout>
     </window>

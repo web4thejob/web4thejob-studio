@@ -21,41 +21,51 @@ import java.util.StringTokenizer;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.util.ReflectionUtils.findField;
 import static org.springframework.util.ReflectionUtils.makeAccessible;
+import static org.web4thejob.studio.support.StudioUtil.isCodeElement;
 
 /**
  * Created by e36132 on 20/5/2014.
  */
 public class MultiplexSerializer extends Serializer {
 
-    private static ScriptEngine engine;
     private static Invocable invocable;
+    private static Field escaper;
+    private static Object options;
 
-    {
+    static {
         ScriptEngineManager engineManager = new ScriptEngineManager();
-        engine = engineManager.getEngineByName("nashorn");
+        ScriptEngine engine = engineManager.getEngineByName("nashorn");
 
         try {
-            Resource resource = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
+            escaper = findField(Serializer.class, "escaper");
+            notNull(escaper);
+            makeAccessible(escaper);
+
+            Resource js_beautify = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
                     .getServletContext(), "js/beautify.js");
-            engine.eval(new FileReader(resource.getFile()));
+            Resource css_beautify = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
+                    .getServletContext(), "js/beautify-css.js");
+            Resource html_beautify = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
+                    .getServletContext(), "js/beautify-html.js");
+            engine.eval(new FileReader(js_beautify.getFile()));
+            engine.eval(new FileReader(css_beautify.getFile()));
+            engine.eval(new FileReader(html_beautify.getFile()));
+
+            invocable = (Invocable) engine;
+            Object json = engine.eval("JSON");
+            options = invocable.invokeMethod(json, "parse", "{\"indent_size\": 2}");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        invocable = (Invocable) engine;
     }
-    private Field escaper;
 
     public MultiplexSerializer(OutputStream out) {
         super(out);
-        escaper = findField(Serializer.class, "escaper");
-        notNull(escaper);
-        makeAccessible(escaper);
     }
 
     @Override
     protected void write(Element element) throws IOException {
-        if ("attribute".equals(element.getLocalName()) || "script".equals(element.getLocalName())) {
+        if (isCodeElement(element)) {
             writeStartTag(element);
             breakLine();
             writeRaw("<![CDATA[");
@@ -63,13 +73,25 @@ public class MultiplexSerializer extends Serializer {
             preserveWhiteSpace(true);
 
             for (int i = 0; i < element.getChildCount(); i++) {
-                Text text = (Text) element.getChild(i);
 
+                if (!(element.getChild(i) instanceof Text)) {
+                    writeChild(element.getChild(i));
+                    continue;
+                }
+
+                Text text = (Text) element.getChild(i);
                 String js;
                 try {
-                    Object json = engine.eval("JSON");
-                    Object options = invocable.invokeMethod(json, "parse", "{\"indent_size\": 2}");
-                    js = (String) invocable.invokeFunction("js_beautify", text.getValue(), options);
+                    String tag = element.getLocalName();
+                    if (tag.equals("attribute") || tag.equals("script") || tag.equals("zscript")) {
+                        js = (String) invocable.invokeFunction("js_beautify", text.getValue(), options);
+                    } else if (tag.equals("style")) {
+                        js = (String) invocable.invokeFunction("css_beautify", text.getValue(), options);
+                    } else if (tag.equals("html")) {
+                        js = (String) invocable.invokeFunction("html_beautify", text.getValue(), options);
+                    } else {
+                        throw new IllegalArgumentException(tag + " is not a recognized code block");
+                    }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -84,7 +106,6 @@ public class MultiplexSerializer extends Serializer {
             preserveWhiteSpace(false);
             writeRaw("]]>");
             breakLine();
-//            decrementIndent();
             writeEndTag(element);
         } else super.write(element);
 
@@ -102,19 +123,6 @@ public class MultiplexSerializer extends Serializer {
             throw new RuntimeException(e);
         }
     }
-
-    private void decrementIndent() {
-        try {
-            Object o = escaper.get(this);
-            Method m = ReflectionUtils.findMethod(o.getClass(), "decrementIndent");
-            notNull(m);
-            makeAccessible(m);
-            m.invoke(o);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     private String getSpaces(int number) {
         StringBuilder sb = new StringBuilder();
