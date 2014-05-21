@@ -4,7 +4,6 @@ import nu.xom.Element;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.DropEvent;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -71,11 +70,7 @@ public class OutlineController extends AbstractController {
         Treecell cell = new Treecell();
         cell.setStyle("white-space: nowrap;");
         String i = "/img/zul/" + element.getLocalName() + ".png";
-        if (Executions.getCurrent().getDesktop().getWebApp().getResource(i) != null) {
-            cell.setImage("/img/zul/" + element.getLocalName() + ".png");
-        } else {
-            cell.setImage("/img/zul/zk.png");
-        }
+        cell.setImage("/w4tjstudio-support/img?f=" + element.getLocalName() + ".png");
         cell.setParent(item.getTreerow());
 
         Html html = new Html(describeElement(element));
@@ -177,7 +172,7 @@ public class OutlineController extends AbstractController {
         Html html = new Html("Canvas");
         html.setStyle("margin-left: 5px;");
         html.setParent(cell);
-        cell.setImage("/img/zul/window.png");
+        cell.setImage("/w4tjstudio-support/img?f=window.png");
 
         root.setParent(outline.getTreechildren());
         root.setValue(zk);

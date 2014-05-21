@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <browser>
+    <stylesheet src="codemirror/lib/codemirror.css"/>
+    <stylesheet src="codemirror/addon/hint/show-hint.css"/>
+    <stylesheet src="codemirror/addon/fold/foldgutter.css"/>
     <!--***********************************************
     * Bootstrap
     *************************************************-->
@@ -9,9 +12,7 @@
     <!--***********************************************
     * Codemirror
     *************************************************-->
-    <stylesheet src="codemirror/lib/codemirror.css"/>
-    <stylesheet src="codemirror/addon/hint/show-hint.css"/>
-    <stylesheet src="codemirror/addon/fold/foldgutter.css"/>
-    /codemirror/addon/hint/show-hint.css
+
+
 </browser>
 

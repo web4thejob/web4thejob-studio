@@ -15,180 +15,230 @@
         <tabpanels>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="A" hflex="true" image="/img/zul/a.png" ca:template="a.zul"/>
-                    <toolbarbutton label="Label" hflex="true" image="/img/zul/label.png" ca:template="label.zul"/>
-                    <toolbarbutton label="Image" hflex="true" image="/img/zul/image.png" ca:template="image.zul"/>
-                    <toolbarbutton label="Button" hflex="true" image="/img/zul/button.png" ca:template="button.zul"/>
+                    <toolbarbutton label="A" hflex="true" image="/w4tjstudio-support/img?f=a.png" ca:template="a.zul"/>
+                    <toolbarbutton label="Label" hflex="true" image="/w4tjstudio-support/img?f=label.png"
+                                   ca:template="label.zul"/>
+                    <toolbarbutton label="Image" hflex="true" image="/w4tjstudio-support/img?f=image.png"
+                                   ca:template="image.zul"/>
+                    <toolbarbutton label="Button" hflex="true" image="/w4tjstudio-support/img?f=button.png"
+                                   ca:template="button.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Textbox" hflex="true" image="/img/zul/textbox.png" ca:template="textbox.zul"/>
-                    <toolbarbutton label="Combobox" hflex="true" image="/img/zul/combobox.png"
+                    <toolbarbutton label="Textbox" hflex="true" image="/w4tjstudio-support/img?f=textbox.png"
+                                   ca:template="textbox.zul"/>
+                    <toolbarbutton label="Combobox" hflex="true" image="/w4tjstudio-support/img?f=combobox.png"
                                    ca:template="combobox.zul"/>
-                    <toolbarbutton label="Comboitem" hflex="true" image="/img/zul/comboitem.png"
+                    <toolbarbutton label="Comboitem" hflex="true" image="/w4tjstudio-support/img?f=comboitem.png"
                                    ca:template="comboitem.zul"/>
                     <toolbarbutton label="Combobutton" hflex="true"
-                                   image="/img/zul/combobox.png" ca:template="combobutton.zul"/>
+                                   image="/w4tjstudio-support/img?f=combobox.png" ca:template="combobutton.zul"/>
                     <toolbarbutton label="Bandbox" hflex="true"
-                                   image="/img/zul/bandbox.png" ca:template="bandbox.zul"/>
+                                   image="/w4tjstudio-support/img?f=bandbox.png" ca:template="bandbox.zul"/>
                     <toolbarbutton label="Bandpopup" hflex="true"
-                                   image="/img/zul/bandpopup.png" ca:template="bandpopup.zul"/>
+                                   image="/w4tjstudio-support/img?f=bandpopup.png" ca:template="bandpopup.zul"/>
                     <separator bar="true"/>
                     <toolbarbutton label="Intbox" hflex="true"
-                                   image="/img/zul/intbox.png" ca:template="intbox.zul"/>
+                                   image="/w4tjstudio-support/img?f=intbox.png" ca:template="intbox.zul"/>
                     <toolbarbutton label="Longbox" hflex="true"
-                                   image="/img/zul/longbox.png" ca:template="longbox.zul"/>
+                                   image="/w4tjstudio-support/img?f=longbox.png" ca:template="longbox.zul"/>
                     <toolbarbutton label="Doublebox" hflex="true"
-                                   image="/img/zul/doublebox.png" ca:template="doublebox.zul"/>
+                                   image="/w4tjstudio-support/img?f=doublebox.png" ca:template="doublebox.zul"/>
                     <toolbarbutton label="Decimalbox" hflex="true"
-                                   image="/img/zul/decimalbox.png" ca:template="decimalbox.zul"/>
+                                   image="/w4tjstudio-support/img?f=decimalbox.png" ca:template="decimalbox.zul"/>
                     <separator bar="true"/>
                     <toolbarbutton label="Checkbox" hflex="true"
-                                   image="/img/zul/checkbox.png" ca:template="checkbox.zul"/>
+                                   image="/w4tjstudio-support/img?f=checkbox.png" ca:template="checkbox.zul"/>
                     <toolbarbutton label="Radio" hflex="true"
-                                   image="/img/zul/radio.png" ca:template="radio.zul"/>
+                                   image="/w4tjstudio-support/img?f=radio.png" ca:template="radio.zul"/>
                     <toolbarbutton label="Radiogroup" hflex="true"
-                                   image="/img/zul/radiogroup.png" ca:template="radiogroup.zul"/>
+                                   image="/w4tjstudio-support/img?f=radiogroup.png" ca:template="radiogroup.zul"/>
                     <separator bar="true"/>
                     <toolbarbutton label="Datebox" hflex="true"
-                                   image="/img/zul/datebox.png" ca:template="datebox.zul"/>
+                                   image="/w4tjstudio-support/img?f=datebox.png" ca:template="datebox.zul"/>
                     <toolbarbutton label="Calendar" hflex="true"
-                                   image="/img/zul/calendar.png" ca:template="calendar.zul"/>
+                                   image="/w4tjstudio-support/img?f=calendar.png" ca:template="calendar.zul"/>
                     <separator bar="true"/>
                     <toolbarbutton label="Doublespinner" hflex="true"
-                                   image="/img/zul/zk.png" ca:template="doublespinner.zul"/>
+                                   image="/w4tjstudio-support/img?f=zk.png" ca:template="doublespinner.zul"/>
                     <toolbarbutton label="Spinner" hflex="true"
-                                   image="/img/zul/spinner.png" ca:template="spinner.zul"/>
+                                   image="/w4tjstudio-support/img?f=spinner.png" ca:template="spinner.zul"/>
                     <toolbarbutton label="Slider" hflex="true"
-                                   image="/img/zul/slider.png" ca:template="slider.zul"/>
+                                   image="/w4tjstudio-support/img?f=slider.png" ca:template="slider.zul"/>
 
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Window" hflex="true" image="/img/zul/window.png" ca:template="window.zul"/>
-                    <toolbarbutton label="Panel" hflex="true" image="/img/zul/panel.png" ca:template="panel.zul"/>
+                    <toolbarbutton label="Window" hflex="true" image="/w4tjstudio-support/img?f=window.png"
+                                   ca:template="window.zul"/>
+                    <toolbarbutton label="Panel" hflex="true" image="/w4tjstudio-support/img?f=panel.png"
+                                   ca:template="panel.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Tabbox" hflex="true" image="/img/zul/tabbox.png" ca:template="tabbox.zul"/>
-                    <toolbarbutton label="Tab" hflex="true" image="/img/zul/tab.png" ca:template="tab.zul/"/>
+                    <toolbarbutton label="Tabbox" hflex="true" image="/w4tjstudio-support/img?f=tabbox.png"
+                                   ca:template="tabbox.zul"/>
+                    <toolbarbutton label="Tab" hflex="true" image="/w4tjstudio-support/img?f=tab.png"
+                                   ca:template="tab.zul/"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Caption" hflex="true" image="/img/zul/caption.png" ca:template="caption.zul"/>
-                    <toolbarbutton label="Groupbox" hflex="true" image="/img/zul/groupbox.png"
+                    <toolbarbutton label="Caption" hflex="true" image="/w4tjstudio-support/img?f=caption.png"
+                                   ca:template="caption.zul"/>
+                    <toolbarbutton label="Groupbox" hflex="true" image="/w4tjstudio-support/img?f=groupbox.png"
                                    ca:template="groupbox.zul"/>
-                    <toolbarbutton label="Div" hflex="true" image="/img/zul/div.png" ca:template="div.zul/"/>
-                    <toolbarbutton label="Span" hflex="true" image="/img/zul/span.png" ca:template="span.zul"/>
-                    <toolbarbutton label="Idspace" hflex="true" image="/img/zul/zk.png" ca:template="idspace.zul"/>
+                    <toolbarbutton label="Div" hflex="true" image="/w4tjstudio-support/img?f=div.png"
+                                   ca:template="div.zul/"/>
+                    <toolbarbutton label="Span" hflex="true" image="/w4tjstudio-support/img?f=span.png"
+                                   ca:template="span.zul"/>
+                    <toolbarbutton label="Idspace" hflex="true" image="/w4tjstudio-support/img?f=zk.png"
+                                   ca:template="idspace.zul"/>
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Borderlayout" hflex="true" image="/img/zul/borderlayout.png"
+                    <toolbarbutton label="Borderlayout" hflex="true" image="/w4tjstudio-support/img?f=borderlayout.png"
                                    ca:template="borderlayout.zul"/>
-                    <toolbarbutton label="North" hflex="true" image="/img/zul/north.png" ca:template="north.zul"/>
-                    <toolbarbutton label="South" hflex="true" image="/img/zul/south.png" ca:template="south.zul"/>
-                    <toolbarbutton label="Center" hflex="true" image="/img/zul/center.png" ca:template="center.zul"/>
-                    <toolbarbutton label="West" hflex="true" image="/img/zul/west.png" ca:template="west.zul"/>
-                    <toolbarbutton label="East" hflex="true" image="/img/zul/east.png" ca:template="east.zul"/>
+                    <toolbarbutton label="North" hflex="true" image="/w4tjstudio-support/img?f=north.png"
+                                   ca:template="north.zul"/>
+                    <toolbarbutton label="South" hflex="true" image="/w4tjstudio-support/img?f=south.png"
+                                   ca:template="south.zul"/>
+                    <toolbarbutton label="Center" hflex="true" image="/w4tjstudio-support/img?f=center.png"
+                                   ca:template="center.zul"/>
+                    <toolbarbutton label="West" hflex="true" image="/w4tjstudio-support/img?f=west.png"
+                                   ca:template="west.zul"/>
+                    <toolbarbutton label="East" hflex="true" image="/w4tjstudio-support/img?f=east.png"
+                                   ca:template="east.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Hbox" hflex="true" image="/img/zul/hbox.png" ca:template="hbox.zul"/>
-                    <toolbarbutton label="Vbox" hflex="true" image="/img/zul/vbox.png" ca:template="vbox.zul"/>
-                    <toolbarbutton label="Hlayout" hflex="true" image="/img/zul/hlayout.png" ca:template="hlayout.zul"/>
-                    <toolbarbutton label="Vlayout" hflex="true" image="/img/zul/vlayout.png" ca:template="vlayout.zul"/>
+                    <toolbarbutton label="Hbox" hflex="true" image="/w4tjstudio-support/img?f=hbox.png"
+                                   ca:template="hbox.zul"/>
+                    <toolbarbutton label="Vbox" hflex="true" image="/w4tjstudio-support/img?f=vbox.png"
+                                   ca:template="vbox.zul"/>
+                    <toolbarbutton label="Hlayout" hflex="true" image="/w4tjstudio-support/img?f=hlayout.png"
+                                   ca:template="hlayout.zul"/>
+                    <toolbarbutton label="Vlayout" hflex="true" image="/w4tjstudio-support/img?f=vlayout.png"
+                                   ca:template="vlayout.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Absolutelayout" hflex="true" image="/img/zul/zk.png"
+                    <toolbarbutton label="Absolutelayout" hflex="true" image="/w4tjstudio-support/img?f=zk.png"
                                    ca:template="absolutelayout.zul"/>
-                    <toolbarbutton label="Absolutechildren" hflex="true" image="/img/zul/zk.png"
+                    <toolbarbutton label="Absolutechildren" hflex="true" image="/w4tjstudio-support/img?f=zk.png"
                                    ca:template="absolutechildren.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Anchorlayout" hflex="true" image="/img/zul/zk.png"
+                    <toolbarbutton label="Anchorlayout" hflex="true" image="/w4tjstudio-support/img?f=zk.png"
                                    ca:template="anchorlayout.zul"/>
-                    <toolbarbutton label="Anchorchildren" hflex="true" image="/img/zul/zk.png"
+                    <toolbarbutton label="Anchorchildren" hflex="true" image="/w4tjstudio-support/img?f=zk.png"
                                    ca:template="anchorchildren.zul"/>
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Grid" hflex="true" image="/img/zul/grid.png" ca:template="grid.zul"/>
-                    <toolbarbutton label="Auxhead" hflex="true" image="/img/zul/auxhead.png" ca:template="auxhead.zul"/>
-                    <toolbarbutton label="Auxheader" hflex="true" image="/img/zul/auxheader.png"
+                    <toolbarbutton label="Grid" hflex="true" image="/w4tjstudio-support/img?f=grid.png"
+                                   ca:template="grid.zul"/>
+                    <toolbarbutton label="Auxhead" hflex="true" image="/w4tjstudio-support/img?f=auxhead.png"
+                                   ca:template="auxhead.zul"/>
+                    <toolbarbutton label="Auxheader" hflex="true" image="/w4tjstudio-support/img?f=auxheader.png"
                                    ca:template="auxheader.zul"/>
-                    <toolbarbutton label="Frozen" hflex="true" image="/img/zul/frozen.png" ca:template="frozen.zul"/>
-                    <toolbarbutton label="Columns" hflex="true" image="/img/zul/columns.png" ca:template="columns.zul"/>
-                    <toolbarbutton label="Rows" hflex="true" image="/img/zul/rows.png" ca:template="rows.zul"/>
-                    <toolbarbutton label="Row" hflex="true" image="/img/zul/row.png" ca:template="row.zul"/>
-                    <toolbarbutton label="Column" hflex="true" image="/img/zul/column.png" ca:template="column.zul"/>
-                    <toolbarbutton label="Foot" hflex="true" image="/img/zul/foot.png" ca:template="foot.zul"/>
-                    <toolbarbutton label="Footer" hflex="true" image="/img/zul/footer.png" ca:template="footer.zul"/>
-                    <toolbarbutton label="Cell" hflex="true" image="/img/zul/cell.png" ca:template="cell.zul"/>
+                    <toolbarbutton label="Frozen" hflex="true" image="/w4tjstudio-support/img?f=frozen.png"
+                                   ca:template="frozen.zul"/>
+                    <toolbarbutton label="Columns" hflex="true" image="/w4tjstudio-support/img?f=columns.png"
+                                   ca:template="columns.zul"/>
+                    <toolbarbutton label="Rows" hflex="true" image="/w4tjstudio-support/img?f=rows.png"
+                                   ca:template="rows.zul"/>
+                    <toolbarbutton label="Row" hflex="true" image="/w4tjstudio-support/img?f=row.png"
+                                   ca:template="row.zul"/>
+                    <toolbarbutton label="Column" hflex="true" image="/w4tjstudio-support/img?f=column.png"
+                                   ca:template="column.zul"/>
+                    <toolbarbutton label="Foot" hflex="true" image="/w4tjstudio-support/img?f=foot.png"
+                                   ca:template="foot.zul"/>
+                    <toolbarbutton label="Footer" hflex="true" image="/w4tjstudio-support/img?f=footer.png"
+                                   ca:template="footer.zul"/>
+                    <toolbarbutton label="Cell" hflex="true" image="/w4tjstudio-support/img?f=cell.png"
+                                   ca:template="cell.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Listbox" hflex="true" image="/img/zul/listbox.png" ca:template="listbox.zul"/>
-                    <toolbarbutton label="Auxhead" hflex="true" image="/img/zul/auxhead.png" ca:template="auxhead.zul"/>
-                    <toolbarbutton label="Auxheader" hflex="true" image="/img/zul/auxheader.png"
+                    <toolbarbutton label="Listbox" hflex="true" image="/w4tjstudio-support/img?f=listbox.png"
+                                   ca:template="listbox.zul"/>
+                    <toolbarbutton label="Auxhead" hflex="true" image="/w4tjstudio-support/img?f=auxhead.png"
+                                   ca:template="auxhead.zul"/>
+                    <toolbarbutton label="Auxheader" hflex="true" image="/w4tjstudio-support/img?f=auxheader.png"
                                    ca:template="auxheader.zul"/>
-                    <toolbarbutton label="Frozen" hflex="true" image="/img/zul/frozen.png" ca:template="frozen.zul"/>
-                    <toolbarbutton label="Listhead" hflex="true" image="/img/zul/listhead.png"
+                    <toolbarbutton label="Frozen" hflex="true" image="/w4tjstudio-support/img?f=frozen.png"
+                                   ca:template="frozen.zul"/>
+                    <toolbarbutton label="Listhead" hflex="true" image="/w4tjstudio-support/img?f=listhead.png"
                                    ca:template="listhead.zul"/>
-                    <toolbarbutton label="Listheader" hflex="true" image="/img/zul/listheader.png"
+                    <toolbarbutton label="Listheader" hflex="true" image="/w4tjstudio-support/img?f=listheader.png"
                                    ca:template="listheader.zul"/>
-                    <toolbarbutton label="Listfoot" hflex="true" image="/img/zul/listfoot.png"
+                    <toolbarbutton label="Listfoot" hflex="true" image="/w4tjstudio-support/img?f=listfoot.png"
                                    ca:template="listfoot.zul"/>
-                    <toolbarbutton label="Listfooter" hflex="true" image="/img/zul/listfooter.png"
+                    <toolbarbutton label="Listfooter" hflex="true" image="/w4tjstudio-support/img?f=listfooter.png"
                                    ca:template="listfooter.zul"/>
-                    <toolbarbutton label="Listitem" hflex="true" image="/img/zul/listitem.png"
+                    <toolbarbutton label="Listitem" hflex="true" image="/w4tjstudio-support/img?f=listitem.png"
                                    ca:template="listitem.zul"/>
-                    <toolbarbutton label="Listcell" hflex="true" image="/img/zul/listcell.png"
+                    <toolbarbutton label="Listcell" hflex="true" image="/w4tjstudio-support/img?f=listcell.png"
                                    ca:template="listcell.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Tree" hflex="true" image="/img/zul/tree.png" ca:template="tree.zul"/>
-                    <toolbarbutton label="Treecols" hflex="true" image="/img/zul/treecols.png"
+                    <toolbarbutton label="Tree" hflex="true" image="/w4tjstudio-support/img?f=tree.png"
+                                   ca:template="tree.zul"/>
+                    <toolbarbutton label="Treecols" hflex="true" image="/w4tjstudio-support/img?f=treecols.png"
                                    ca:template="treecols.zul"/>
-                    <toolbarbutton label="Treecol" hflex="true" image="/img/zul/treecol.png" ca:template="treecol.zul"/>
-                    <toolbarbutton label="Treechildren" hflex="true" image="/img/zul/treechildren.png"
+                    <toolbarbutton label="Treecol" hflex="true" image="/w4tjstudio-support/img?f=treecol.png"
+                                   ca:template="treecol.zul"/>
+                    <toolbarbutton label="Treechildren" hflex="true" image="/w4tjstudio-support/img?f=treechildren.png"
                                    ca:template="treechildren.zul"/>
-                    <toolbarbutton label="Treerow" hflex="true" image="/img/zul/treerow.png" ca:template="treerow.zul"/>
-                    <toolbarbutton label="Treeitem" hflex="true" image="/img/zul/treeitem.png"
+                    <toolbarbutton label="Treerow" hflex="true" image="/w4tjstudio-support/img?f=treerow.png"
+                                   ca:template="treerow.zul"/>
+                    <toolbarbutton label="Treeitem" hflex="true" image="/w4tjstudio-support/img?f=treeitem.png"
                                    ca:template="treeitem.zul"/>
-                    <toolbarbutton label="Treecell" hflex="true" image="/img/zul/treecell.png"
+                    <toolbarbutton label="Treecell" hflex="true" image="/w4tjstudio-support/img?f=treecell.png"
                                    ca:template="treecell.zul"/>
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="Menubar" hflex="true" image="/img/zul/menubar.png" ca:template="menubar.zul"/>
-                    <toolbarbutton label="Menu" hflex="true" image="/img/zul/menu.png" ca:template="menu.zul"/>
-                    <toolbarbutton label="Menuitem" hflex="true" image="/img/zul/menuitem.png"
+                    <toolbarbutton label="Menubar" hflex="true" image="/w4tjstudio-support/img?f=menubar.png"
+                                   ca:template="menubar.zul"/>
+                    <toolbarbutton label="Menu" hflex="true" image="/w4tjstudio-support/img?f=menu.png"
+                                   ca:template="menu.zul"/>
+                    <toolbarbutton label="Menuitem" hflex="true" image="/w4tjstudio-support/img?f=menuitem.png"
                                    ca:template="menuitem.zul"/>
-                    <toolbarbutton label="Menupopup" hflex="true" image="/img/zul/menupopup.png"
+                    <toolbarbutton label="Menupopup" hflex="true" image="/w4tjstudio-support/img?f=menupopup.png"
                                    ca:template="menupopup.zul"/>
-                    <toolbarbutton label="Menuseparator" hflex="true" image="/img/zul/menuseparator.png"
+                    <toolbarbutton label="Menuseparator" hflex="true"
+                                   image="/w4tjstudio-support/img?f=menuseparator.png"
                                    ca:template="menuseparator.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="Toolbar" hflex="true" image="/img/zul/toolbar.png" ca:template="toolbar.zul"/>
-                    <toolbarbutton label="Toolbarbutton" hflex="true" image="/img/zul/toolbarbutton.png"
+                    <toolbarbutton label="Toolbar" hflex="true" image="/w4tjstudio-support/img?f=toolbar.png"
+                                   ca:template="toolbar.zul"/>
+                    <toolbarbutton label="Toolbarbutton" hflex="true"
+                                   image="/w4tjstudio-support/img?f=toolbarbutton.png"
                                    ca:template="toolbarbutton.zul"/>
 
                 </vlayout>
             </tabpanel>
             <tabpanel style="overflow:auto">
                 <vlayout spacing="10px">
-                    <toolbarbutton label="CK Editor" hflex="true" image="/img/zul/ckeditor.jpg"
+                    <toolbarbutton label="CK Editor" hflex="true" image="/w4tjstudio-support/img?f=ckeditor.jpg"
                                    ca:template="ckeditor.zul"/>
-                    <toolbarbutton label="Calendars" hflex="true" image="/img/zul/calendar.png"
+                    <toolbarbutton label="Calendars" hflex="true" image="/w4tjstudio-support/img?f=calendar.png"
                                    ca:template="calendars.zul"/>
 
-                    <toolbarbutton label="Html" hflex="true" image="/img/zul/html.png" ca:template="html.zul"/>
-                    <toolbarbutton label="Iframe" hflex="true" image="/img/zul/iframe.png" ca:template="iframe.zul"/>
-                    <toolbarbutton label="Popup" hflex="true" image="/img/zul/popup.png" ca:template="popup.zul"/>
+                    <toolbarbutton label="Html" hflex="true" image="/w4tjstudio-support/img?f=html.png"
+                                   ca:template="html.zul"/>
+                    <toolbarbutton label="Iframe" hflex="true" image="/w4tjstudio-support/img?f=iframe.png"
+                                   ca:template="iframe.zul"/>
+                    <toolbarbutton label="Popup" hflex="true" image="/w4tjstudio-support/img?f=popup.png"
+                                   ca:template="popup.zul"/>
 
-                    <toolbarbutton label="Separator" hflex="true" image="/img/zul/separator.png"
+                    <toolbarbutton label="Separator" hflex="true" image="/w4tjstudio-support/img?f=separator.png"
                                    ca:template="separator.zul"/>
-                    <toolbarbutton label="Space" hflex="true" image="/img/zul/space.png" ca:template="space.zul"/>
-                    <toolbarbutton label="Timer" hflex="true" image="/img/zul/timer.png" ca:template="timer.zul"/>
+                    <toolbarbutton label="Space" hflex="true" image="/w4tjstudio-support/img?f=space.png"
+                                   ca:template="space.zul"/>
+                    <toolbarbutton label="Timer" hflex="true" image="/w4tjstudio-support/img?f=timer.png"
+                                   ca:template="timer.zul"/>
                     <separator bar="true"/>
-                    <toolbarbutton label="ZScript" hflex="true" image="/img/zul/zscript.png" ca:template="zscript.zul"/>
-                    <toolbarbutton label="Script" hflex="true" image="/img/zul/script.png" ca:template="script.zul"/>
-                    <toolbarbutton label="Style" hflex="true" image="/img/zul/style.png" ca:template="style.zul"/>
+                    <toolbarbutton label="ZScript" hflex="true" image="/w4tjstudio-support/img?f=zscript.png"
+                                   ca:template="zscript.zul"/>
+                    <toolbarbutton label="Script" hflex="true" image="/w4tjstudio-support/img?f=script.png"
+                                   ca:template="script.zul"/>
+                    <toolbarbutton label="Style" hflex="true" image="/w4tjstudio-support/img?f=style.png"
+                                   ca:template="style.zul"/>
 
                 </vlayout>
             </tabpanel>

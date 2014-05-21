@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 
-<?style rel="stylesheet" type="text/css" href="/w4tjstudio-support/styles"?>
+<?style type="text/css" href="/w4tjstudio-support/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/scripts"?>
-
-<?script type="text/javascript" src="/js/designer.js"?>
-
-<?script  type="text/javascript" src="/js/beautify.js"?>
-<?script  type="text/javascript" src="/js/beautify-css.js"?>
-<?script  type="text/javascript" src="/js/beautify-html.js"?>
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:c="http://www.zkoss.org/2005/zk/client"
@@ -22,7 +16,7 @@
         <!--<panelchildren>-->
         <borderlayout vflex="true">
             <west width="200px" splittable="true" collapsible="true">
-            <tabbox vflex="true">
+                <tabbox vflex="true">
                     <tabs>
                         <tab label="Widgets"/>
                     </tabs>
@@ -39,7 +33,7 @@
                         <tab id="canvasView" label="Canvas" iconSclass="z-icon-coffee"/>
                         <tab id="outlineView" label="Outline" iconSclass="z-icon-sitemap"/>
                         <tab id="codeView" label="ZUL" iconSclass="z-icon-code">
-                        <attribute c:name="onSelect">if (myCodeMirror) myCodeMirror.refresh();</attribute>
+                            <attribute c:name="onSelect">if (myCodeMirror) myCodeMirror.refresh();</attribute>
                         </tab>
                     </tabs>
                     <tabpanels>

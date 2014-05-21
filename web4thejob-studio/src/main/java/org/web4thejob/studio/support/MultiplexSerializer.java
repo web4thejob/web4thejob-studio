@@ -3,10 +3,9 @@ package org.web4thejob.studio.support;
 import nu.xom.Element;
 import nu.xom.Serializer;
 import nu.xom.Text;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.context.support.ServletContextResource;
-import org.zkoss.zk.ui.Executions;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -41,12 +40,10 @@ public class MultiplexSerializer extends Serializer {
             notNull(escaper);
             makeAccessible(escaper);
 
-            Resource js_beautify = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
-                    .getServletContext(), "js/beautify.js");
-            Resource css_beautify = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
-                    .getServletContext(), "js/beautify-css.js");
-            Resource html_beautify = new ServletContextResource(Executions.getCurrent().getDesktop().getWebApp()
-                    .getServletContext(), "js/beautify-html.js");
+            String basePath = "org/web4thejob/studio/support/js/beautify/";
+            Resource js_beautify = new ClassPathResource(basePath + "beautify.js");
+            Resource css_beautify = new ClassPathResource(basePath + "beautify-css.js");
+            Resource html_beautify = new ClassPathResource(basePath + "beautify-html.js");
             engine.eval(new FileReader(js_beautify.getFile()));
             engine.eval(new FileReader(css_beautify.getFile()));
             engine.eval(new FileReader(html_beautify.getFile()));
