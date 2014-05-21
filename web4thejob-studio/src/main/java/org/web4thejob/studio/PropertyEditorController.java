@@ -166,7 +166,7 @@ public class PropertyEditorController extends AbstractController {
                     name.setParent(row);
 
                     Button btn = new Button();
-                    btn.setMold("bs");
+//                    btn.setMold("bs");
                     btn.setParent(row);
                     btn.setIconSclass("z-icon-bolt");
                     btn.setAttribute("side", "server");
@@ -174,15 +174,15 @@ public class PropertyEditorController extends AbstractController {
                     btn.setAttribute("element", selection);
                     btn.addEventListener(Events.ON_CLICK, CODE_EDITOR_HANDLER);
                     if (getEventCodeNode(selection, propertyName, true) != null) {
-                        btn.setSclass("btn-xs btn-primary");
+                        btn.setZclass("btn btn-xs btn-primary");
                     } else {
-                        btn.setSclass("btn-xs btn-default");
+                        btn.setZclass("btn btn-xs btn-default");
                     }
                     btn.setWidth("32px");
                     btn.setHeight("25px");
 
                     btn = new Button();
-                    btn.setMold("bs");
+//                    btn.setMold("bs");
                     btn.setParent(row);
                     btn.setIconSclass("z-icon-bolt");
                     btn.setAttribute("side", "client");
@@ -190,9 +190,9 @@ public class PropertyEditorController extends AbstractController {
                     btn.setAttribute("element", selection);
                     btn.addEventListener(Events.ON_CLICK, CODE_EDITOR_HANDLER);
                     if (getEventCodeNode(selection, propertyName, false) != null) {
-                        btn.setSclass("btn-xs btn-primary");
+                        btn.setZclass("btn btn-xs btn-primary");
                     } else {
-                        btn.setSclass("btn-xs btn-default");
+                        btn.setZclass("btn btn-xs btn-default");
                     }
                     btn.setWidth("32px");
                     btn.setHeight("25px");

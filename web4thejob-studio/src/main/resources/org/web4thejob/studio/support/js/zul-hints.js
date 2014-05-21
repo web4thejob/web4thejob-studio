@@ -33,7 +33,7 @@ function completeIfInTag(cm) {
 // copy paste tags here
 //**************************************************************************************************
 
-var tags={
+window.tags={
 	"!top": ["a", "absolutelayout", "anchorlayout", "audio", "bandbox", "borderlayout", "box", "button", "calendar", "cell", "chart", "checkbox", "combobox", "combobutton", "datebox", "decimalbox", "div", "doublebox", "doublespinner", "flash", "frozen", "grid", "groupbox", "hbox", "hlayout", "html", "idspace", "iframe", "image", "imagemap", "include", "intbox", "label", "listbox", "longbox", "menubar", "menupopup", "paging", "panel", "popup", "progressmeter", "radio", "radiogroup", "script", "selectbox", "separator", "slider", "space", "spinner", "style", "tabbox", "textbox", "timer", "timebox", "toolbar", "toolbarbutton", "tree", "vbox", "vlayout", "window", "a", "absolutelayout", "anchorlayout", "audio", "bandbox", "borderlayout", "box", "button", "calendar", "cell", "chart", "checkbox", "combobox", "combobutton", "datebox", "decimalbox", "div", "doublebox", "doublespinner", "flash", "frozen", "grid", "groupbox", "hbox", "hlayout", "html", "idspace", "iframe", "image", "imagemap", "include", "intbox", "label", "listbox", "longbox", "menubar", "menupopup", "paging", "panel", "popup", "progressmeter", "radio", "radiogroup", "script", "selectbox", "separator", "slider", "space", "spinner", "style", "tabbox", "textbox", "timer", "timebox", "toolbar", "toolbarbutton", "tree", "vbox", "vlayout", "window", ],
 	a: {
 		attrs: {

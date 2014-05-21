@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<browser>
+    <!--***********************************************
+    * Codemirror
+    *************************************************-->
+    <script src="codemirror/lib/codemirror.js"/>
+
+    <script src="codemirror/addon/hint/show-hint.js"/>
+    <script src="codemirror/addon/hint/xml-hint.js"/>
+    <script src="codemirror/addon/hint/html-hint.js"/>
+    <script src="codemirror/addon/hint/javascript-hint.js"/>
+    <script src="codemirror/addon/hint/css-hint.js"/>
+
+    <script src="codemirror/addon/fold/foldcode.js"/>
+    <script src="codemirror/addon/fold/foldgutter.js"/>
+    <script src="codemirror/addon/fold/brace-fold.js"/>
+    <script src="codemirror/addon/fold/xml-fold.js"/>
+    <script src="codemirror/addon/fold/comment-fold.js"/>
+
+    <script src="codemirror/addon/edit/matchtags.js"/>
+    <script src="codemirror/addon/edit/closetag.js"/>
+    <script src="codemirror/addon/edit/matchbrackets.js"/>
+
+    <script src="codemirror/addon/mode/multiplex.js"/>
+
+    <!--
+    <script src="/codemirror/addon/lint/lint.js">
+    <script src="/codemirror/addon/lint/javascript-lint.js">
+    <script src="/codemirror/addon/lint/css-lint.js">
+    -->
+
+    <script src="codemirror/mode/xml/xml.js"/>
+    <script src="codemirror/mode/javascript/javascript.js"/>
+    <script src="codemirror/mode/clike/clike.js"/>
+    <script src="codemirror/mode/css/css.js"/>
+
+    <script src="zul-hints.js"/>
+
+    <!--***********************************************
+    * Bootstrap
+    *************************************************-->
+    <script src="bootstrap/js/bootstrap.min.js"/>
+
+</browser>
+
