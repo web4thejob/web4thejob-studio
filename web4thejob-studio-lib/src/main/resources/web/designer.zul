@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 
-<!--<?style type="text/css" href="/w4tjstudio-support/styles"?>-->
-<!--<?script type="text/javascript" src="/w4tjstudio-support/scripts"?>-->
+<?style type="text/css" href="/w4tjstudio-support/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/scripts"?>
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:c="http://www.zkoss.org/2005/zk/client"
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-
-    <!--<style src="/w4tjstudio-support/styles"/>-->
-    <script type="text/javascript" src="/w4tjstudio-support/scripts"/>
 
     <include src="~./include/topbar.zul"/>
 

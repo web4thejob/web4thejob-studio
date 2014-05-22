@@ -37,13 +37,11 @@
                     <stopPort>8181</stopPort>
                 </configuration>
             </plugin>
-            <!--
-                        <plugin>
-                            <groupId>net.alchim31.maven</groupId>
-                            <artifactId>yuicompressor-maven-plugin</artifactId>
-                            <version>1.4.0</version>
-                        </plugin>
-            -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.1.Final</version>
+            </plugin>
         </plugins>
     </build>
 </project>
