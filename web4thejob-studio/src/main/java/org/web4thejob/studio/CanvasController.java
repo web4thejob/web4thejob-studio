@@ -113,21 +113,20 @@ public class CanvasController extends AbstractController {
         String parentUuid = (String) ((Map) event.getData()).get("parent");
         notNull(parentUuid);
 
-        String templatePath = "/template/" + template;
-        if (Executions.getCurrent().getDesktop().getWebApp().getResource(templatePath) != null) {
-            try {
-                Component parent = getComponentByUuid(parentUuid);
-                Map<String, Object> args = new HashMap<>();
-                args.put("parent", parent);
-                Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
-                if (target != null) {
-                    StudioUtil.sendToDesigner("onCanvasAddition", target.getUuid());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Clients.clearBusy();
-                showError(e, true);
+        String templatePath = "~./template/" + template;
+        try {
+            Component parent = getComponentByUuid(parentUuid);
+            Map<String, Object> args = new HashMap<>();
+            args.put("parent", parent);
+            Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
+            if (target != null) {
+                StudioUtil.sendToDesigner("onCanvasAddition", target.getUuid());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError(e, true);
+        } finally {
+            Clients.clearBusy();
         }
     }
 

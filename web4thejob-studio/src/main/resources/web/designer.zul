@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 
-<?style type="text/css" href="/w4tjstudio-support/styles"?>
-<?script type="text/javascript" src="/w4tjstudio-support/scripts"?>
+<!--<?style type="text/css" href="/w4tjstudio-support/styles"?>-->
+<!--<?script type="text/javascript" src="/w4tjstudio-support/scripts"?>-->
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:c="http://www.zkoss.org/2005/zk/client"
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
-    <include src="include/topbar.zul"/>
+    <!--<style src="/w4tjstudio-support/styles"/>-->
+    <script type="text/javascript" src="/w4tjstudio-support/scripts"/>
+
+    <include src="~./include/topbar.zul"/>
 
     <window id="designer" sclass="w4tjstudio-designer" vflex="true" apply="org.web4thejob.studio.DesignerController"
             contentStyle="overflow:visible">
@@ -22,7 +25,7 @@
                     </tabs>
                     <tabpanels>
                         <tabpanel style="overflow:auto">
-                            <include src="include/templates.zul"/>
+                            <include src="~./include/templates.zul"/>
                         </tabpanel>
                     </tabpanels>
                 </tabbox>
@@ -46,17 +49,17 @@
                             </div>
                         </tabpanel>
                         <tabpanel>
-                            <include src="include/outline.zul"/>
+                            <include src="~./include/outline.zul"/>
                         </tabpanel>
                         <tabpanel>
-                            <include src="include/code.zul"/>
+                            <include src="~./include/code.zul"/>
                         </tabpanel>
                     </tabpanels>
                 </tabbox>
 
             </center>
             <east width="300px" splittable="true" collapsible="true">
-                <include src="include/propertyeditor.zul"/>
+                <include src="~./include/propertyeditor.zul"/>
             </east>
         </borderlayout>
         <!--</panelchildren>-->

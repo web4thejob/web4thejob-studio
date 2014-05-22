@@ -1,4 +1,4 @@
-package org.web4thejob.studio.support;
+package org.web4thejob.studio.http;
 
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "w4tjstudio", urlPatterns = {"/w4tjstudio-support/*"})
 public class SupportServlet extends HttpServlet {
     private static final String IMG_PATH_PREFFIX = "org/web4thejob/studio/support/img/";
+
     static {
         String JS_PATH_PREFFIX = "org/web4thejob/studio/support/js/";
         Resource scripts = new ClassPathResource("org/web4thejob/studio/support/script.xml");

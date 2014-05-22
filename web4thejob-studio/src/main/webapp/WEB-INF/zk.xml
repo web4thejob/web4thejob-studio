@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk>
+    <richlet>
+        <richlet-name>StudioRichlet</richlet-name>
+        <richlet-class>org.web4thejob.studio.http.StudioRichlet</richlet-class>
+    </richlet>
+
+    <richlet-mapping>
+        <richlet-name>StudioRichlet</richlet-name>
+        <url-pattern>/*</url-pattern>
+    </richlet-mapping>
+
+
     <client-config>
         <debug-js>true</debug-js>
     </client-config>

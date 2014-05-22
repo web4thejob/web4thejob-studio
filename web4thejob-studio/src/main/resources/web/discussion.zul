@@ -2,11 +2,11 @@
 <?page title="About Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="favicon.ico"?>
 
-<?style type="text/css" href="/w4tjstudio-support/styles"?>
-<?script type="text/javascript" src="/w4tjstudio-support/scripts"?>
-
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <include src="include/topbar.zul"/>
+
+    <script type="text/javascript" src="/w4tjstudio-support/scripts"/>
+
+    <include src="~./include/topbar.zul"/>
 
     <zk xmlns="http://www.zkoss.org/2005/zk/native">
         <div class="container">

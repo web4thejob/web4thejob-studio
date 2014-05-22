@@ -95,8 +95,8 @@ public class PropertyEditorController extends AbstractController {
         properties.getChildren().clear();
         events.getChildren().clear();
         properties.setAttribute("prevSelection", null);
-        new Include("/include/emptyattributes.zul").setParent(properties);
-        new Include("/include/emptyevents.zul").setParent(events);
+        new Include("~./include/emptyattributes.zul").setParent(properties);
+        new Include("~./include/emptyevents.zul").setParent(events);
     }
 
     public void refresh() throws Exception {
