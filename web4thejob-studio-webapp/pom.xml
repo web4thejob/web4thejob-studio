@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>web4thejob-studio-parent</artifactId>
+        <groupId>org.web4thejob</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+
+    <artifactId>web4thejob-studio-webapp</artifactId>
+    <name>Webapp container</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.web4thejob</groupId>
+            <artifactId>web4thejob-studio-lib</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.0.RC0</version>
+                <configuration>
+                    <!--<useTestClasspath>true</useTestClasspath>-->
+                    <stopKey>my-stop-key</stopKey>
+                    <stopPort>8181</stopPort>
+                </configuration>
+            </plugin>
+            <!--
+                        <plugin>
+                            <groupId>net.alchim31.maven</groupId>
+                            <artifactId>yuicompressor-maven-plugin</artifactId>
+                            <version>1.4.0</version>
+                        </plugin>
+            -->
+        </plugins>
+    </build>
+</project>
