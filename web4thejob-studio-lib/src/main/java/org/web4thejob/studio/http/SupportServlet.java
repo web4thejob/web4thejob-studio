@@ -102,8 +102,11 @@ public class SupportServlet extends HttpServlet {
 
             Resource img = new ClassPathResource(IMG_PATH_PREFFIX + f.trim());
             if (!img.exists()) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+                img = new ClassPathResource(IMG_PATH_PREFFIX + "zk.png");
+                if (!img.exists()) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    return;
+                }
             }
 
             try (ServletOutputStream out = response.getOutputStream()) {

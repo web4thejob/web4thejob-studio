@@ -10,10 +10,12 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.sys.PageCtrl;
 import org.zkoss.zk.ui.sys.WebAppCtrl;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 
+import java.net.URLDecoder;
 import java.util.*;
 
 import static org.springframework.util.Assert.notNull;
@@ -61,6 +63,19 @@ public class CanvasController extends AbstractController {
 
         for (Element toDetach : toDetachList) {
             toDetach.detach();
+        }
+    }
+
+    @Override
+    protected void init() throws Exception {
+        super.init();
+
+        //init() ensures that the page has not been created yet, thus it is a convenient place to apply
+        //any processing instructions that live in the header section of the page.
+        String instructions = getQueryParam(Executions.getCurrent().getDesktop().getQueryString(), "pi");
+        if (instructions != null) {
+            instructions = URLDecoder.decode(instructions, "UTF-8");
+            ((PageCtrl) canvas.getPage()).addAfterHeadTags(processProcessingInstructions(instructions.split("\n")));
         }
     }
 

@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import static org.web4thejob.studio.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.zkoss.lang.Generics.cast;
 
@@ -54,10 +55,12 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
                 controller.process(message);
             }
 
-            if (MessageEnum.EVALUATE_ZUL == id) {
+            if (EVALUATE_ZUL == id) {
                 //ZUL_EVAL_SUCCEEDED will come from the onCanvasReady event
-            } else if (MessageEnum.EVALUATE_XML == id) {
-                publish(MessageEnum.XML_EVAL_SUCCEEDED, data);
+            } else if (EVALUATE_XML == id) {
+                publish(XML_EVAL_SUCCEEDED, data);
+            } else if (ATTRIBUTE_CHANGED == id) {
+                publish(EVALUATE_ZUL, ATTRIBUTE_CHANGED);
             }
 
         } catch (Exception e) {
@@ -65,13 +68,13 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
 
             message.setStopPropagation(true);
 
-            if (MessageEnum.EVALUATE_ZUL == id) {
-                publish(MessageEnum.ZUL_EVAL_FAILED, e);
+            if (EVALUATE_ZUL == id) {
+                publish(ZUL_EVAL_FAILED, e);
                 //ZUL_EVAL_FAILED will come from the onCanvasReady event
                 //however I add this here in case the code breaks prior to
                 //calling canvasHolder.setSrc
-            } else if (MessageEnum.EVALUATE_XML == id) {
-                publish(MessageEnum.XML_EVAL_FAILED, e);
+            } else if (EVALUATE_XML == id) {
+                publish(XML_EVAL_FAILED, e);
             } else {
                 showError(e);
             }
@@ -85,7 +88,7 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
     }
 
 
-    protected void init() {
+    protected void init() throws Exception {
         //override
     }
 

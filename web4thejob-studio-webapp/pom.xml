@@ -35,6 +35,10 @@
                     <!--<useTestClasspath>true</useTestClasspath>-->
                     <stopKey>my-stop-key</stopKey>
                     <stopPort>8181</stopPort>
+                    <webApp>
+                        <contextPath>/test</contextPath>
+                    </webApp>
+
                 </configuration>
             </plugin>
             <plugin>

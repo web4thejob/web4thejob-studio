@@ -1,7 +1,10 @@
 package org.web4thejob.studio;
 
+import nu.xom.Document;
 import nu.xom.Element;
+import nu.xom.ProcessingInstruction;
 import org.web4thejob.studio.support.AbstractController;
+import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -9,6 +12,7 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
@@ -36,11 +40,6 @@ public class DesignerController extends AbstractController {
     @Override
     public ControllerEnum getId() {
         return DESIGNER_CONTROLLER;
-    }
-
-    @Override
-    protected void init() {
-        super.init();
     }
 
     @Listen("onWidgetSelected=#designer")
@@ -116,14 +115,48 @@ public class DesignerController extends AbstractController {
     @Override
     public void process(Message message) {
         switch (message.getId()) {
-            case ATTRIBUTE_CHANGED:
-                Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
-                canvasHolder.setSrc("include/canvas.zul?m=" + EVALUATE_ZUL + "&h=" + ATTRIBUTE_CHANGED + "&t=" + new
-                        Date().getTime());
-                break;
             case EVALUATE_ZUL:
-                Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
-                canvasHolder.setSrc("include/canvas.zul?m=" + EVALUATE_ZUL + "&t=" + new Date().getTime());
+                Map<String, String> params = new LinkedHashMap<>();
+
+                //1. Message id
+                params.put("m", EVALUATE_ZUL.name());
+
+                //2. Possible Hints
+                if (message.getData() != null) {
+                    params.put("h", message.getData().toString());
+                }
+
+                //3. Provision Processing Instructions of the user's code
+                final Document doc = getCode();
+                if (doc != null) {
+
+                    StringBuilder intructions = new StringBuilder();
+                    for (int i = 0; i < doc.getChildCount(); i++) {
+                        if (doc.getChild(i) instanceof ProcessingInstruction) {
+                            ProcessingInstruction pi = (ProcessingInstruction) doc.getChild(i);
+                            if ("style".equals(pi.getTarget())) {
+                                intructions.append(pi.toXML()).append("\n");
+                            } else if ("script".equals(pi.getTarget())) {
+                                intructions.append(pi.toXML()).append("\n");
+                            }
+                        }
+                    }
+
+                    if (intructions.length() > 0) {
+                        params.put("pi", intructions.toString());
+                    }
+                }
+
+                //4. Timestamp of the request
+                params.put("t", Long.valueOf(new Date().getTime()).toString());
+
+                try {
+                    canvasHolder.setSrc(Encodes.addToQueryString(new StringBuffer("include/canvas.zul"),
+                            params).toString());
+                    Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case XML_EVAL_SUCCEEDED:
                 publish(EVALUATE_ZUL);

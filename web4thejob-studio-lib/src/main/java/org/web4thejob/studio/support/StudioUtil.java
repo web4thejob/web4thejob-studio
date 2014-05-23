@@ -1,6 +1,9 @@
 package org.web4thejob.studio.support;
 
 import nu.xom.*;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.MethodInvoker;
 import org.springframework.util.StringUtils;
@@ -15,6 +18,7 @@ import org.zkoss.zk.ui.metainfo.ComponentDefinition;
 import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -384,6 +388,60 @@ public abstract class StudioUtil {
         if (nodes.size() != 1) return null;
 
         return nodes.get(0);
+    }
+
+    public static String getProcessingInstructions(String uri) throws IOException {
+        uri = uri.replace("~.", "web");
+        Resource resource = new ClassPathResource(uri);
+        if (!resource.exists()) return null;
+
+        return processProcessingInstructions(IOUtils.readLines(resource.getInputStream()));
+    }
+
+    public static String processProcessingInstructions(String[] lines) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : lines) {
+            String line = s.trim();
+            if (line.startsWith("<?style") && line.endsWith("?>")) {
+                sb.append("<link type=\"text/css\" rel=\"stylesheet\" href=\"").append(extractValue(line, "href",
+                        true)).append("\"/>\n");
+            } else if (line.startsWith("<?script") && line.endsWith("?>")) {
+                sb.append("<script type=\"text/javascript\" src=\"").append(extractValue(line, "src",
+                        true)).append("\" charset=\"UTF-8\"></script>\n");
+            } else if (line.startsWith("<zk")) {
+                break;
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public static String processProcessingInstructions(List<String> lines) {
+        return processProcessingInstructions(lines.toArray(new String[lines.size()]));
+    }
+
+    private static String extractValue(String s, String key, boolean isPath) {
+        int start = s.indexOf(key);
+        if (start < 0) return null;
+
+        String value = "";
+        start += key.length();
+        for (int i = start; i < s.length(); i++) {
+            String c = s.substring(i, i + 1);
+            if (c.equals("=")) {
+                value = s.substring(s.indexOf("\"", i + 1) + 1, s.indexOf("\"", i + 2));
+
+                if (isPath && value.startsWith("/")/*absolute path*/) {
+                    String cpath = Executions.getCurrent().getContextPath();
+                    if (cpath != null && !cpath.equals("/")/*no root context*/) {
+                        value = cpath + value;
+                    }
+                }
+
+                break;
+            }
+        }
+        return value;
     }
 
 
