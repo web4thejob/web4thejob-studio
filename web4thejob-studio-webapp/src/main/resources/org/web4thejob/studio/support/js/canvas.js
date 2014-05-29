@@ -11,7 +11,7 @@ var w4tjStudioCanvas = {
         this._desktopId=zk.Desktop.$().id;
         var designerDesktopId=top.w4tjStudioDesigner.desktopId;
 
-        zAu.send(new zk.Event(zk("$canvas").$(), "onPairedWithDesigner", {
+        zAu.send(new zk.Event(zk.Desktop.$(), "onPairedWithDesigner", {
             designerDesktopId: designerDesktopId
         }));
 
@@ -20,7 +20,7 @@ var w4tjStudioCanvas = {
     },
 
     makeWidgetsDroppable: function() {
-        jq('$canvas').find('*').andSelf()
+        jq('body').find('*').andSelf()
         .on('drop', function(e) {
             e.stopPropagation();
             e.preventDefault();
@@ -31,7 +31,7 @@ var w4tjStudioCanvas = {
 
             if (dragged && dropped) {
                 zAu.cmd0.showBusy();
-                zAu.send(new zk.Event(zk("$canvas").$(), "onTemplateDropped", {
+                zAu.send(new zk.Event(zk.Desktop.$(), "onTemplateDropped", {
                     template: dragged,
                     parent: dropped.uuid
                 }));
@@ -55,8 +55,8 @@ var w4tjStudioCanvas = {
     },
 
     monitorActivity: function() {
-        jq("$canvas").undelegate("*", "click"); //reset
-        jq("$canvas").delegate("*", "click", function (e) {
+        jq("body").undelegate("*", "click"); /*reset*/
+        jq("body").delegate("*", "click", function (e) {
             var wgt = zk(this).$();
             if (wgt) { //select
                 if (e.target == this && !jq(wgt.$n()).is(".selected")) {
@@ -72,7 +72,7 @@ var w4tjStudioCanvas = {
         jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
         if (jq(e).length > 0) { //from client
             uuid = zk(e).$().uuid;
-            zAu.send(new zk.Event(zk("$canvas").$(), "onWidgetSelected", {target: uuid}));
+            top.zAu.send(new top.zk.Event(top.zk("$designer").$(), "onWidgetSelected", {target: uuid}));
 
         } else if (jq("#" + e).length > 0) { //from server
             uuid = e;
