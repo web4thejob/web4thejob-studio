@@ -2,8 +2,8 @@
 <?page title="About Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="favicon.ico"?>
 
-<?style type="text/css" href="/w4tjstudio-support/styles"?>
-<?script type="text/javascript" src="/w4tjstudio-support/scripts"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
 
