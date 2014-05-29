@@ -1,24 +1,30 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller.impl;
 
-import nu.xom.Document;
 import nu.xom.Element;
-import nu.xom.ProcessingInstruction;
+import org.apache.commons.io.FileUtils;
+import org.web4thejob.studio.controller.AbstractController;
+import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.message.MessageEnum;
-import org.web4thejob.studio.support.AbstractController;
+import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.URIEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
-import static org.web4thejob.studio.ControllerEnum.DESIGNER_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.DESIGNER_CONTROLLER;
 import static org.web4thejob.studio.message.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.zkoss.lang.Generics.cast;
@@ -27,6 +33,10 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
+    public static final String PARAM_HINT = "w4tjstudio_hint";
+    public static final String PARAM_MESSAGE = "w4tjstudio_message";
+    public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
 
     @Wire
     private Iframe canvasHolder;
@@ -39,6 +49,37 @@ public class DesignerController extends AbstractController {
     @Wire
     private Tab codeView;
 
+    private static String getQueryParam(String uri, String param) {
+        return splitQuery(uri).get(param);
+    }
+
+    private static Map<String, String> splitQuery(String uri) {
+        Map<String, String> query_pairs = new LinkedHashMap<>();
+        int i = uri.indexOf("?");
+        if (i > 0) {
+            String[] pairs = uri.substring(i + 1).split("&");
+            for (String pair : pairs) {
+                int idx = pair.indexOf("=");
+                try {
+                    query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
+                            URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return query_pairs;
+    }
+
+    private static String getRequestPath(String uri) {
+        int i = uri.indexOf("?");
+        if (i > 0) {
+            return uri.substring(i - 1);
+        } else {
+            return uri;
+        }
+    }
+
     @Override
     public ControllerEnum getId() {
         return DESIGNER_CONTROLLER;
@@ -48,7 +89,7 @@ public class DesignerController extends AbstractController {
     public void onWidgetSelected(Event event) throws InterruptedException {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
-        publish(COMPONENT_SELECTED, getElementByUuid(target));
+//        publish(COMPONENT_SELECTED, getElementByUuid(target));
     }
 
     @Listen("onActionsClicked=#designer")
@@ -82,8 +123,12 @@ public class DesignerController extends AbstractController {
         clearAlerts();
 
         Map<String, String> data = cast(event.getData());
-        String message = data.get("message");
-        String hint = data.get("hint");
+
+        String message = null, hint = null;
+        if (data != null) {
+            message = data.get(PARAM_MESSAGE);
+            hint = data.get(PARAM_HINT);
+        }
 
         if (message == null) {
             //this is the initial canvas load
@@ -105,7 +150,12 @@ public class DesignerController extends AbstractController {
         clearAlerts();
 
         Map<String, String> data = cast(event.getData());
-        String message = data.get("message");
+        String message = null;
+        if (data != null) {
+            message = data.get(PARAM_MESSAGE);
+        }
+        if (message == null) return;
+
         MessageEnum id = MessageEnum.valueOf(message);
         switch (id) {
             case EVALUATE_ZUL:
@@ -121,40 +171,21 @@ public class DesignerController extends AbstractController {
                 Map<String, String> params = new LinkedHashMap<>();
 
                 //1. Message id
-                params.put("m", EVALUATE_ZUL.name());
+                params.put(PARAM_MESSAGE, EVALUATE_ZUL.name());
 
                 //2. Possible Hints
                 if (message.getData() != null) {
-                    params.put("h", message.getData().toString());
+                    params.put(PARAM_HINT, message.getData().toString());
                 }
 
-                //3. Provision Processing Instructions of the user's code
-                final Document doc = getCode();
-                if (doc != null) {
+                //3. Timestamp of the request to prevent caching
+                params.put(PARAM_TIMESTAMP, Long.valueOf(new Date().getTime()).toString());
 
-                    StringBuilder intructions = new StringBuilder();
-                    for (int i = 0; i < doc.getChildCount(); i++) {
-                        if (doc.getChild(i) instanceof ProcessingInstruction) {
-                            ProcessingInstruction pi = (ProcessingInstruction) doc.getChild(i);
-                            if ("style".equals(pi.getTarget())) {
-                                intructions.append(pi.toXML()).append("\n");
-                            } else if ("script".equals(pi.getTarget())) {
-                                intructions.append(pi.toXML()).append("\n");
-                            }
-                        }
-                    }
-
-                    if (intructions.length() > 0) {
-                        params.put("pi", intructions.toString());
-                    }
-                }
-
-                //4. Timestamp of the request
-                params.put("t", Long.valueOf(new Date().getTime()).toString());
-
+                params.put(PARAM_WORK_FILE, getWorkingFilePath());
                 try {
-                    canvasHolder.setSrc(Encodes.addToQueryString(new StringBuffer("include/canvas.zul"),
-                            params).toString());
+                    String src = getCanvasHolderURI();
+                    canvasHolder.removeAttribute("src");
+                    canvasHolder.setSrc(Encodes.setToQueryString(new StringBuffer(src), params).toString());
                     Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -218,5 +249,28 @@ public class DesignerController extends AbstractController {
     public void onCanvasHang() {
         Clients.clearBusy();
         publish(ZUL_EVAL_FAILED);
+    }
+
+    @Listen("onURIChange=#canvasHolder")
+    public void onCanvasURIChanged(URIEvent event) {
+        canvasHolder.setAttribute("src", event.getURI());
+    }
+
+    private String getCanvasHolderURI() {
+        String src = (String) canvasHolder.getAttribute("src");
+        if (src == null) {
+            src = canvasHolder.getSrc();
+        }
+        return src;
+    }
+
+    private String getWorkingFilePath() {
+        try {
+            File f = File.createTempFile("w4tjstudio", "zul");
+            FileUtils.writeStringToFile(f, StudioUtil.getCode().toXML(), "UTF-8");
+            return f.getAbsolutePath();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

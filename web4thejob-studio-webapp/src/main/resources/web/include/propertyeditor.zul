@@ -5,7 +5,7 @@
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
-    <vlayout id="propeditor" vflex="true" apply="org.web4thejob.studio.PropertyEditorController">
+    <vlayout id="propeditor" vflex="true" apply="org.web4thejob.studio.controller.impl.PropertyEditorController">
         <custom-attributes properties="/properties"/>
 
         <n:div n:class="well well-sm bs-adaptor"

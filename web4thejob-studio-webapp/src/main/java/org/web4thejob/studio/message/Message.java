@@ -1,6 +1,6 @@
 package org.web4thejob.studio.message;
 
-import org.web4thejob.studio.Controller;
+import org.web4thejob.studio.controller.Controller;
 
 import java.util.Map;
 

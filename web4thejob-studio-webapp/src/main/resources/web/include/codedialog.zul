@@ -2,7 +2,7 @@
 <zk xmlns:c="client" xmlns="http://www.zkoss.org/2005/zul">
 
     <window id="editorWindow" width="70%" height="60%" border="none" sizable="true"
-            mode="modal" maximizable="true" apply="org.web4thejob.studio.CodeDialogController"
+            mode="modal" maximizable="true" apply="org.web4thejob.studio.controller.impl.CodeDialogController"
             style="box-shadow: 0 0 7px black;">
         <vlayout vflex="true">
             <panel id="editorPanel" vflex="true" mold="bs" sclass=""

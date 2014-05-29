@@ -11,6 +11,12 @@
         <url-pattern>/*</url-pattern>
     </richlet-mapping>
 
+    <listener>
+        <listener-class>org.web4thejob.studio.support.DesktopInitListener</listener-class>
+    </listener>
+    <system-config>
+        <ui-factory-class>org.web4thejob.studio.canvas.CanvasUiFactory</ui-factory-class>
+    </system-config>
 
     <client-config>
         <debug-js>true</debug-js>

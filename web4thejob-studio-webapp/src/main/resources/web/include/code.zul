@@ -5,7 +5,7 @@
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
-    <panel vflex="true" apply="org.web4thejob.studio.CodeController" border="normal">
+    <panel vflex="true" apply="org.web4thejob.studio.controller.impl.CodeController" border="normal">
         <panelchildren>
             <textbox id="zulBox" multiline="true">
                 <attribute c:name="bind_">

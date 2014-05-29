@@ -6,7 +6,8 @@
 
     <panel border="normal" vflex="true">
         <panelchildren style="overflow:auto">
-            <tree id="outline" vflex="true" apply="org.web4thejob.studio.OutlineController" style="border:0px">
+            <tree id="outline" vflex="true" apply="org.web4thejob.studio.controller.impl.OutlineController"
+                  style="border:0px">
                 <treechildren/>
             </tree>
         </panelchildren>

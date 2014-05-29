@@ -1,7 +1,8 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller.impl;
 
 import nu.xom.*;
-import org.web4thejob.studio.support.AbstractController;
+import org.web4thejob.studio.controller.AbstractController;
+import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
@@ -19,7 +20,7 @@ import java.net.URLDecoder;
 import java.util.*;
 
 import static org.springframework.util.Assert.notNull;
-import static org.web4thejob.studio.ControllerEnum.CANVAS_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.CANVAS_CONTROLLER;
 import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**

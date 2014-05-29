@@ -1,4 +1,4 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller;
 
 import org.web4thejob.studio.message.MessageAware;
 

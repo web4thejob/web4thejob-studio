@@ -1,4 +1,4 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller;
 
 /**
  * Created by Veniamin on 11/5/2014.

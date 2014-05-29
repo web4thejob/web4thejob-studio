@@ -1,7 +1,5 @@
-package org.web4thejob.studio.support;
+package org.web4thejob.studio.controller;
 
-import org.web4thejob.studio.Controller;
-import org.web4thejob.studio.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.message.MessageEnum;
 import org.zkoss.zk.ui.Component;

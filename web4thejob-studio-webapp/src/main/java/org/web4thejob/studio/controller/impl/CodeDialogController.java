@@ -1,9 +1,10 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller.impl;
 
 import nu.xom.*;
 import org.springframework.util.StringUtils;
+import org.web4thejob.studio.controller.AbstractController;
+import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.MessageEnum;
-import org.web4thejob.studio.support.AbstractController;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -18,7 +19,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import static org.springframework.util.Assert.notNull;
-import static org.web4thejob.studio.ControllerEnum.CODE_DIALOG_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.CODE_DIALOG_CONTROLLER;
 
 /**
  * Created by e36132 on 19/5/2014.

@@ -7,9 +7,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.MethodInvoker;
 import org.springframework.util.StringUtils;
-import org.web4thejob.studio.CodeController;
-import org.web4thejob.studio.Controller;
-import org.web4thejob.studio.ControllerEnum;
+import org.web4thejob.studio.controller.Controller;
+import org.web4thejob.studio.controller.ControllerEnum;
+import org.web4thejob.studio.controller.impl.CodeController;
 import org.zkoss.json.JSONValue;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
@@ -18,14 +18,17 @@ import org.zkoss.zk.ui.metainfo.ComponentDefinition;
 import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import static org.springframework.util.Assert.isTrue;
 import static org.springframework.util.Assert.notNull;
-import static org.web4thejob.studio.ControllerEnum.CANVAS_CONTROLLER;
-import static org.web4thejob.studio.ControllerEnum.CODE_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.CANVAS_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.CODE_CONTROLLER;
 import static org.web4thejob.studio.support.ZulXsdUtil.XPATH_CONTEXT_ZUL;
 import static org.zkoss.lang.Generics.cast;
 
@@ -33,14 +36,16 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 9/5/2014.
  */
 public abstract class StudioUtil {
+    public static final String ATTR_CANVAS_DESKTOP = "i-am-the-canvas-desktop";
     public static final String ATTR_PAIRED_DESKTOP = "paired-desktop-id";
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
-    private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new HashMap
-            ()));
+    public static final String ATTR_CANVAS_FILE = "canvas-file";
+    private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
+            HashMap<>()));
 
     public static boolean isCanvasDesktop() {
-        return Executions.getCurrent().getDesktop().getRequestPath().contains("canvas.zul");
+        return Executions.getCurrent().getDesktop().hasAttribute(ATTR_CANVAS_DESKTOP);
     }
 
     /**
@@ -445,4 +450,12 @@ public abstract class StudioUtil {
     }
 
 
+    public static InputStream getCanvasFile() {
+        Desktop desktop = (isCanvasDesktop() ? Executions.getCurrent().getDesktop() : getPairedDesktop());
+        try {
+            return new FileInputStream((String) desktop.getAttribute(ATTR_CANVAS_FILE));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

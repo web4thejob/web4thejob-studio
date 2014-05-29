@@ -1,11 +1,13 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller.impl;
 
 import nu.xom.*;
 import org.apache.commons.lang.ClassUtils;
+import org.web4thejob.studio.controller.AbstractController;
+import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
-import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.MultiplexSerializer;
+import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -24,7 +26,6 @@ import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.web4thejob.studio.support.ZulXsdUtil.ZUL_NS;
 import static org.web4thejob.studio.support.ZulXsdUtil.getWidgetDescription;
-import static org.zkoss.zk.ui.metainfo.LanguageDefinition.CLIENT_NAMESPACE;
 
 /**
  * Created by e36132 on 14/5/2014.
@@ -67,10 +68,13 @@ public class CodeController extends AbstractController {
     }
 
     public void reset() {
-        Element zk = new Element("zk", ZUL_NS);
-        zk.addAttribute(new Attribute("uuid", getCanvasUuid()));
-        zk.addNamespaceDeclaration("client", CLIENT_NAMESPACE);
-        document = new Document(zk);
+        Builder parser = new Builder(false);
+        try {
+            document = parser.build(StudioUtil.getCanvasFile(), null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         changed = false;
         print();
     }

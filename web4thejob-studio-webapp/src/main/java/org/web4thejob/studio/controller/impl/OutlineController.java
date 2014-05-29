@@ -1,8 +1,9 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.controller.impl;
 
 import nu.xom.Element;
+import org.web4thejob.studio.controller.AbstractController;
+import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
-import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.DropEvent;
@@ -14,7 +15,7 @@ import org.zkoss.zul.*;
 
 import java.util.Map;
 
-import static org.web4thejob.studio.ControllerEnum.OUTLINE_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.OUTLINE_CONTROLLER;
 import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 
@@ -89,6 +90,7 @@ public class OutlineController extends AbstractController {
 
     @Override
     public void process(Message message) {
+/*
         switch (message.getId()) {
             case COMPONENT_SELECTED:
                 selectItem((Element) message.getData());
@@ -113,6 +115,7 @@ public class OutlineController extends AbstractController {
                 outline.clear();
                 break;
         }
+*/
     }
 
     private void includeComponent(Element element) {

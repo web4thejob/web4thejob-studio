@@ -12,7 +12,8 @@
 
     <include src="~./include/topbar.zul"/>
 
-    <window id="designer" sclass="w4tjstudio-designer" vflex="true" apply="org.web4thejob.studio.DesignerController"
+    <window id="designer" sclass="w4tjstudio-designer" vflex="true"
+            apply="org.web4thejob.studio.controller.impl.DesignerController"
             contentStyle="overflow:visible">
         <borderlayout vflex="true">
             <west width="200px" splittable="true" collapsible="true">
