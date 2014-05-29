@@ -21,6 +21,16 @@
         <org.hibernate.version>4.3.5.Final</org.hibernate.version>
     </properties>
 
+    <dependencies>
+
+        <!-- TODO remove after tests-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
