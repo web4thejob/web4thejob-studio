@@ -3,6 +3,8 @@ package org.web4thejob.studio;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.ProcessingInstruction;
+import org.web4thejob.studio.message.Message;
+import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.AbstractController;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.event.Event;
@@ -17,7 +19,7 @@ import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.ControllerEnum.DESIGNER_CONTROLLER;
-import static org.web4thejob.studio.MessageEnum.*;
+import static org.web4thejob.studio.message.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.zkoss.lang.Generics.cast;
 

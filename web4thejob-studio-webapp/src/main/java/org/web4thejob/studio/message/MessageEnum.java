@@ -1,4 +1,4 @@
-package org.web4thejob.studio;
+package org.web4thejob.studio.message;
 
 /**
  * Created by e36132 on 14/5/2014.

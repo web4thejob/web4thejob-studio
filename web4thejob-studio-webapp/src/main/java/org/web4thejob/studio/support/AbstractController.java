@@ -2,8 +2,8 @@ package org.web4thejob.studio.support;
 
 import org.web4thejob.studio.Controller;
 import org.web4thejob.studio.ControllerEnum;
-import org.web4thejob.studio.Message;
-import org.web4thejob.studio.MessageEnum;
+import org.web4thejob.studio.message.Message;
+import org.web4thejob.studio.message.MessageEnum;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -11,7 +11,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import static org.web4thejob.studio.MessageEnum.*;
+import static org.web4thejob.studio.message.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.zkoss.lang.Generics.cast;
 

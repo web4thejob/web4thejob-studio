@@ -4,6 +4,8 @@ import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.XPathContext;
+import org.web4thejob.studio.message.Message;
+import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
@@ -19,7 +21,7 @@ import org.zkoss.zul.impl.InputElement;
 import java.util.*;
 
 import static org.web4thejob.studio.ControllerEnum.PROPERTY_EDITOR_CONTROLLER;
-import static org.web4thejob.studio.MessageEnum.ATTRIBUTE_CHANGED;
+import static org.web4thejob.studio.message.MessageEnum.ATTRIBUTE_CHANGED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.web4thejob.studio.support.ZulXsdUtil.*;
 import static org.zkoss.lang.Generics.cast;

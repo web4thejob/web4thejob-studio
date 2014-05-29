@@ -2,6 +2,7 @@ package org.web4thejob.studio;
 
 import nu.xom.*;
 import org.apache.commons.lang.ClassUtils;
+import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.MultiplexSerializer;
@@ -18,8 +19,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-import static org.web4thejob.studio.MessageEnum.CODE_CHANGED;
-import static org.web4thejob.studio.MessageEnum.COMPONENT_SELECTED;
+import static org.web4thejob.studio.message.MessageEnum.CODE_CHANGED;
+import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.web4thejob.studio.support.ZulXsdUtil.ZUL_NS;
 import static org.web4thejob.studio.support.ZulXsdUtil.getWidgetDescription;

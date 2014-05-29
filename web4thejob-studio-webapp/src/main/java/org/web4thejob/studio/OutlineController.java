@@ -1,6 +1,7 @@
 package org.web4thejob.studio;
 
 import nu.xom.Element;
+import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.AbstractController;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.zkoss.zk.ui.Component;
@@ -14,7 +15,7 @@ import org.zkoss.zul.*;
 import java.util.Map;
 
 import static org.web4thejob.studio.ControllerEnum.OUTLINE_CONTROLLER;
-import static org.web4thejob.studio.MessageEnum.COMPONENT_SELECTED;
+import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
