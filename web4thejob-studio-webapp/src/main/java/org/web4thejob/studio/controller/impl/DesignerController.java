@@ -1,8 +1,6 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.Document;
 import nu.xom.Element;
-import org.apache.commons.io.FileUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
@@ -16,10 +14,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +32,7 @@ public class DesignerController extends AbstractController {
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
+    public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
 
     @Wire
@@ -49,37 +45,6 @@ public class DesignerController extends AbstractController {
     private Tab outlineView;
     @Wire
     private Tab codeView;
-
-    private static String getQueryParam(String uri, String param) {
-        return splitQuery(uri).get(param);
-    }
-
-    private static Map<String, String> splitQuery(String uri) {
-        Map<String, String> query_pairs = new LinkedHashMap<>();
-        int i = uri.indexOf("?");
-        if (i > 0) {
-            String[] pairs = uri.substring(i + 1).split("&");
-            for (String pair : pairs) {
-                int idx = pair.indexOf("=");
-                try {
-                    query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-                            URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return query_pairs;
-    }
-
-    private static String getRequestPath(String uri) {
-        int i = uri.indexOf("?");
-        if (i > 0) {
-            return uri.substring(i - 1);
-        } else {
-            return uri;
-        }
-    }
 
     @Override
     public ControllerEnum getId() {
@@ -114,7 +79,6 @@ public class DesignerController extends AbstractController {
     @Listen("onCanvasAddition=#designer")
     public void onCanvasAddition(Event event) {
         publish(COMPONENT_ADDED, event.getData());
-        publish(ZUL_EVAL_SUCCEEDED);
         publish(COMPONENT_SELECTED, getElementByUuid((String) event.getData()));
         clearCanvasBusy(null);
     }
@@ -126,15 +90,16 @@ public class DesignerController extends AbstractController {
 
         Map<String, String> data = cast(event.getData());
 
-        String message = null, hint = null;
+        String message = null, hint = null, workFile = null;
         if (data != null) {
             message = data.get(PARAM_MESSAGE);
             hint = data.get(PARAM_HINT);
+            workFile = data.get(PARAM_WORK_FILE);
         }
 
         if (message == null) {
             //this is the initial canvas load
-            publish(RESET);
+            publish(RESET, workFile);
         } else {
             MessageEnum id = MessageEnum.valueOf(message);
             switch (id) {
@@ -156,7 +121,10 @@ public class DesignerController extends AbstractController {
         if (data != null) {
             message = data.get(PARAM_MESSAGE);
         }
-        if (message == null) return;
+        if (message == null) {
+            publish(ZUL_EVAL_FAILED, "Unspecified error occurred");
+            return;
+        }
 
         MessageEnum id = MessageEnum.valueOf(message);
         switch (id) {
@@ -184,7 +152,7 @@ public class DesignerController extends AbstractController {
                 params.put(PARAM_TIMESTAMP, Long.valueOf(new Date().getTime()).toString());
 
                 //4. Working file, this file will be read by CanvasUiFactory.getPageDefinition()
-                params.put(PARAM_WORK_FILE, getWorkingFilePath());
+                params.put(PARAM_WORK_FILE, StudioUtil.buildWorkingFile(StudioUtil.getCode()).getAbsolutePath());
                 try {
                     String src = getCanvasHolderURI();
                     canvasHolder.removeAttribute("src");
@@ -203,7 +171,6 @@ public class DesignerController extends AbstractController {
                 if (message.getData() == null) { //no hint, parse zul was clicked
                     Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
                 }
-                updateCanvasFile();
                 break;
             case XML_EVAL_FAILED:
                 canvasView.setDisabled(true);
@@ -223,7 +190,7 @@ public class DesignerController extends AbstractController {
                 if (message.getData() != null) {
                     showError(message.getData().toString(), false);
                 }
-                publish(COMPONENT_SELECTED); //deselect
+//                publish(COMPONENT_SELECTED); //deselect
                 break;
             case CODE_CHANGED:
                 codeView.setSelected(true);
@@ -273,35 +240,18 @@ public class DesignerController extends AbstractController {
         if (src == null) {
             src = canvasHolder.getSrc();
         }
-        return src;
-    }
 
-    private String getWorkingFilePath() {
         try {
-            File f = File.createTempFile("w4tjstudio", "zul");
-            f.deleteOnExit();
-
-            Document doc = new Document(StudioUtil.getCode());
-            StudioUtil.cleanUUIDs(doc.getRootElement());
-            FileUtils.writeStringToFile(f, doc.toXML(), "UTF-8");
-            return f.getAbsolutePath();
-        } catch (IOException e) {
+            src = Encodes.removeFromQueryString(src, PARAM_MESSAGE);
+            src = Encodes.removeFromQueryString(src, PARAM_HINT);
+            src = Encodes.removeFromQueryString(src, PARAM_WORK_FILE);
+            src = Encodes.removeFromQueryString(src, PARAM_TIMESTAMP);
+            src = Encodes.removeFromQueryString(src, PARAM_PRODUCTION_FILE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    private void updateCanvasFile() {
-        File src = new File(getWorkingFilePath());
-        File dest = StudioUtil.getCanvasFile();
-        if (src.exists() && dest.exists()) {
-            try {
-                FileUtils.copyFile(src, dest);
-                src.delete();
-            } catch (IOException e) {
-                e.printStackTrace();
-                showError(e, false);
-            }
-        }
+        return src;
     }
 
     @Listen("onNonZKPage=#designer")

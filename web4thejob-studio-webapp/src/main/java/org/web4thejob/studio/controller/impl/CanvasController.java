@@ -1,27 +1,11 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.*;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
-import org.web4thejob.studio.support.ChildDelegate;
-import org.web4thejob.studio.support.StudioUtil;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Desktop;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.sys.PageCtrl;
-import org.zkoss.zk.ui.sys.WebAppCtrl;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 
-import java.net.URLDecoder;
-import java.util.*;
-
-import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.controller.ControllerEnum.CANVAS_CONTROLLER;
-import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
  * Created by Veniamin on 9/5/2014.
@@ -31,9 +15,16 @@ public class CanvasController extends AbstractController {
     @Wire
     private Window canvas;
 
-    /**
-     * Clears white space for all code blocks so that pretty formatting can work recursively.
-     */
+    @Override
+    public ControllerEnum getId() {
+        return CANVAS_CONTROLLER;
+    }
+
+
+/**
+ * Clears white space for all code blocks so that pretty formatting can work recursively.
+ *//*
+
     private static void clearWitespaces(Element element) {
         for (int i = 0; i < element.getChildElements().size(); i++) {
             Element child = element.getChildElements().get(i);
@@ -78,11 +69,6 @@ public class CanvasController extends AbstractController {
             instructions = URLDecoder.decode(instructions, "UTF-8");
             ((PageCtrl) canvas.getPage()).addAfterHeadTags(processProcessingInstructions(instructions.split("\n")));
         }
-    }
-
-    @Override
-    public ControllerEnum getId() {
-        return CANVAS_CONTROLLER;
     }
 
     @Listen("onPairedWithDesigner=#canvas")
@@ -191,5 +177,6 @@ public class CanvasController extends AbstractController {
         });
     }
 
+*/
 
 }

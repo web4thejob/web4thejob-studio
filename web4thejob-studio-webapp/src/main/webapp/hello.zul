@@ -1,16 +1,8 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <zk>
     <window vflex="true" hflex="true" border="normal">
-        <menubar xmlns="http://www.zkoss.org/2005/zul">
-            <menu label="Menu 1">
-                <menupopup>
-                    <menuitem label="Menu item"/>
-                    <menuitem label="Menu item"/>
-                </menupopup>
-            </menu>
-            <menu label="Menu"/>
+        <menubar>
+            <menu label="Menu 1*++++++++++++*"/>
         </menubar>
-        <button xmlns="http://www.zkoss.org/2005/zul" label="Button"/>
-        <textbox xmlns="http://www.zkoss.org/2005/zul"/>
     </window>
 </zk>

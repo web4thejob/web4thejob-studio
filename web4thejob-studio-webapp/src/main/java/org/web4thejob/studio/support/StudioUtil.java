@@ -1,6 +1,7 @@
 package org.web4thejob.studio.support;
 
 import nu.xom.*;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -18,6 +19,7 @@ import org.zkoss.zk.ui.metainfo.ComponentDefinition;
 import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -28,6 +30,7 @@ import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.controller.ControllerEnum.CANVAS_CONTROLLER;
 import static org.web4thejob.studio.controller.ControllerEnum.CODE_CONTROLLER;
 import static org.web4thejob.studio.support.ZulXsdUtil.XPATH_CONTEXT_ZUL;
+import static org.web4thejob.studio.support.ZulXsdUtil.ZUL_NS;
 import static org.zkoss.lang.Generics.cast;
 
 /**
@@ -92,17 +95,6 @@ public abstract class StudioUtil {
         showNotification("danger", "Ooops!", message, autoclosable);
     }
 
-    public static void sendToDesigner(String eventName, Object data) {
-        isTrue(isCanvasDesktop(), "Use it only from canvas desktop");
-        Clients.evalJavaScript("w4tjStudioCanvas.sendToDesigner('" + eventName + "'," +
-                "" + JSONValue.toJSONString(data) + ")");
-    }
-
-    public static void sendToCanvas(String eventName, Object data) {
-        isTrue(!isCanvasDesktop(), "Use it only from designer desktop");
-        Clients.evalJavaScript("w4tjStudioDesigner.sendToCanvas('" + eventName + "'," +
-                "" + JSONValue.toJSONString(data) + ")");
-    }
 
     /**
      * Restricted for read only use
@@ -452,4 +444,65 @@ public abstract class StudioUtil {
         Desktop desktop = (isCanvasDesktop() ? Executions.getCurrent().getDesktop() : getPairedDesktop());
         return new File((String) desktop.getAttribute(ATTR_CANVAS_FILE));
     }
+
+    public static String beautifyXml(Document document) {
+        cleanWellKnownErrors(document);
+        final Serializer serializer;
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            serializer = new MultiplexSerializer(out);
+            serializer.setIndent(2);
+            serializer.write(document);
+//            serializer.setMaxLength(120);
+            serializer.flush();
+
+            String zul = out.toString("UTF-8");
+            zul = zul.replaceAll(" xmlns=\"\"", "");//xom bug?
+            return zul;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void cleanWellKnownErrors(Document document) {
+        XPathContext xpathContext = new XPathContext("zul", ZUL_NS);
+        Nodes nodes = document.query("//zul:panelchildren[@vflex]", xpathContext);
+        for (int i = 0; i < nodes.size(); i++) {
+            Attribute a = ((Element) nodes.get(i)).getAttribute("vflex");
+            a.detach();
+        }
+
+        nodes = document.query("//zul:treeitem[@label]", xpathContext);
+        for (int i = 0; i < nodes.size(); i++) {
+            Attribute a = ((Element) nodes.get(i)).getAttribute("label");
+            a.detach();
+        }
+        nodes = document.query("//zul:treerow[@label]", xpathContext);
+        for (int i = 0; i < nodes.size(); i++) {
+            Attribute a = ((Element) nodes.get(i)).getAttribute("label");
+            a.detach();
+        }
+        nodes = document.query("//zul:tabbox[@selectedIndex]", xpathContext);
+        for (int i = 0; i < nodes.size(); i++) {
+            Attribute a = ((Element) nodes.get(i)).getAttribute("selectedIndex");
+            a.detach();
+        }
+
+    }
+
+    public static File buildWorkingFile(Document document) {
+        try {
+            File f = File.createTempFile("w4tjstudio", "zul");
+            f.deleteOnExit();
+            FileUtils.writeStringToFile(f, StudioUtil.beautifyXml(document), "UTF-8");
+            return f;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void sendToDesigner(String eventName, Object data) {
+        Clients.evalJavaScript("w4tjStudioCanvas.sendToDesigner('" + eventName + "'," +
+                "" + JSONValue.toJSONString(data) + ")");
+    }
+
 }
