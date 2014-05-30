@@ -236,7 +236,10 @@ hasHandler: function(element, event) {
 },
 
 hookCanvas: function() {
-    if (!this.getCanvasFrame().jq) return; /*no zk desktop*/
+    if (!this.getCanvasFrame().zk){
+        zAu.send(new zk.Event(zk("$designer").$(), "onNonZKPage"));
+        return;
+    }
 
     var contextURI=zk.Desktop.$().contextURI;
     var canvas=this.getCanvasFrame();
@@ -247,9 +250,10 @@ hookCanvas: function() {
             console.log( textStatus );
             canvas.w4tjStudioCanvas.init();
             canvasHead.append( jq('<link rel="stylesheet" type="text/css"/>').attr('href', contextURI+'/w4tjstudio-support/canvas/styles') );
+            zAu.send(new zk.Event(zk("$designer").$(), "onZKPage"));
         })
         .fail(function( jqxhr, settings, exception ) {
-            /*error message*/
+            w4tjStudioDesigner.alert('danger','This is serious','Unfortunately canvas was not hooked as expected :-(',false);
         });
 }
 

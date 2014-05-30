@@ -7,6 +7,8 @@ import org.zkoss.zk.ui.util.DesktopInit;
 /**
  * Created by e36132 on 29/5/2014.
  */
+
+@Deprecated
 public class DesktopInitListener implements DesktopInit {
     private static CanvasAuService canvasAuService = new CanvasAuService();
 

@@ -118,10 +118,12 @@ public class PropertyEditorController extends AbstractController {
         }
 
 
+/*
         if (getCanvasUuid().equals(selection.getAttributeValue("uuid"))) {
             editorSelection.setContent("Canvas");
             return;
         }
+*/
         editorSelection.setContent(describeElement(selection));
 
         if (isBaseGroupElement(selection)) {

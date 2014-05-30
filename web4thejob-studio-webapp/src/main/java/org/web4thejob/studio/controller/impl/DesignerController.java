@@ -1,5 +1,6 @@
 package org.web4thejob.studio.controller.impl;
 
+import nu.xom.Document;
 import nu.xom.Element;
 import org.apache.commons.io.FileUtils;
 import org.web4thejob.studio.controller.AbstractController;
@@ -89,7 +90,7 @@ public class DesignerController extends AbstractController {
     public void onWidgetSelected(Event event) throws InterruptedException {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
-//        publish(COMPONENT_SELECTED, getElementByUuid(target));
+        publish(COMPONENT_SELECTED, getElementByUuid(target));
     }
 
     @Listen("onActionsClicked=#designer")
@@ -113,6 +114,7 @@ public class DesignerController extends AbstractController {
     @Listen("onCanvasAddition=#designer")
     public void onCanvasAddition(Event event) {
         publish(COMPONENT_ADDED, event.getData());
+        publish(ZUL_EVAL_SUCCEEDED);
         publish(COMPONENT_SELECTED, getElementByUuid((String) event.getData()));
         clearCanvasBusy(null);
     }
@@ -181,6 +183,7 @@ public class DesignerController extends AbstractController {
                 //3. Timestamp of the request to prevent caching
                 params.put(PARAM_TIMESTAMP, Long.valueOf(new Date().getTime()).toString());
 
+                //4. Working file, this file will be read by CanvasUiFactory.getPageDefinition()
                 params.put(PARAM_WORK_FILE, getWorkingFilePath());
                 try {
                     String src = getCanvasHolderURI();
@@ -200,6 +203,7 @@ public class DesignerController extends AbstractController {
                 if (message.getData() == null) { //no hint, parse zul was clicked
                     Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
                 }
+                updateCanvasFile();
                 break;
             case XML_EVAL_FAILED:
                 canvasView.setDisabled(true);
@@ -217,7 +221,7 @@ public class DesignerController extends AbstractController {
                 canvasView.setDisabled(true);
                 outlineView.setDisabled(true);
                 if (message.getData() != null) {
-                    showError((String) message.getData(), false);
+                    showError(message.getData().toString(), false);
                 }
                 publish(COMPONENT_SELECTED); //deselect
                 break;
@@ -232,7 +236,15 @@ public class DesignerController extends AbstractController {
                             .getAttributeValue("uuid") + "')");
                 else
                     Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget()");
-
+                break;
+            case NON_ZK_PAGE_VISITED:
+                codeView.setDisabled(true);
+                outlineView.setDisabled(true);
+                break;
+            case ZK_PAGE_VISITED:
+                codeView.setDisabled(false);
+                outlineView.setDisabled(false);
+                break;
             default:
                 break;
         }
@@ -267,10 +279,39 @@ public class DesignerController extends AbstractController {
     private String getWorkingFilePath() {
         try {
             File f = File.createTempFile("w4tjstudio", "zul");
-            FileUtils.writeStringToFile(f, StudioUtil.getCode().toXML(), "UTF-8");
+            f.deleteOnExit();
+
+            Document doc = new Document(StudioUtil.getCode());
+            StudioUtil.cleanUUIDs(doc.getRootElement());
+            FileUtils.writeStringToFile(f, doc.toXML(), "UTF-8");
             return f.getAbsolutePath();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private void updateCanvasFile() {
+        File src = new File(getWorkingFilePath());
+        File dest = StudioUtil.getCanvasFile();
+        if (src.exists() && dest.exists()) {
+            try {
+                FileUtils.copyFile(src, dest);
+                src.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showError(e, false);
+            }
+        }
+    }
+
+    @Listen("onNonZKPage=#designer")
+    public void onNonZKPage() {
+        publish(NON_ZK_PAGE_VISITED);
+    }
+
+    @Listen("onZKPage=#designer")
+    public void onZKPage() {
+        publish(ZK_PAGE_VISITED);
+    }
+
 }

@@ -1,9 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.zkoss.org/2005/zul"
-    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-
-    <window border="normal" vflex="true">
-        <a href="fo/hello2.zul" label="go to"/>
+<?xml version="1.0"?>
+<zk>
+    <window vflex="true" hflex="true" border="normal">
+        <menubar xmlns="http://www.zkoss.org/2005/zul">
+            <menu label="Menu 1">
+                <menupopup>
+                    <menuitem label="Menu item"/>
+                    <menuitem label="Menu item"/>
+                </menupopup>
+            </menu>
+            <menu label="Menu"/>
+        </menubar>
+        <button xmlns="http://www.zkoss.org/2005/zul" label="Button"/>
+        <textbox xmlns="http://www.zkoss.org/2005/zul"/>
     </window>
 </zk>

@@ -9,17 +9,16 @@ import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.MultiplexSerializer;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Textbox;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.SortedSet;
+import java.util.*;
 
 import static org.web4thejob.studio.message.MessageEnum.CODE_CHANGED;
 import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
@@ -62,6 +61,19 @@ public class CodeController extends AbstractController {
 
     }
 
+    private static boolean doMatch(Element element, Component component) {
+        boolean match;
+        match = isAvailable(element.getDocument().getRootElement(), component.getUuid()) && component.getDefinition()
+                .getName().equals(element.getLocalName());
+        return match;
+    }
+
+    private static boolean isAvailable(Element root, String uuid) {
+//        XPathContext xpathContext = new XPathContext("zul", ZUL_NS);
+        Nodes nodes = root.query("//*[@uuid='" + uuid + "']", null);
+        return nodes.size() == 0;
+    }
+
     @Override
     public ControllerEnum getId() {
         return ControllerEnum.CODE_CONTROLLER;
@@ -70,7 +82,8 @@ public class CodeController extends AbstractController {
     public void reset() {
         Builder parser = new Builder(false);
         try {
-            document = parser.build(StudioUtil.getCanvasFile(), null);
+            document = parser.build(new FileInputStream(StudioUtil.getCanvasFile()), null);
+            mapZulToComponents();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -93,9 +106,10 @@ public class CodeController extends AbstractController {
     }
 
     public void print() {
+        if (document == null) return;
         cleanWellKnownErrors(document);
         final Document doc = (Document) document.copy();
-        cleanUUIDs(doc.getRootElement());
+//        cleanUUIDs(doc.getRootElement());
 
         final Serializer serializer;
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -198,6 +212,7 @@ public class CodeController extends AbstractController {
         switch (message.getId()) {
             case COMPONENT_ADDED:
                 includeComponent(message.getData(String.class));
+                mapZulToComponents();
                 //addBookmark();
                 break;
             case RESET:
@@ -213,6 +228,7 @@ public class CodeController extends AbstractController {
                 getCode(); //will throw error if it fails
                 break;
             case ZUL_EVAL_SUCCEEDED:
+                mapZulToComponents();
                 print();
                 break;
             case ZUL_EVAL_FAILED:
@@ -228,7 +244,54 @@ public class CodeController extends AbstractController {
             case RESTORE_BOOKMARK:
                 //restoreBookmark((String) message.getDefaultParam());
                 break;
+            case EVALUATE_ZUL:
+                break;
         }
     }
 
+    private void mapZulToComponents() {
+        final Desktop canvas = getPairedDesktop();
+        if (document.getRootElement() == null) return;
+
+        Map<String, Object> params = new HashMap<>();
+        traverseChildren(document.getRootElement(), params, new ChildDelegate<Element>() {
+            @Override
+            public void onChild(Element child, Map<String, Object> params) {
+                if ("zk".equals(child.getLocalName())) return;
+
+                Element parent = getParent(child);
+                if (parent == null) {
+                    for (Component root : canvas.getFirstPage().getRoots()) {
+                        if (doMatch(child, root)) {
+                            child.addAttribute(new Attribute("uuid", root.getUuid()));
+                            break;
+                        }
+                    }
+                } else {
+                    if (parent.getAttributeValue("uuid") != null) {
+                        Collection<Component> children = getCanvasComponentByUuid(parent.getAttributeValue("uuid"))
+                                .getChildren();
+                        for (Component comp : children) {
+                            if (doMatch(child, comp)) {
+                                child.addAttribute(new Attribute("uuid", comp.getUuid()));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private Element getParent(Element element) {
+        Node parent = element.getParent();
+        while (parent != null) {
+            if (parent instanceof Element && !"zk".equals(((Element) parent).getLocalName())) {
+                break;
+            }
+            parent = parent.getParent();
+        }
+
+        return parent instanceof Element ? (Element) parent : null;
+    }
 }

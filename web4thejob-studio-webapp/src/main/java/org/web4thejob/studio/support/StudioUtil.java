@@ -18,10 +18,8 @@ import org.zkoss.zk.ui.metainfo.ComponentDefinition;
 import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -450,12 +448,8 @@ public abstract class StudioUtil {
     }
 
 
-    public static InputStream getCanvasFile() {
+    public static File getCanvasFile() {
         Desktop desktop = (isCanvasDesktop() ? Executions.getCurrent().getDesktop() : getPairedDesktop());
-        try {
-            return new FileInputStream((String) desktop.getAttribute(ATTR_CANVAS_FILE));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return new File((String) desktop.getAttribute(ATTR_CANVAS_FILE));
     }
 }

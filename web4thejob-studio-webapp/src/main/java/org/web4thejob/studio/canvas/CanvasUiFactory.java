@@ -2,6 +2,7 @@ package org.web4thejob.studio.canvas;
 
 import org.web4thejob.studio.controller.impl.DesignerController;
 import org.zkoss.io.FileReader;
+import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.http.SimpleUiFactory;
 import org.zkoss.zk.ui.metainfo.PageDefinition;
 import org.zkoss.zk.ui.sys.RequestInfo;
@@ -14,7 +15,15 @@ import java.io.IOException;
  * Created by e36132 on 29/5/2014.
  */
 public class CanvasUiFactory extends SimpleUiFactory {
+    private static CanvasAuService canvasAuService = new CanvasAuService();
 
+
+    @Override
+    public Desktop newDesktop(RequestInfo ri, String updateURI, String path) {
+        Desktop desktop = super.newDesktop(ri, updateURI, path);
+        desktop.addListener(canvasAuService);
+        return desktop;
+    }
 
     @Override
     public PageDefinition getPageDefinition(RequestInfo ri, String path) {

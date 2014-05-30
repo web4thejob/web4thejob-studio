@@ -11,12 +11,13 @@ var w4tjStudioCanvas = {
         this._desktopId=zk.Desktop.$().id;
         var designerDesktopId=top.w4tjStudioDesigner.desktopId;
 
+        this.makeWidgetsDroppable();
+        this.monitorActivity();
+
         zAu.send(new zk.Event(zk.Desktop.$(), "onPairedWithDesigner", {
             designerDesktopId: designerDesktopId
         }));
 
-        this.makeWidgetsDroppable();
-        this.monitorActivity();
     },
 
     makeWidgetsDroppable: function() {
