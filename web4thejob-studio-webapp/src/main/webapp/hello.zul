@@ -2,7 +2,7 @@
 <zk>
     <window vflex="true" hflex="true" border="normal">
         <menubar>
-            <menu label="Menu 1*++++++++++++*"/>
+            <menu label="Menu 1*++++++++++++-----*--*"/>
         </menubar>
     </window>
 </zk>

@@ -2,12 +2,10 @@ package org.web4thejob.studio.canvas;
 
 import org.w3c.dom.NodeList;
 import org.web4thejob.studio.controller.impl.DesignerController;
-import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.idom.Document;
 import org.zkoss.idom.input.SAXBuilder;
 import org.zkoss.io.FileReader;
 import org.zkoss.zk.ui.Desktop;
-import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.http.SimpleUiFactory;
 import org.zkoss.zk.ui.metainfo.PageDefinition;
 import org.zkoss.zk.ui.sys.RequestInfo;
@@ -17,8 +15,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -48,7 +44,7 @@ public class CanvasUiFactory extends SimpleUiFactory {
     public PageDefinition getPageDefinition(RequestInfo ri, String path) {
         ServletRequest request = (ServletRequest) ri.getNativeRequest();
         String file = request.getParameter(DesignerController.PARAM_WORK_FILE);
-        if (file == null) {
+        if (file == null || path.startsWith("~")) {
             return super.getPageDefinition(ri, path);
         } else {
             try {
@@ -56,23 +52,9 @@ public class CanvasUiFactory extends SimpleUiFactory {
                 cleanUUIDs(document);
                 return super.getPageDefinitionDirectly(ri, document, "zul");
             } catch (Exception e) {
-                Map<String, String> data = new HashMap<>();
-                data.put("exception", (e.getMessage() != null ? e.getMessage() : e.toString()));
-                StudioUtil.sendToDesigner("onCanvasFailed", data);
                 throw new RuntimeException(e);
             }
         }
     }
 
-    @Override
-    public Page newPage(RequestInfo ri, PageDefinition pagedef, String path) {
-        try {
-            return super.newPage(ri, pagedef, path);
-        } catch (Exception e) {
-            Map<String, String> data = new HashMap<>();
-            data.put("exception", (e.getMessage() != null ? e.getMessage() : e.toString()));
-            StudioUtil.sendToDesigner("onCanvasFailed", data);
-            throw new RuntimeException(e);
-        }
-    }
 }

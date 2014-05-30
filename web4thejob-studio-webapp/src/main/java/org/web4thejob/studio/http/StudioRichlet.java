@@ -1,9 +1,12 @@
 package org.web4thejob.studio.http;
 
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.GenericRichlet;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.sys.PageCtrl;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static org.web4thejob.studio.support.StudioUtil.getProcessingInstructions;
 
@@ -29,6 +32,12 @@ public class StudioRichlet extends GenericRichlet {
             case "/discussion":
                 uri = "~./discussion.zul";
                 break;
+            case "/exception":
+                Execution execution = Executions.getCurrent();
+                Exception e = (Exception) ((HttpServletRequest) execution.getNativeRequest()).getAttribute("javax.servlet.error.exception");
+                page.setAttribute("javax.servlet.error.exception", e);
+                page.setTitle("+++Error+++");
+                return;
             default:
                 uri = "~." + page.getRequestPath();
         }

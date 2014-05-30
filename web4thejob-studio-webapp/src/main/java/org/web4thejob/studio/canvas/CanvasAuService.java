@@ -9,6 +9,7 @@ import org.zkoss.zk.au.AuService;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.util.Clients;
 
 import java.io.File;
@@ -61,17 +62,25 @@ public class CanvasAuService implements AuService {
 
         String result = "onCanvasSucceeded";
         try {
-            Document document = mapZulToComponents(workFile != null ? workFile : prodFile);
-            if (workFile != null) {
-                //update workfile with uuids
-                FileUtils.writeStringToFile(new File(workFile), StudioUtil.beautifyXml(document), "UTF-8");
 
-                //update production file without uuids
-                StudioUtil.cleanUUIDs(document.getRootElement());
-                FileUtils.writeStringToFile(new File(prodFile), StudioUtil.beautifyXml(document), "UTF-8");
+            Exception e = getExceptionIfAny();
+
+            if (e == null) {
+                Document document = mapZulToComponents(workFile != null ? workFile : prodFile);
+                if (workFile != null) {
+                    //update workfile with uuids
+                    FileUtils.writeStringToFile(new File(workFile), StudioUtil.beautifyXml(document), "UTF-8");
+
+                    //update production file without uuids
+                    StudioUtil.cleanUUIDs(document.getRootElement());
+                    FileUtils.writeStringToFile(new File(prodFile), StudioUtil.beautifyXml(document), "UTF-8");
+                } else {
+                    workFile = StudioUtil.buildWorkingFile(document).getAbsolutePath();
+                    data.put(PARAM_WORK_FILE, workFile);
+                }
             } else {
-                workFile = StudioUtil.buildWorkingFile(document).getAbsolutePath();
-                data.put(PARAM_WORK_FILE, workFile);
+                result = "onCanvasFailed";
+                data.put("exception", (e.getMessage() != null ? e.getMessage() : e.toString()));
             }
         } catch (Exception e) {
             result = "onCanvasFailed";
@@ -203,6 +212,18 @@ public class CanvasAuService implements AuService {
         }
 
         return null;
+    }
+
+    private static Exception getExceptionIfAny() {
+        Exception e = null;
+        for (Page page : Executions.getCurrent().getDesktop().getPages()) {
+            if (page.hasAttribute("javax.servlet.error.exception")) {
+                e = (Exception) page.getAttribute("javax.servlet.error.exception");
+                break;
+            }
+
+        }
+        return e;
     }
 
     @Override

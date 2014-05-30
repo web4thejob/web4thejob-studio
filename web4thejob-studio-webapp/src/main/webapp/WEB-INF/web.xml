@@ -19,6 +19,11 @@
         <servlet-name>zkLoader</servlet-name>
         <url-pattern>/w4tjstudio/*</url-pattern>
     </servlet-mapping>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/w4tjstudio/exception</location>
+    </error-page>
+
 
     <!--<welcome-file-list>
         <welcome-file>designer.zul</welcome-file>

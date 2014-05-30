@@ -29,12 +29,11 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
-
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -104,7 +103,8 @@ public class DesignerController extends AbstractController {
             MessageEnum id = MessageEnum.valueOf(message);
             switch (id) {
                 case EVALUATE_ZUL:
-                    publish(ZUL_EVAL_SUCCEEDED, hint);
+                    data.remove(PARAM_MESSAGE);
+                    publish(ZUL_EVAL_SUCCEEDED, data);
                     break;
             }
 
@@ -168,7 +168,7 @@ public class DesignerController extends AbstractController {
             case ZUL_EVAL_SUCCEEDED:
                 canvasView.setDisabled(false);
                 outlineView.setDisabled(false);
-                if (message.getData() == null) { //no hint, parse zul was clicked
+                if (message.getData(PARAM_HINT) == null) { //no hint, parse zul was clicked
                     Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
                 }
                 break;
