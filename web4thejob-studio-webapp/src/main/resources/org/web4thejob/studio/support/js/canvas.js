@@ -17,7 +17,6 @@ var w4tjStudioCanvas = {
         zAu.send(new zk.Event(zk.Desktop.$(), "onCanvasReady", {
             designerDesktopId: designerDesktopId
         }));
-
     },
 
     makeWidgetsDroppable: function() {

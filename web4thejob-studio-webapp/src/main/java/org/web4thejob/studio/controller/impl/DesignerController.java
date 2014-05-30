@@ -89,10 +89,9 @@ public class DesignerController extends AbstractController {
 
         Map<String, String> data = cast(event.getData());
 
-        String message = null, hint = null, workFile = null;
+        String message = null, workFile = null;
         if (data != null) {
             message = data.get(PARAM_MESSAGE);
-            hint = data.get(PARAM_HINT);
             workFile = data.get(PARAM_WORK_FILE);
         }
 
@@ -107,7 +106,6 @@ public class DesignerController extends AbstractController {
                     publish(ZUL_EVAL_SUCCEEDED, data);
                     break;
             }
-
         }
     }
 

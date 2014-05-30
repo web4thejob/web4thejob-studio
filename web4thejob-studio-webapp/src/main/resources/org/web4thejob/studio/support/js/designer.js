@@ -86,7 +86,11 @@ var w4tjStudioDesigner = {
     }
   },
   selectCanvasWidget: function(w){
-    this.getCanvasFrame().w4tjStudioCanvas.select(w);
+    try {
+        this.getCanvasFrame().w4tjStudioCanvas.select(w);
+    } catch (err) {
+        /*suppress*/
+    }
   },
   getCanvasFrame: function() {
     var f=frames['canvasHolder']; /*ff*/
@@ -236,13 +240,15 @@ hasHandler: function(element, event) {
 },
 
 hookCanvas: function() {
-    if (!this.getCanvasFrame().zk){
+    var canvas=this.getCanvasFrame();
+
+    this.fileName=canvas.location.pathname;
+    if (!canvas.zk){
         zAu.send(new zk.Event(zk("$designer").$(), "onNonZKPage"));
         return;
     }
 
     var contextURI=zk.Desktop.$().contextURI;
-    var canvas=this.getCanvasFrame();
     var canvasHead=jq('head',jq('$canvasHolder').contents());
 
     this.getCanvasFrame().jq.getScript( contextURI+"/w4tjstudio-support/canvas/scripts")
