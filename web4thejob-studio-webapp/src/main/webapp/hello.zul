@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
     <window vflex="true" hflex="true" border="normal">
-        <menubar>
-            <menu label="Menu 1*++++++++++++-----*--*"/>
+        <menubar xmlns="http://www.zkoss.org/2005/zul">
+            <menu label="Menu 1">
+                <menupopup>
+                    <menuitem label="Menu item" href="/fo/hello2.zul"/>
+                    <menuitem label="Menu item"/>
+                </menupopup>
+            </menu>
         </menubar>
     </window>
 </zk>

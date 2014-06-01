@@ -78,6 +78,8 @@
                                    ca:template="tabbox.zul"/>
                     <toolbarbutton label="Tab" hflex="true" image="/w4tjstudio-support/img?f=tab.png"
                                    ca:template="tab.zul/"/>
+                    <toolbarbutton label="Tabpanel" hflex="true" image="/w4tjstudio-support/img?f=tabpanel.png"
+                                   ca:template="tabpanel.zul/"/>
                     <separator bar="true"/>
                     <toolbarbutton label="Caption" hflex="true" image="/w4tjstudio-support/img?f=caption.png"
                                    ca:template="caption.zul"/>

@@ -4,6 +4,7 @@ import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.XPathContext;
+import org.springframework.util.Assert;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
@@ -14,6 +15,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.*;
 import org.zkoss.zk.ui.metainfo.ComponentDefinition;
+import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
@@ -434,13 +436,14 @@ public class PropertyEditorController extends AbstractController {
             Element selected = (Element) event.getTarget().getAttribute("element");
             String propertyName = event.getTarget().getAttribute("property").toString();
             String uuid = selected.getAttributeValue("uuid");
-            Component component = null;
-            if (uuid != null) {
-                component = getCanvasComponentByUuid(uuid);
-            }
+            Assert.notNull(uuid);
+//            Component component = null;
+//            if (uuid != null) {
+//                component = getCanvasComponentByUuid(uuid);
+//            }
 
             String value = event.getValue();
-            Object previousValue = event.getPreviousValue();
+//            Object previousValue = event.getPreviousValue();
 
             if (value != null) {
                 value = value.trim();
@@ -449,8 +452,15 @@ public class PropertyEditorController extends AbstractController {
             }
 
             boolean isBoolean = "booleanType".equals(getTypeOfAttribute(selected.getLocalName(), propertyName));
-            boolean isDefaultValue = component != null && isDefaultValueForProperty(component, propertyName, value,
-                    isBoolean);
+            boolean isDefaultValue = false;
+
+            LanguageDefinition languageDefinition = LanguageDefinition.getByExtension("zul");
+            ComponentDefinition componentDefinition = languageDefinition.getComponentDefinitionIfAny(selected.getLocalName());
+            if (componentDefinition != null) {
+                Component component = componentDefinition.newInstance(null, null);
+                isDefaultValue = component != null && isDefaultValueForProperty(component, propertyName, value,
+                        isBoolean);
+            }
 
 
             Attribute attribute = selected.getAttribute(propertyName);

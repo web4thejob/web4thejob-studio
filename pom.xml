@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.zkoss.version>7.0.1</org.zkoss.version>
+        <org.zkoss.version>7.0.2</org.zkoss.version>
         <org.springframework.version>4.0.0.RELEASE</org.springframework.version>
         <org.hibernate.version>4.3.5.Final</org.hibernate.version>
     </properties>

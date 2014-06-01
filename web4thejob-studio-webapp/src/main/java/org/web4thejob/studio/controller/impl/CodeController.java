@@ -10,6 +10,8 @@ import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.StudioUtil;
+import org.zkoss.json.JSONObject;
+import org.zkoss.util.resource.Locators;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -24,8 +26,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-import static org.web4thejob.studio.message.MessageEnum.CODE_CHANGED;
-import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
+import static org.web4thejob.studio.message.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.web4thejob.studio.support.ZulXsdUtil.ZUL_NS;
 import static org.web4thejob.studio.support.ZulXsdUtil.getWidgetDescription;
@@ -166,7 +167,26 @@ public class CodeController extends AbstractController {
     public void process(Message message) {
         switch (message.getId()) {
             case COMPONENT_ADDED:
-                includeComponent(message.getData(String.class));
+                JSONObject data = message.getData();
+                Element parent = getElementByUuid((String) data.get("parent"));
+                String template = ((String) data.get("template")).replace("~./", "web/");
+
+                try {
+                    Element target = new Builder(false).build(Locators.getDefault().getResourceAsStream(template), "UTF-8").getRootElement();
+                    if ("zk".equals(target.getLocalName())) {
+                        for (int i = 0; i < target.getChildCount(); i++) {
+                            parent.appendChild(target.getChild(i).copy());
+                        }
+                    } else {
+                        parent.appendChild(target.copy());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+
+                publish(EVALUATE_ZUL, COMPONENT_ADDED);
+//                includeComponent(message.getData(String.class));
                 //addBookmark();
                 break;
             case RESET:

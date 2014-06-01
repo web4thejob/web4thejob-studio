@@ -5,5 +5,8 @@
     <window border="normal" vflex="true">
         <a href="../hello1.zul" label="go to 2"/>
         <textbox/>
+        <combobox/>
+        <button label="Button"/>
+        <intbox/>
     </window>
 </zk>

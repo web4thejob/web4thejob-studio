@@ -105,7 +105,11 @@ public class CanvasAuService implements AuService {
             args.put("parent", parent);
             Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
             if (target != null) {
-                sendToDesigner("onCanvasAddition", target.getUuid());
+                Map<String, String> data = new HashMap<>();
+                data.put("parent", parentUuid);
+                data.put("target", target.getUuid());
+                data.put("template", templatePath);
+                sendToDesigner("onCanvasAddition", data);
             }
         } catch (Exception e) {
             e.printStackTrace();
