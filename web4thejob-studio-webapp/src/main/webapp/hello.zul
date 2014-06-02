@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
-    <window vflex="true" hflex="true" border="normal">
+    <window vflex="true" hflex="true" border="normal" closable="true" title="AB">
         <menubar xmlns="http://www.zkoss.org/2005/zul">
             <menu label="Menu 1">
                 <menupopup>
@@ -9,5 +9,20 @@
                 </menupopup>
             </menu>
         </menubar>
+        <panel vflex="true" xmlns="http://www.zkoss.org/2005/zul">
+            <panelchildren>
+                <groupbox mold="3d">
+                    <caption label="Title"/>
+                    <tabbox>
+                        <tabs>
+                            <tab label="Tab" closable="true"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel/>
+                        </tabpanels>
+                    </tabbox>
+                </groupbox>
+            </panelchildren>
+        </panel>
     </window>
 </zk>

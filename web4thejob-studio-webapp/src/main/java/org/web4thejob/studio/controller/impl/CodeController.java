@@ -18,9 +18,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Textbox;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -74,15 +72,11 @@ public class CodeController extends AbstractController {
     public void print() {
         if (document == null) return;
         final Document doc = (Document) document.copy();
+        //TODO activate for production
 //        cleanUUIDs(doc.getRootElement());
 
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            zulBox.setValue(StudioUtil.beautifyXml(doc));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            Clients.evalJavaScript("myCodeMirror.refresh()");
-        }
+        zulBox.setValue(StudioUtil.beautifyXml(doc));
+        Clients.evalJavaScript("myCodeMirror.refresh()");
     }
 
     @Listen("onChange=#zulBox;")
