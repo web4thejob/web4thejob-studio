@@ -445,7 +445,7 @@ public abstract class StudioUtil {
         return new File((String) desktop.getAttribute(ATTR_CANVAS_FILE));
     }
 
-    public static String beautifyXml(Document document) {
+    public static String beautifyXml2(Document document) {
         cleanWellKnownErrors(document);
         final Serializer serializer;
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -462,6 +462,11 @@ public abstract class StudioUtil {
             throw new RuntimeException(e);
         }
     }
+
+    public static String beautifyXml(Document document) {
+        return CodeFormatter.formatXML(document.toXML());
+    }
+
 
     private static void cleanWellKnownErrors(Document document) {
         XPathContext xpathContext = new XPathContext("zul", ZUL_NS);

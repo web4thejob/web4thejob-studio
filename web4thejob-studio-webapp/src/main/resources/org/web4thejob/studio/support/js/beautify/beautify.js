@@ -1694,6 +1694,7 @@
     }
 
 
+/*
     if (typeof define === "function" && define.amd) {
         // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
         define([], function() {
@@ -1713,5 +1714,8 @@
         // Else attach to this (works for nashorn)
         this.js_beautify = js_beautify;
     }
+*/
+
+    this.js_beautify = js_beautify;
 
 }());

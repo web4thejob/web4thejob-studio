@@ -809,7 +809,7 @@
         return multi_parser.output.join('');
     }
 
-    if (typeof define === "function" && define.amd) {
+/*    if (typeof define === "function" && define.amd) {
         // Add support for AMD ( https://github.com/amdjs/amdjs-api/wiki/AMD#defineamd-property- )
         define(["require", "./beautify", "./beautify-css"], function(requireamd) {
             var js_beautify =  requireamd("./beautify");
@@ -845,6 +845,10 @@
         this.html_beautify = function(html_source, options) {
              return style_html(html_source, options, this.js_beautify, this.css_beautify);
          };
-    }
+    }*/
+
+    this.html_beautify = function(html_source, options) {
+        return style_html(html_source, options, this.js_beautify, this.css_beautify);
+    };
 
 }());
