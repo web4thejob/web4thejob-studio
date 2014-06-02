@@ -124,8 +124,8 @@ var w4tjStudioDesigner = {
     var actionsHandler=function() {
       var $group=jq(jq('.designer-toolbar .toolbar-actions').parent());
       var p=$group.offset();
-      var w=$group.outerWidth()+2;
-      var h=$group.height();
+      var w=$group.outerWidth();
+      var h=$group.outerHeight();
       var r=jq(window).width() - (p.left + w);
       zAu.send(new zk.Event(zk("$designer").$(), "onActionsClicked",{top:p.top+h,right:r}));
     }

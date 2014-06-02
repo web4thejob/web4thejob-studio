@@ -38,6 +38,9 @@
     * Bootstrap
     *************************************************-->
     <script src="bootstrap/js/bootstrap.min.js"/>
+    <script src="bootstrap/button.js"/>
+    <script src="bootstrap/menupopup.js"/>
+    <script src="bootstrap/panel.js"/>
 
     <!--***********************************************
     * Beautify_js

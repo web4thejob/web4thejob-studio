@@ -7,8 +7,8 @@
 
     <panel vflex="true" apply="org.web4thejob.studio.controller.impl.CodeController" border="normal">
         <panelchildren>
-            <textbox id="zulBox" multiline="true">
-                <attribute c:name="bind_">
+            <textbox id="zulBox" multiline="true" focus="true">
+            <attribute c:name="bind_">
                     <![CDATA[
                         function (a, b, c) {
                             this.$bind_(a, b, c);

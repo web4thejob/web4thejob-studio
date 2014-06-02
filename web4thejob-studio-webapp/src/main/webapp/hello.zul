@@ -1,119 +1,38 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
+<?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" ?>
+<?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" ?>
 <zk>
     <window vflex="true" hflex="true" border="normal" closable="true" title="AB">
-        <menubar xmlns="http://www.zkoss.org/2005/zul">
+        <attribute name="onFulfill">x</attribute>
+
+
+        <menubar xmlns="http://www.zkoss.org/2005/zul" focus="true">
             <menu label="Menu 1">
                 <menupopup>
-                    <menuitem label="Menu item" href="/fo/hello2.zul"/>
+                    <menuitem label="Menu item" href="/"/>
+                    <menuitem label="Menu item"/>
+                    <menuitem label="Menu item"/>
+                    <menuitem label="Menu item" disabled="true"/>
+                    <menuitem label="Menu item"/>
                     <menuitem label="Menu item"/>
                 </menupopup>
             </menu>
         </menubar>
-        <panel xmlns="http://www.zkoss.org/2005/zul" vflex="true">
-            <panelchildren>
-                <groupbox mold="3d">
-                    <caption label="Title"/>
-                    <tabbox>
-                        <tabs>
-                            <tab label="Tab" closable="true"/>
-                        </tabs>
-                        <tabpanels>
-                            <tabpanel/>
-                        </tabpanels>
-                    </tabbox>
-                </groupbox>
 
-                <combobutton label="Combobutton"/>
+        <panel xmlns="http://www.zkoss.org/2005/zul" vflex="true" title="A666" floatable="true" movable="true"
+               closable="true" border="normal">
+            <panelchildren>
+                <tabbox xmlns="" height="250px" width="300px">
+                    <tabs>
+                        <tab label="Tab" closable="true"/>
+                        <tab label="Tab" closable="true"/>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel/>
+                        <tabpanel/>
+                    </tabpanels>
+                </tabbox>
             </panelchildren>
         </panel>
     </window>
-
-    <style>
-        .mono {
-        font-family: monospace, Courier, Courier New;
-        font-style: normal
-        }
-        .w4tjstudio-designer * {
-        font-size: 14px !important;
-        }
-        .w4tjstudio-designer a {
-        text-decoration: none !important
-        }
-        .w4tjstudio-hovered {
-        border: 1px solid orange !important;
-        }
-        .w4tjstudio-element-hidden {
-        color: rgb(167, 167, 167) !important;
-        }
-        .w4tjstudio-element-skipped {
-        color: rgb(167, 167, 167) !important;
-        text-decoration: line-through
-        }
-        .mild-shadow {
-        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-        }
-        .designer-toolbar {
-        position: absolute;
-        top: 3px;
-        right: 0px;
-        }
-        /* -------------------------------------------------
-        File name
-        ------------------------------------------------- */
-        .designer-file {
-        position: absolute;
-        text-align: center;
-        margin: 0 auto;
-        top: 9px;
-        right: 0px;
-        left: 0px;
-        z-index: -1;
-        font-family: monospace
-        }
-        .designer-file &gt;
-        span {
-        border-radius: 0.75em;
-        font-weight: 100;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-        .designer-file &gt;
-        span &gt;
-        span {
-        font-family: FontAwesome;
-        font-size: 5px !important;
-        vertical-align: middle;
-        }
-        .z-tab:hover,
-        .z-tab-selected {
-        border-top-width: 2px;
-        border-top-color: orange;
-        padding-top: 0px;
-        }
-        .custom-menupopup {
-        left: auto !important
-        }
-        /* ff bug */
-        .designer-toolbar .btn {
-        height: 26px
-        }
-        .code-succeeded-effect {
-        vertical-align: middle;
-        font-size: 1px;
-        opacity: 0.1;
-        background-color: transparent;
-        font-family: FontAwesome;
-        color: rgb(0, 190, 23);
-        position: absolute;
-        text-align: center;
-        margin: 0 auto;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-        left: 0px;
-        z-index: 10000;
-        text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
-        }
-    </style>
 </zk>

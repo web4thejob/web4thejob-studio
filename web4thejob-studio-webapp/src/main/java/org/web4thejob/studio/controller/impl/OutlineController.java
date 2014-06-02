@@ -98,7 +98,7 @@ public class OutlineController extends AbstractController {
 //                includeComponent(getElementByUuid((String) message.getData()));
                 break;
             case RESET:
-                reset();
+                refresh();
                 selection = null;
                 break;
             case ZUL_EVAL_SUCCEEDED:

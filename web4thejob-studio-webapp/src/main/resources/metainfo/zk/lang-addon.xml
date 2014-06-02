@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<language-addon>
+    <!-- The name of this addon. It must be unique -->
+    <addon-name>w4tj-bootstrap</addon-name>
+    <!-- Specifies what other addon this depends-->
+    <depends>zkbind,zkex,zkmax</depends>
+
+    <!-- Which language this addon will be added to -->
+    <language-name>xul/html</language-name>
+
+    <component>
+        <component-name>button</component-name>
+        <extends>button</extends>
+        <mold>
+            <mold-name>w4tjstudio</mold-name>
+        </mold>
+    </component>
+    <component>
+        <component-name>menupopup</component-name>
+        <extends>menupopup</extends>
+        <mold>
+            <mold-name>w4tjstudio</mold-name>
+        </mold>
+    </component>
+    <component>
+        <component-name>panel</component-name>
+        <extends>panel</extends>
+        <mold>
+            <mold-name>w4tjstudio</mold-name>
+        </mold>
+    </component>
+
+</language-addon>

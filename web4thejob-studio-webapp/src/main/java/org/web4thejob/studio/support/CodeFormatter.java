@@ -45,7 +45,8 @@ public abstract class CodeFormatter {
 
     public static String formatHTML(String html) {
         try {
-            return (String) invocable.invokeFunction("html_beautify", html, options);
+//            return (String) invocable.invokeFunction("html_beautify", html, options);
+            return html;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

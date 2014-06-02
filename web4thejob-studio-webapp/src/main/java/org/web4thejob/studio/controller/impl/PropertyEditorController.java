@@ -339,6 +339,8 @@ public class PropertyEditorController extends AbstractController {
             combobox.setHflex("true");
             combobox.addEventListener(Events.ON_CHANGE, SAVE_CHANGES_HANDLER);
             for (String moldName : definition.getMoldNames()) {
+                if ("w4tjstudio".equals(moldName)) continue;
+                
                 Comboitem comboitem = new Comboitem(moldName);
                 comboitem.setParent(combobox);
 
@@ -426,7 +428,7 @@ public class PropertyEditorController extends AbstractController {
             args.put("side", event.getTarget().getAttribute("side"));
             args.put("element", event.getTarget().getAttribute("element"));
             args.put("property", event.getTarget().getAttribute("property"));
-            Executions.createComponents("include/codedialog.zul", null, args);
+            Executions.createComponents("~./include/codedialog.zul", null, args);
         }
     }
 
