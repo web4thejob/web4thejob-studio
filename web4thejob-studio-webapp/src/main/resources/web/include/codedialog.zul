@@ -5,13 +5,21 @@
             mode="modal" maximizable="true" apply="org.web4thejob.studio.controller.impl.CodeDialogController"
             style="box-shadow: 0 0 7px black;">
         <vlayout vflex="true">
-            <panel id="editorPanel" vflex="true" mold="bs" sclass=""
+            <panel id="editorPanel" vflex="true" sclass=""
                    style="margin-bottom: 0px;" closable="true" maximizable="true">
                 <attribute name="onClose">
                     editorWindow.detach();
                 </attribute>
                 <attribute name="onMaximize">
                     editorWindow.setMaximized(self.maximized);
+                </attribute>
+                <attribute c:name="bind_">
+                    <![CDATA[
+                        function (a, b, c) {
+                            this.$bind_(a, b, c);
+                            this.setMold('bs');
+                        }
+                    ]]>
                 </attribute>
                 <panelchildren>
                     <vlayout vflex="true" width="300px" hflex="true">
@@ -24,7 +32,8 @@
                                         var wgt = this;
                                         eventEditor = CodeMirror.fromTextArea(this.$n(),{mode: "${arg.side=='server'?'text/x-java':'javascript'}",
                                                                                         lineNumbers: true,
-                                                                                        matchBrackets: true});
+                                                                                        matchBrackets: true,
+                                                                                        autofocus: true});
 
                                         wgt.set("codemirror",eventEditor);
                                         eventEditor.on("change", function () {
@@ -58,8 +67,8 @@
             </panel>
             <hbox height="40px" hflex="true" align="center">
                 <hbox hflex="1" pack="start" spacing="8px">
-                    <button id="btnBeautify" width="100px" label="Beautify" mold="bs" sclass="btn-success btn-sm">
-                        <attribute c:name="onClick">
+                    <button id="btnBeautify" width="100px" label="Beautify" zclass="btn btn-success btn-sm">
+                    <attribute c:name="onClick">
                             var wgt=zk('$editor').$();
                             var s=wgt.get("codemirror").getValue();
                             s=js_beautify(s);
@@ -68,11 +77,11 @@
                     </button>
                 </hbox>
                 <hbox hflex="1" pack="end" spacing="8px">
-                    <button id="btnCancel" width="100px" label="Cancel" mold="bs" sclass="btn-default btn-sm">
-                        <attribute name="onClick">editorWindow.detach();</attribute>
+                    <button id="btnCancel" width="100px" label="Cancel" zclass="btn btn-default btn-sm">
+                    <attribute name="onClick">editorWindow.detach();</attribute>
                     </button>
-                    <button id="btnOK" width="100px" label="OK" iconSclass="z-icon-save" mold="bs"
-                            sclass="btn-primary btn-sm"/>
+                    <button id="btnOK" width="100px" label="OK" iconSclass="z-icon-save"
+                            zclass="btn btn-primary btn-sm"/>
                 </hbox>
             </hbox>
         </vlayout>

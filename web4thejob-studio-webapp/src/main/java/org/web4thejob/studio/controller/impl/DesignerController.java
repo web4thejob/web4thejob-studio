@@ -29,11 +29,11 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -62,15 +62,15 @@ public class DesignerController extends AbstractController {
         //showNotification("success", event.getName(), "", false);
 
         Menupopup popup = new Menupopup();
-        popup.setMold("bs");
+//        popup.setMold("bs");
         popup.setSclass("custom-menupopup");
         popup.setPage(event.getTarget().getPage());
         Menuitem label = new Menuitem("hello");
         label.setParent(popup);
 
-        int y = Integer.valueOf(((Map) event.getData()).get("top").toString());
+//        int y = Integer.valueOf(((Map) event.getData()).get("top").toString());
         int x = Integer.valueOf(((Map) event.getData()).get("right").toString());
-        popup.setStyle("min-width:200px");
+//        popup.setStyle("min-width:200px");
         popup.open("auto", ((Map) event.getData()).get("top").toString() + "px");
         popup.setStyle("right:" + x + "px");
     }

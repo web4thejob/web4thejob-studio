@@ -119,7 +119,7 @@
         padding-top: 0px;
         }
 
-        .custom-menupopup {left:auto !important}
+        .custom-menupopup {left:auto !important;}
 
         /* ff bug */
         .designer-toolbar .btn {height: 26px}
