@@ -98,9 +98,13 @@ public class CanvasAuService implements AuService {
         String parentUuid = (String) ((Map) event.getData()).get("parent");
         notNull(parentUuid);
 
+        if (Executions.getCurrent().getDesktop().getPageIfAny(parentUuid) != null) {
+            parentUuid = "_canvas_";
+        }
+
         String templatePath = "~./template/" + template;
         try {
-            Component parent = getComponentByUuid(parentUuid);
+            Component parent = !"_canvas_".equals(parentUuid) ? getComponentByUuid(parentUuid) : null;
             Map<String, Object> args = new HashMap<>();
             args.put("parent", parent);
             Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
@@ -128,6 +132,12 @@ public class CanvasAuService implements AuService {
         traverseChildren(document.getRootElement(), params, new ChildDelegate<Element>() {
             @Override
             public void onChild(Element child, Map<String, Object> params) {
+                if (child.getParent() instanceof Document) {
+                    if ("zk".equals(child.getLocalName())) {
+                        //special case when root element is a zk element
+                        child.addAttribute(new Attribute("uuid", "_canvas_"));
+                    }
+                }
                 if ("zk".equals(child.getLocalName())) return;
 
                 Element parent = getParent(child);

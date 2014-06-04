@@ -1,3 +1,1 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <west size="25%" splittable="true" collapsible="true"/>
-</zk>
+<west size="25%" splittable="true" collapsible="true"/>

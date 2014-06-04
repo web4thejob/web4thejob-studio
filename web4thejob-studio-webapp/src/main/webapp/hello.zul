@@ -23,7 +23,7 @@
 
         <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal">
             <panelchildren>
-                <tabbox height="250px" width="300px">
+                <tabbox height="250px" width="600px">
                     <tabs>
                         <tab label="Tab" closable="true"/>
                         <tab label="Tab" closable="true"/>
@@ -32,7 +32,14 @@
                         <tabpanel>
                             <n:h1>Wowww</n:h1>
                         </tabpanel>
-                        <tabpanel/>
+                        <tabpanel>
+                            <menubar>
+                                <menu label="Menu 1"/>
+                            </menubar>
+                            <ckeditor vflex="true">
+                                <attribute c:name="onSave">h</attribute>
+                            </ckeditor>
+                        </tabpanel>
                     </tabpanels>
                 </tabbox>
             </panelchildren>
@@ -72,5 +79,6 @@
             <south size="25%" splittable="true" collapsible="true"/>
             <west size="25%" splittable="true" collapsible="true"/>
         </borderlayout>
+        <label value="New Label"/>
     </window>
 </zk>

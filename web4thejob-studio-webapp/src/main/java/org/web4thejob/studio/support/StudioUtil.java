@@ -270,9 +270,9 @@ public abstract class StudioUtil {
                 sb.append("<span style=\"font-family:monospace\">");
                 sb.append(element.getAttributeValue("name")).append("@server");
                 sb.append("</span>");
-            } else if (element.getAttributeValue("name", "http://www.zkoss.org/2005/zk/client") != null) {
+            } else if (element.getAttributeValue("name", getClientNamespace((org.web4thejob.studio.dom.Element) element)) != null) {
                 sb.append("<span style=\"font-family:monospace\">");
-                sb.append(element.getAttributeValue("name", "http://www.zkoss.org/2005/zk/client")).append("@client");
+                sb.append(element.getAttributeValue("name", getClientNamespace((org.web4thejob.studio.dom.Element) element))).append("@client");
                 sb.append("</span>");
             }
         }
@@ -536,4 +536,10 @@ public abstract class StudioUtil {
         }
         return null;
     }
+
+    public static String getClientNamespace(org.web4thejob.studio.dom.Element element) {
+        Map<String, String> ns = element.getNamespacePrefixesInScope();
+        return ns.get(getClientNamespacePrefix(element));
+    }
+
 }

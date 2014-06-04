@@ -1,3 +1,1 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <treecol label="Column X"/>
-</zk>
+<treecol label="Column X"/>

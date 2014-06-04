@@ -1,9 +1,8 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <borderlayout>
-        <north size="25%" splittable="true" collapsible="true"/>
-        <east size="25%" splittable="true" collapsible="true"/>
-        <center/>
-        <south size="25%" splittable="true" collapsible="true"/>
-        <west size="25%" splittable="true" collapsible="true"/>
-    </borderlayout>
-</zk>
+<borderlayout>
+    <north size="25%" splittable="true" collapsible="true"/>
+    <east size="25%" splittable="true" collapsible="true"/>
+    <center/>
+    <south size="25%" splittable="true" collapsible="true"/>
+    <west size="25%" splittable="true" collapsible="true"/>
+</borderlayout>
+

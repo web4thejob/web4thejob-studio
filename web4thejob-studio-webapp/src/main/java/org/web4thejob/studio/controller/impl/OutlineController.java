@@ -23,18 +23,12 @@ import static org.web4thejob.studio.support.StudioUtil.*;
  * Created by e36132 on 15/5/2014.
  */
 public class OutlineController extends AbstractController {
-    private static OutlineClickHandler outlineClickHandler;
-    private static DroppableHandler droppableHandler;
+    private final OutlineClickHandler outlineClickHandler = new OutlineClickHandler();
+    private final DroppableHandler droppableHandler = new DroppableHandler();
 
     @Wire
     private Tree outline;
     private Element selection;
-
-
-    {
-        outlineClickHandler = new OutlineClickHandler();
-        droppableHandler = new DroppableHandler();
-    }
 
     private static Treeitem findTreeitemParent(Component child) {
         if (child == null) return null;
@@ -52,21 +46,17 @@ public class OutlineController extends AbstractController {
     }
 
     public void refresh() {
-        reset();
-        Element zk = getCode().getRootElement();
-        for (int i = 0; i < zk.getChildElements().size(); i++) {
-            //TODO check for baseGroup elements like <attribute>, <custom-attributes> etc
-            includeComponent(zk.getChildElements().get(i));
-        }
-
-        selectItem(selection);
+        outline.clear();
+        Element rootElement = getCode().getRootElement();
+        if (rootElement == null) return;
+        includeComponent(rootElement);
     }
 
     private Treeitem toTreeitem(Element element) {
         Treeitem item = new Treeitem();
         Treerow treerow = new Treerow();
         treerow.setParent(item);
-        //Supports the d 'n d of templates in outline view in the same way as in canvas
+        //Supports the d'nd of templates in outline view in the same way as in canvas
         treerow.setWidgetAttribute("canvas-uuid", element.getAttributeValue("uuid"));
 
         Treecell cell = new Treecell();
@@ -123,18 +113,17 @@ public class OutlineController extends AbstractController {
             public void onChild(Element child, Map<String, Object> params) {
                 Treeitem item = toTreeitem(child);
 
-                if (child.getParent() instanceof Element && !child.getParent().equals(getCode().getRootElement())) {
+                if (child.getParent() instanceof Element) {
                     Treeitem parent = getTreeitemByElement((Element) child.getParent());
                     if (parent.getTreechildren() == null) {
                         new Treechildren().setParent(parent);
                     }
                     item.setParent(parent.getTreechildren());
                 } else {
-                    Treeitem parent = (Treeitem) outline.getTreechildren().getFirstChild();
-                    if (parent.getTreechildren() == null) {
-                        new Treechildren().setParent(parent);
+                    if (outline.getTreechildren() == null) {
+                        new Treechildren().setParent(outline);
                     }
-                    item.setParent(parent.getTreechildren());
+                    item.setParent(outline.getTreechildren());
                 }
             }
         });
@@ -161,6 +150,7 @@ public class OutlineController extends AbstractController {
         }
     }
 
+/*
     public void reset() {
         outline.clear();
         Element zk = getCode().getRootElement();
@@ -182,6 +172,7 @@ public class OutlineController extends AbstractController {
         root.addEventListener(Events.ON_DROP, droppableHandler);
         root.setDroppable("true");
     }
+*/
 
     private class DroppableHandler implements EventListener<DropEvent> {
 

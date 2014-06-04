@@ -1,7 +1,5 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <treeitem>
-        <treerow>
-            <treecell label="Item"/>
-        </treerow>
-    </treeitem>
-</zk>
+<treeitem>
+    <treerow>
+        <treecell label="Item"/>
+    </treerow>
+</treeitem>

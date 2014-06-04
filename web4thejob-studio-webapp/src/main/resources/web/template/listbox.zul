@@ -1,9 +1,7 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <listbox height="300px">
-        <listhead>
-            <listheader label="Header 1"/>
-            <listheader label="Header 2"/>
-            <listheader label="Header 3"/>
-        </listhead>
-    </listbox>
-</zk>
+<listbox height="300px">
+    <listhead>
+        <listheader label="Header 1"/>
+        <listheader label="Header 2"/>
+        <listheader label="Header 3"/>
+    </listhead>
+</listbox>

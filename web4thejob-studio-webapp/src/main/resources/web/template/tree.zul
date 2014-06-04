@@ -1,28 +1,26 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <tree>
-        <treechildren>
-            <treeitem>
-                <treerow>
-                    <treecell label="Node 1"/>
-                </treerow>
-                <treechildren>
-                    <treeitem>
-                        <treerow>
-                            <treecell label="Subnode 1"/>
-                        </treerow>
-                    </treeitem>
-                    <treeitem>
-                        <treerow>
-                            <treecell label="Subnode 2"/>
-                        </treerow>
-                    </treeitem>
-                    <treeitem>
-                        <treerow>
-                            <treecell label="Subnode 3"/>
-                        </treerow>
-                    </treeitem>
-                </treechildren>
-            </treeitem>
-        </treechildren>
-    </tree>
-</zk>
+<tree>
+    <treechildren>
+        <treeitem>
+            <treerow>
+                <treecell label="Node 1"/>
+            </treerow>
+            <treechildren>
+                <treeitem>
+                    <treerow>
+                        <treecell label="Subnode 1"/>
+                    </treerow>
+                </treeitem>
+                <treeitem>
+                    <treerow>
+                        <treecell label="Subnode 2"/>
+                    </treerow>
+                </treeitem>
+                <treeitem>
+                    <treerow>
+                        <treecell label="Subnode 3"/>
+                    </treerow>
+                </treeitem>
+            </treechildren>
+        </treeitem>
+    </treechildren>
+</tree>

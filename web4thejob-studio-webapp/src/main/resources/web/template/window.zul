@@ -1,3 +1,1 @@
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <window title="Window" vflex="true"/>
-</zk>
+<window title="Window" vflex="true"/>
