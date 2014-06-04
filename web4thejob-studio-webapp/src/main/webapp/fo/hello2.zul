@@ -1,19 +1,18 @@
 <?xml version="1.0"?>
 <zk>
-    <tabbox width="400px" height="250px">
-        <tabs>
-            <tab label="Tab" closable="true"/>
-        </tabs>
-        <tabpanels>
-            <tabpanel/>
-        </tabpanels>
-    </tabbox>
-    <tabbox width="400px" height="250px">
-        <tabs>
-            <tab label="Tab" closable="true"/>
-        </tabs>
-        <tabpanels>
-            <tabpanel/>
-        </tabpanels>
-    </tabbox>
+
+    <grid height="300px">
+        <columns>
+            <column label="Col 1"/>
+            <column label="Col 2"/>
+            <column label="Col 3"/>
+        </columns>
+        <rows>
+            <row>
+                <label value="Value 1"/>
+                <label value="Value 2"/>
+                <label value="Value 3"/>
+            </row>
+        </rows>
+    </grid>
 </zk>

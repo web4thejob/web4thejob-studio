@@ -13,5 +13,11 @@
         </panelchildren>
     </panel>
 
+    <style>
+        .z-treerow.z-treerow-selected>.z-treecell {
+        background: -webkit-linear-gradient(top, #F8E5FB 0%, #FFBAFF 100%);
+        background: linear-gradient(to bottom, #F8E5FB 0%, #FFBAFF 100%);
+        }
+    </style>
 
 </zk>

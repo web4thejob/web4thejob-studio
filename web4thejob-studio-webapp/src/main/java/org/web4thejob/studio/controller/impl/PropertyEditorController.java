@@ -1,6 +1,9 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.*;
+import nu.xom.Attribute;
+import nu.xom.Element;
+import nu.xom.Nodes;
+import nu.xom.XPathContext;
 import org.springframework.util.Assert;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
@@ -82,8 +85,7 @@ public class PropertyEditorController extends AbstractController {
             case ZUL_EVAL_SUCCEEDED:
                 if (selection != null) {
                     String xpath = getXPath(selection);
-                    Document document = getCode();
-                    Nodes nodes = getCode().query(xpath, XPathContext.makeNamespaceContext(document.getRootElement()));
+                    Nodes nodes = getCode().query(xpath, XPathContext.makeNamespaceContext(selection));
                     if (nodes.size() != 1) break;
                     if (selection.getQualifiedName().equals(((Element) nodes.get(0)).getQualifiedName())) {
                         publish(MessageEnum.COMPONENT_SELECTED, nodes.get(0));

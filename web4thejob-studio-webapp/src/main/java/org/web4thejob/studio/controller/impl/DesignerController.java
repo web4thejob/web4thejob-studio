@@ -1,6 +1,8 @@
 package org.web4thejob.studio.controller.impl;
 
 import nu.xom.Element;
+import nu.xom.Nodes;
+import nu.xom.XPathContext;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
@@ -29,11 +31,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
+    public static final String PARAM_XPATH = "w4tjstudio_xpath";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -143,8 +146,13 @@ public class DesignerController extends AbstractController {
 
                 //2. Possible Hints
                 if (message.getData() != null) {
-                    params.put(PARAM_HINT, message.getData().toString());
+                    if (message.getData() instanceof Map) {
+                        params.putAll(message.<Map<String, String>>getData());
+                    } else {
+                        params.put(PARAM_HINT, message.getData().toString());
+                    }
                 }
+
 
                 //3. Timestamp of the request to prevent caching
                 params.put(PARAM_TIMESTAMP, Long.valueOf(new Date().getTime()).toString());
@@ -168,6 +176,13 @@ public class DesignerController extends AbstractController {
                 outlineView.setDisabled(false);
                 if (message.getData(PARAM_HINT) == null) { //no hint, parse zul was clicked
                     Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
+                } else if (message.getData(PARAM_HINT).equals(MessageEnum.COMPONENT_ADDED.name())) {
+                    String xpath = message.getData(PARAM_XPATH);
+                    if (xpath != null) {
+                        Nodes nodes = getCode().query(xpath, XPathContext.makeNamespaceContext(getCode().getRootElement()));
+                        if (nodes.size() != 1) break;
+                        publish(COMPONENT_SELECTED, nodes.get(0));
+                    }
                 }
                 break;
             case XML_EVAL_FAILED:

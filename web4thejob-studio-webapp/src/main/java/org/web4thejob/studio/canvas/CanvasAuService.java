@@ -53,12 +53,14 @@ public class CanvasAuService implements AuService {
         String message = getQueryParam(queryString, PARAM_MESSAGE);
         String hint = getQueryParam(queryString, PARAM_HINT);
         String workFile = getQueryParam(queryString, PARAM_WORK_FILE);
+        String xpath = getQueryParam(queryString, PARAM_XPATH);
 
         Map<String, String> data = new HashMap<>();
         if (prodFile != null) data.put(PARAM_PRODUCTION_FILE, prodFile);
         if (message != null) data.put(PARAM_MESSAGE, message);
         if (hint != null) data.put(PARAM_HINT, hint);
         if (workFile != null) data.put(PARAM_WORK_FILE, workFile);
+        if (xpath != null) data.put(PARAM_XPATH, xpath);
 
         String result = "onCanvasSucceeded";
         try {

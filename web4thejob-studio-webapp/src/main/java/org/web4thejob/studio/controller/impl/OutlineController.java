@@ -82,7 +82,7 @@ public class OutlineController extends AbstractController {
     public void process(Message message) {
         switch (message.getId()) {
             case COMPONENT_SELECTED:
-//                selectItem((Element) message.getData());
+                selectItem((Element) message.getData());
                 break;
             case COMPONENT_ADDED:
 //                includeComponent(getElementByUuid((String) message.getData()));

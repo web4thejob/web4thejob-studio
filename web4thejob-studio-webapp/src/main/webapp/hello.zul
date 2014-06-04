@@ -2,13 +2,14 @@
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" ?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" ?>
 <zk xmlns:n="native" xmlns:c="client">
-    <window vflex="true" hflex="true" border="normal" closable="true" title="AB" contentStyle="overflow:auto">
+    <window vflex="true" hflex="true" border="normal" closable="true" title="AB" contentStyle="overflow:auto"
+            sizable="true">
         <attribute name="onDrop">g</attribute>
         <attribute c:name="onCreate">h</attribute>
         <attribute c:name="onFulfill">s</attribute>
 
 
-        <menubar xmlns="http://www.zkoss.org/2005/zul">
+        <menubar>
             <menu label="Menu 1">
                 <menupopup>
                     <menuitem label="Menu item" href="/"/>
@@ -21,7 +22,8 @@
             </menu>
         </menubar>
 
-        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal">
+        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal"
+               visible="false">
             <panelchildren>
                 <tabbox height="250px" width="600px">
                     <tabs>
@@ -31,6 +33,16 @@
                     <tabpanels>
                         <tabpanel>
                             <n:h1>Wowww</n:h1>
+                            <button label="Button"/>
+                            <combobox/>
+                            <combobox/>
+                            <textbox/>
+                            <combobox/>
+                            <button label="Button"/>
+                            <combobutton label="Combobutton"/>
+                            <bandbox/>
+                            <combobutton label="Combobutton"/>
+                            <combobutton label="Combobutton"/>
                         </tabpanel>
                         <tabpanel>
                             <menubar>
@@ -42,6 +54,7 @@
                         </tabpanel>
                     </tabpanels>
                 </tabbox>
+                <textbox/>
             </panelchildren>
         </panel>
 
@@ -59,7 +72,9 @@
                         </treeitem>
                         <treeitem>
                             <treerow>
-                                <treecell label="Subnode 2"/>
+                                <treecell label="Subnode 2">
+                                    <textbox value="fdfdf"/>
+                                </treecell>
                             </treerow>
                         </treeitem>
                         <treeitem>
@@ -69,15 +84,47 @@
                         </treeitem>
                     </treechildren>
                 </treeitem>
+                <treeitem>
+                    <treerow>
+                        <treecell label="Item"/>
+                    </treerow>
+                </treeitem>
             </treechildren>
         </tree>
 
-        <borderlayout xmlns="http://www.zkoss.org/2005/zul">
-            <north size="25%" splittable="true" collapsible="true"/>
-            <east size="25%" splittable="true" collapsible="true"/>
-            <center/>
+        <borderlayout>
+            <north size="25%" splittable="true" collapsible="true" flex="true">
+                <vbox vflex="true" width="300px">
+                    <button label="Button"/>
+                    <button label="Button" disabled="true"/>
+                    <button label="${1+1}"/>
+                    <combobutton label="Combobutton"/>
+                    <combobutton label="Combobutton"/>
+                </vbox>
+            </north>
+            <east size="45%" splittable="true" collapsible="true">
+                <longbox/>
+            </east>
+            <center>
+                <doublebox/>
+            </center>
             <south size="25%" splittable="true" collapsible="true"/>
-            <west size="25%" splittable="true" collapsible="true"/>
+            <west size="25%" splittable="true" collapsible="true">
+                <grid vflex="true">
+                    <columns>
+                        <column label="Col 1"/>
+                        <column label="Col 2+" sortDirection="ascending"/>
+                        <column label="Col 3"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="Value 1"/>
+                            <label value="Value 2"/>
+                            <label value="Value 3"/>
+                        </row>
+                    </rows>
+                </grid>
+            </west>
         </borderlayout>
         <label value="New Label"/>
     </window>

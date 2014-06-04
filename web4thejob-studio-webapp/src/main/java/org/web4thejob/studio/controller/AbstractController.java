@@ -6,6 +6,8 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -17,6 +19,7 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public abstract class AbstractController extends SelectorComposer<Component> implements Controller {
+    private final List<Message> queue = new ArrayList<>();
 
     private static void register(Controller controller) {
         synchronized (Executions.getCurrent().getDesktop()) {
@@ -45,26 +48,30 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
 
     @Override
     public void publish(MessageEnum id, Object data) {
-        Message message = new Message(id, this, data);
+        queue.add(new Message(id, this, data));
+        if (queue.size() > 1) return;
 
         try {
-            for (Controller controller : getLocalControllers()) {
-                if (message.isStopPropagation()) break;
-                controller.process(message);
-            }
+            while (!queue.isEmpty()) {
+                Message message = queue.get(0);
+                for (Controller controller : getLocalControllers()) {
+                    if (message.isStopPropagation()) break;
+                    controller.process(message);
+                }
+                queue.remove(message);
 
-            if (EVALUATE_ZUL == id) {
-                //ZUL_EVAL_SUCCEEDED will come from the onCanvasReady event
-            } else if (EVALUATE_XML == id) {
-                publish(XML_EVAL_SUCCEEDED, data);
-            } else if (ATTRIBUTE_CHANGED == id) {
-                publish(EVALUATE_ZUL, ATTRIBUTE_CHANGED);
+                if (EVALUATE_ZUL == id) {
+                    //ZUL_EVAL_SUCCEEDED will come from the onCanvasReady event
+                } else if (EVALUATE_XML == id) {
+                    publish(XML_EVAL_SUCCEEDED, data);
+                } else if (ATTRIBUTE_CHANGED == id) {
+                    publish(EVALUATE_ZUL, ATTRIBUTE_CHANGED);
+                }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
 
-            message.setStopPropagation(true);
+            queue.clear();
 
             if (EVALUATE_ZUL == id) {
                 publish(ZUL_EVAL_FAILED, e);

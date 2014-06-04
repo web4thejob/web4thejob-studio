@@ -1,12 +1,12 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.StudioUtil;
+import org.web4thejob.studio.support.ZulXsdUtil;
 import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Locators;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -16,6 +16,8 @@ import org.zkoss.zul.Textbox;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.web4thejob.studio.message.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.getElementByUuid;
@@ -149,23 +151,28 @@ public class CodeController extends AbstractController {
                 Element parent = getElementByUuid((String) data.get("parent"));
                 String template = ((String) data.get("template")).replace("~./", "web/");
 
+                Element toSelect = null;
                 try {
-                    Element target = new Builder(false).build(Locators.getDefault().getResourceAsStream(template), "UTF-8").getRootElement();
+                    Element target = StudioUtil.buildDocument(Locators.getDefault().getResourceAsStream(template)).getRootElement();
                     if ("zk".equals(target.getLocalName())) {
                         for (int i = 0; i < target.getChildCount(); i++) {
-                            parent.appendChild(target.getChild(i).copy());
+                            Element clone = (Element) target.getChild(i).copy();
+                            parent.appendChild(clone);
+                            if (i == 0) toSelect = clone;
                         }
                     } else {
-                        parent.appendChild(target.copy());
+                        toSelect = (Element) target.copy();
+                        parent.appendChild(toSelect);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
 
-                publish(EVALUATE_ZUL, COMPONENT_ADDED);
-//                includeComponent(message.getData(String.class));
-                //addBookmark();
+                Map<String, String> hints = new HashMap<>();
+                hints.put(DesignerController.PARAM_HINT, COMPONENT_ADDED.name());
+                hints.put(DesignerController.PARAM_XPATH, ZulXsdUtil.getXPath(toSelect));
+                publish(EVALUATE_ZUL, hints);
                 break;
             case RESET:
                 reset((String) message.getData());
