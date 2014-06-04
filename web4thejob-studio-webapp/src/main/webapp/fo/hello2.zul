@@ -1,18 +1,41 @@
 <?xml version="1.0"?>
-<zk>
+<zk xmlns:c="client">
 
-    <grid height="300px">
-        <columns>
-            <column label="Col 1"/>
-            <column label="Col 2"/>
-            <column label="Col 3"/>
-        </columns>
-        <rows>
-            <row>
-                <label value="Value 1"/>
-                <label value="Value 2"/>
-                <label value="Value 3"/>
-            </row>
-        </rows>
-    </grid>
+
+    <button label="Button">
+        <attribute c:name="onClick">var txt = zk("$txt").$();
+
+            var wgt = zk(txt.uuid).$();
+            while (wgt) {
+            if (wgt.$instanceof(zul.tab.Tabpanel)) {
+            wgt.getLinkedTab().setSelected(true);
+            } else if (wgt.$instanceof(zul.layout.LayoutRegion)) {
+            wgt.setOpen(true);
+            }
+            wgt = wgt.parent;
+            }
+        </attribute>
+    </button>
+    <borderlayout>
+        <north size="25%" splittable="true" collapsible="true"/>
+        <east size="25%" splittable="true" collapsible="true"/>
+        <center/>
+        <south size="25%" splittable="true" collapsible="true"/>
+        <west size="25%" splittable="true" collapsible="true" open="false">
+            <tabbox width="400px" height="250px">
+                <tabs>
+                    <tab label="Tab" closable="true"/>
+                    <tab label="Tab" closable="true"/>
+                </tabs>
+                <tabpanels>
+                    <tabpanel/>
+                    <tabpanel>
+                        <textbox id="txt"/>
+                    </tabpanel>
+                </tabpanels>
+            </tabbox>
+
+
+        </west>
+    </borderlayout>
 </zk>

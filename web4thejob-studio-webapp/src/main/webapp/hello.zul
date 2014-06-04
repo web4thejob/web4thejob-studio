@@ -100,6 +100,8 @@
                     <button label="${1+1}"/>
                     <combobutton label="Combobutton"/>
                     <combobutton label="Combobutton"/>
+                    <textbox/>
+                    <combobox/>
                 </vbox>
             </north>
             <east size="45%" splittable="true" collapsible="true">
@@ -108,7 +110,9 @@
             <center>
                 <doublebox/>
             </center>
-            <south size="25%" splittable="true" collapsible="true"/>
+            <south size="25%" splittable="true" collapsible="true" open="false">
+                <decimalbox/>
+            </south>
             <west size="25%" splittable="true" collapsible="true">
                 <grid vflex="true">
                     <columns>
@@ -127,5 +131,6 @@
             </west>
         </borderlayout>
         <label value="New Label"/>
+        <combobox/>
     </window>
 </zk>

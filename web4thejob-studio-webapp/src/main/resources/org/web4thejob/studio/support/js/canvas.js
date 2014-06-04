@@ -68,19 +68,31 @@ var w4tjStudioCanvas = {
     },
 
     select: function (e) {
-        var uuid;
+        var uuid,fromServer;
+
         jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
         if (jq(e).length > 0) { //from client
             uuid = zk(e).$().uuid;
             top.zAu.send(new top.zk.Event(top.zk("$designer").$(), "onWidgetSelected", {target: uuid}));
-
         } else if (jq("#" + e).length > 0) { //from server
             uuid = e;
-            //jq("#"+e).addClass("w4tj-selected");
+            fromServer=true;
         }
 
         if (!uuid) return;
         this.tojqo(uuid).addClass("w4tjstudio-selected");
+
+        if (fromServer){
+            var wgt = zk(uuid).$();
+            while (wgt) {
+                if (wgt.$instanceof(zul.tab.Tabpanel)) {
+                    wgt.getLinkedTab().setSelected(true);
+                } else if (wgt.$instanceof(zul.layout.LayoutRegion)) {
+                    wgt.setOpen(true);
+                }
+                wgt = wgt.parent;
+            }
+        }
     },
 
     //fine tunes selection for the real zk widget (e.g. with borderlayout regions)

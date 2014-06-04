@@ -1,6 +1,8 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.*;
+import nu.xom.Attribute;
+import nu.xom.Element;
+import nu.xom.Text;
 import org.springframework.util.StringUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
@@ -11,7 +13,6 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
@@ -21,6 +22,7 @@ import org.zkoss.zul.Window;
 
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.controller.ControllerEnum.CODE_DIALOG_CONTROLLER;
+import static org.web4thejob.studio.support.StudioUtil.getEventCodeNode;
 
 /**
  * Created by e36132 on 19/5/2014.
@@ -43,18 +45,6 @@ public class CodeDialogController extends AbstractController {
     private Button button;
     private boolean isServerSide;
 
-    public static Node getEventCodeNode(Element element, String eventName, boolean isServerSide) {
-        Nodes nodes;
-        if (isServerSide) {
-            nodes = element.query("child::*[@name='" + eventName + "']");
-        } else {
-            nodes = element.query("child::*[@client:name='" + eventName + "']", new XPathContext("client",
-                    LanguageDefinition.CLIENT_NAMESPACE));
-        }
-        if (nodes.size() != 1) return null;
-
-        return nodes.get(0);
-    }
 
     @Override
     public ControllerEnum getId() {

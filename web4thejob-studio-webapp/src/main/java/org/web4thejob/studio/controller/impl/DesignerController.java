@@ -8,6 +8,7 @@ import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.StudioUtil;
+import org.web4thejob.studio.support.ZulXsdUtil;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.URIEvent;
@@ -48,6 +49,8 @@ public class DesignerController extends AbstractController {
     @Wire
     private Tab codeView;
 
+    private Element selection;
+
     @Override
     public ControllerEnum getId() {
         return DESIGNER_CONTROLLER;
@@ -57,7 +60,8 @@ public class DesignerController extends AbstractController {
     public void onWidgetSelected(Event event) throws InterruptedException {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
-        publish(COMPONENT_SELECTED, getElementByUuid(target));
+        selection = getElementByUuid(target);
+        publish(COMPONENT_SELECTED, selection);
     }
 
     @Listen("onActionsClicked=#designer")
@@ -181,7 +185,8 @@ public class DesignerController extends AbstractController {
                     if (xpath != null) {
                         Nodes nodes = getCode().query(xpath, XPathContext.makeNamespaceContext(getCode().getRootElement()));
                         if (nodes.size() != 1) break;
-                        publish(COMPONENT_SELECTED, nodes.get(0));
+                        selection = (Element) nodes.get(0);
+                        publish(COMPONENT_SELECTED, selection);
                     }
                 }
                 break;
@@ -211,11 +216,16 @@ public class DesignerController extends AbstractController {
                 outlineView.setDisabled(true);
                 break;
             case COMPONENT_SELECTED:
-                if (message.getData() != null)
-                    Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget('" + ((Element) message.getData())
-                            .getAttributeValue("uuid") + "')");
-                else
+                Element newSelection = message.getData();
+                if ((newSelection != null && selection != null)) {
+                    String oldXPath = ZulXsdUtil.getXPath(selection);
+                    String newXPath = ZulXsdUtil.getXPath(newSelection);
+                    if (!oldXPath.equals(newXPath))
+                        Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget('" + newSelection.getAttributeValue("uuid") + "')");
+                } else if (newSelection == null && selection != null)
                     Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget()");
+
+                selection = newSelection;
                 break;
             case NON_ZK_PAGE_VISITED:
                 codeView.setDisabled(true);
@@ -224,6 +234,9 @@ public class DesignerController extends AbstractController {
             case ZK_PAGE_VISITED:
                 codeView.setDisabled(false);
                 outlineView.setDisabled(false);
+                break;
+            case RESET:
+                selection = null;
                 break;
             default:
                 break;
