@@ -1,9 +1,6 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-import nu.xom.Nodes;
-import nu.xom.XPathContext;
+import nu.xom.*;
 import org.springframework.util.Assert;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
@@ -85,9 +82,10 @@ public class PropertyEditorController extends AbstractController {
             case ZUL_EVAL_SUCCEEDED:
                 if (selection != null) {
                     String xpath = getXPath(selection);
-                    Nodes nodes = getCode().query(xpath, new XPathContext("zul", ZUL_NS));
+                    Document document = getCode();
+                    Nodes nodes = getCode().query(xpath, XPathContext.makeNamespaceContext(document.getRootElement()));
                     if (nodes.size() != 1) break;
-                    if (selection.getLocalName().equals(((Element) nodes.get(0)).getLocalName())) {
+                    if (selection.getQualifiedName().equals(((Element) nodes.get(0)).getQualifiedName())) {
                         publish(MessageEnum.COMPONENT_SELECTED, nodes.get(0));
                     }
                 }
@@ -340,7 +338,7 @@ public class PropertyEditorController extends AbstractController {
             combobox.addEventListener(Events.ON_CHANGE, SAVE_CHANGES_HANDLER);
             for (String moldName : definition.getMoldNames()) {
                 if ("w4tjstudio".equals(moldName)) continue;
-                
+
                 Comboitem comboitem = new Comboitem(moldName);
                 comboitem.setParent(combobox);
 

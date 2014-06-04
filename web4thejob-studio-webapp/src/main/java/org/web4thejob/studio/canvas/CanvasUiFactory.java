@@ -11,8 +11,8 @@ import org.zkoss.zk.ui.metainfo.PageDefinition;
 import org.zkoss.zk.ui.sys.RequestInfo;
 
 import javax.servlet.ServletRequest;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
@@ -21,13 +21,19 @@ import javax.xml.xpath.XPathFactory;
  * Created by e36132 on 29/5/2014.
  */
 public class CanvasUiFactory extends SimpleUiFactory {
-    private static CanvasAuService canvasAuService = new CanvasAuService();
+    private static final CanvasAuService canvasAuService = new CanvasAuService();
+    private static final XPathExpression xPathExpression;
+
+    static {
+        try {
+            xPathExpression = XPathFactory.newInstance().newXPath().compile("descendant-or-self::*[@uuid]");
+        } catch (XPathExpressionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static void cleanUUIDs(org.zkoss.idom.Document document) throws XPathExpressionException {
-        String expression = "descendant-or-self::*[@uuid]";
-        XPath xPath = XPathFactory.newInstance().newXPath();
-        NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(document, XPathConstants.NODESET);
-
+        NodeList nodeList = (NodeList) xPathExpression.evaluate(document, XPathConstants.NODESET);
         for (int i = 0; i < nodeList.getLength(); i++) {
             ((org.zkoss.idom.Element) nodeList.item(i)).removeAttribute("uuid");
         }
@@ -48,6 +54,9 @@ public class CanvasUiFactory extends SimpleUiFactory {
             return super.getPageDefinition(ri, path);
         } else {
             try {
+                //I use here the zk Document so that I will not have to parse twice the document
+                //in order to remove the uuids and then feed it to the getPageDefinitionDirectly.
+                //Alternatively I could do the uuid discarding wiht regex replace?!?
                 Document document = new SAXBuilder(true, false, true).build(new FileReader(file, "UTF-8"));
                 cleanUUIDs(document);
                 return super.getPageDefinitionDirectly(ri, document, "zul");

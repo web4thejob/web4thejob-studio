@@ -3,6 +3,7 @@ package org.web4thejob.studio.support;
 import nu.xom.*;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.xml.XMLConstants;
 import java.util.*;
 
 /**
@@ -10,8 +11,7 @@ import java.util.*;
  */
 public abstract class ZulXsdUtil {
     public static final String ZUL_NS = "http://www.zkoss.org/2005/zul";
-    public static final XPathContext XPATH_CONTEXT_XS = new XPathContext("xs", "http://www.w3.org/2001/XMLSchema");
-    public static final XPathContext XPATH_CONTEXT_ZUL = new XPathContext("zul", "org/web4thejob/studio/zul.xsd");
+    public static final XPathContext XPATH_CONTEXT_XS = new XPathContext("xs", XMLConstants.W3C_XML_SCHEMA_NS_URI);
     private static final ElementComparator ELEMENT_COMPARATOR = new ElementComparator();
     private static final SortedMap<String, SortedSet<Element>> emptyMap = new TreeMap<>();
     private static final SortedSet<String> emptySet = new TreeSet<>();
@@ -148,16 +148,16 @@ public abstract class ZulXsdUtil {
         if (element == null) return null;
         Node parent = element.getParent();
         if (parent == null || !(parent instanceof Element)) {
-            return "/zul:" + element.getLocalName();
+            return "/" + element.getQualifiedName();
         }
-        return getXPath((Element) parent) + "/zul:" + element.getLocalName() + "[" + getOccurenceOfChild((Element)
+        return getXPath((Element) parent) + "/" + element.getQualifiedName() + "[" + getOccurenceOfChild((Element)
                 parent, element) + "]";
     }
 
     private static int getOccurenceOfChild(Element parent, Element child) {
         int occurence = 0;
         for (int i = 0; i < parent.getChildElements().size(); i++) {
-            if (parent.getChildElements().get(i).getLocalName().equals(child.getLocalName())) {
+            if (parent.getChildElements().get(i).getQualifiedName().equals(child.getQualifiedName())) {
                 occurence++;
             }
             if (parent.getChildElements().get(i).equals(child)) {

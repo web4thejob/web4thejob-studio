@@ -121,7 +121,7 @@ public class CanvasAuService implements AuService {
 
     private static Document mapZulToComponents(String src) throws IOException, ParsingException {
         final Desktop canvas = Executions.getCurrent().getDesktop();
-        Document document = new Builder(false).build(new FileInputStream(src), null);
+        Document document = StudioUtil.buildDocument(new FileInputStream(src));
         if (document.getRootElement() == null) return document;
 
         Map<String, Object> params = new HashMap<>();

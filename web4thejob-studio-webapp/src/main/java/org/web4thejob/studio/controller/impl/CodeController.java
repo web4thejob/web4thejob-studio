@@ -1,33 +1,24 @@
 package org.web4thejob.studio.controller.impl;
 
-import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
-import org.apache.commons.lang.ClassUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
-import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Locators;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Textbox;
 
 import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.SortedSet;
+import java.io.FileNotFoundException;
 
 import static org.web4thejob.studio.message.MessageEnum.*;
-import static org.web4thejob.studio.support.StudioUtil.*;
-import static org.web4thejob.studio.support.ZulXsdUtil.ZUL_NS;
-import static org.web4thejob.studio.support.ZulXsdUtil.getWidgetDescription;
+import static org.web4thejob.studio.support.StudioUtil.getElementByUuid;
 
 /**
  * Created by e36132 on 14/5/2014.
@@ -45,25 +36,18 @@ public class CodeController extends AbstractController {
     }
 
     public void reset(String file) {
-        Builder parser = new Builder(false);
         try {
-            document = parser.build(new FileInputStream(file), null);
-        } catch (Exception e) {
+            document = StudioUtil.buildDocument(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         changed = false;
         print();
     }
 
     public Document getCode() {
         if (changed) {
-            Builder parser = new Builder(false);
-            try {
-                document = parser.build(zulBox.getValue(), null);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            document = StudioUtil.buildDocument(zulBox.getValue());
             changed = false;
         }
         return document;
@@ -92,70 +76,70 @@ public class CodeController extends AbstractController {
         return changed;
     }
 
-    private void includeComponent(String uuid) {
-        Component component = getCanvasComponentByUuid(uuid);
-        Element element = toElement(component);
-
-        if (component.getParent() != null && !component.getParent().getUuid().equals(getCanvasUuid())) {
-            String parentUuid = component.getParent().getUuid();
-            getElementByUuid(parentUuid).appendChild(element);
-        } else {
-            document.getRootElement().appendChild(element);
-        }
-        print();
-    }
-
-    private Element toElement(Component component) {
-        Map<String, Object> params = new HashMap<>();
-        traverseChildren(component, params, new ChildDelegate<Component>() {
-            @Override
-            public void onChild(Component child, Map<String, Object> params) {
-                if (ClassUtils.isInnerClass(child.getClass())) return;
-
-                Element element = new Element(child.getDefinition().getName(), ZUL_NS);
-                element.addAttribute(new Attribute("uuid", child.getUuid()));
-                Element parent = (Element) params.get("parent");
-                if (parent != null) {
-                    parent.appendChild(element);
-                } else {
-                    params.put("element", element); //this is the top element
-                }
-                params.put("parent", element);
-
-
-                SortedMap<String, SortedSet<Element>> propsMap = getWidgetDescription(child.getDefinition()
-                        .getName());
-                for (String group : propsMap.keySet()) {
-                    for (Element property : propsMap.get(group)) {
-                        String propertyName = property.getAttributeValue("name");
-                        String type = property.getAttributeValue("type");
-                        boolean isBoolean = "booleanType".equals(type);
-//                        if (isBannedProperty(child.getClass(), propertyName, isBoolean)) continue;
-
-                        if (hasProperty(child.getClass(), propertyName, isBoolean)) {
-                            Object value = null;
-
-                            try {
-                                value = invokeGetter(child, propertyName, isBoolean);
-                            } catch (Exception e) {
-                                //do nothing, probably just wrong state like when you call pageSize on grid without
-                                // paging mold
-                            }
-
-                            if (value != null && !isDefaultValueForProperty(child, propertyName, value.toString(),
-                                    isBoolean) && isEligibleTypeForXml(value.getClass())) {
-                                element.addAttribute(new Attribute(propertyName, value.toString()));
-                            }
-                        }
-                    }
-                }
-
-
-            }
-        });
-
-        return (Element) params.get("element");
-    }
+//    private void includeComponent(String uuid) {
+//        Component component = getCanvasComponentByUuid(uuid);
+//        Element element = toElement(component);
+//
+//        if (component.getParent() != null && !component.getParent().getUuid().equals(getCanvasUuid())) {
+//            String parentUuid = component.getParent().getUuid();
+//            getElementByUuid(parentUuid).appendChild(element);
+//        } else {
+//            document.getRootElement().appendChild(element);
+//        }
+//        print();
+//    }
+//
+//    private Element toElement(Component component) {
+//        Map<String, Object> params = new HashMap<>();
+//        traverseChildren(component, params, new ChildDelegate<Component>() {
+//            @Override
+//            public void onChild(Component child, Map<String, Object> params) {
+//                if (ClassUtils.isInnerClass(child.getClass())) return;
+//
+//                Element element = new Element(child.getDefinition().getName(), ZUL_NS);
+//                element.addAttribute(new Attribute("uuid", child.getUuid()));
+//                Element parent = (Element) params.get("parent");
+//                if (parent != null) {
+//                    parent.appendChild(element);
+//                } else {
+//                    params.put("element", element); //this is the top element
+//                }
+//                params.put("parent", element);
+//
+//
+//                SortedMap<String, SortedSet<Element>> propsMap = getWidgetDescription(child.getDefinition()
+//                        .getName());
+//                for (String group : propsMap.keySet()) {
+//                    for (Element property : propsMap.get(group)) {
+//                        String propertyName = property.getAttributeValue("name");
+//                        String type = property.getAttributeValue("type");
+//                        boolean isBoolean = "booleanType".equals(type);
+////                        if (isBannedProperty(child.getClass(), propertyName, isBoolean)) continue;
+//
+//                        if (hasProperty(child.getClass(), propertyName, isBoolean)) {
+//                            Object value = null;
+//
+//                            try {
+//                                value = invokeGetter(child, propertyName, isBoolean);
+//                            } catch (Exception e) {
+//                                //do nothing, probably just wrong state like when you call pageSize on grid without
+//                                // paging mold
+//                            }
+//
+//                            if (value != null && !isDefaultValueForProperty(child, propertyName, value.toString(),
+//                                    isBoolean) && isEligibleTypeForXml(value.getClass())) {
+//                                element.addAttribute(new Attribute(propertyName, value.toString()));
+//                            }
+//                        }
+//                    }
+//                }
+//
+//
+//            }
+//        });
+//
+//        return (Element) params.get("element");
+//    }
 
     @Override
     public void process(Message message) {

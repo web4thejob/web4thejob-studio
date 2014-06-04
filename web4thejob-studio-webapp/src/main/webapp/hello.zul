@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" ?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" ?>
-<zk>
-    <window vflex="true" hflex="true" border="normal" closable="true" title="AB">
-        <attribute name="onFulfill">x</attribute>
+<zk xmlns:n="native" xmlns:c="client">
+    <window vflex="true" hflex="true" border="normal" closable="true" title="AB" contentStyle="overflow:auto">
+        <attribute name="onDrop">g</attribute>
+        <attribute c:name="onCreate">h</attribute>
+        <attribute c:name="onFulfill">s</attribute>
 
 
-        <menubar xmlns="http://www.zkoss.org/2005/zul" focus="true">
+        <menubar xmlns="http://www.zkoss.org/2005/zul">
             <menu label="Menu 1">
                 <menupopup>
                     <menuitem label="Menu item" href="/"/>
@@ -19,20 +21,56 @@
             </menu>
         </menubar>
 
-        <panel xmlns="http://www.zkoss.org/2005/zul" vflex="true" title="A666" floatable="true" movable="true"
-               closable="true" border="normal">
+        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal">
             <panelchildren>
-                <tabbox xmlns="" height="250px" width="300px">
+                <tabbox height="250px" width="300px">
                     <tabs>
                         <tab label="Tab" closable="true"/>
                         <tab label="Tab" closable="true"/>
                     </tabs>
                     <tabpanels>
-                        <tabpanel/>
+                        <tabpanel>
+                            <n:h1>Wowww</n:h1>
+                        </tabpanel>
                         <tabpanel/>
                     </tabpanels>
                 </tabbox>
             </panelchildren>
         </panel>
+
+        <tree>
+            <treechildren>
+                <treeitem>
+                    <treerow>
+                        <treecell label="Node 1"/>
+                    </treerow>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Subnode 1"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Subnode 2"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Subnode 3"/>
+                            </treerow>
+                        </treeitem>
+                    </treechildren>
+                </treeitem>
+            </treechildren>
+        </tree>
+
+        <borderlayout xmlns="http://www.zkoss.org/2005/zul">
+            <north size="25%" splittable="true" collapsible="true"/>
+            <east size="25%" splittable="true" collapsible="true"/>
+            <center/>
+            <south size="25%" splittable="true" collapsible="true"/>
+            <west size="25%" splittable="true" collapsible="true"/>
+        </borderlayout>
     </window>
 </zk>

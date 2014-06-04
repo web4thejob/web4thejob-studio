@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import org.web4thejob.studio.controller.Controller;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.controller.impl.CodeController;
+import org.web4thejob.studio.dom.NodeFactory;
 import org.zkoss.json.JSONValue;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
@@ -22,6 +23,7 @@ import org.zkoss.zk.ui.util.Clients;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -29,8 +31,6 @@ import static org.springframework.util.Assert.isTrue;
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.controller.ControllerEnum.CANVAS_CONTROLLER;
 import static org.web4thejob.studio.controller.ControllerEnum.CODE_CONTROLLER;
-import static org.web4thejob.studio.support.ZulXsdUtil.XPATH_CONTEXT_ZUL;
-import static org.web4thejob.studio.support.ZulXsdUtil.ZUL_NS;
 import static org.zkoss.lang.Generics.cast;
 
 /**
@@ -196,7 +196,7 @@ public abstract class StudioUtil {
     }
 
     public static void cleanUUIDs(Element parent) {
-        Nodes nodes = parent.query("descendant-or-self::*[@uuid]", XPATH_CONTEXT_ZUL);
+        Nodes nodes = parent.query("descendant-or-self::*[@uuid]", XPathContext.makeNamespaceContext(parent));
         for (int i = 0; i < nodes.size(); i++) {
             Attribute uuid = ((Element) nodes.get(i)).getAttribute("uuid");
             ((Element) nodes.get(i)).removeAttribute(uuid);
@@ -377,8 +377,8 @@ public abstract class StudioUtil {
         if (isServerSide) {
             nodes = element.query("child::*[@name='" + eventName + "']");
         } else {
-            nodes = element.query("child::*[@client:name='" + eventName + "']", new XPathContext("client",
-                    LanguageDefinition.CLIENT_NAMESPACE));
+            String prefix = StudioUtil.getClientNamespacePrefix((org.web4thejob.studio.dom.Element) element);
+            nodes = element.query("child::*[@" + prefix + ":name='" + eventName + "']", XPathContext.makeNamespaceContext(element));
         }
         if (nodes.size() != 1) return null;
 
@@ -469,13 +469,13 @@ public abstract class StudioUtil {
 
 
     private static void cleanWellKnownErrors(Document document) {
-        XPathContext xpathContext = new XPathContext("zul", ZUL_NS);
+        XPathContext xpathContext = XPathContext.makeNamespaceContext(document.getRootElement());
+
         Nodes nodes = document.query("//zul:panelchildren[@vflex]", xpathContext);
         for (int i = 0; i < nodes.size(); i++) {
             Attribute a = ((Element) nodes.get(i)).getAttribute("vflex");
             a.detach();
         }
-
         nodes = document.query("//zul:treeitem[@label]", xpathContext);
         for (int i = 0; i < nodes.size(); i++) {
             Attribute a = ((Element) nodes.get(i)).getAttribute("label");
@@ -510,4 +510,30 @@ public abstract class StudioUtil {
                 "" + JSONValue.toJSONString(data) + ")");
     }
 
+    public static Document buildDocument(String content) {
+        try {
+            return new Builder(false, new NodeFactory()).build(content, null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Document buildDocument(InputStream content) {
+        try {
+            return new Builder(false, new NodeFactory()).build(content, null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getClientNamespacePrefix(org.web4thejob.studio.dom.Element element) {
+        Map<String, String> ns = element.getNamespacePrefixesInScope();
+        for (String prefix : ns.keySet()) {
+            String uri = ns.get(prefix);
+            if ("client".equals(uri) || LanguageDefinition.CLIENT_NAMESPACE.equals(uri)) {
+                return prefix;
+            }
+        }
+        return null;
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.util.StringUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.MessageEnum;
+import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -107,13 +108,17 @@ public class CodeDialogController extends AbstractController {
                         if (isServerSide) {
                             codeBlock.addAttribute(new Attribute("name", eventName));
                         } else {
-                            codeBlock.addAttribute(new Attribute("client:name", LanguageDefinition.CLIENT_NAMESPACE,
-                                    eventName));
+                            String clientPrefix = StudioUtil.getClientNamespacePrefix((org.web4thejob.studio.dom.Element) element);
+                            if (clientPrefix == null) {
+                                clientPrefix = "c";
+                                element.getDocument().getRootElement().addNamespaceDeclaration(clientPrefix, "client");
+                            }
+
+                            codeBlock.addAttribute(new Attribute(clientPrefix + ":name", "client", eventName));
                         }
                         element.insertChild(codeBlock, 0);
                     }
-                    codeBlock.insertChild(cdata, 0);
-
+                    codeBlock.appendChild(cdata);
                 }
 
                 editorWindow.detach();
