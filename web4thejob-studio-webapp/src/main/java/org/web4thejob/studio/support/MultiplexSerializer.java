@@ -3,14 +3,8 @@ package org.web4thejob.studio.support;
 import nu.xom.Element;
 import nu.xom.Serializer;
 import nu.xom.Text;
-import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.util.ReflectionUtils;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -27,47 +21,28 @@ import static org.web4thejob.studio.support.StudioUtil.isCodeElement;
  */
 public class MultiplexSerializer extends Serializer {
 
-    private static Invocable invocable;
+    public MultiplexSerializer(OutputStream out) {
+        super(out);
+    }
+
     private static Field escaper;
-    private static Object options;
-
     static {
-        ScriptEngineManager engineManager = new ScriptEngineManager();
-        ScriptEngine engine = engineManager.getEngineByName("nashorn");
-
         try {
             escaper = findField(Serializer.class, "escaper");
-            notNull(escaper);
-            makeAccessible(escaper);
-
-            String basePath = "org/web4thejob/studio/support/js/beautify/";
-            Resource js_beautify = new ClassPathResource(basePath + "beautify.js");
-            Resource css_beautify = new ClassPathResource(basePath + "beautify-css.js");
-            Resource html_beautify = new ClassPathResource(basePath + "beautify-html.js");
-            engine.eval(IOUtils.toString(js_beautify.getInputStream()));
-            engine.eval(IOUtils.toString(css_beautify.getInputStream()));
-            engine.eval(IOUtils.toString(html_beautify.getInputStream()));
-
-            invocable = (Invocable) engine;
-            Object json = engine.eval("JSON");
-            options = invocable.invokeMethod(json, "parse", "{\"indent_size\": 2}");
+            escaper.setAccessible(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public MultiplexSerializer(OutputStream out) {
-        super(out);
     }
 
     @Override
     protected void write(Element element) throws IOException {
         if (isCodeElement(element)) {
 
-            if (element.getAttribute("src") != null) {
-                super.write(element);
-                return;
-            }
+//            if (element.getAttribute("src") != null) {
+//                super.write(element);
+//                return;
+//            }
 
             writeStartTag(element);
             breakLine();
@@ -87,11 +62,11 @@ public class MultiplexSerializer extends Serializer {
                 try {
                     String tag = element.getLocalName();
                     if (tag.equals("attribute") || tag.equals("script") || tag.equals("zscript")) {
-                        js = (String) invocable.invokeFunction("js_beautify", text.getValue(), options);
+                        js = CodeFormatter.formatJS(text.getValue());
                     } else if (tag.equals("style")) {
-                        js = (String) invocable.invokeFunction("css_beautify", text.getValue(), options);
+                        js = CodeFormatter.formatCSS(text.getValue());
                     } else if (tag.equals("html")) {
-                        js = (String) invocable.invokeFunction("html_beautify", text.getValue(), options);
+                        js = CodeFormatter.formatHTML(text.getValue());
                     } else {
                         throw new IllegalArgumentException(tag + " is not a recognized code block");
                     }
@@ -122,6 +97,18 @@ public class MultiplexSerializer extends Serializer {
             notNull(m);
             makeAccessible(m);
             m.invoke(o, preserve);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void decrementIndent() {
+        try {
+            Object o = escaper.get(this);
+            Method m = ReflectionUtils.findMethod(o.getClass(), "decrementIndent");
+            notNull(m);
+            makeAccessible(m);
+            m.invoke(o);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

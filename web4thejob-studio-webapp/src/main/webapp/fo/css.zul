@@ -1,39 +1,29 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" ?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" ?>
 <zk xmlns:n="native">
     <n:div class="label label-default file ">
         <n:a href="/" target="_blank">abc/h/dsds/ds/ds/ds/d/s/a/hello.zul</n:a>
     </n:div>
-
-
     <style>
-        .file {
-        position:absolute;
-        margin: 0 auto;
-        left: 0px;
-        right:0px;
-
-        font-size:14px !important;
-        font-family:monospace;
-        display:table-cell;
-        max-width:250px;
-        border-radius: 0.75em;
-        font-weight: 100;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        direction:rtl;
-        }
-
-        .file a {
-        color:white;
-        }
-        .file a:hover {
-        text-decoration:underline;
-        }
+        <![CDATA[
+            .sasa {
+              max-width: 250px;
+              border-radius: 0.75em;
+              font-weight: 100;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+              -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              direction: rtl;
+            }
+            .file a {
+              color: white;
+            }
+            .file a:hover {
+              text-decoration: underline;
+            }
+        ]]>
     </style>
 </zk>

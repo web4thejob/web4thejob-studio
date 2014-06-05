@@ -5,6 +5,7 @@ import nu.xom.Element;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
+import org.web4thejob.studio.support.CodeFormatter;
 import org.web4thejob.studio.support.StudioUtil;
 import org.web4thejob.studio.support.ZulXsdUtil;
 import org.zkoss.json.JSONObject;
@@ -61,7 +62,7 @@ public class CodeController extends AbstractController {
         //TODO activate for production
 //        cleanUUIDs(doc.getRootElement());
 
-        zulBox.setValue(StudioUtil.beautifyXml(doc));
+        zulBox.setValue(CodeFormatter.formatXML(doc));
         Clients.evalJavaScript("myCodeMirror.refresh()");
     }
 

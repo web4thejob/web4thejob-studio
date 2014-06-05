@@ -463,11 +463,6 @@ public abstract class StudioUtil {
         }
     }
 
-    public static String beautifyXml(Document document) {
-        return CodeFormatter.formatXML(document.toXML());
-    }
-
-
     private static void cleanWellKnownErrors(Document document) {
         XPathContext xpathContext = XPathContext.makeNamespaceContext(document.getRootElement());
 
@@ -498,7 +493,7 @@ public abstract class StudioUtil {
         try {
             File f = File.createTempFile("w4tjstudio", "zul");
             f.deleteOnExit();
-            FileUtils.writeStringToFile(f, StudioUtil.beautifyXml(document), "UTF-8");
+            FileUtils.writeStringToFile(f, CodeFormatter.formatXML(document), "UTF-8");
             return f;
         } catch (IOException e) {
             throw new RuntimeException(e);

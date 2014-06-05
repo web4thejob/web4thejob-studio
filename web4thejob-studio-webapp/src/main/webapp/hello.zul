@@ -1,14 +1,91 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" ?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" ?>
 <zk xmlns:n="native" xmlns:c="client">
     <window vflex="true" hflex="true" border="normal" closable="true" title="AB" contentStyle="overflow:auto"
             sizable="true">
-        <attribute name="onDrop">g</attribute>
-        <attribute c:name="onCreate">h</attribute>
-        <attribute c:name="onFulfill">s</attribute>
-
-
+        <html>
+            <![CDATA[
+                <div>
+                  <a>hello</a>
+                  <p>dsdsds</p>
+                </div>
+                <style>
+                  .file {
+                    position: absolute;
+                    margin: 0 auto;
+                    left: 0px;
+                    right: 0px;
+                    font-size: 14px !important;
+                    font-family: monospace;
+                    display: table-cell;
+                    max-width: 250px;
+                    border-radius: 0.75em;
+                    font-weight: 100;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    direction: rtl;
+                  }
+                </style>
+            ]]>
+        </html>
+        <attribute name="onDrop">
+            <![CDATA[
+                //dsdsds ds
+                function(evt, timeout) {
+                  var oldtg = evt.currentTarget;
+                  evt.currentTarget = this;
+                  try {
+                    var evtnm = evt.name,
+                      lsns = this._lsns[evtnm],
+                      len = lsns ? lsns.length : 0;
+                    /* dsdsdsdsdsdsj djskdsk dsjkdsk */
+                    if (len) {
+                      for (var j = 0; j < len;) {
+                        var inf = lsns[j++],
+                          o = inf[0];
+                        (inf[1] || o[evtnm]).call(o, evt);
+                        if (evt.stopped) return evt;
+                      }
+                    }
+                    if (!evt.auStopped) {
+                      var toServer = evt.opts && evt.opts.toServer;
+                      if (toServer || (this.inServer && this.desktop)) {
+                        var asap = toServer || this._asaps[evtnm];
+                        if (asap == null) {
+                          var ime = this.$class._importantEvts;
+                          if (ime) {
+                            var ime = ime[evtnm];
+                            if (ime != null)
+                              asap = ime;
+                          }
+                        }
+                        if (asap != null || evt.opts.sendAhead)
+                          this.sendAU_(evt,
+                            asap ? timeout >= 0 ? timeout : Widget.auDelay : -1);
+                      }
+                    }
+                    return evt;
+                  } finally {
+                    evt.currentTarget = oldtg;
+                  }
+                }
+            ]]>
+        </attribute>
+        <attribute c:name="onCreate">
+            <![CDATA[
+                h
+            ]]>
+        </attribute>
+        <attribute c:name="onFulfill">
+            <![CDATA[
+                s
+            ]]>
+        </attribute>
+        <!-- jasnaks sjakjka sajksa -->
         <menubar>
             <menu label="Menu 1">
                 <menupopup>
@@ -21,9 +98,7 @@
                 </menupopup>
             </menu>
         </menubar>
-
-        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal"
-               visible="false">
+        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal">
             <panelchildren>
                 <tabbox height="250px" width="600px">
                     <tabs>
@@ -49,7 +124,11 @@
                                 <menu label="Menu 1"/>
                             </menubar>
                             <ckeditor vflex="true">
-                                <attribute c:name="onSave">h</attribute>
+                                <attribute c:name="onSave">
+                                    <![CDATA[
+                                        h
+                                    ]]>
+                                </attribute>
                             </ckeditor>
                         </tabpanel>
                     </tabpanels>
@@ -57,7 +136,6 @@
                 <textbox/>
             </panelchildren>
         </panel>
-
         <tree>
             <treechildren>
                 <treeitem>
@@ -87,6 +165,7 @@
                                 <treecell label="Subnode 3">
                                     <label value="New Label"/>
                                     <button label="Button" orient="horizontal"/>
+                                    <button label="Button" orient="horizontal"/>
                                 </treecell>
                             </treerow>
                         </treeitem>
@@ -99,7 +178,6 @@
                 </treeitem>
             </treechildren>
         </tree>
-
         <borderlayout>
             <north size="25%" splittable="true" collapsible="true" flex="true">
                 <vbox vflex="true" width="300px">

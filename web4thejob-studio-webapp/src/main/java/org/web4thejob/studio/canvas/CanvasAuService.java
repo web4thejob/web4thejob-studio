@@ -3,6 +3,7 @@ package org.web4thejob.studio.canvas;
 import nu.xom.*;
 import org.apache.commons.io.FileUtils;
 import org.web4thejob.studio.support.ChildDelegate;
+import org.web4thejob.studio.support.CodeFormatter;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.au.AuRequest;
 import org.zkoss.zk.au.AuService;
@@ -71,11 +72,11 @@ public class CanvasAuService implements AuService {
                 Document document = mapZulToComponents(workFile != null ? workFile : prodFile);
                 if (workFile != null) {
                     //update workfile with uuids
-                    FileUtils.writeStringToFile(new File(workFile), StudioUtil.beautifyXml(document), "UTF-8");
+                    FileUtils.writeStringToFile(new File(workFile), CodeFormatter.formatXML(document), "UTF-8");
 
                     //update production file without uuids
                     StudioUtil.cleanUUIDs(document.getRootElement());
-                    FileUtils.writeStringToFile(new File(prodFile), StudioUtil.beautifyXml(document), "UTF-8");
+                    FileUtils.writeStringToFile(new File(prodFile), CodeFormatter.formatXML(document), "UTF-8");
                 } else {
                     workFile = StudioUtil.buildWorkingFile(document).getAbsolutePath();
                     data.put(PARAM_WORK_FILE, workFile);

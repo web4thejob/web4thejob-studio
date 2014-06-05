@@ -1,7 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <zk>
-
-
     <button label="Button"/>
     <textbox multiline="true" tabbable="true"/>
     <grid height="300px">
