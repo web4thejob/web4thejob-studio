@@ -17,7 +17,9 @@
         </attribute>
     </button>
     <borderlayout>
-        <north size="25%" splittable="true" collapsible="true"/>
+        <north size="25%" splittable="true" collapsible="true">
+            <a label="Link" sclass="label"/>
+        </north>
         <east size="25%" splittable="true" collapsible="true"/>
         <center/>
         <south size="25%" splittable="true" collapsible="true"/>

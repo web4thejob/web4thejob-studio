@@ -74,6 +74,7 @@
                             <treerow>
                                 <treecell label="Subnode 2">
                                     <textbox value="fdfdf"/>
+                                    <a label="Link" sclass="label label-info" href="/"/>
                                 </treecell>
                             </treerow>
                         </treeitem>

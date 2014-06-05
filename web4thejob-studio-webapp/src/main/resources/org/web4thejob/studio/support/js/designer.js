@@ -146,15 +146,21 @@ var w4tjStudioDesigner = {
   set fileName(fileName) {
     this._fileName=fileName;
 
-    var e=jq('$views').find('.designer-file .label');
+    var e=jq('$views').find('.designer-file .label a');
     if (!e.length) {
-      jq('$views').append('<div class="designer-file"><span class="label label-default"/></div>');
-      e=jq('$views').find('.designer-file .label');
+      jq('$views').append('<div class="designer-file"><span class="label label-default"><span class="dot">&#xf111;</span><a target="_blank"/><span class="dot">&#xf111;</span></span></div>');
+      e=jq('$views').find('.designer-file .label a');
     }
-    jq(e).empty();
-    jq(e).text(this._fileName);
-    jq(e).prepend('<span style="margin-right:5px">&#xf111;</span>');
-    jq(e).append('<span style="margin-left:5px">&#xf111;</span>');
+
+    var jqo=jq(e);
+    jqo.empty();
+    jqo.attr("href",this._fileName);
+
+    var s=this._fileName;
+    if (s.length>25){
+        s="..." + s.substr(s.length - 25);
+    }
+    jqo.text(s);
   },
 
   codeSuccessEffect: function() {
@@ -242,7 +248,7 @@ hasHandler: function(element, event) {
 hookCanvas: function() {
     var canvas=this.getCanvasFrame();
 
-    this.fileName=canvas.location.pathname;
+    this.fileName=canvas.location.pathname.split('?')[0];
     if (!canvas.zk){
         zAu.send(new zk.Event(zk("$designer").$(), "onNonZKPage"));
         return;

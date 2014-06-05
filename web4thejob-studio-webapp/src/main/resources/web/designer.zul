@@ -96,22 +96,37 @@
         top: 9px;
         right: 0px;
         left: 0px;
-        z-index: -1;
         font-family: monospace
         }
 
-        .designer-file > span{
+        .designer-file > .label {
         border-radius: 0.75em;
         font-weight: 100;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
+        .designer-file a {
+        color:white;
+        margin-left: 5px;
+        margin-right: 5px;
+        }
+        .designer-file a:hover {
+        color:white;
+        text-decoration: underline !important;
+        }
 
-        .designer-file > span > span {
+        .designer-file .dot {
         font-family: FontAwesome;
         font-size: 5px !important;
         vertical-align: middle;
         }
+
+        .w4tjstudio-designer .designer-file {z-index: 0;}
+        .w4tjstudio-designer .designer-toolbar {z-index: 1;}
+        .w4tjstudio-designer .z-tab {z-index: 1;}
+        /* ---------------------------------------------------------- */
+
+
 
         .z-tab:hover, .z-tab-selected {
         border-top-width: 2px;
