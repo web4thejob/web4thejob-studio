@@ -75,12 +75,19 @@
                                 <treecell label="Subnode 2">
                                     <textbox value="fdfdf"/>
                                     <a label="Link" sclass="label label-info" href="/"/>
+                                    <textbox multiline="true" constraint="no empty"/>
+                                    <textbox tabbable="true"/>
+                                    <button label="Button"/>
+                                    <textbox/>
                                 </treecell>
                             </treerow>
                         </treeitem>
                         <treeitem>
                             <treerow>
-                                <treecell label="Subnode 3"/>
+                                <treecell label="Subnode 3">
+                                    <label value="New Label"/>
+                                    <button label="Button" orient="horizontal"/>
+                                </treecell>
                             </treerow>
                         </treeitem>
                     </treechildren>
@@ -97,7 +104,7 @@
             <north size="25%" splittable="true" collapsible="true" flex="true">
                 <vbox vflex="true" width="300px">
                     <button label="Button"/>
-                    <button label="Button" disabled="true"/>
+                    <button label="Button" disabled="true" orient="vertical"/>
                     <button label="${1+1}"/>
                     <combobutton label="Combobutton"/>
                     <combobutton label="Combobutton"/>
@@ -105,7 +112,7 @@
                     <combobox/>
                 </vbox>
             </north>
-            <east size="45%" splittable="true" collapsible="true">
+            <east size="40%" splittable="true" collapsible="true">
                 <longbox/>
             </east>
             <center>

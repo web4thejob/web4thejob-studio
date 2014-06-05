@@ -8,7 +8,6 @@ import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.StudioUtil;
-import org.web4thejob.studio.support.ZulXsdUtil;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.URIEvent;
@@ -32,12 +31,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     public static final String PARAM_XPATH = "w4tjstudio_xpath";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -60,8 +59,12 @@ public class DesignerController extends AbstractController {
     public void onWidgetSelected(Event event) throws InterruptedException {
         String target = (String) ((Map) event.getData()).get("target");
         notNull(target);
-        selection = getElementByUuid(target);
-        publish(COMPONENT_SELECTED, selection);
+        try {
+            selection = getElementByUuid(target);
+            publish(COMPONENT_SELECTED, selection);
+        } catch (Exception e) {
+            publish(COMPONENT_SELECTED);
+        }
     }
 
     @Listen("onActionsClicked=#designer")
@@ -218,10 +221,10 @@ public class DesignerController extends AbstractController {
             case COMPONENT_SELECTED:
                 Element newSelection = message.getData();
                 if ((newSelection != null && selection != null)) {
-                    String oldXPath = ZulXsdUtil.getXPath(selection);
-                    String newXPath = ZulXsdUtil.getXPath(newSelection);
-                    if (!oldXPath.equals(newXPath))
-                        Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget('" + newSelection.getAttributeValue("uuid") + "')");
+//                    String oldXPath = ZulXsdUtil.getXPath(selection);
+//                    String newXPath = ZulXsdUtil.getXPath(newSelection);
+//                    if (!oldXPath.equals(newXPath))
+                    Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget('" + newSelection.getAttributeValue("uuid") + "')");
                 } else if (newSelection == null && selection != null)
                     Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget()");
 

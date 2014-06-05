@@ -68,21 +68,30 @@ var w4tjStudioCanvas = {
     },
 
     select: function (e) {
-        var uuid,fromServer;
+        var uuid,
+            fromServer=typeof e === "string";
 
-        jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
-        if (jq(e).length > 0) { //from client
-            uuid = zk(e).$().uuid;
-            top.zAu.send(new top.zk.Event(top.zk("$designer").$(), "onWidgetSelected", {target: uuid}));
-        } else if (jq("#" + e).length > 0) { //from server
+        if (!fromServer) {
+            var wgt = zk(e).$();
+            if (wgt.$instanceof(zul.Widget))
+                top.zAu.send(new top.zk.Event(top.zk("$designer").$(), "onWidgetSelected", {target: wgt.uuid}));
+            else
+                return;
+        } else { //from server
             uuid = e;
-            fromServer=true;
         }
 
-        if (!uuid) return;
-        this.tojqo(uuid).addClass("w4tjstudio-selected");
+        if (!uuid) {
+            jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
+            return;
+        }
 
-        if (fromServer){
+        var jqosel=this.tojqo(uuid)
+        var isNew=!jq("[class~=w4tjstudio-selected]").is(jqosel);
+        jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
+        jqosel.addClass("w4tjstudio-selected");
+
+        if (fromServer && isNew){
             var wgt = zk(uuid).$();
             while (wgt) {
                 if (wgt.$instanceof(zul.tab.Tabpanel)) {
@@ -93,6 +102,7 @@ var w4tjStudioCanvas = {
                 wgt = wgt.parent;
             }
         }
+
     },
 
     //fine tunes selection for the real zk widget (e.g. with borderlayout regions)

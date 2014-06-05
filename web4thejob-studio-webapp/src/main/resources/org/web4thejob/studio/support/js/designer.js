@@ -204,6 +204,7 @@ var w4tjStudioDesigner = {
        var $badge=jq($caption.find(".badge"));
        $badge.css("color","#3a87ad");
        $badge.css("background-color","#d9edf7");
+       $badge.css("border","1px solid #A5CDE0");
        $badge.attr("title",val + " out of " + count + " attribute(s) are set").attr("data-toggle","tooltip").attr("data-placement","auto left").tooltip();;
      }
    })
