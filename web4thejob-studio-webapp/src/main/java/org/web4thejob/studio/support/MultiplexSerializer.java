@@ -13,7 +13,6 @@ import java.util.StringTokenizer;
 
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.util.ReflectionUtils.findField;
-import static org.springframework.util.ReflectionUtils.makeAccessible;
 import static org.web4thejob.studio.support.StudioUtil.isCodeElement;
 
 /**
@@ -21,11 +20,33 @@ import static org.web4thejob.studio.support.StudioUtil.isCodeElement;
  */
 public class MultiplexSerializer extends Serializer {
 
+
     public MultiplexSerializer(OutputStream out) {
         super(out);
-    }
+        try {
+            Object o = escaper.get(this);
 
+            incrementIndent = ReflectionUtils.findMethod(o.getClass(), "incrementIndent");
+            notNull(incrementIndent);
+            incrementIndent.setAccessible(true);
+
+            decrementIndent = ReflectionUtils.findMethod(o.getClass(), "decrementIndent");
+            notNull(decrementIndent);
+            decrementIndent.setAccessible(true);
+
+            setPreserveSpace = ReflectionUtils.findMethod(o.getClass(), "setPreserveSpace", boolean.class);
+            notNull(setPreserveSpace);
+            setPreserveSpace.setAccessible(true);
+
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     private static Field escaper;
+    private Method incrementIndent;
+    private Method decrementIndent;
+    private Method setPreserveSpace;
     static {
         try {
             escaper = findField(Serializer.class, "escaper");
@@ -39,15 +60,22 @@ public class MultiplexSerializer extends Serializer {
     protected void write(Element element) throws IOException {
         if (isCodeElement(element)) {
 
-//            if (element.getAttribute("src") != null) {
-//                super.write(element);
-//                return;
-//            }
+            //native javascript block, do not process
+            if (element.getAttribute("src") != null) {
+                super.write(element);
+                return;
+            }
+
+            boolean needsCDATA = !"style".equals(element.getLocalName());
 
             writeStartTag(element);
-            breakLine();
-            writeRaw("<![CDATA[");
-            breakLine();
+
+            if (needsCDATA) {
+                breakLine();
+                writeRaw("<![CDATA[");
+                incrementIndent();
+            }
+
             preserveWhiteSpace(true);
 
             for (int i = 0; i < element.getChildCount(); i++) {
@@ -58,15 +86,15 @@ public class MultiplexSerializer extends Serializer {
                 }
 
                 Text text = (Text) element.getChild(i);
-                String js;
+                String source;
                 try {
                     String tag = element.getLocalName();
                     if (tag.equals("attribute") || tag.equals("script") || tag.equals("zscript")) {
-                        js = CodeFormatter.formatJS(text.getValue());
+                        source = CodeFormatter.formatJS(text.getValue());
                     } else if (tag.equals("style")) {
-                        js = CodeFormatter.formatCSS(text.getValue());
+                        source = CodeFormatter.formatCSS(text.getValue());
                     } else if (tag.equals("html")) {
-                        js = CodeFormatter.formatHTML(text.getValue());
+                        source = CodeFormatter.formatHTML(text.getValue());
                     } else {
                         throw new IllegalArgumentException(tag + " is not a recognized code block");
                     }
@@ -74,29 +102,35 @@ public class MultiplexSerializer extends Serializer {
                     throw new RuntimeException(e);
                 }
 
-                StringTokenizer tokenizer = new StringTokenizer(js, "\n", false);
+                StringTokenizer tokenizer = new StringTokenizer(source, "\n", false);
                 while (tokenizer.hasMoreTokens()) {
-                    writeRaw(getSpaces(getIndent()) + tokenizer.nextToken());
                     breakLine();
+                    writeRaw(tokenizer.nextToken());
                 }
             }
 
             preserveWhiteSpace(false);
-            writeRaw("]]>");
-            breakLine();
+
+            if (needsCDATA) {
+                decrementIndent();
+                breakLine();
+                writeRaw("]]>");
+            }
+
+            //necessary trick to achieve proper indentation in closing tag
+            //Serializer looks for non text children ???
+            element = (Element) element.copy();
+            element.appendChild(new Element("fake"));
             writeEndTag(element);
         } else super.write(element);
 
 
     }
 
+
     private void preserveWhiteSpace(boolean preserve) {
         try {
-            Object o = escaper.get(this);
-            Method m = ReflectionUtils.findMethod(o.getClass(), "setPreserveSpace", boolean.class);
-            notNull(m);
-            makeAccessible(m);
-            m.invoke(o, preserve);
+            setPreserveSpace.invoke(escaper.get(this), preserve);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -104,22 +138,17 @@ public class MultiplexSerializer extends Serializer {
 
     private void decrementIndent() {
         try {
-            Object o = escaper.get(this);
-            Method m = ReflectionUtils.findMethod(o.getClass(), "decrementIndent");
-            notNull(m);
-            makeAccessible(m);
-            m.invoke(o);
+            decrementIndent.invoke(escaper.get(this));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private String getSpaces(int number) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= number; i++) {
-            sb.append(" ");
+    private void incrementIndent() {
+        try {
+            incrementIndent.invoke(escaper.get(this));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return sb.toString();
     }
-
 }

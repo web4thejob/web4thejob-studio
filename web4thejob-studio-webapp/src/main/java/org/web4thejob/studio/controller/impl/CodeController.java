@@ -60,7 +60,7 @@ public class CodeController extends AbstractController {
         if (document == null) return;
         final Document doc = (Document) document.copy();
         //TODO activate for production
-//        cleanUUIDs(doc.getRootElement());
+        StudioUtil.cleanUUIDs(doc.getRootElement());
 
         zulBox.setValue(CodeFormatter.formatXML(doc));
         Clients.evalJavaScript("myCodeMirror.refresh()");

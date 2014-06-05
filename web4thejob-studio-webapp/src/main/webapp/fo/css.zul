@@ -6,24 +6,8 @@
         <n:a href="/" target="_blank">abc/h/dsds/ds/ds/ds/d/s/a/hello.zul</n:a>
     </n:div>
     <style>
-        <![CDATA[
-            .sasa {
-              max-width: 250px;
-              border-radius: 0.75em;
-              font-weight: 100;
-              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-              -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              direction: rtl;
-            }
-            .file a {
-              color: white;
-            }
-            .file a:hover {
-              text-decoration: underline;
-            }
-        ]]>
+        * {
+        font-size: 25px !important
+        }
     </style>
 </zk>
