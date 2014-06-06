@@ -260,13 +260,14 @@ hookCanvas: function() {
 
     this.getCanvasFrame().jq.getScript( contextURI+"/w4tjstudio-support/canvas/scripts")
         .done(function(data, textStatus, jqxhr){
-            console.log( textStatus );
+//            console.log( 'canvas hook: ' + textStatus );
             canvas.w4tjStudioCanvas.init();
             canvasHead.append( jq('<link rel="stylesheet" type="text/css"/>').attr('href', contextURI+'/w4tjstudio-support/canvas/styles') );
             zAu.send(new zk.Event(zk("$designer").$(), "onZKPage"));
         })
         .fail(function( jqxhr, settings, exception ) {
-            w4tjStudioDesigner.alert('danger','This is serious','Unfortunately canvas was not hooked as expected :-(',false);
+            w4tjStudioDesigner.alert('danger','This is serious','Unfortunately canvas was not hooked as expected. Refreshing may fix the problem...', false);
+            zAu.cmd0.showBusy("Sorry, something broke :-(");
         });
 }
 

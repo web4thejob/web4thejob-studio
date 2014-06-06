@@ -98,7 +98,7 @@
                 </menupopup>
             </menu>
         </menubar>
-        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" border="normal" left="160px">
+        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" left="160px">
             <panelchildren>
                 <attribute c:name="onCtrlKey">
                     <![CDATA[
@@ -158,7 +158,7 @@
                                 <treecell label="Subnode 2">
                                     <textbox value="fdfdf"/>
                                     <a label="Link" sclass="label label-info" href="/"/>
-                                    <textbox multiline="true" constraint="no empty"/>
+                                    <textbox multiline="true"/>
                                     <textbox tabbable="true"/>
                                     <button label="Button"/>
                                     <textbox/>
@@ -195,7 +195,7 @@
                     <combobox/>
                 </vbox>
             </north>
-            <east size="40%" splittable="true" collapsible="true">
+            <east size="40%" splittable="true" collapsible="true" open="false">
                 <longbox/>
             </east>
             <center>

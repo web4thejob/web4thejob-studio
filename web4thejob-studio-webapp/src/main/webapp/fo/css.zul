@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" ?>
 <?style type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" ?>
-<zk xmlns:n="native">
-    <n:div class="label label-default file ">
-        <n:a href="/" target="_blank">abc/h/dsds/ds/ds/ds/d/s/a/hello.zul</n:a>
-    </n:div>
-    <style>
-        * {
-        font-size: 25px !important
-        }
-    </style>
+<zk>
+    <borderlayout>
+        <north size="25%" splittable="true" collapsible="true">
+            <groupbox>
+                <button label="Button"/>
+            </groupbox>
+        </north>
+        <east size="25%" splittable="true" collapsible="true"/>
+        <center/>
+        <south size="25%" splittable="true" collapsible="true"/>
+        <west size="25%" splittable="true" collapsible="true"/>
+    </borderlayout>
 </zk>

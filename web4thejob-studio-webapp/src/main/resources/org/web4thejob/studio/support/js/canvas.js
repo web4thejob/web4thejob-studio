@@ -93,10 +93,14 @@ var w4tjStudioCanvas = {
 
         if (fromServer && isNew){
             var wgt = zk(uuid).$();
+            if (wgt.className.startsWith("zul.layout.") &&  wgt.$instanceof(zul.layout.LayoutRegion)) return;
+
             while (wgt) {
-                if (wgt.$instanceof(zul.tab.Tabpanel)) {
+                //if the package is not loaded yet an error is raised.
+                //this is annoying and undocumented!
+                if (wgt.className.startsWith("zul.tab.") &&  wgt.$instanceof(zul.tab.Tabpanel)) {
                     wgt.getLinkedTab().setSelected(true);
-                } else if (wgt.$instanceof(zul.layout.LayoutRegion)) {
+                } else if (wgt.className.startsWith("zul.layout.") &&  wgt.$instanceof(zul.layout.LayoutRegion)) {
                     wgt.setOpen(true);
                 }
                 wgt = wgt.parent;

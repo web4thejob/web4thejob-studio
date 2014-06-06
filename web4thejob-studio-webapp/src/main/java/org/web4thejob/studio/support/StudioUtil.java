@@ -378,7 +378,10 @@ public abstract class StudioUtil {
             nodes = element.query("child::*[@name='" + eventName + "']");
         } else {
             String prefix = StudioUtil.getClientNamespacePrefix((org.web4thejob.studio.dom.Element) element);
-            nodes = element.query("child::*[@" + prefix + ":name='" + eventName + "']", XPathContext.makeNamespaceContext(element));
+            if (prefix != null) {
+                nodes = element.query("child::*[@" + prefix + ":name='" + eventName + "']", XPathContext.makeNamespaceContext(element));
+            } else
+                return null;
         }
         if (nodes.size() != 1) return null;
 

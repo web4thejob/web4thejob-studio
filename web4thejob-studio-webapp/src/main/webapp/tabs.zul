@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+    <tabbox vflex="true" hflex="true">
+        <tabs>
+            <tab label="Canvas"/>
+            <tab label="Outline"/>
+            <tab label="Code"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel></tabpanel>
+            <tabpanel>
+                <tree>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Node 1"/>
+                            </treerow>
+                            <treechildren>
+                                <treeitem>
+                                    <treerow>
+                                        <treecell label="Subnode 1"/>
+                                    </treerow>
+                                </treeitem>
+                                <treeitem>
+                                    <treerow>
+                                        <treecell label="Subnode 2"/>
+                                    </treerow>
+                                </treeitem>
+                                <treeitem>
+                                    <treerow>
+                                        <treecell label="Subnode 3"/>
+                                    </treerow>
+                                </treeitem>
+                            </treechildren>
+                        </treeitem>
+                    </treechildren>
+                </tree>
+                <button label="Button"/>
+                <button label="Button"/>
+                <label value="New Label" multiline="false"/>
+            </tabpanel>
+            <tabpanel/>
+        </tabpanels>
+    </tabbox>
+</zk>

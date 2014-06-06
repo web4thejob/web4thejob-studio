@@ -10,6 +10,7 @@ import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.event.URIEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -161,7 +162,7 @@ public class DesignerController extends AbstractController {
                 }
 
 
-                //3. Timestamp of the request to prevent caching
+                //3. Timestamp of the request to prevent caching (redundant?)
                 params.put(PARAM_TIMESTAMP, Long.valueOf(new Date().getTime()).toString());
 
                 //4. Working file, this file will be read by CanvasUiFactory.getPageDefinition()
@@ -276,6 +277,7 @@ public class DesignerController extends AbstractController {
             src = Encodes.removeFromQueryString(src, PARAM_WORK_FILE);
             src = Encodes.removeFromQueryString(src, PARAM_TIMESTAMP);
             src = Encodes.removeFromQueryString(src, PARAM_PRODUCTION_FILE);
+            src = Encodes.removeFromQueryString(src, PARAM_XPATH);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -293,4 +295,16 @@ public class DesignerController extends AbstractController {
         publish(ZK_PAGE_VISITED);
     }
 
+    @Listen("onSelect=#views")
+    public void onTabSelected(SelectEvent e) {
+        Tab tab = (Tab) e.getTarget();
+        if (tab.equals(canvasView)) {
+            publish(DESIGNER_ACTIVATED);
+        } else if (tab.equals(outlineView)) {
+            publish(OUTLINE_ACTIVATED);
+        } else if (tab.equals(codeView)) {
+            publish(CODE_ACTIVATED);
+        }
+
+    }
 }
