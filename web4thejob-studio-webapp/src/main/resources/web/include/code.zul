@@ -30,6 +30,7 @@
                             myCodeMirror = CodeMirror.fromTextArea(this.$n(),
                                     {mode: 'multi',
                                     lineNumbers: true,
+                                    autofocus: true,
                                     foldGutter: true,
                                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                                     matchTags: {bothTags: true},
@@ -55,6 +56,13 @@
                                     wgt.fire('onChange', {value: val}, {toServer: true});
                                 }
                             });
+
+                            myCodeMirror.on('cursorActivity', function () {
+                                var pos=myCodeMirror.getCursor();
+                                if (pos.line==0 && pos.ch==0) return;
+                                myCodeMirror.lastCursorPosition = pos;
+                            });
+
                         }
                     ]]>
                 </attribute>

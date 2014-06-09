@@ -145,7 +145,7 @@
             <treechildren>
                 <treeitem>
                     <treerow>
-                        <treecell label="Node 1"/>
+                        <treecell label="Node 2"/>
                     </treerow>
                     <treechildren>
                         <treeitem>
@@ -193,6 +193,9 @@
                     <combobutton label="Combobutton"/>
                     <textbox/>
                     <combobox/>
+                    <bandbox>
+                        <bandpopup/>
+                    </bandbox>
                 </vbox>
             </north>
             <east size="40%" splittable="true" collapsible="true" open="false">
@@ -225,6 +228,7 @@
         <combobox/>
         <button label="Button"/>
         <button label="Button"/>
+        <combobox/>
     </window>
     <style>
         .mono {
@@ -329,4 +333,5 @@
         text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
         }
     </style>
+    <label value="New Label"/>
 </zk>

@@ -32,9 +32,11 @@
                 <tabbox id="views" vflex="true">
                     <tabs>
                         <tab id="canvasView" label="Canvas" iconSclass="z-icon-coffee"/>
-                        <tab id="outlineView" label="Outline" iconSclass="z-icon-sitemap"/>
+                        <tab id="outlineView" label="Outline" iconSclass="z-icon-sitemap">
+                            <attribute c:name="onSelect">w4tjStudioDesigner.centerOutlineSelection();</attribute>
+                        </tab>
                         <tab id="codeView" label="ZUL" iconSclass="z-icon-code">
-                            <attribute c:name="onSelect">if (myCodeMirror) myCodeMirror.refresh();</attribute>
+                            <attribute c:name="onSelect">w4tjStudioDesigner.refreshCode();</attribute>
                         </tab>
                     </tabs>
                     <tabpanels>

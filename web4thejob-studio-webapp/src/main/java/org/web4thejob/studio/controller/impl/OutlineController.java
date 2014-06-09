@@ -11,7 +11,6 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import java.util.Map;
@@ -149,7 +148,6 @@ public class OutlineController extends AbstractController {
         if (element != null) {
             Treeitem item = getTreeitemByElement(element);
             item.setSelected(true);
-            Clients.scrollIntoView(item);
         }
     }
 

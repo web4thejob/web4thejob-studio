@@ -90,6 +90,7 @@ var w4tjStudioCanvas = {
         var isNew=!jq("[class~=w4tjstudio-selected]").is(jqosel);
         jq("[class~=w4tjstudio-selected]").removeClass("w4tjstudio-selected");
         jqosel.addClass("w4tjstudio-selected");
+        zAu.cmd0.scrollIntoView(jqosel.get(0).id);
 
         if (fromServer && isNew){
             var wgt = zk(uuid).$();

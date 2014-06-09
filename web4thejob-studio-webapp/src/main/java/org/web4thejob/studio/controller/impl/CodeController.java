@@ -63,7 +63,7 @@ public class CodeController extends AbstractController {
         StudioUtil.cleanUUIDs(doc.getRootElement());
 
         zulBox.setValue(CodeFormatter.formatXML(doc));
-        Clients.evalJavaScript("myCodeMirror.refresh()");
+        Clients.evalJavaScript("w4tjStudioDesigner.refreshCode()");
     }
 
     @Listen("onChange=#zulBox;")

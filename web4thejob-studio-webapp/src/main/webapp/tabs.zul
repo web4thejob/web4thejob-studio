@@ -1,43 +1,519 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zk>
+<zk xmlns:c="client">
     <tabbox vflex="true" hflex="true">
         <tabs>
             <tab label="Canvas"/>
-            <tab label="Outline"/>
+            <tab label="Outline" selected="true"/>
             <tab label="Code"/>
         </tabs>
         <tabpanels>
-            <tabpanel></tabpanel>
+            <tabpanel/>
             <tabpanel>
-                <tree>
-                    <treechildren>
-                        <treeitem>
-                            <treerow>
-                                <treecell label="Node 1"/>
-                            </treerow>
-                            <treechildren>
-                                <treeitem>
-                                    <treerow>
-                                        <treecell label="Subnode 1"/>
-                                    </treerow>
-                                </treeitem>
-                                <treeitem>
-                                    <treerow>
-                                        <treecell label="Subnode 2"/>
-                                    </treerow>
-                                </treeitem>
-                                <treeitem>
-                                    <treerow>
-                                        <treecell label="Subnode 3"/>
-                                    </treerow>
-                                </treeitem>
-                            </treechildren>
-                        </treeitem>
-                    </treechildren>
-                </tree>
-                <button label="Button"/>
-                <button label="Button"/>
-                <label value="New Label" multiline="false"/>
+                <vlayout vflex="true">
+                    <button label="Go">
+                        <attribute c:name="onClick">
+                            <![CDATA[
+                                var selected = zk("$mytree").$().getSelectedItem();
+                                if (selected) {
+                                  var treebody = jq(jq("$mytree").find(".z-tree-body"));
+                                  treebody.scrollTop(0);
+                                  var scroll = jq(selected).offset().top - Math.round(treebody.height() / 2);
+                                  console.log(jq(selected).offset().top);
+                                  console.log(Math.round(treebody.height() / 2));
+                                  console.log(scroll);
+                                  treebody.animate({
+                                    "scrollTop": scroll
+                                  });
+                                }
+                            ]]>
+                        </attribute>
+                    </button>
+                    <tree id="mytree" vflex="true">
+                        <treechildren>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem selected="true">
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Node 1"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 1"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 2"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="Subnode 3"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item2"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item"/>
+                                </treerow>
+                            </treeitem>
+                        </treechildren>
+                    </tree>
+                </vlayout>
             </tabpanel>
             <tabpanel/>
         </tabpanels>
