@@ -135,8 +135,8 @@ var w4tjStudioDesigner = {
             var h = $group.outerHeight();
             var r = jq(window).width() - (p.left + w);
             zAu.send(new zk.Event(zk("$designer").$(), "onActionsClicked", {
-                top: p.top + h,
-                right: r
+                top: Math.round(p.top + h),
+                right: Math.round(r)
             }));
         }
         jq('.designer-toolbar .toolbar-actions').click(actionsHandler);
