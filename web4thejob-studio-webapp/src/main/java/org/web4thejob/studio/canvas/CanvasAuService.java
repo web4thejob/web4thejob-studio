@@ -120,6 +120,7 @@ public class CanvasAuService implements AuService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Clients.evalJavaScript("top.zAu.cmd0.clearBusy()");
             showError(e, true);
         } finally {
             Clients.clearBusy();

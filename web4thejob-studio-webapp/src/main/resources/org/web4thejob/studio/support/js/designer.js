@@ -239,6 +239,7 @@ var w4tjStudioDesigner = {
                     var dropped = jq(this);
 
                     if (dragged && dropped) {
+                        zAu.cmd0.showBusy();
                         w4tjStudioDesigner.getCanvasFrame().zAu.send(new zk.Event(zk("$canvas").$(), "onTemplateDropped", {
                             template: dragged,
                             parent: dropped.attr('canvas-uuid')
@@ -258,7 +259,7 @@ var w4tjStudioDesigner = {
     },
 
     hasHandler: function(element, event) {
-        var ev = $._data(element, 'events');
+        var ev = jq._data(element, 'events');
         return (ev && ev[event]) ? true : false;
     },
 

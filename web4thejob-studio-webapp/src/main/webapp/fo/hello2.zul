@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zk>
-    <button label="Button"/>
-    <textbox multiline="true" tabbable="true"/>
-    <grid height="300px">
-        <columns>
-            <column label="Col 1"/>
-            <column label="Col 2"/>
-            <column label="Col 3"/>
-        </columns>
-        <rows>
-            <row>
-                <label value="Value 1"/>
-                <label value="Value 2"/>
-                <label value="Value 3"/>
-            </row>
-            <row>
-                <button label="Button"/>
-            </row>
-            <row>
-                <button label="Button"/>
-            </row>
-            <row>
-                <button label="Button"/>
-            </row>
-            <row>
-                <button label="Button"/>
-            </row>
-            <row>
-                <button label="Button" href="css.zul"/>
-            </row>
-        </rows>
-    </grid>
+<zk xmlns:c="client">
+    <borderlayout id="bl">
+        <north size="25%" splittable="true" collapsible="true"/>
+        <east size="25%" splittable="true" collapsible="true" id="bl-east">
+            <button label="Button">
+                <attribute c:name="onClick">
+                    <![CDATA[
+                        var w = zk("$bl-east").$();
+                        var r = jq(w).find('#' + w.uuid + '-real');
+                        //console.log(r);
+                        w.effects_.showBusy = new zk.eff.Mask({
+                          id: w.uuid + '-shby',
+                          anchor: r,
+                          message: '****'
+                        });
+                    ]]>
+                </attribute>
+            </button>
+        </east>
+        <center>
+            <button label="Button">
+                <attribute c:name="onClick">
+                    <![CDATA[
+                        var w = zk("$bl-east").$();
+                        zAu.cmd0.clearBusy(w.uuid);
+                    ]]>
+                </attribute>
+            </button>
+        </center>
+        <south size="25%" splittable="true" collapsible="true"/>
+        <west size="25%" splittable="true" collapsible="true"/>
+    </borderlayout>
 </zk>

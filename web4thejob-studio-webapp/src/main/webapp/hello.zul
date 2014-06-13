@@ -109,6 +109,8 @@
                     <tabs>
                         <tab label="Tab" closable="true"/>
                         <tab label="Tab" closable="true"/>
+                        <tab label="Tab" closable="true"/>
+                        <tab label="Tab" closable="true"/>
                     </tabs>
                     <tabpanels>
                         <tabpanel>
@@ -123,6 +125,8 @@
                             <bandbox/>
                             <combobutton label="Combobutton"/>
                             <combobutton label="Combobutton"/>
+                            <textbox/>
+                            <textbox/>
                         </tabpanel>
                         <tabpanel>
                             <menubar>
@@ -135,6 +139,7 @@
                                     ]]>
                                 </attribute>
                             </ckeditor>
+                            <groupbox/>
                         </tabpanel>
                     </tabpanels>
                 </tabbox>
@@ -162,6 +167,8 @@
                                     <textbox tabbable="true"/>
                                     <button label="Button"/>
                                     <textbox/>
+                                    <button label="Button"/>
+                                    <combobox/>
                                 </treecell>
                             </treerow>
                         </treeitem>

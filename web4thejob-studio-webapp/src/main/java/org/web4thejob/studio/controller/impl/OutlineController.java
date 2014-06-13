@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import java.util.Map;
@@ -83,6 +84,9 @@ public class OutlineController extends AbstractController {
         switch (message.getId()) {
             case COMPONENT_SELECTED:
                 selectItem((Element) message.getData());
+                if (!this.equals(message.getSender()))
+                    //required for selecting a newly added component in outline view
+                    Clients.evalJavaScript("w4tjStudioDesigner.centerOutlineSelection()");
                 break;
             case COMPONENT_ADDED:
 //                includeComponent(getElementByUuid((String) message.getData()));

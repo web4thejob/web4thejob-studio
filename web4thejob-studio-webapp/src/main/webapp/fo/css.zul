@@ -8,9 +8,15 @@
                 <button label="Button"/>
             </groupbox>
         </north>
-        <east size="25%" splittable="true" collapsible="true"/>
-        <center/>
-        <south size="25%" splittable="true" collapsible="true"/>
+        <east size="25%" splittable="true" collapsible="true">
+            <button label="Button"/>
+        </east>
+        <center>
+            <button label="Button"/>
+        </center>
+        <south size="25%" splittable="true" collapsible="true">
+            <textbox/>
+        </south>
         <west size="25%" splittable="true" collapsible="true"/>
     </borderlayout>
 </zk>

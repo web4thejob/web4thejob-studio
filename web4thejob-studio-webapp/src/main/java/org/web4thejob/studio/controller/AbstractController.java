@@ -21,7 +21,7 @@ import static org.zkoss.lang.Generics.cast;
 public abstract class AbstractController extends SelectorComposer<Component> implements Controller {
     private final List<Message> queue = new ArrayList<>();
 
-    private static void register(Controller controller) {
+    private static synchronized void register(Controller controller) {
         synchronized (Executions.getCurrent().getDesktop()) {
             SortedMap<ControllerEnum, Controller> controllers = cast(Executions.getCurrent().getDesktop().getAttribute
                     (ATTR_STUDIO_CONTROLLERS));

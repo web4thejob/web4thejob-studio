@@ -58,8 +58,8 @@
                 </tabbox>
 
             </center>
-            <east width="300px" splittable="true" collapsible="true">
-                <include src="~./include/propertyeditor.zul"/>
+            <east id="propertyeditor" width="300px" splittable="true" collapsible="true">
+            <include src="~./include/propertyeditor.zul"/>
             </east>
         </borderlayout>
     </window>
