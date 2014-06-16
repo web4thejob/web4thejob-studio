@@ -12,7 +12,7 @@
                         w.effects_.showBusy = new zk.eff.Mask({
                           id: w.uuid + '-shby',
                           anchor: r,
-                          message: '****'
+                          message: 'Refreshing...'
                         });
                     ]]>
                 </attribute>

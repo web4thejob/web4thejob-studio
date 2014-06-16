@@ -74,7 +74,7 @@ var w4tjStudioCanvas = {
         if (!fromServer) {
             var wgt = zk(e).$();
             if (wgt.$instanceof(zul.Widget))
-                top.zAu.send(new top.zk.Event(top.zk("$designer").$(), "onWidgetSelected", {target: wgt.uuid}));
+                top.w4tjStudioDesigner.onWidgetSelected({target: wgt.uuid});
             else
                 return;
         } else { //from server

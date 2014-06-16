@@ -343,7 +343,7 @@
                                     </treeitem>
                                     <treeitem>
                                         <treerow>
-                                            <treecell label="Subnode 3"/>
+                                            <treecell label="Subnode 2" left="10px"/>
                                         </treerow>
                                     </treeitem>
                                 </treechildren>
@@ -370,7 +370,10 @@
                                 <treechildren>
                                     <treeitem selected="true">
                                         <treerow>
-                                            <treecell label="Subnode 1"/>
+                                            <treecell label="Subnode 1">
+                                                <textbox/>
+                                                <textbox/>
+                                            </treecell>
                                         </treerow>
                                     </treeitem>
                                     <treeitem>
@@ -402,7 +405,18 @@
                             </treeitem>
                             <treeitem>
                                 <treerow>
-                                    <treecell label="Node 1"/>
+                                    <treecell label="Node 1">
+                                        <combobutton label="Combobutton">
+                                            <menupopup>
+                                                <menuitem label="Menu item"/>
+                                                <menuitem label="Menu item"/>
+                                                <menuitem label="Menu item"/>
+                                                <menuitem label="Menu item"/>
+                                                <menuitem label="Menu item"/>
+                                                <menuitem label="Menu item"/>
+                                            </menupopup>
+                                        </combobutton>
+                                    </treecell>
                                 </treerow>
                                 <treechildren>
                                     <treeitem>
@@ -471,7 +485,7 @@
                             </treeitem>
                             <treeitem>
                                 <treerow>
-                                    <treecell label="Item"/>
+                                    <treecell label="Item" id="ggfggg"/>
                                 </treerow>
                             </treeitem>
                             <treeitem>

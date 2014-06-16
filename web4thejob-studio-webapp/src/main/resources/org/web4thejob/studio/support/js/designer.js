@@ -310,6 +310,19 @@ var w4tjStudioDesigner = {
                 "scrollTop": jq(selected).offset().top - Math.round(treebody.height() / 2)
             });
         }
+    },
+
+    onWidgetSelected: function(data){
+        zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
+
+        var w = zk("$propertyeditor").$();
+        var r = jq(w).find('#' + w.uuid + '-real');
+        w.effects_.showBusy = new zk.eff.Mask({
+              id: w.uuid + '-shby',
+              anchor: r,
+              message: 'Refreshing...'
+        });
+
     }
 
 }

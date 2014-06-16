@@ -68,6 +68,8 @@ public class PropertyEditorController extends AbstractController {
                         refresh();
                     } catch (Exception e) {
                         e.printStackTrace();
+                    } finally {
+                        Clients.evalJavaScript("zAu.cmd0.clearBusy(zk('$propertyeditor').$().uuid)");
                     }
                 } else {
                     clear();
