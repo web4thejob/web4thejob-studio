@@ -3,6 +3,7 @@ package org.web4thejob.studio.support;
 import nu.xom.Document;
 import nu.xom.Serializer;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.zkoss.util.resource.Locators;
 
 import javax.script.Invocable;
@@ -59,6 +60,11 @@ public abstract class CodeFormatter {
     }
 
     public static String formatCSS(String css) {
+
+        if (StringUtils.isBlank(css)) {
+            return "";
+        }
+
         try {
             css = (String) invocable.invokeFunction("css_beautify", "<style>" + css + "</style>", options);
             StringBuffer sb = new StringBuffer();

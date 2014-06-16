@@ -483,6 +483,7 @@ public class PropertyEditorController extends AbstractController {
                 }
             }
 
+            Clients.showBusy(null);
             publish(ATTRIBUTE_CHANGED);
 
 //            Clients.evalJavaScript("w4tjDesigner.highlight('" + event.getTarget().getParent().getUuid() + "');" +

@@ -106,7 +106,7 @@
                     ]]>
                 </attribute>
                 <tabbox height="250px" width="600px">
-                    <tabs>
+                    <tabs align="center">
                         <tab label="Tab" closable="true"/>
                         <tab label="Tab" closable="true"/>
                         <tab label="Tab" closable="true"/>
@@ -127,6 +127,7 @@
                             <combobutton label="Combobutton"/>
                             <textbox/>
                             <textbox/>
+                            <combobox/>
                         </tabpanel>
                         <tabpanel>
                             <menubar>
@@ -218,8 +219,8 @@
                 <grid vflex="true">
                     <columns>
                         <column label="Col 1"/>
-                        <column label="Col 2+" sortDirection="ascending"/>
-                        <column label="Col 3"/>
+                        <column label="Col 2+" sortDirection="descending"/>
+                        <column label="Col 3" sort="none"/>
                     </columns>
                     <rows>
                         <row>
@@ -236,6 +237,7 @@
         <button label="Button"/>
         <button label="Button"/>
         <combobox/>
+        <button label="Button"/>
     </window>
     <style>
         .mono {

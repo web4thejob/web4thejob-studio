@@ -540,4 +540,27 @@ public abstract class StudioUtil {
         return ns.get(getClientNamespacePrefix(element));
     }
 
+    public static boolean acceptsChild(Element parent, Element child) {
+        Component container = null;
+        Component target;
+
+        Element parentClone = (Element) parent.copy();
+        cleanUUIDs(parentClone);
+
+        Element childClone = (Element) child.copy();
+        childClone.removeChildren();
+        cleanUUIDs(childClone);
+
+        try {
+            container = Executions.createComponentsDirectly(parentClone.toXML(), "zul", null, null);
+            target = Executions.createComponentsDirectly(childClone.toXML(), "zul", container, null);
+            container.detach();
+        } catch (Exception e) {
+            showError(e);
+            return false;
+        } finally {
+            if (container != null) container.detach();
+        }
+        return target != null;
+    }
 }

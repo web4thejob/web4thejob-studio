@@ -23,6 +23,13 @@ var w4tjStudioDesigner = {
 
         this.buildToolbar();
         this.fileName = 'Untitled';
+
+        //sends busy when outline item is selected
+        zk.override(zul.sel.Treeitem.prototype, 'doSelect_', function() {
+            if (this.getTree().id === 'outline') {
+                w4tjStudioDesigner.onWidgetSelected(false);
+            }
+        });
     },
 
     makeTemplatesDraggable: function() {
@@ -109,11 +116,9 @@ var w4tjStudioDesigner = {
 
     buildToolbar: function() {
         var e = '<div class="designer-toolbar"> \
-    <div class="btn-group btn-xs" style="padding-right:0px"> \
-    <button type="button" class="btn btn-default btn-xs toolbar-actions"> \
+    <div class="btn-group btn-xs toolbar-actions" style="padding-right:0px"> \
+    <button type="button" class="btn btn-default btn-xs dropdown-toggle toolbar-actions-dropdown" data-toggle="dropdown"> \
     <i class="z-icon-gear"/> Actions \
-    </button> \
-    <button type="button" class="btn btn-default btn-xs toolbar-actions-dropdown"> \
     <span class="caret"></span> \
     </button> \
     </div> \
@@ -129,7 +134,7 @@ var w4tjStudioDesigner = {
         jq('$views').append(e);
 
         var actionsHandler = function() {
-            var $group = jq(jq('.designer-toolbar .toolbar-actions').parent());
+            var $group = jq(jq('.designer-toolbar .toolbar-actions-dropdown').parent());
             var p = $group.offset();
             var w = $group.outerWidth();
             var h = $group.outerHeight();
@@ -140,7 +145,7 @@ var w4tjStudioDesigner = {
             }));
         }
         jq('.designer-toolbar .toolbar-actions').click(actionsHandler);
-        jq('.designer-toolbar .toolbar-actions-dropdown').click(actionsHandler);
+        //jq('.designer-toolbar .toolbar-actions-dropdown').click(actionsHandler);
 
         jq('.designer-toolbar .toolbar-parsezul').click(function() {
             zAu.cmd0.showBusy("Parsing your zul...");
@@ -268,10 +273,12 @@ var w4tjStudioDesigner = {
 
         this.fileName = canvas.location.pathname.split('?')[0];
         if (!canvas.zk) {
+            jq(".designer-toolbar button").attr("disabled","disabled");
             zAu.send(new zk.Event(zk("$designer").$(), "onNonZKPage"));
             return;
         }
 
+        zAu.cmd0.showBusy("Hooking the canvas...");
         var contextURI = zk.Desktop.$().contextURI;
         var canvasHead = jq('head', jq('$canvasHolder').contents());
 
@@ -280,6 +287,8 @@ var w4tjStudioDesigner = {
                 //            console.log( 'canvas hook: ' + textStatus );
                 canvas.w4tjStudioCanvas.init();
                 canvasHead.append(jq('<link rel="stylesheet" type="text/css"/>').attr('href', contextURI + '/w4tjstudio-support/canvas/styles'));
+
+                jq(".designer-toolbar button").removeAttr("disabled");
                 zAu.send(new zk.Event(zk("$designer").$(), "onZKPage"));
             })
             .fail(function(jqxhr, settings, exception) {
@@ -312,15 +321,23 @@ var w4tjStudioDesigner = {
         }
     },
 
-    onWidgetSelected: function(data){
-        zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
+    onWidgetSelected: function(sendToServer, data) {
+        var actionsMenupopup=zk("$actionsMenupopup").$();
+        if (actionsMenupopup){
+            actionsMenupopup.close();
+            jq(".designer-toolbar .open").removeClass("open");
+
+        }
+
+        if (sendToServer)
+            zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
 
         var w = zk("$propertyeditor").$();
         var r = jq(w).find('#' + w.uuid + '-real');
         w.effects_.showBusy = new zk.eff.Mask({
-              id: w.uuid + '-shby',
-              anchor: r,
-              message: 'Refreshing...'
+            id: w.uuid + '-shby',
+            anchor: r,
+            message: 'Refreshing...'
         });
 
     }

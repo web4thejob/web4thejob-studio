@@ -9,9 +9,8 @@ import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.web.servlet.http.Encodes;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.SelectEvent;
-import org.zkoss.zk.ui.event.URIEvent;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.*;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
@@ -32,12 +31,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     public static final String PARAM_XPATH = "w4tjstudio_xpath";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -50,6 +49,7 @@ public class DesignerController extends AbstractController {
     private Tab codeView;
 
     private Element selection;
+    private Menupopup actionsPopup;
 
     @Override
     public ControllerEnum getId() {
@@ -70,20 +70,130 @@ public class DesignerController extends AbstractController {
 
     @Listen("onActionsClicked=#designer")
     public void onActionsClicked(Event event) {
-        //showNotification("success", event.getName(), "", false);
+        if (actionsPopup == null) {
+            actionsPopup = new Menupopup();
+            actionsPopup.setId("actionsMenupopup");
+            actionsPopup.setMold("w4tjstudio");
+            actionsPopup.setSclass("custom-menupopup");
+            actionsPopup.setPage(event.getTarget().getPage());
+        } else {
+            actionsPopup.getChildren().clear();
+        }
 
-        Menupopup popup = new Menupopup();
-        popup.setMold("w4tjstudio");
-        popup.setSclass("custom-menupopup");
-        popup.setPage(event.getTarget().getPage());
-        Menuitem label = new Menuitem("hello");
-        label.setParent(popup);
-
-//        int y = Integer.valueOf(((Map) event.getData()).get("top").toString());
         int x = Integer.valueOf(((Map) event.getData()).get("right").toString());
-//        popup.setStyle("min-width:200px");
-        popup.open("auto", ((Map) event.getData()).get("top").toString() + "px");
-        popup.setStyle("right:" + x + "px");
+        actionsPopup.open("auto", ((Map) event.getData()).get("top").toString() + "px");
+        actionsPopup.setStyle("right:" + x + "px");
+
+
+        if (selection == null) {
+            final Menuitem nosel = new Menuitem("No current selection");
+            nosel.setParent(actionsPopup);
+            nosel.setDisabled(true);
+            return;
+        }
+
+
+        final Menuitem id = new Menuitem(selection.getLocalName() + " [" + selection.getAttributeValue("uuid") + "]");
+        id.setParent(actionsPopup);
+        id.setDisabled(true);
+
+        new Menuseparator().setParent(actionsPopup);
+
+        final Menuitem cut = new Menuitem("Cut");
+        cut.setParent(actionsPopup);
+        cut.setIconSclass("z-icon-cut");
+        cut.setAttribute("target", selection);
+        cut.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                Element element = (Element) cut.getAttribute("target");
+                element.detach();
+
+                Element cutElement = (Element) element.copy();
+                Executions.getCurrent().getDesktop().setAttribute("cutcopy", cutElement);
+                publish(MessageEnum.COMPONENT_SELECTED);
+                publish(MessageEnum.COMPONENT_DETACHED, element);
+            }
+        });
+
+
+        final Menuitem copy = new Menuitem("Copy");
+        copy.setParent(actionsPopup);
+        copy.setIconSclass("z-icon-copy");
+        copy.setAttribute("target", selection);
+        copy.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                Element element = (Element) copy.getAttribute("target");
+                Executions.getCurrent().getDesktop().setAttribute("cutcopy", element);
+            }
+        });
+
+        new Menuseparator().setParent(actionsPopup);
+
+        final Menuitem pasteInside = new Menuitem("Paste inside");
+        pasteInside.setParent(actionsPopup);
+        pasteInside.setIconSclass("z-icon-paste");
+        pasteInside.setAttribute("target", selection);
+        pasteInside.setDisabled(!Executions.getCurrent().getDesktop().hasAttribute("cutcopy"));
+        pasteInside.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                Element parent = (Element) pasteInside.getAttribute("target");
+                Element child = (Element) ((Element) Executions.getCurrent().getDesktop().getAttribute("cutcopy")).copy();
+                if (acceptsChild(parent, child)) {
+                    parent.appendChild(child);
+                    publish(COMPONENT_SELECTED, child);
+                    publish(EVALUATE_ZUL);
+                }
+            }
+        });
+
+
+        final Menuitem pasteBefore = new Menuitem("Paste previous");
+        pasteBefore.setParent(actionsPopup);
+        pasteBefore.setIconSclass("z-icon-paste");
+        pasteBefore.setAttribute("target", selection);
+        pasteBefore.setDisabled(!Executions.getCurrent().getDesktop().hasAttribute("cutcopy"));
+        pasteBefore.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                Element before = ((Element) pasteBefore.getAttribute("target"));
+                Element parent = (Element) before.getParent();
+                int pos = 0;
+                for (int i = 0; i < parent.getChildElements().size(); i++) {
+                    if (parent.getChildElements().get(i).equals(before)) {
+                        pos = i;
+                        break;
+                    }
+                }
+                Element child = (Element) ((Element) Executions.getCurrent().getDesktop().getAttribute("cutcopy")).copy();
+                if (acceptsChild(parent, child)) {
+                    parent.insertChild(child, pos);
+                    publish(COMPONENT_SELECTED, child);
+                    publish(EVALUATE_ZUL);
+                }
+            }
+        });
+
+
+        new Menuseparator().setParent(actionsPopup);
+
+        final Menuitem detach = new Menuitem("Detach");
+        detach.setParent(actionsPopup);
+        detach.setIconSclass("z-icon-trash-o");
+        detach.setAttribute("target", selection);
+        detach.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                Element element = (Element) detach.getAttribute("target");
+                element.detach();
+                publish(MessageEnum.COMPONENT_SELECTED);
+                publish(MessageEnum.COMPONENT_DETACHED, element);
+            }
+        });
+
+
     }
 
     @Listen("onCanvasAddition=#designer")
@@ -222,9 +332,6 @@ public class DesignerController extends AbstractController {
             case COMPONENT_SELECTED:
                 Element newSelection = message.getData();
                 if ((newSelection != null && selection != null)) {
-//                    String oldXPath = ZulXsdUtil.getXPath(selection);
-//                    String newXPath = ZulXsdUtil.getXPath(newSelection);
-//                    if (!oldXPath.equals(newXPath))
                     Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget('" + newSelection.getAttributeValue("uuid") + "')");
                 } else if (newSelection == null && selection != null)
                     Clients.evalJavaScript("w4tjStudioDesigner.selectCanvasWidget()");
@@ -292,6 +399,7 @@ public class DesignerController extends AbstractController {
 
     @Listen("onZKPage=#designer")
     public void onZKPage() {
+        Clients.clearBusy();
         publish(ZK_PAGE_VISITED);
     }
 

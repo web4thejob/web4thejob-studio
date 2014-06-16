@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static org.web4thejob.studio.controller.ControllerEnum.OUTLINE_CONTROLLER;
 import static org.web4thejob.studio.message.MessageEnum.COMPONENT_SELECTED;
+import static org.web4thejob.studio.message.MessageEnum.EVALUATE_ZUL;
 import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
@@ -99,7 +100,7 @@ public class OutlineController extends AbstractController {
                 refresh();
                 break;
             case COMPONENT_DETACHED:
-                removeItem((Element) message.getData());
+//                removeItem((Element) message.getData());
                 break;
             case XML_EVAL_FAILED:
                 outline.clear();
@@ -151,7 +152,7 @@ public class OutlineController extends AbstractController {
         outline.setSelectedItem(null);
         if (element != null) {
             Treeitem item = getTreeitemByElement(element);
-            item.setSelected(true);
+            if (item != null) item.setSelected(true);
         }
     }
 
@@ -188,23 +189,13 @@ public class OutlineController extends AbstractController {
             Element dropped = ((Treeitem) event.getTarget()).getValue();
             if (dropped.getAttributeValue("uuid") == null) return;
 
-//            Component draggedComp = getCanvasComponentByUuid(dragged.getAttributeValue("uuid"));
-//            Component droppedComp = getCanvasComponentByUuid(dropped.getAttributeValue("uuid"));
-//            if (droppedComp.equals(draggedComp.getParent())) return;
-//            draggedComp.setParent(droppedComp);
-//
-//            dragged.detach();
-//            dropped.appendChild(dragged);
-//
-//            Treeitem draggedItem = (Treeitem) event.getDragged();
-//            Treeitem droppedItem = (Treeitem) event.getTarget();
-//            if (droppedItem.getTreechildren() == null) {
-//                new Treechildren().setParent(droppedItem);
-//            }
-//            draggedItem.setParent(droppedItem.getTreechildren());
-//            draggedItem.setSelected(true);
-//
-//            publish(SET_BOOKMARK);
+            if (acceptsChild(dropped, dragged)) {
+                dragged.detach();
+                dropped.appendChild(dragged);
+                publish(COMPONENT_SELECTED, dropped);
+                publish(EVALUATE_ZUL);
+            }
+
         }
     }
 

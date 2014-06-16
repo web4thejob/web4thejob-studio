@@ -60,7 +60,7 @@
             <hbox height="40px" hflex="true" align="center">
                 <hbox hflex="1" pack="start" spacing="8px">
                     <button id="btnBeautify" width="100px" label="Beautify" mold="w4tjstudio"
-                            sclass="btn-success btn-sm">
+                            sclass="btn-default btn-sm" iconSclass="z-icon-magic">
                     <attribute c:name="onClick">
                             var wgt=zk('$editor').$();
                             var s=wgt.get("codemirror").getValue();

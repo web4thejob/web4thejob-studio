@@ -158,5 +158,17 @@
         z-index: 10000;
         text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
         }
+
+
+        .dropdown-menu>li>a:hover,
+        .dropdown-menu>li>a:focus {
+        background-image: -webkit-linear-gradient(top, #F8E5FB 0, #FFBAFF 100%);
+        background-image: linear-gradient(to bottom, #F8E5FB 0, #FFBAFF 100%);
+        background-repeat: repeat-x;
+        filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#F8E5FB', endColorstr='#FFBAFF',
+        GradientType=0);
+        background-color: #FFBAFF;
+        }
+
     </style>
 </zk>

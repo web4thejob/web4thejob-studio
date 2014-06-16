@@ -1,34 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zk xmlns:c="client">
+<zk>
     <borderlayout id="bl">
-        <north size="25%" splittable="true" collapsible="true"/>
-        <east size="25%" splittable="true" collapsible="true" id="bl-east">
-            <button label="Button">
-                <attribute c:name="onClick">
-                    <![CDATA[
-                        var w = zk("$bl-east").$();
-                        var r = jq(w).find('#' + w.uuid + '-real');
-                        //console.log(r);
-                        w.effects_.showBusy = new zk.eff.Mask({
-                          id: w.uuid + '-shby',
-                          anchor: r,
-                          message: 'Refreshing...'
-                        });
-                    ]]>
-                </attribute>
-            </button>
-        </east>
-        <center>
-            <button label="Button">
-                <attribute c:name="onClick">
-                    <![CDATA[
-                        var w = zk("$bl-east").$();
-                        zAu.cmd0.clearBusy(w.uuid);
-                    ]]>
-                </attribute>
-            </button>
-        </center>
+        <east size="25%" splittable="true" id="bl-east" border="none"></east>
+        <center></center>
         <south size="25%" splittable="true" collapsible="true"/>
-        <west size="25%" splittable="true" collapsible="true"/>
     </borderlayout>
 </zk>
