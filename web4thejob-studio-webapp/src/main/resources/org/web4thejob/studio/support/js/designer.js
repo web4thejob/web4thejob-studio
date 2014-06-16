@@ -197,8 +197,9 @@ var w4tjStudioDesigner = {
         if (f) {
             setTimeout(function() {
                 if (jq("#zk_showBusy").length) {
-                    w4tjStudioDesigner.alert('warning', 'Too long', "Parsing has been cancelled because it was taking too long.</br> Are you sure your there aren't any javascript errors? Please check and retry.", true, true);
-                    zAu.send(new zk.Event(zk("$designer").$(), "onCanvasHang"));
+                    var msg='Parsing is taking too long.</br> Are you sure your there aren\'t any javascript errors? Click <a href="javascript:;" onclick="zAu.send(new zk.Event(zk(\'$designer\').$(), \'onCanvasHang\'))">here</a> to cancel.';
+                    w4tjStudioDesigner.alert('warning', 'This is weird', msg, false, true);
+//                    zAu.send(new zk.Event(zk('$designer').$(), 'onCanvasHang'));
                 }
             }, 5000); /*5sec tolerance, TODO: make this user configured*/
         }

@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.MessageEnum;
+import org.web4thejob.studio.support.CodeFormatter;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -67,7 +68,7 @@ public class CodeDialogController extends AbstractController {
         isServerSide = "server".equals(side);
         codeBlock = (Element) getEventCodeNode(element, eventName, isServerSide);
         if (codeBlock != null) {
-            editor.setValue(codeBlock.getValue().trim());
+            editor.setValue(CodeFormatter.formatJS(codeBlock.getValue().trim()));
         }
 
         editorPanel.setTitle("<strong class=\"label label-primary\" style=\"font-size:120%;font-family:monospace\">"

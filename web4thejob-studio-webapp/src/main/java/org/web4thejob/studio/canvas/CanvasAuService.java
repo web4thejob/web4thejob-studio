@@ -76,7 +76,10 @@ public class CanvasAuService implements AuService {
 
                     //update production file without uuids
                     StudioUtil.cleanUUIDs(document.getRootElement());
-                    FileUtils.writeStringToFile(new File(prodFile), CodeFormatter.formatXML(document), "UTF-8");
+                    File fileProd = new File(prodFile);
+                    if (fileProd.exists() && fileProd.canWrite()) {
+                        FileUtils.writeStringToFile(fileProd, CodeFormatter.formatXML(document), "UTF-8");
+                    }
                 } else {
                     workFile = StudioUtil.buildWorkingFile(document).getAbsolutePath();
                     data.put(PARAM_WORK_FILE, workFile);
