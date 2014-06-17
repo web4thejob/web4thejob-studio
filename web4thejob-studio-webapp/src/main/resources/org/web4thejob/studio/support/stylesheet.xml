@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <browser>
+    <!--***********************************************
+    * Codemirror
+    *************************************************-->
     <stylesheet src="codemirror/lib/codemirror.css"/>
     <stylesheet src="codemirror/addon/hint/show-hint.css"/>
     <stylesheet src="codemirror/addon/fold/foldgutter.css"/>
+
     <!--***********************************************
     * Bootstrap
     *************************************************-->
     <stylesheet src="bootstrap/css/bootstrap.min.css"/>
     <stylesheet src="bootstrap/css/bootstrap-theme.min.css"/>
-
-    <!--***********************************************
-    * Codemirror
-    *************************************************-->
-
-
 </browser>
 

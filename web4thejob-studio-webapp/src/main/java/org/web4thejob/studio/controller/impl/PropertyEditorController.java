@@ -68,12 +68,11 @@ public class PropertyEditorController extends AbstractController {
                         refresh();
                     } catch (Exception e) {
                         e.printStackTrace();
-                    } finally {
-                        Clients.evalJavaScript("zAu.cmd0.clearBusy(zk('$propertyeditor').$().uuid)");
                     }
                 } else {
                     clear();
                 }
+                Clients.evalJavaScript("zAu.cmd0.clearBusy(zk('$propertyeditor').$().uuid)");
                 break;
             case RESET:
                 clear();
@@ -102,8 +101,8 @@ public class PropertyEditorController extends AbstractController {
         properties.getChildren().clear();
         events.getChildren().clear();
         properties.setAttribute("prevSelection", null);
-        new Include("~./include/emptyattributes.zul").setParent(properties);
-        new Include("~./include/emptyevents.zul").setParent(events);
+        new Include("~./include/nocurrentselection.zul").setParent(properties);
+        new Include("~./include/nocurrentselection.zul").setParent(events);
     }
 
     public void refresh() throws Exception {

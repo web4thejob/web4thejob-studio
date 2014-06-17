@@ -327,11 +327,7 @@ var w4tjStudioDesigner = {
         if (actionsMenupopup){
             actionsMenupopup.close();
             jq(".designer-toolbar .open").removeClass("open");
-
         }
-
-        if (sendToServer)
-            zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
 
         var w = zk("$propertyeditor").$();
         var r = jq(w).find('#' + w.uuid + '-real');
@@ -340,6 +336,9 @@ var w4tjStudioDesigner = {
             anchor: r,
             message: 'Refreshing...'
         });
+
+        if (sendToServer)
+            zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
 
     }
 

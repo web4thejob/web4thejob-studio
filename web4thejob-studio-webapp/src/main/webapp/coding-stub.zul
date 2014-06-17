@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk>
+    <borderlayout>
+        <north size="25%" splittable="true" collapsible="true" height="50px">
+            <hbox hflex="true" height="300px">
+                <button label="zscript">
+                    <attribute name="onClick">
+                        <![CDATA[
+                            import org.web4thejob.studio.dom.*;
+                            Map args = new HashMap();
+                            Element element = new Element("zscript", "");
+                            args.put("element", element);
+                            args.put("mode", "text/x-java");
+                            execution.createComponents("coding.zul", here, args);
+                        ]]>
+                    </attribute>
+                </button>
+                <button label="css">
+                    <attribute name="onClick">
+                        <![CDATA[
+                            import org.web4thejob.studio.dom.*;
+                            Map args = new HashMap();
+                            Element element = new Element("style", "");
+                            args.put("element", element);
+                            args.put("mode", "css");
+                            execution.createComponents("coding.zul", here, args);
+                        ]]>
+                    </attribute>
+                </button>
+            </hbox>
+        </north>
+        <center id="here"/>
+    </borderlayout>
+</zk>

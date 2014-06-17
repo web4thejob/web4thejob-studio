@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+    <hbox vflex="true" hflex="true" pack="center" align="start" style="text-align:center">
+        <html sclass="z-label no-current-selection">
+            <p>No current selection. Select a component to edit it's attributes or events.</p>
+            <p>Note that not all components are editable through the Property Editor. For example
+                <a target="_blank"
+                   href="http://books.zkoss.org/wiki/ZK_Developer%27s_Reference/UI_Patterns/HTML_Tags/The_native_Namespace">
+                    native components
+                </a>
+                which are
+                immutable by definition cannot be edited. The same stands for
+                <a target="_blank"
+                   href="http://books.zkoss.org/wiki/ZK_Developer's_Reference/UI_Composing/ZUML/Load_ZUML_in_Java">
+                    components created dynamically
+                </a>
+                or loaded through an<a target="_blank"
+                                       href="http://books.zkoss.org/wiki/ZK_Component_Reference/Essential_Components/Include">
+                    include component</a>.
+            </p>
+            <p>In other words the Property Editor can handle only zk components which are referenced in the currently
+                loaded zul file.
+                For all other cases you can use the ZUL tab to change the source code directly.
+            </p>
+        </html>
+    </hbox>
+
+    <style>
+        .no-current-selection {font-style:italic;color:#aaa}
+    </style>
+</zk>
