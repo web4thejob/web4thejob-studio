@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Page;
+import org.zkoss.zk.ui.sys.DesktopCtrl;
 import org.zkoss.zk.ui.util.Clients;
 
 import java.io.File;
@@ -113,14 +114,21 @@ public class CanvasAuService implements AuService {
             Component parent = !"_canvas_".equals(parentUuid) ? getComponentByUuid(parentUuid) : null;
             Map<String, Object> args = new HashMap<>();
             args.put("parent", parent);
-            Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
-            if (target != null) {
-                Map<String, String> data = new HashMap<>();
-                data.put("parent", parentUuid);
-                data.put("target", target.getUuid());
-                data.put("template", templatePath);
-                sendToDesigner("onCanvasAddition", data);
+
+            Map<String, String> data = new HashMap<>();
+            data.put("parent", parentUuid);
+            data.put("template", templatePath);
+
+            if (!"zscript.zul".equals(template)) {
+                Component target = Executions.getCurrent().createComponents(templatePath, parent, args);
+                if (target != null) {
+                    data.put("target", target.getUuid());
+                } else {
+                    return;
+                }
             }
+
+            sendToDesigner("onCanvasAddition", data);
         } catch (Exception e) {
             e.printStackTrace();
             Clients.evalJavaScript("top.zAu.cmd0.clearBusy()");
@@ -145,7 +153,12 @@ public class CanvasAuService implements AuService {
                         child.addAttribute(new Attribute("uuid", "_canvas_"));
                     }
                 }
-                if ("zk".equals(child.getLocalName())) return;
+                if ("zk".equals(child.getLocalName()))
+                    return;
+                else if ("zscript".equals(child.getLocalName()))
+                    //although zscripts are not components I assign a fake uuid so that their handling is
+                    //similar as much as possible with that of regular components.
+                    child.addAttribute(new Attribute("uuid", ((DesktopCtrl) Executions.getCurrent().getDesktop()).getNextUuid(canvas.getFirstPage())));
 
                 Element parent = getParent(child);
                 if (parent == null) {

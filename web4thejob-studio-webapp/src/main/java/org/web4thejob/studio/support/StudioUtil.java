@@ -73,7 +73,6 @@ public abstract class StudioUtil {
     }
 
     public static void clearCanvasBusy(String uuid) {
-        isTrue(!isCanvasDesktop(), "Call clearBusy directly");
         Clients.evalJavaScript("top.w4tjStudioDesigner.clearCanvasBusy(" + (uuid != null ? "'" + uuid + "'" : "") +
                 ")");
     }

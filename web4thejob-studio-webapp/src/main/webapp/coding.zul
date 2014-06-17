@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns:c="client">
+    <window title="Window" vflex="true">
+        <attribute c:name="onOK">
+            <![CDATA[
+                alert('onOK');
+            ]]>
+        </attribute>
+        <attribute name="onCancel">
+            <![CDATA[
+                Clients.alert("onCancel");
+            ]]>
+        </attribute>
+        <zscript>
+            <![CDATA[
+                    ]]>
+        </zscript>
+        <script>
+            <![CDATA[
+                    ]]>
+        </script>
+        <style>
+        </style>
+        <html>
+            <![CDATA[
+                    ]]>
+        </html>
+    </window>
+</zk>

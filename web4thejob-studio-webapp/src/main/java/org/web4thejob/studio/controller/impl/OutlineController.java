@@ -89,18 +89,12 @@ public class OutlineController extends AbstractController {
                     //required for selecting a newly added component in outline view
                     Clients.evalJavaScript("w4tjStudioDesigner.centerOutlineSelection()");
                 break;
-            case COMPONENT_ADDED:
-//                includeComponent(getElementByUuid((String) message.getData()));
-                break;
             case RESET:
                 refresh();
                 selection = null;
                 break;
             case ZUL_EVAL_SUCCEEDED:
                 refresh();
-                break;
-            case COMPONENT_DETACHED:
-//                removeItem((Element) message.getData());
                 break;
             case XML_EVAL_FAILED:
                 outline.clear();

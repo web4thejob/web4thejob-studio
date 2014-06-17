@@ -205,6 +205,9 @@ public class CodeController extends AbstractController {
                 break;
             case EVALUATE_ZUL:
                 break;
+            case ZSCRIPT_ADDED:
+
+                break;
         }
     }
 
