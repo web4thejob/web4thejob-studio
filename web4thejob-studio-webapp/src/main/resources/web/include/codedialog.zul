@@ -61,7 +61,7 @@
                 <hbox hflex="1" pack="start" spacing="8px">
                     <button id="btnBeautify" width="100px" label="Beautify" mold="w4tjstudio"
                             sclass="btn-default btn-sm" iconSclass="z-icon-magic">
-                    <attribute c:name="onClick">
+                        <attribute c:name="onClick">
                             var wgt=zk('$editor').$();
                             var s=wgt.get("codemirror").getValue();
                             s=js_beautify(s);
@@ -71,7 +71,7 @@
                 </hbox>
                 <hbox hflex="1" pack="end" spacing="8px">
                     <button id="btnCancel" width="100px" label="Cancel" mold="w4tjstudio" sclass="btn-default btn-sm">
-                    <attribute name="onClick">editorWindow.detach();</attribute>
+                        <attribute name="onClick">editorWindow.detach();</attribute>
                     </button>
                     <button id="btnOK" width="100px" label="OK" iconSclass="z-icon-save" mold="w4tjstudio"
                             sclass="btn-primary btn-sm"/>
@@ -82,7 +82,6 @@
 
     <style>
         .panel-maximize:hover,.panel-close:hover {cursor:pointer;text-decoration:none}
-
     </style>
 </zk>
 

@@ -209,7 +209,7 @@
             <east size="40%" splittable="true" collapsible="true" open="false">
                 <longbox/>
             </east>
-            <center>
+            <center title="44">
                 <doublebox/>
             </center>
             <south size="25%" splittable="true" collapsible="true" open="false">
