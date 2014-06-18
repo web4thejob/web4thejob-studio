@@ -10,6 +10,7 @@ import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.message.MessageEnum;
 import org.web4thejob.studio.support.ChildDelegate;
+import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
@@ -40,6 +41,8 @@ public class PropertyEditorController extends AbstractController {
     private Tabpanel properties;
     @Wire
     private Tabpanel events;
+    @Wire
+    private Tabpanel source;
     @Wire
     private Html editorSelection;
     private Element selection;
@@ -99,7 +102,13 @@ public class PropertyEditorController extends AbstractController {
     public void clear() {
         editorSelection.setContent(null);
         properties.getChildren().clear();
+        properties.getLinkedTab().setVisible(true);
+        properties.getLinkedTab().setSelected(true);
         events.getChildren().clear();
+        events.getLinkedTab().setVisible(true);
+        source.getChildren().clear();
+        source.getLinkedTab().setVisible(false);
+
         properties.setAttribute("prevSelection", null);
         new Include("~./include/nocurrentselection.zul").setParent(properties);
         new Include("~./include/nocurrentselection.zul").setParent(events);
@@ -107,6 +116,8 @@ public class PropertyEditorController extends AbstractController {
 
     public void refresh() throws Exception {
         events.getChildren().clear();
+        source.getChildren().clear();
+
         Element prevSelection = (Element) properties.getAttribute("prevSelection");
         properties.setAttribute("prevSelection", selection);
 
@@ -120,19 +131,77 @@ public class PropertyEditorController extends AbstractController {
             properties.getChildren().clear();
         }
 
-
-/*
-        if (getCanvasUuid().equals(selection.getAttributeValue("uuid"))) {
-            editorSelection.setContent("Canvas");
-            return;
-        }
-*/
         editorSelection.setContent(describeElement(selection));
 
         if (isBaseGroupElement(selection)) {
-//            properties.getChildren().clear();
+            properties.getLinkedTab().setVisible(false);
+            events.getLinkedTab().setVisible(false);
+            source.getLinkedTab().setVisible(true);
+            source.getLinkedTab().setSelected(true);
+
+            if ("attribute".equals(selection.getLocalName())) {
+                boolean isServerSide = true;
+                Attribute name = selection.getAttribute("name");
+                if (name == null) {
+                    String clientNS = StudioUtil.getClientNamespace((org.web4thejob.studio.dom.Element) selection);
+                    name = selection.getAttribute("name", clientNS);
+                    isServerSide = false;
+                }
+
+                source.getLinkedTab().setLabel(isServerSide ? "Java" : "Javascript");
+                Map<String, Object> data = new HashMap<>();
+                data.put("element", selection.getParent());
+                data.put("mode", isServerSide ? "text/x-java" : "javascript");
+                data.put("event", name.getValue());
+                Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
+            }
+        } else if ("zscript".equals(selection.getLocalName())) {
+            properties.getLinkedTab().setVisible(false);
+            events.getLinkedTab().setVisible(false);
+            source.getLinkedTab().setVisible(true);
+            source.getLinkedTab().setSelected(true);
+            source.getLinkedTab().setLabel("Java");
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("element", selection);
+            data.put("mode", "text/x-java");
+            Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
+
         } else {
+            properties.getLinkedTab().setVisible(true);
+            events.getLinkedTab().setVisible(true);
+            source.getLinkedTab().setVisible(false);
+
+            Tab tab = properties.getTabbox().getSelectedTab();
             refreshComponent();
+
+            String tag = selection.getLocalName();
+
+            if (tag.equals("style") || tag.equals("script") || tag.equals("html")) {
+                Map<String, Object> data = new HashMap<>();
+                data.put("element", selection);
+
+                source.getLinkedTab().setVisible(true);
+                switch (selection.getLocalName()) {
+                    case "style":
+                        data.put("mode", "css");
+                        source.getLinkedTab().setLabel("CSS");
+                        break;
+                    case "script":
+                        data.put("mode", "javascript");
+                        source.getLinkedTab().setLabel("Javascript");
+                        break;
+                    case "html":
+                        data.put("mode", "text/html");
+                        source.getLinkedTab().setLabel("HTML");
+                        break;
+                }
+                Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
+            }
+
+            if (tab == null || (tab.isSelected() && !tab.isVisible()))
+                properties.getLinkedTab().setSelected(true);
+
         }
 
 
@@ -492,3 +561,4 @@ public class PropertyEditorController extends AbstractController {
 
 
 }
+

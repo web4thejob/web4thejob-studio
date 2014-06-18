@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:n="http://www.zkoss.org/2005/zk/native"
+    xmlns:n="native"
+    xmlns:c="client"
     xmlns="http://www.zkoss.org/2005/zul"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
@@ -17,7 +18,15 @@
             <tabs>
                 <tab label="Attributes" iconSclass="z-icon-tags" sclass="bs-fonts"/>
                 <tab label="Events" iconSclass="z-icon-bolt" sclass="bs-fonts"/>
-                <tab label="Source" iconSclass="z-icon-code" sclass="bs-fonts"/>
+                <tab label="Source" iconSclass="z-icon-code" sclass="bs-fonts">
+                    <attribute c:name="onSelect">
+                        var cm=zk('$editor').$().get('codemirror');
+                        if (cm){
+                        cm.refresh();
+                        cm.focus();
+                        }
+                    </attribute>
+                </tab>
             </tabs>
             <tabpanels>
                 <tabpanel id="properties" style="overflow:auto"/>

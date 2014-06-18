@@ -31,12 +31,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     public static final String PARAM_XPATH = "w4tjstudio_xpath";
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -150,7 +150,7 @@ public class DesignerController extends AbstractController {
         });
 
 
-        final Menuitem pasteBefore = new Menuitem("Paste previous");
+        final Menuitem pasteBefore = new Menuitem("Paste before");
         pasteBefore.setParent(actionsPopup);
         pasteBefore.setIconSclass("z-icon-paste");
         pasteBefore.setAttribute("target", selection);
@@ -161,8 +161,8 @@ public class DesignerController extends AbstractController {
                 Element before = ((Element) pasteBefore.getAttribute("target"));
                 Element parent = (Element) before.getParent();
                 int pos = 0;
-                for (int i = 0; i < parent.getChildElements().size(); i++) {
-                    if (parent.getChildElements().get(i).equals(before)) {
+                for (int i = 0; i < parent.getChildCount(); i++) {
+                    if (parent.getChild(i).equals(before)) {
                         pos = i;
                         break;
                     }

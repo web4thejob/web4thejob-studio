@@ -9,6 +9,7 @@
                 <div>
                   <a>hello</a>
                   <p>dsdsds</p>
+                  <h1>Hello</h1>
                 </div>
                 <style>
                   .file {
@@ -78,11 +79,6 @@
         <attribute c:name="onCreate">
             <![CDATA[
                 h
-            ]]>
-        </attribute>
-        <attribute c:name="onFulfill">
-            <![CDATA[
-                s
             ]]>
         </attribute>
         <!-- jasnaks sjakjka sajksa -->
@@ -240,6 +236,10 @@
                             <label value="Value 3"/>
                         </row>
                     </rows>
+                    <zscript>
+                        <![CDATA[
+                                ]]>
+                    </zscript>
                 </grid>
             </west>
         </borderlayout>
@@ -348,5 +348,10 @@
             text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
             }
         </style>
+        <script>
+            <![CDATA[
+                hello;
+            ]]>
+        </script>
     </window>
 </zk>

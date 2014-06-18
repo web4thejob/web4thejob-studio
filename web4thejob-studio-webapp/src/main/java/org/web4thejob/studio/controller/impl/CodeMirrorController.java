@@ -73,7 +73,7 @@ public class CodeMirrorController extends AbstractController {
             }
         }
 
-        Clients.evalJavaScript("var cm=zk('$editor').$().get('codemirror'); cm.refresh(); cm.focus();");
+        Clients.evalJavaScript("var cm=zk('$editor').$(); if(cm) {cm=cm.get('codemirror'); cm.refresh(); cm.focus();};");
 
         btnSave.addEventListener(Events.ON_CLICK, new onSaveClicked());
 

@@ -7,7 +7,7 @@
         </tabs>
         <tabpanels>
             <tabpanel>
-                <button label="Button"/>
+                <button label="Button*"></button>
                 <button label="Button"/>
                 <button label="Button">
                     <attribute name="onClick">
@@ -16,6 +16,14 @@
                         ]]>
                     </attribute>
                 </button>
+                <button label="Button">
+                    <attribute name="onRightClick">
+                        <![CDATA[
+                            gggggg
+                        ]]>
+                    </attribute>
+                </button>
+                <button label="Button*"></button>
                 <style>
                     .dropdown-menu>li>a:hover,
                     .dropdown-menu>li>a:focus {
@@ -28,14 +36,12 @@
                     color: #FFF;
                     }
                 </style>
+                <button label="Button*"></button>
+                <button label="Button*"></button>
             </tabpanel>
             <tabpanel>
                 <button label="Button**"/>
-                <button label="Button**"/>
-                <button label="Button"/>
-                <button label="Button**"/>
                 <textbox/>
-                <button label="Button**"/>
                 <button label="Button**"/>
             </tabpanel>
         </tabpanels>
