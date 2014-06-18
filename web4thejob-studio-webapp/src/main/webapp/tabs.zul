@@ -2,14 +2,20 @@
 <zk>
     <tabbox vflex="true" hflex="true">
         <tabs>
-            <tab label="Outline" selected="true"></tab>
+            <tab label="Outline" selected="true"/>
             <tab label="Tab" closable="true" tooltiptext="aaa"/>
         </tabs>
         <tabpanels>
             <tabpanel>
                 <button label="Button"/>
                 <button label="Button"/>
-                <button label="Button"/>
+                <button label="Button">
+                    <attribute name="onClick">
+                        <![CDATA[
+                            Clients.alert("hello");
+                        ]]>
+                    </attribute>
+                </button>
                 <style>
                     .dropdown-menu>li>a:hover,
                     .dropdown-menu>li>a:focus {

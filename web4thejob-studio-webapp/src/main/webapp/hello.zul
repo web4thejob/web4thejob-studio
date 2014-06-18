@@ -118,7 +118,18 @@
                             <button label="Button"/>
                             <combobox/>
                             <combobox/>
-                            <textbox/>
+                            <textbox>
+                                <attribute name="onCancel">
+                                    <![CDATA[
+                                        g
+                                    ]]>
+                                </attribute>
+                                <attribute name="onDrop">
+                                    <![CDATA[
+                                        g
+                                    ]]>
+                                </attribute>
+                            </textbox>
                             <combobox/>
                             <button label="Button"/>
                             <combobutton label="Combobutton"/>
@@ -232,115 +243,110 @@
                 </grid>
             </west>
         </borderlayout>
-        <label value="New Label"/>
         <combobox/>
         <button label="Button"/>
-        <button label="Button"/>
-        <combobox/>
-        <button label="Button"/>
+        <style>
+            .mono {
+            font-family: monospace, Courier, Courier New;
+            font-style: normal
+            }
+            .w4tjstudio-designer * {
+            font-size: 14px !important;
+            }
+            .w4tjstudio-designer a {
+            text-decoration: none !important
+            }
+            .w4tjstudio-hovered {
+            border: 1px solid orange !important;
+            }
+            .w4tjstudio-element-hidden {
+            color: rgb(167, 167, 167) !important;
+            }
+            .w4tjstudio-element-skipped {
+            color: rgb(167, 167, 167) !important;
+            text-decoration: line-through
+            }
+            .mild-shadow {
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            }
+            .designer-toolbar {
+            position: absolute;
+            top: 3px;
+            right: 0px;
+            }
+            /* -------------------------------------------------- */
+            /* File name */
+            /* -------------------------------------------------- */
+            .designer-file {
+            position: absolute;
+            text-align: center;
+            margin: 0 auto;
+            top: 9px;
+            right: 0px;
+            left: 0px;
+            font-family: monospace
+            }
+            .designer-file > .label {
+            border-radius: 0.75em;
+            font-weight: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            .designer-file a {
+            color: white;
+            margin-left: 5px;
+            margin-right: 5px;
+            }
+            .designer-file a:hover {
+            color: white;
+            text-decoration: underline !important;
+            }
+            .designer-file .dot {
+            font-family: FontAwesome;
+            font-size: 5px !important;
+            vertical-align: middle;
+            }
+            .w4tjstudio-designer .designer-file {
+            z-index: 0;
+            }
+            .w4tjstudio-designer .designer-toolbar {
+            z-index: 1;
+            }
+            .w4tjstudio-designer .z-tab {
+            z-index: 1;
+            }
+            /* ---------------------------------------------------------- */
+            .z-tab:hover,
+            .z-tab-selected {
+            border-top-width: 2px;
+            border-top-color: orange;
+            padding-top: 0px;
+            }
+            .custom-menupopup {
+            left: auto !important;
+            }
+            /* ff bug */
+            .designer-toolbar .btn {
+            height: 26px
+            }
+            .code-succeeded-effect {
+            vertical-align: middle;
+            font-size: 1px;
+            opacity: 0.1;
+            background-color: transparent;
+            font-family: FontAwesome;
+            color: rgb(0, 190, 23);
+            position: absolute;
+            text-align: center;
+            margin: 0 auto;
+            top: 0px;
+            bottom: 0px;
+            right: 0px;
+            left: 0px;
+            z-index: 10000;
+            text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
+            }
+        </style>
     </window>
-    <style>
-        .mono {
-        font-family: monospace, Courier, Courier New;
-        font-style: normal
-        }
-        .w4tjstudio-designer * {
-        font-size: 14px !important;
-        }
-        .w4tjstudio-designer a {
-        text-decoration: none !important
-        }
-        .w4tjstudio-hovered {
-        border: 1px solid orange !important;
-        }
-        .w4tjstudio-element-hidden {
-        color: rgb(167, 167, 167) !important;
-        }
-        .w4tjstudio-element-skipped {
-        color: rgb(167, 167, 167) !important;
-        text-decoration: line-through
-        }
-        .mild-shadow {
-        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-        }
-        .designer-toolbar {
-        position: absolute;
-        top: 3px;
-        right: 0px;
-        }
-        /* -------------------------------------------------- */
-        /* File name */
-        /* -------------------------------------------------- */
-        .designer-file {
-        position: absolute;
-        text-align: center;
-        margin: 0 auto;
-        top: 9px;
-        right: 0px;
-        left: 0px;
-        font-family: monospace
-        }
-        .designer-file > .label {
-        border-radius: 0.75em;
-        font-weight: 100;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-        .designer-file a {
-        color: white;
-        margin-left: 5px;
-        margin-right: 5px;
-        }
-        .designer-file a:hover {
-        color: white;
-        text-decoration: underline !important;
-        }
-        .designer-file .dot {
-        font-family: FontAwesome;
-        font-size: 5px !important;
-        vertical-align: middle;
-        }
-        .w4tjstudio-designer .designer-file {
-        z-index: 0;
-        }
-        .w4tjstudio-designer .designer-toolbar {
-        z-index: 1;
-        }
-        .w4tjstudio-designer .z-tab {
-        z-index: 1;
-        }
-        /* ---------------------------------------------------------- */
-        .z-tab:hover,
-        .z-tab-selected {
-        border-top-width: 2px;
-        border-top-color: orange;
-        padding-top: 0px;
-        }
-        .custom-menupopup {
-        left: auto !important;
-        }
-        /* ff bug */
-        .designer-toolbar .btn {
-        height: 26px
-        }
-        .code-succeeded-effect {
-        vertical-align: middle;
-        font-size: 1px;
-        opacity: 0.1;
-        background-color: transparent;
-        font-family: FontAwesome;
-        color: rgb(0, 190, 23);
-        position: absolute;
-        text-align: center;
-        margin: 0 auto;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-        left: 0px;
-        z-index: 10000;
-        text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
-        }
-    </style>
-    <label value="New Label"/>
 </zk>

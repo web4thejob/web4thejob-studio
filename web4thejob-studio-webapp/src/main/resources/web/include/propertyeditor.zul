@@ -17,10 +17,12 @@
             <tabs>
                 <tab label="Attributes" iconSclass="z-icon-tags" sclass="bs-fonts"/>
                 <tab label="Events" iconSclass="z-icon-bolt" sclass="bs-fonts"/>
+                <tab label="Source" iconSclass="z-icon-code" sclass="bs-fonts"/>
             </tabs>
             <tabpanels>
                 <tabpanel id="properties" style="overflow:auto"/>
                 <tabpanel id="events" style="overflow:auto"/>
+                <tabpanel id="source"/>
             </tabpanels>
         </tabbox>
     </vlayout>

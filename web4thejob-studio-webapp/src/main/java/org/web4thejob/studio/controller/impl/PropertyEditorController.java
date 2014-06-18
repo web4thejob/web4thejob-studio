@@ -177,8 +177,8 @@ public class PropertyEditorController extends AbstractController {
 //                    btn.setMold("bs");
                     btn.setParent(row);
                     btn.setIconSclass("z-icon-bolt");
-                    btn.setAttribute("side", "server");
-                    btn.setAttribute("property", propertyName);
+                    btn.setAttribute("mode", "text/x-java");
+                    btn.setAttribute("event", propertyName);
                     btn.setAttribute("element", selection);
                     btn.addEventListener(Events.ON_CLICK, CODE_EDITOR_HANDLER);
                     if (getEventCodeNode(selection, propertyName, true) != null) {
@@ -193,8 +193,8 @@ public class PropertyEditorController extends AbstractController {
 //                    btn.setMold("bs");
                     btn.setParent(row);
                     btn.setIconSclass("z-icon-bolt");
-                    btn.setAttribute("side", "client");
-                    btn.setAttribute("property", propertyName);
+                    btn.setAttribute("mode", "javascript");
+                    btn.setAttribute("event", propertyName);
                     btn.setAttribute("element", selection);
                     btn.addEventListener(Events.ON_CLICK, CODE_EDITOR_HANDLER);
                     if (getEventCodeNode(selection, propertyName, false) != null) {
@@ -425,10 +425,9 @@ public class PropertyEditorController extends AbstractController {
         @Override
         public void onEvent(MouseEvent event) throws Exception {
             Map<String, Object> args = new HashMap<>();
-            args.put("button", event.getTarget());
-            args.put("side", event.getTarget().getAttribute("side"));
+            args.put("mode", event.getTarget().getAttribute("mode"));
             args.put("element", event.getTarget().getAttribute("element"));
-            args.put("property", event.getTarget().getAttribute("property"));
+            args.put("event", event.getTarget().getAttribute("event"));
             Executions.createComponents("~./include/codedialog.zul", null, args);
         }
     }

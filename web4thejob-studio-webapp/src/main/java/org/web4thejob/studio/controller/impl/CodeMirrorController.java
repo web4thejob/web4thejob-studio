@@ -45,10 +45,9 @@ public class CodeMirrorController extends AbstractController {
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-        btnSave.addEventListener(Events.ON_CLICK, new onSaveClicked());
 
         element = (Element) Executions.getCurrent().getArg().get("element");
-        notNull(element);
+        if (element == null) return;
         mode = (String) Executions.getCurrent().getArg().get("mode");
         notNull(element);
         eventName = (String) Executions.getCurrent().getArg().get("event");
@@ -75,6 +74,9 @@ public class CodeMirrorController extends AbstractController {
         }
 
         Clients.evalJavaScript("var cm=zk('$editor').$().get('codemirror'); cm.refresh(); cm.focus();");
+
+        btnSave.addEventListener(Events.ON_CLICK, new onSaveClicked());
+
     }
 
     private class onSaveClicked implements EventListener<MouseEvent> {

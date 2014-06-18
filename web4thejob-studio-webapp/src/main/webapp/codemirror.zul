@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk xmlns:c="client">
+    <idspace vflex="true" hflex="true" apply="org.web4thejob.studio.controller.impl.CodeMirrorController">
+        <borderlayout>
+            <center>
+                <textbox id="editor" multiline="true">
+                    <attribute c:name="bind_">
+                        <![CDATA[
+                            function(a, b, c) {
+                              this.$bind_(a, b, c);
+                              var wgt = this;
+                              var codeEditor = CodeMirror.fromTextArea(this.$n(), {
+                                mode: "${arg.mode}",
+                                lineNumbers: true,
+                                matchBrackets: true,
+                                autofocus: true
+                              });
+                              wgt.set("codemirror", codeEditor);
+                              codeEditor.on("change", function() {
+                                var val = codeEditor.getValue();
+                                var txt = wgt.$n().value;
+                                if (val != txt) {
+                                  zk("$btnSave").$().setDisabled(false);
+                                  wgt.$n().value = val;
+                                  wgt.fire('onChange', {
+                                    value: val
+                                  }, {
+                                    toServer: true
+                                  });
+                                }
+                              });
+                            }
+                        ]]>
+                    </attribute>
+                    <attribute c:name="setValue">
+                        <![CDATA[
+                            function(a, b) {
+                              this.$setValue(a, b);
+                              if (this.get("codemirror")) {
+                                this.get("codemirror").setValue(a);
+                              }
+                            }
+                        ]]>
+                    </attribute>
+                </textbox>
+            </center>
+            <south size="50px" border="none">
+                <hbox hflex="true" pack="end" align="center" vflex="true" spacing="10px">
+                    <button label="Beautify" mold="w4tjstudio" width="80px" iconSclass="z-icon-magic"
+                            sclass="btn-default btn-sm">
+                        <attribute c:name="onClick">
+                            <![CDATA[
+                                var cm = zk("$editor").$();
+                                if (cm && cm.get("codemirror")) {
+                                  cm = cm.get("codemirror");
+                                  var src = cm.getValue().trim(),
+                                    mode = cm.getMode().name;
+                                  if (src.length == 0) {
+                                    cm.focus();
+                                    return;
+                                  }
+                                  switch (mode) {
+                                    case "css":
+                                      src = css_beautify("<style>" + src + "</style>", {
+                                        indent_size: 2
+                                      });
+                                      src = src.replace(/<style>/g, "");
+                                      src = src.replace(/<\/style>/g, "");
+                                      break;
+                                    case "text/html":
+                                      src = html_beautify(src, {
+                                        indent_size: 2
+                                      });
+                                      break;
+                                    default:
+                                      src = js_beautify(src, {
+                                        indent_size: 2
+                                      });
+                                      break;
+                                  }
+                                  cm.setValue(src);
+                                  cm.focus();
+                                }
+                            ]]>
+                        </attribute>
+                    </button>
+                    <button id="btnSave" label="Save" mold="w4tjstudio" width="80px" iconSclass="z-icon-save"
+                            sclass="btn-primary btn-sm" disabled="true">
+                        <attribute c:name="onClick">
+                            <![CDATA[
+                                this.setDisabled(true);
+                                var cm = zk("$editor").$();
+                                if (cm && cm.get("codemirror")) {
+                                  cm.get("codemirror").focus();
+                                }
+                            ]]>
+                        </attribute>
+                    </button>
+                </hbox>
+            </south>
+        </borderlayout>
+    </idspace>
+</zk>

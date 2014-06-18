@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
     <borderlayout id="bl">
-        <east size="25%" splittable="true" id="bl-east" border="none"></east>
-        <center></center>
+        <east size="25%" splittable="true" id="bl-east" border="none"/>
+        <center>
+            <attribute name="onCreate">
+                <![CDATA[
+                    a
+                ]]>
+            </attribute>
+        </center>
         <south size="25%" splittable="true" collapsible="true"/>
     </borderlayout>
 </zk>
