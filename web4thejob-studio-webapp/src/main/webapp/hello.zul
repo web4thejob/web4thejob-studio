@@ -109,7 +109,7 @@
                             <button label="Button"/>
                             <combobox/>
                             <combobox/>
-                            <textbox></textbox>
+                            <textbox/>
                             <combobox/>
                             <button label="Button"/>
                             <combobutton label="Combobutton"/>
@@ -124,7 +124,7 @@
                             <menubar>
                                 <menu label="Menu 1"/>
                             </menubar>
-                            <ckeditor vflex="true"></ckeditor>
+                            <ckeditor vflex="true"/>
                             <groupbox/>
                         </tabpanel>
                     </tabpanels>
@@ -194,7 +194,7 @@
             <east size="40%" splittable="true" collapsible="true" open="false">
                 <longbox/>
             </east>
-            <center title="44">
+            <center title="44" border="normal">
                 <doublebox/>
             </center>
             <south size="25%" splittable="true" collapsible="true" open="false">
@@ -220,7 +220,7 @@
         <combobox/>
         <button label="Button"/>
         <style>
-            ono {
+            mono {
             font-family: monospace, Courier, Courier New;
             font-style: normal
             }

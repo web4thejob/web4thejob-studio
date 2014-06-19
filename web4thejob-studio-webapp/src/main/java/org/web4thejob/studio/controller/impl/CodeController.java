@@ -2,12 +2,14 @@ package org.web4thejob.studio.controller.impl;
 
 import nu.xom.Document;
 import nu.xom.Element;
+import org.apache.commons.io.IOUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.CodeFormatter;
 import org.web4thejob.studio.support.StudioUtil;
 import org.web4thejob.studio.support.ZulXsdUtil;
+import org.zkoss.io.FileReader;
 import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Locators;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -15,13 +17,18 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Textbox;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.web4thejob.studio.message.MessageEnum.*;
 import static org.web4thejob.studio.support.StudioUtil.getElementByUuid;
+import static org.web4thejob.studio.support.StudioUtil.getWorkFile;
 
 /**
  * Created by e36132 on 14/5/2014.
@@ -31,6 +38,7 @@ public class CodeController extends AbstractController {
     private Textbox zulBox;
     private boolean changed;
     private Document document;
+    private Element selection;
 
 
     @Override
@@ -182,7 +190,6 @@ public class CodeController extends AbstractController {
                 Element element = message.getData();
                 element.detach();
                 print();
-                //addBookmark();
                 break;
             case EVALUATE_XML:
                 getCode(); //will throw error if it fails
@@ -195,17 +202,44 @@ public class CodeController extends AbstractController {
                 break;
             case ATTRIBUTE_CHANGED:
                 print();
-//                addBookmark();
                 break;
-            case SET_BOOKMARK:
-                //addBookmark();
+            case COMPONENT_SELECTED:
+                selection = message.getData();
                 break;
-            case RESTORE_BOOKMARK:
-                //restoreBookmark((String) message.getDefaultParam());
-                break;
-            case EVALUATE_ZUL:
-                break;
-            case ZSCRIPT_ADDED:
+            case CODE_ACTIVATED:
+                if (changed || selection == null || selection.getAttributeValue("uuid") == null) return;
+
+                List<String> lines;
+                try {
+                    File workFile = new File(getWorkFile());
+                    if (!workFile.exists()) return;
+                    lines = IOUtils.readLines(new FileReader(workFile, "UTF-8"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                int lineNo = -1, charNo = -1;
+                Pattern pattern = Pattern.compile("(^\\s*)(<" + selection.getLocalName() + "\\s{1,1})(.*)(\\s*uuid=\"" + selection.getAttributeValue("uuid") + "\")");
+                Matcher matcher;
+                for (String line : lines) {
+                    lineNo++;
+
+                    matcher = pattern.matcher(line);
+                    if (matcher.find()) {
+                        for (int m = 0; m <= matcher.groupCount(); m++) {
+                            if (matcher.group(m).startsWith("<")) {
+                                charNo = matcher.start(m);
+                            }
+                        }
+                        break;
+                    }
+
+                }
+
+                if (lineNo >= 0 && charNo >= 0) {
+                    Clients.evalJavaScript("myCodeMirror.setCursor({line:" + lineNo + ",ch:" + charNo + "});myCodeMirror.scrollIntoView(null,Math.round(jq(\".CodeMirror-scroll\").height() / 2))");
+                }
 
                 break;
         }

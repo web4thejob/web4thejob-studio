@@ -204,7 +204,6 @@ public class DesignerController extends AbstractController {
 
     @Listen("onCanvasSucceeded=#designer")
     public void onCanvasSucceeded(Event event) {
-//        Clients.clearBusy();
         clearAlerts();
 
         Map<String, String> data = cast(event.getData());
@@ -217,6 +216,7 @@ public class DesignerController extends AbstractController {
 
         if (message == null) {
             //this is the initial canvas load
+            Clients.clearBusy();
             publish(RESET, workFile);
         } else {
             MessageEnum id = MessageEnum.valueOf(message);
@@ -277,7 +277,9 @@ public class DesignerController extends AbstractController {
                 params.put(PARAM_TIMESTAMP, Long.valueOf(new Date().getTime()).toString());
 
                 //4. Working file, this file will be read by CanvasUiFactory.getPageDefinition()
-                params.put(PARAM_WORK_FILE, StudioUtil.buildWorkingFile(StudioUtil.getCode()).getAbsolutePath());
+                String workFile = StudioUtil.buildWorkingFile(StudioUtil.getCode()).getAbsolutePath();
+                setWorkFile(workFile); //store it for other controllers to find
+                params.put(PARAM_WORK_FILE, workFile);
                 try {
                     String src = getCanvasHolderURI();
                     canvasHolder.removeAttribute("src");
@@ -293,8 +295,8 @@ public class DesignerController extends AbstractController {
             case ZUL_EVAL_SUCCEEDED:
                 canvasView.setDisabled(false);
                 outlineView.setDisabled(false);
+                Clients.clearBusy();
                 if (message.getData(PARAM_HINT) == null) { //no hint, parse zul was clicked
-                    Clients.clearBusy();
                     Clients.evalJavaScript("w4tjStudioDesigner.codeSuccessEffect()");
                 } else if (message.getData(PARAM_HINT).equals(MessageEnum.COMPONENT_ADDED.name())) {
                     String xpath = message.getData(PARAM_XPATH);
@@ -303,7 +305,6 @@ public class DesignerController extends AbstractController {
                         if (nodes.size() != 1) break;
                         selection = (Element) nodes.get(0);
                         publish(COMPONENT_SELECTED, selection);
-                        Clients.clearBusy();
                     }
                 }
                 break;
@@ -402,7 +403,7 @@ public class DesignerController extends AbstractController {
 
     @Listen("onZKPage=#designer")
     public void onZKPage() {
-        Clients.clearBusy();
+//        Clients.clearBusy();
         publish(ZK_PAGE_VISITED);
     }
 

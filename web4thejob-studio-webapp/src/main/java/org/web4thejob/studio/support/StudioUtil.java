@@ -42,6 +42,7 @@ public abstract class StudioUtil {
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
+    public static final String ATTR_WORK_FILE = "work-file";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -562,4 +563,13 @@ public abstract class StudioUtil {
         }
         return target != null;
     }
+
+    public static String getWorkFile() {
+        return (String) Executions.getCurrent().getDesktop().getAttribute(ATTR_WORK_FILE);
+    }
+
+    public static void setWorkFile(String path) {
+        Executions.getCurrent().getDesktop().setAttribute(ATTR_WORK_FILE, path);
+    }
+
 }
