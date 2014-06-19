@@ -148,7 +148,7 @@ var w4tjStudioDesigner = {
         //jq('.designer-toolbar .toolbar-actions-dropdown').click(actionsHandler);
 
         jq('.designer-toolbar .toolbar-parsezul').click(function() {
-            zAu.cmd0.showBusy("Parsing your zul...");
+//            zAu.cmd0.showBusy("Parsing your zul...");
             zAu.send(new zk.Event(zk("$designer").$(), "onParseZulClicked"));
         });
 
@@ -245,7 +245,7 @@ var w4tjStudioDesigner = {
                     var dropped = jq(this);
 
                     if (dragged && dropped) {
-                        zAu.cmd0.showBusy();
+//                        zAu.cmd0.showBusy();
                         w4tjStudioDesigner.getCanvasFrame().zAu.send(new zk.Event(zk("$canvas").$(), "onTemplateDropped", {
                             template: dragged,
                             parent: dropped.attr('canvas-uuid')

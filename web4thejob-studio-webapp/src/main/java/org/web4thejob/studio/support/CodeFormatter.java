@@ -73,7 +73,7 @@ public abstract class CodeFormatter {
                 String line = tokenizer.nextToken();
                 if (line.contains("<style>")) {
                     line = line.replaceFirst("<style>", "");
-                    line = line.substring(1);
+                    line = line.trim();
                 } else if (line.contains("</style>")) {
                     line = line.replaceFirst("</style>", "");
                 }

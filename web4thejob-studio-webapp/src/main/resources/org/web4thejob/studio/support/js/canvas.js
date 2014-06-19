@@ -30,7 +30,7 @@ var w4tjStudioCanvas = {
                 var dropped = zk(e.target).$();
 
                 if (dragged && dropped) {
-                    zAu.cmd0.showBusy();
+//                    zAu.cmd0.showBusy();
                     zAu.send(new zk.Event(zk.Desktop.$(), "onTemplateDropped", {
                         template: dragged,
                         parent: dropped.uuid

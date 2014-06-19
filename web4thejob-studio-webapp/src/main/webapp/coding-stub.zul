@@ -35,6 +35,10 @@
                 </style>
             </hbox>
         </north>
-        <center id="here"/>
+        <center>
+            <panel vflex="true">
+                <panelchildren id="here"/>
+            </panel>
+        </center>
     </borderlayout>
 </zk>

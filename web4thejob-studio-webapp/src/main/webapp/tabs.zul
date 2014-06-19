@@ -7,25 +7,9 @@
         </tabs>
         <tabpanels>
             <tabpanel>
-                <button label="Button*"></button>
-                <button label="Button"/>
-                <button label="Button">
-                    <attribute name="onClick">
-                        <![CDATA[
-                            Clients.alert("hello");
-                        ]]>
-                    </attribute>
-                </button>
-                <button label="Button">
-                    <attribute name="onRightClick">
-                        <![CDATA[
-                            gggggg
-                        ]]>
-                    </attribute>
-                </button>
-                <button label="Button*"></button>
+                <button label="Button*"/>
                 <style>
-                    .dropdown-menu>li>a:hover,
+                    dropdown-menu>li>a:hover,
                     .dropdown-menu>li>a:focus {
                     background-image: -webkit-linear-gradient(top, #E597E5 0, #FF37FF 100%);
                     background-image: linear-gradient(to bottom, #E597E5 0, #FF37FF 100%);
@@ -36,12 +20,11 @@
                     color: #FFF;
                     }
                 </style>
-                <button label="Button*"></button>
-                <button label="Button*"></button>
+                <button label="Button*-"/>
             </tabpanel>
             <tabpanel>
                 <button label="Button**"/>
-                <textbox/>
+                <textbox multiline="true"/>
                 <button label="Button**"/>
             </tabpanel>
         </tabpanels>
