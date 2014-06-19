@@ -2,59 +2,98 @@
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <zk xmlns:c="client">
-    <idspace vflex="true" hflex="true" apply="org.web4thejob.studio.controller.impl.CodeMirrorController">
-        <borderlayout>
-            <center>
-                <textbox id="editor" multiline="true">
-                    <attribute c:name="bind_">
-                        <![CDATA[
-                            function(a, b, c) {
-                              this.$bind_(a, b, c);
-                              var wgt = this;
-                              var codeEditor = CodeMirror.fromTextArea(this.$n(), {
-                                mode: "${arg.mode}",
-                                lineNumbers: true,
-                                matchBrackets: true,
-                                autofocus: true
-                              });
-                              wgt.set("codemirror", codeEditor);
-                              codeEditor.on("change", function() {
-                                var val = codeEditor.getValue();
-                                var txt = wgt.$n().value;
-                                if (val != txt) {
-                                  zk("$btnSave").$().setDisabled(false);
-                                  wgt.$n().value = val;
-                                  wgt.fire('onChange', {
-                                    value: val
-                                  }, {
-                                    toServer: true
-                                  });
-                                }
+    <script>
+        <![CDATA[
+            function getClosestCodeMirror(wgt) {
+              var bl = zk(jq(wgt).parents('.z-borderlayout')).$();
+              if (bl) {
+                var ta = zk(jq(bl).find('textarea')).$();
+                if (ta) {
+                  return ta.get('codemirror');
+                }
+              }
+            };
+            function getClosestSaveButton(wgt) {
+              var bl = zk(jq(wgt).parents('.z-borderlayout')).$();
+              if (bl) {
+                return zk(jq(bl).find('.btn-primary')).$();
+              }
+            };
+            function getClosestToDialogButton(wgt) {
+              var bl = zk(jq(wgt).parents('.z-borderlayout')).$();
+              if (bl) {
+                return zk(jq(bl).find('.dummy-btndialog')).$();
+              }
+            };
+        ]]>
+    </script>
+    <borderlayout vflex="true" apply="org.web4thejob.studio.controller.impl.CodeMirrorController">
+        <center>
+            <textbox id="editor" multiline="true">
+                <attribute c:name="bind_">
+                    <![CDATA[
+                        function(a, b, c) {
+                          this.$bind_(a, b, c);
+                          var wgt = this;
+                          var codeEditor = CodeMirror.fromTextArea(this.$n(), {
+                            mode: "${arg.mode}",
+                            lineNumbers: true,
+                            matchBrackets: true,
+                            autofocus: true,
+                            foldGutter: true,
+                            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                            matchTags: {
+                              bothTags: true
+                            },
+                            autoCloseTags: true,
+                            lint: true
+                          });
+                          codeEditor.refresh();
+                          wgt.set("codemirror", codeEditor);
+                          codeEditor.on("change", function() {
+                            var val = codeEditor.getValue();
+                            var txt = wgt.$n().value;
+                            if (val != txt) {
+                              getClosestSaveButton(wgt).setDisabled(false);
+                              if (getClosestToDialogButton(wgt)) getClosestToDialogButton(wgt).setDisabled(true);
+                              wgt.$n().value = val;
+                              wgt.fire('onChange', {
+                                value: val
+                              }, {
+                                toServer: true
                               });
                             }
-                        ]]>
-                    </attribute>
-                    <attribute c:name="setValue">
-                        <![CDATA[
-                            function(a, b) {
-                              this.$setValue(a, b);
-                              if (this.get("codemirror")) {
-                                this.get("codemirror").setValue(a);
-                              }
-                            }
-                        ]]>
-                    </attribute>
-                </textbox>
-            </center>
-            <south size="50px" border="none">
+                          });
+                        }
+                    ]]>
+                </attribute>
+                <attribute c:name="setValue">
+                    <![CDATA[
+                        function(a, b) {
+                          this.$setValue(a, b);
+                          var cm = getClosestCodeMirror(this);
+                          if (cm) {
+                            cm.setValue(a);
+                            cm.refresh();
+                          }
+                        }
+                    ]]>
+                </attribute>
+            </textbox>
+        </center>
+        <south size="50px" border="none">
+            <hlayout hflex="true" vflex="true">
+                <hbox hflex="true" height="300px" vflex="true" align="center" pack="start">
+                    <button id="btnDialog" mold="w4tjstudio" sclass="dummy-btndialog btn-default btn-${arg.size}"
+                            iconSclass="z-icon-external-link" if="${arg.size=='xs'}"/>
+                </hbox>
                 <hbox hflex="true" pack="end" align="center" vflex="true" spacing="10px">
-                    <button label="Beautify" mold="w4tjstudio" width="80px" iconSclass="z-icon-magic"
-                            sclass="btn-default btn-sm">
+                    <button label="Beautify" mold="w4tjstudio" iconSclass="z-icon-magic"
+                            sclass="btn-default btn-${arg.size}">
                         <attribute c:name="onClick">
                             <![CDATA[
-                                var cm = zk("$editor").$();
-                                if (cm && cm.get("codemirror")) {
-                                  cm = cm.get("codemirror");
+                                var cm = getClosestCodeMirror(this);
+                                if (cm) {
                                   var src = cm.getValue().trim(),
                                     mode = cm.getMode().name;
                                   if (src.length == 0) {
@@ -69,7 +108,8 @@
                                       src = src.replace(/<style>/g, "");
                                       src = src.replace(/<\/style>/g, "");
                                       break;
-                                    case "text/html":
+                                    case "xml":
+                                      /*html actually*/
                                       src = html_beautify(src, {
                                         indent_size: 2
                                       });
@@ -86,20 +126,21 @@
                             ]]>
                         </attribute>
                     </button>
-                    <button id="btnSave" label="Save" mold="w4tjstudio" width="80px" iconSclass="z-icon-save"
-                            sclass="btn-primary btn-sm" disabled="true">
+                    <button id="btnSave" label="Save" mold="w4tjstudio" iconSclass="z-icon-save"
+                            sclass="btn-primary btn-${arg.size}" disabled="true">
                         <attribute c:name="onClick">
                             <![CDATA[
                                 this.setDisabled(true);
-                                var cm = zk("$editor").$();
-                                if (cm && cm.get("codemirror")) {
-                                  cm.get("codemirror").focus();
+                                if (getClosestToDialogButton(this)) getClosestToDialogButton(this).setDisabled(false);
+                                var cm = getClosestCodeMirror(this);
+                                if (cm) {
+                                  cm.focus();
                                 }
                             ]]>
                         </attribute>
                     </button>
                 </hbox>
-            </south>
-        </borderlayout>
-    </idspace>
+            </hlayout>
+        </south>
+    </borderlayout>
 </zk>

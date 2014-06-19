@@ -14,10 +14,14 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.MouseEvent;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
 import static org.web4thejob.studio.controller.ControllerEnum.CODE_MIRROR_CONTROLLER;
@@ -73,10 +77,19 @@ public class CodeMirrorController extends AbstractController {
             }
         }
 
-        Clients.evalJavaScript("var cm=zk('$editor').$(); if(cm) {cm=cm.get('codemirror'); cm.refresh(); cm.focus();};");
+        Clients.evalJavaScript("var cm=zk('" + editor.getUuid() + "').$(); if(cm) {cm=cm.get('codemirror'); cm.refresh(); cm.focus();};");
 
         btnSave.addEventListener(Events.ON_CLICK, new onSaveClicked());
 
+    }
+
+    @Listen("onClick=#btnDialog")
+    public void onToDialogClicked(MouseEvent event) {
+        Map<String, Object> args = new HashMap<>();
+        args.put("mode", mode);
+        args.put("element", element);
+        args.put("event", eventName);
+        Executions.createComponents("~./include/codedialog.zul", null, args);
     }
 
     private class onSaveClicked implements EventListener<MouseEvent> {

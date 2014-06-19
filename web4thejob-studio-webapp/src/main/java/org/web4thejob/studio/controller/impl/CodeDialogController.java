@@ -47,13 +47,19 @@ public class CodeDialogController extends AbstractController {
         element = (Element) Executions.getCurrent().getArg().get("element");
         notNull(element);
         eventName = (String) Executions.getCurrent().getArg().get("event");
-        notNull(eventName);
 
         isServerSide = !"javascript".equals(mode);
 
-        editorPanel.setTitle("<strong class=\"label label-primary\" style=\"font-size:120%;font-family:monospace\">"
-                + eventName + "</strong> <strong>" + (isServerSide ? "Java" : "Javascript") + "</strong> handler on " +
-                "the " + (isServerSide ? "server" : "browser"));
+        if (eventName != null) {
+            editorPanel.setTitle("<strong class=\"label label-primary\" style=\"font-size:120%;font-family:monospace\">"
+                    + eventName + "</strong> <strong>" + (isServerSide ? "Java" : "Javascript") + "</strong> handler on " +
+                    "the " + (isServerSide ? "server" : "browser"));
+        } else {
+            editorPanel.setTitle("<strong class=\"label label-primary\" style=\"font-size:120%;font-family:monospace\">"
+                    + "Source" + "</strong>");
+        }
+
+
         editorWindow.addEventListener(Events.ON_CANCEL, new EventListener<Event>() {
             @Override
             public void onEvent(Event event) throws Exception {
@@ -65,7 +71,7 @@ public class CodeDialogController extends AbstractController {
         data.put("element", element);
         data.put("mode", mode);
         data.put("event", eventName);
-        Executions.getCurrent().createComponents("~./include/codemirror.zul", editorPanel.getPanelchildren(), data);
+        Executions.getCurrent().createComponents("/codemirror.zul", editorPanel.getPanelchildren(), data);
 
     }
 

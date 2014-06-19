@@ -31,7 +31,7 @@
             <tabpanels>
                 <tabpanel id="properties" style="overflow:auto"/>
                 <tabpanel id="events" style="overflow:auto"/>
-                <tabpanel id="source"/>
+                <tabpanel id="source" style="padding-bottom:0px;margin-bottom:0px;"/>
             </tabpanels>
         </tabbox>
     </vlayout>

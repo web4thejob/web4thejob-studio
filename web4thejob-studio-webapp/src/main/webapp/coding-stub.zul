@@ -13,6 +13,7 @@
                             Element element = new Element("zscript", "");
                             args.put("element", element);
                             args.put("mode", "text/x-java");
+                            args.put("size", "sm");
                             execution.createComponents("codemirror.zul", here, args);
                         ]]>
                     </attribute>
@@ -25,10 +26,13 @@
                             Element element = new Element("style", "");
                             args.put("element", element);
                             args.put("mode", "css");
+                            args.put("size", "xs");
                             execution.createComponents("codemirror.zul", here, args);
                         ]]>
                     </attribute>
                 </button>
+                <style>
+                </style>
             </hbox>
         </north>
         <center id="here"/>

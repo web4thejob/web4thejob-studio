@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zk xmlns="http://www.zkoss.org/2005/zul">
+<zk xmlns:c="client" xmlns="http://www.zkoss.org/2005/zul">
 
     <window id="editorWindow" width="70%" height="60%" border="none" sizable="true"
             mode="modal" maximizable="true" apply="org.web4thejob.studio.controller.impl.CodeDialogController"
             style="box-shadow: 0 0 7px black;">
+        <attribute c:name="onCreate">
+            <![CDATA[
+                var cm = zk("$editor").$();
+                if (cm && cm.get("codemirror")) {
+                  cm = cm.get("codemirror");
+                  cm.refresh();
+                }
+            ]]>
+        </attribute>
         <panel id="editorPanel" vflex="true" mold="w4tjstudio"
                style="margin-bottom: 0px;" closable="true" maximizable="true">
             <attribute name="onClose">

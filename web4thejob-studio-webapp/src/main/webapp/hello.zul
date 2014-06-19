@@ -7,7 +7,7 @@
         <html>
             <![CDATA[
                 <div>
-                  <a>hello</a>
+                  <a>hello11</a>
                   <p>dsdsds</p>
                   <h1>Hello</h1>
                 </div>
@@ -76,11 +76,6 @@
                 }
             ]]>
         </attribute>
-        <attribute c:name="onCreate">
-            <![CDATA[
-                h
-            ]]>
-        </attribute>
         <!-- jasnaks sjakjka sajksa -->
         <menubar>
             <menu label="Menu 1">
@@ -114,18 +109,7 @@
                             <button label="Button"/>
                             <combobox/>
                             <combobox/>
-                            <textbox>
-                                <attribute name="onCancel">
-                                    <![CDATA[
-                                        g
-                                    ]]>
-                                </attribute>
-                                <attribute name="onDrop">
-                                    <![CDATA[
-                                        g
-                                    ]]>
-                                </attribute>
-                            </textbox>
+                            <textbox></textbox>
                             <combobox/>
                             <button label="Button"/>
                             <combobutton label="Combobutton"/>
@@ -140,13 +124,7 @@
                             <menubar>
                                 <menu label="Menu 1"/>
                             </menubar>
-                            <ckeditor vflex="true">
-                                <attribute c:name="onSave">
-                                    <![CDATA[
-                                        h
-                                    ]]>
-                                </attribute>
-                            </ckeditor>
+                            <ckeditor vflex="true"></ckeditor>
                             <groupbox/>
                         </tabpanel>
                     </tabpanels>
@@ -236,17 +214,13 @@
                             <label value="Value 3"/>
                         </row>
                     </rows>
-                    <zscript>
-                        <![CDATA[
-                                ]]>
-                    </zscript>
                 </grid>
             </west>
         </borderlayout>
         <combobox/>
         <button label="Button"/>
         <style>
-            .mono {
+            ono {
             font-family: monospace, Courier, Courier New;
             font-style: normal
             }
@@ -348,10 +322,5 @@
             text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
             }
         </style>
-        <script>
-            <![CDATA[
-                hello;
-            ]]>
-        </script>
     </window>
 </zk>

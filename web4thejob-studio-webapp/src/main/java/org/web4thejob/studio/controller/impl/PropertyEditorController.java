@@ -151,9 +151,10 @@ public class PropertyEditorController extends AbstractController {
                 source.getLinkedTab().setLabel(isServerSide ? "Java" : "Javascript");
                 Map<String, Object> data = new HashMap<>();
                 data.put("element", selection.getParent());
+                data.put("size", "xs");
                 data.put("mode", isServerSide ? "text/x-java" : "javascript");
                 data.put("event", name.getValue());
-                Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
+                Executions.getCurrent().createComponents("/codemirror.zul", source, data);
             }
         } else if ("zscript".equals(selection.getLocalName())) {
             properties.getLinkedTab().setVisible(false);
@@ -164,8 +165,9 @@ public class PropertyEditorController extends AbstractController {
 
             Map<String, Object> data = new HashMap<>();
             data.put("element", selection);
+            data.put("size", "xs");
             data.put("mode", "text/x-java");
-            Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
+            Executions.getCurrent().createComponents("/codemirror.zul", source, data);
 
         } else {
             properties.getLinkedTab().setVisible(true);
@@ -180,6 +182,7 @@ public class PropertyEditorController extends AbstractController {
             if (tag.equals("style") || tag.equals("script") || tag.equals("html")) {
                 Map<String, Object> data = new HashMap<>();
                 data.put("element", selection);
+                data.put("size", "xs");
 
                 source.getLinkedTab().setVisible(true);
                 switch (selection.getLocalName()) {
@@ -196,7 +199,7 @@ public class PropertyEditorController extends AbstractController {
                         source.getLinkedTab().setLabel("HTML");
                         break;
                 }
-                Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
+                Executions.getCurrent().createComponents("/codemirror.zul", source, data);
             }
 
             if (tab == null || (tab.isSelected() && !tab.isVisible()))
