@@ -71,7 +71,7 @@ public class CodeDialogController extends AbstractController {
         data.put("element", element);
         data.put("mode", mode);
         data.put("event", eventName);
-        Executions.getCurrent().createComponents("/codemirror.zul", editorPanel.getPanelchildren(), data);
+        Executions.getCurrent().createComponents("~./include/codemirror.zul", editorPanel.getPanelchildren(), data);
 
     }
 

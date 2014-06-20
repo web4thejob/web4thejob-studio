@@ -68,6 +68,8 @@ public abstract class AbstractController extends SelectorComposer<Component> imp
                     publish(EVALUATE_ZUL, ATTRIBUTE_CHANGED);
                 } else if (COMPONENT_DETACHED == id) {
                     publish(EVALUATE_ZUL, COMPONENT_DETACHED);
+                } else if (ZUL_EVAL_FAILED == id) {
+                    publish(COMPONENT_SELECTED);
                 }
             }
         } catch (Exception e) {

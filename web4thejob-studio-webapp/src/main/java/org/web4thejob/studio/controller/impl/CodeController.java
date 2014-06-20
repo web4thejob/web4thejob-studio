@@ -1,5 +1,6 @@
 package org.web4thejob.studio.controller.impl;
 
+import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import org.apache.commons.io.IOUtils;
@@ -12,6 +13,7 @@ import org.web4thejob.studio.support.ZulXsdUtil;
 import org.zkoss.io.FileReader;
 import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Locators;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
@@ -207,7 +209,9 @@ public class CodeController extends AbstractController {
                 selection = message.getData();
                 break;
             case CODE_ACTIVATED:
-                if (changed || selection == null || selection.getAttributeValue("uuid") == null) return;
+                if (changed || selection == null ||
+                        (selection.getAttributeValue("uuid") == null && !"attribute".equals(selection.getLocalName())))
+                    return;
 
                 List<String> lines;
                 try {
@@ -220,7 +224,23 @@ public class CodeController extends AbstractController {
                 }
 
                 int lineNo = -1, charNo = -1;
-                Pattern pattern = Pattern.compile("(^\\s*)(<" + selection.getLocalName() + "\\s{1,1})(.*)(\\s*uuid=\"" + selection.getAttributeValue("uuid") + "\")");
+                Pattern pattern;
+                String regex, tag = selection.getLocalName(), uuid = selection.getAttributeValue("uuid");
+                if (!"attribute".equals(tag)) {
+                    regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*uuid=\"" + uuid + "\")";
+                } else {
+
+                    String preffix = "";
+                    Attribute attribute = selection.getAttribute("name");
+                    if (attribute == null) {
+                        String clientNS = StudioUtil.getClientNamespace((org.web4thejob.studio.dom.Element) selection);
+                        attribute = selection.getAttribute("name", clientNS);
+                        preffix = attribute.getNamespacePrefix() + ":";
+                    }
+                    regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*" + preffix + "name=\"" + attribute.getValue() + "\")";
+                }
+
+                pattern = Pattern.compile(regex);
                 Matcher matcher;
                 for (String line : lines) {
                     lineNo++;
@@ -245,4 +265,39 @@ public class CodeController extends AbstractController {
         }
     }
 
+    @Listen("onZulCodeClick=#zulBox")
+    public void onZulCodeClick(Event event) {
+        int targetLine = (int) ((Map) event.getData()).get("line");
+        //int targetChar = (int) ((Map) event.getData()).get("ch");
+
+
+        List<String> lines;
+        try {
+            File workFile = new File(getWorkFile());
+            if (!workFile.exists()) return;
+            lines = IOUtils.readLines(new FileReader(workFile, "UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        String uuid = null;
+        Pattern pattern = Pattern.compile(".*\\s+uuid=\"(\\w+)\"");
+        Matcher matcher;
+        int lno = -1;
+        for (String line : lines) {
+            lno++;
+            if (lno == targetLine) {
+                matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    uuid = matcher.group(1);
+                }
+                break;
+            }
+        }
+
+        if (uuid != null) {
+            publish(COMPONENT_SELECTED, getElementByUuid(uuid));
+        }
+    }
 }

@@ -541,6 +541,9 @@ public abstract class StudioUtil {
     }
 
     public static boolean acceptsChild(Element parent, Element child) {
+        //it is an event, the user is responsible if it is sent by the new parent
+        if ("attribute".equals(child.getLocalName())) return true;
+
         Component container = null;
         Component target;
 

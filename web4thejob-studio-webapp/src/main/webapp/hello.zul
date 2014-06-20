@@ -80,11 +80,23 @@
         <menubar>
             <menu label="Menu 1">
                 <menupopup>
-                    <menuitem label="Menu item" href="/"/>
+                    <menuitem label="Menu item" href="/"></menuitem>
                     <menuitem label="Menu item"/>
                     <menuitem label="Menu item"/>
-                    <menuitem label="Menu item" disabled="true"/>
-                    <menuitem label="Menu item"/>
+                    <menuitem label="Menu item" disabled="true">
+                        <attribute name="onRightClick">
+                            <![CDATA[
+                                l
+                            ]]>
+                        </attribute>
+                    </menuitem>
+                    <menuitem label="Menu item">
+                        <attribute name="onRightClick">
+                            <![CDATA[
+                                l
+                            ]]>
+                        </attribute>
+                    </menuitem>
                     <menuitem label="Menu item"/>
                 </menupopup>
             </menu>
@@ -108,7 +120,6 @@
                             <n:h1>Wowww</n:h1>
                             <button label="Button"/>
                             <combobox/>
-                            <combobox/>
                             <textbox/>
                             <combobox/>
                             <button label="Button"/>
@@ -116,8 +127,8 @@
                             <bandbox/>
                             <combobutton label="Combobutton"/>
                             <combobutton label="Combobutton"/>
-                            <textbox/>
-                            <textbox/>
+                            <textbox type="password"/>
+                            <combobox/>
                             <combobox/>
                         </tabpanel>
                         <tabpanel>

@@ -47,6 +47,12 @@
                                     );
 
                             wgt.set("codemirror",myCodeMirror);
+
+                            myCodeMirror.on('dblclick', function () {
+                                zAu.send(new zk.Event(wgt, 'onZulCodeClick', myCodeMirror.getCursor()));
+                                myCodeMirror.setSelection(myCodeMirror.getCursor()); //so that match tags runs again
+                            });
+
                             myCodeMirror.on('change', function () {
                                 jq(".splash").remove();
                                 var val = myCodeMirror.getValue();

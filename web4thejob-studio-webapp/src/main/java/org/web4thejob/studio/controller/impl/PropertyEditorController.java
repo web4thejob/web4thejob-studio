@@ -154,7 +154,7 @@ public class PropertyEditorController extends AbstractController {
                 data.put("size", "xs");
                 data.put("mode", isServerSide ? "text/x-java" : "javascript");
                 data.put("event", name.getValue());
-                Executions.getCurrent().createComponents("/codemirror.zul", source, data);
+                Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
             }
         } else if ("zscript".equals(selection.getLocalName())) {
             properties.getLinkedTab().setVisible(false);
@@ -167,7 +167,7 @@ public class PropertyEditorController extends AbstractController {
             data.put("element", selection);
             data.put("size", "xs");
             data.put("mode", "text/x-java");
-            Executions.getCurrent().createComponents("/codemirror.zul", source, data);
+            Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
 
         } else {
             properties.getLinkedTab().setVisible(true);
@@ -199,7 +199,7 @@ public class PropertyEditorController extends AbstractController {
                         source.getLinkedTab().setLabel("HTML");
                         break;
                 }
-                Executions.getCurrent().createComponents("/codemirror.zul", source, data);
+                Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
             }
 
             if (tab == null || (tab.isSelected() && !tab.isVisible()))

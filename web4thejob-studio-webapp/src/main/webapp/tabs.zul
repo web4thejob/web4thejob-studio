@@ -3,7 +3,7 @@
     <tabbox vflex="true" hflex="true">
         <tabs>
             <tab label="Outline" selected="true"/>
-            <tab label="Tab" closable="true" tooltiptext="aaa"/>
+            <tab label="Tab" tooltiptext="aaa"/>
         </tabs>
         <tabpanels>
             <tabpanel>
@@ -20,7 +20,7 @@
                     color: #FFF;
                     }
                 </style>
-                <button label="Button*-"/>
+                <button label="Button*-"></button>
             </tabpanel>
             <tabpanel>
                 <button label="Button**"/>
