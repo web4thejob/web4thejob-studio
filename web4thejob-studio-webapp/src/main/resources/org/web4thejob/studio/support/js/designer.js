@@ -330,6 +330,10 @@ var w4tjStudioDesigner = {
         }
 
         var w = zk("$propertyeditor").$();
+
+        //prevents a problem of unremovable mask when user double clicks quickly on widget
+        if (typeof w.effects_.showBusy === "object") return;
+
         var r = jq(w).find('#' + w.uuid + '-real');
         w.effects_.showBusy = new zk.eff.Mask({
             id: w.uuid + '-shby',
