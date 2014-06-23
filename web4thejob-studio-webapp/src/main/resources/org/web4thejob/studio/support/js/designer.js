@@ -329,6 +329,14 @@ var w4tjStudioDesigner = {
             jq(".designer-toolbar .open").removeClass("open");
         }
 
+        this.propertyEditorBusy();
+
+        if (sendToServer)
+            zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
+
+    },
+
+    propertyEditorBusy: function(){
         var w = zk("$propertyeditor").$();
 
         //prevents a problem of unremovable mask when user double clicks quickly on widget
@@ -340,10 +348,6 @@ var w4tjStudioDesigner = {
             anchor: r,
             message: 'Refreshing...'
         });
-
-        if (sendToServer)
-            zAu.send(new zk.Event(zk("$designer").$(), "onWidgetSelected", data));
-
     }
 
 }

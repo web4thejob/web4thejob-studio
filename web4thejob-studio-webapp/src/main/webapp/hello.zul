@@ -80,7 +80,7 @@
         <menubar>
             <menu label="Menu 1">
                 <menupopup>
-                    <menuitem label="Menu item" href="/"></menuitem>
+                    <menuitem label="Menu item" href="/"/>
                     <menuitem label="Menu item"/>
                     <menuitem label="Menu item"/>
                     <menuitem label="Menu item" disabled="true">

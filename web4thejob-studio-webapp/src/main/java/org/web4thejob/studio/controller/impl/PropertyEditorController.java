@@ -75,7 +75,7 @@ public class PropertyEditorController extends AbstractController {
                 } else {
                     clear();
                 }
-                Clients.evalJavaScript("zAu.cmd0.clearBusy(zk('$propertyeditor').$().uuid)");
+                Clients.evalJavaScript("zAu.cmd0.clearBusy(zk('$propertyeditor').$())");
                 break;
             case RESET:
                 clear();
@@ -133,7 +133,7 @@ public class PropertyEditorController extends AbstractController {
 
         editorSelection.setContent(describeElement(selection));
 
-        if (isBaseGroupElement(selection)) {
+        if ("attribute".equals(selection.getLocalName())) {
             properties.getLinkedTab().setVisible(false);
             events.getLinkedTab().setVisible(false);
             source.getLinkedTab().setVisible(true);
@@ -169,7 +169,7 @@ public class PropertyEditorController extends AbstractController {
             data.put("mode", "text/x-java");
             Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
 
-        } else {
+        } else if (!isBaseGroupElement(selection)) {
             properties.getLinkedTab().setVisible(true);
             events.getLinkedTab().setVisible(true);
             source.getLinkedTab().setVisible(false);

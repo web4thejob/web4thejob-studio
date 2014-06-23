@@ -46,6 +46,7 @@
                               bothTags: true
                             },
                             autoCloseTags: true,
+                            autoCloseBrackets: true,
                             lint: true
                           });
                           codeEditor.refresh();

@@ -267,9 +267,11 @@ public class CodeController extends AbstractController {
 
     @Listen("onZulCodeClick=#zulBox")
     public void onZulCodeClick(Event event) {
+        Clients.evalJavaScript("zAu.cmd0.clearBusy(zk('$propertyeditor').$())");
+        if (changed) return;
+
         int targetLine = (int) ((Map) event.getData()).get("line");
         //int targetChar = (int) ((Map) event.getData()).get("ch");
-
 
         List<String> lines;
         try {
