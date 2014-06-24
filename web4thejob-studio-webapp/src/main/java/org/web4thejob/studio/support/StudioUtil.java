@@ -8,9 +8,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.MethodInvoker;
 import org.springframework.util.StringUtils;
+import org.web4thejob.studio.conf.Configuration;
 import org.web4thejob.studio.controller.Controller;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.controller.impl.CodeController;
+import org.web4thejob.studio.controller.impl.DesignerController;
 import org.web4thejob.studio.dom.NodeFactory;
 import org.zkoss.json.JSONValue;
 import org.zkoss.zk.ui.Component;
@@ -29,8 +31,7 @@ import java.util.*;
 
 import static org.springframework.util.Assert.isTrue;
 import static org.springframework.util.Assert.notNull;
-import static org.web4thejob.studio.controller.ControllerEnum.CANVAS_CONTROLLER;
-import static org.web4thejob.studio.controller.ControllerEnum.CODE_CONTROLLER;
+import static org.web4thejob.studio.controller.ControllerEnum.*;
 import static org.zkoss.lang.Generics.cast;
 
 /**
@@ -43,6 +44,7 @@ public abstract class StudioUtil {
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
     public static final String ATTR_WORK_FILE = "work-file";
+    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -543,6 +545,7 @@ public abstract class StudioUtil {
     public static boolean acceptsChild(Element parent, Element child) {
         //it is an event, the user is responsible if it is sent by the new parent
         if ("attribute".equals(child.getLocalName())) return true;
+        if ("zk".equals(parent.getLocalName())) return true;
 
         Component container = null;
         Component target;
@@ -575,4 +578,17 @@ public abstract class StudioUtil {
         Executions.getCurrent().getDesktop().setAttribute(ATTR_WORK_FILE, path);
     }
 
+    public static Configuration getConfiguration() {
+        Configuration configuration = (Configuration) Executions.getCurrent().getSession().getAttribute(ATTR_CONFIG);
+        if (configuration == null) {
+            configuration = new Configuration();
+            Executions.getCurrent().getSession().setAttribute(ATTR_CONFIG, configuration);
+        }
+        return configuration;
+    }
+
+
+    public static String getCanvasURI() {
+        return ((DesignerController) getController(DESIGNER_CONTROLLER)).getCanvasHolderURI();
+    }
 }

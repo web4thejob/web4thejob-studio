@@ -17,11 +17,13 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Textbox;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.web4thejob.studio.message.MessageEnum.*;
-import static org.web4thejob.studio.support.StudioUtil.getElementByUuid;
-import static org.web4thejob.studio.support.StudioUtil.getWorkFile;
+import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
  * Created by e36132 on 14/5/2014.
@@ -209,59 +210,72 @@ public class CodeController extends AbstractController {
                 selection = message.getData();
                 break;
             case CODE_ACTIVATED:
-                if (changed || selection == null ||
-                        (selection.getAttributeValue("uuid") == null && !"attribute".equals(selection.getLocalName())))
-                    return;
-
-                List<String> lines;
-                try {
-                    File workFile = new File(getWorkFile());
-                    if (!workFile.exists()) return;
-                    lines = IOUtils.readLines(new FileReader(workFile, "UTF-8"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                int lineNo = -1, charNo = -1;
-                Pattern pattern;
-                String regex, tag = selection.getLocalName(), uuid = selection.getAttributeValue("uuid");
-                if (!"attribute".equals(tag)) {
-                    regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*uuid=\"" + uuid + "\")";
-                } else {
-
-                    String preffix = "";
-                    Attribute attribute = selection.getAttribute("name");
-                    if (attribute == null) {
-                        String clientNS = StudioUtil.getClientNamespace((org.web4thejob.studio.dom.Element) selection);
-                        attribute = selection.getAttribute("name", clientNS);
-                        preffix = attribute.getNamespacePrefix() + ":";
-                    }
-                    regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*" + preffix + "name=\"" + attribute.getValue() + "\")";
-                }
-
-                pattern = Pattern.compile(regex);
-                Matcher matcher;
-                for (String line : lines) {
-                    lineNo++;
-
-                    matcher = pattern.matcher(line);
-                    if (matcher.find()) {
-                        for (int m = 0; m <= matcher.groupCount(); m++) {
-                            if (matcher.group(m).startsWith("<")) {
-                                charNo = matcher.start(m);
-                            }
-                        }
-                        break;
-                    }
-
-                }
-
-                if (lineNo >= 0 && charNo >= 0) {
-                    Clients.evalJavaScript("myCodeMirror.setCursor({line:" + lineNo + ",ch:" + charNo + "});myCodeMirror.scrollIntoView(null,Math.round(jq(\".CodeMirror-scroll\").height() / 2))");
-                }
-
+                focusSelectedElement();
                 break;
+            case DOWNLOAD_REQUESTED:
+                try {
+                    String uri = getCanvasURI().split("\\?")[0];
+                    if (!uri.endsWith(".zul"))
+                        uri += ".zul";
+                    Filedownload.save(zulBox.getValue().getBytes("UTF-8"), "application/xml", uri);
+                } catch (UnsupportedEncodingException e) {
+                    showError(e);
+                }
+                break;
+        }
+    }
+
+    private void focusSelectedElement() {
+        if (changed || selection == null ||
+                (selection.getAttributeValue("uuid") == null && !"attribute".equals(selection.getLocalName())))
+            return;
+
+        List<String> lines;
+        try {
+            File workFile = new File(getWorkFile());
+            if (!workFile.exists()) return;
+            lines = IOUtils.readLines(new FileReader(workFile, "UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        int lineNo = -1, charNo = -1;
+        Pattern pattern;
+        String regex, tag = selection.getLocalName(), uuid = selection.getAttributeValue("uuid");
+        if (!"attribute".equals(tag)) {
+            regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*uuid=\"" + uuid + "\")";
+        } else {
+
+            String preffix = "";
+            Attribute attribute = selection.getAttribute("name");
+            if (attribute == null) {
+                String clientNS = StudioUtil.getClientNamespace((org.web4thejob.studio.dom.Element) selection);
+                attribute = selection.getAttribute("name", clientNS);
+                preffix = attribute.getNamespacePrefix() + ":";
+            }
+            regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*" + preffix + "name=\"" + attribute.getValue() + "\")";
+        }
+
+        pattern = Pattern.compile(regex);
+        Matcher matcher;
+        for (String line : lines) {
+            lineNo++;
+
+            matcher = pattern.matcher(line);
+            if (matcher.find()) {
+                for (int m = 0; m <= matcher.groupCount(); m++) {
+                    if (matcher.group(m).startsWith("<")) {
+                        charNo = matcher.start(m);
+                    }
+                }
+                break;
+            }
+
+        }
+
+        if (lineNo >= 0 && charNo >= 0) {
+            Clients.evalJavaScript("myCodeMirror.setCursor({line:" + lineNo + ",ch:" + charNo + "});myCodeMirror.scrollIntoView(null,Math.round(jq(\".CodeMirror-scroll\").height() / 2))");
         }
     }
 

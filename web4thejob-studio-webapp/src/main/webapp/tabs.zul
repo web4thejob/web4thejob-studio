@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
+    <menu label="Menu"/>
+    <menu label="Menu"/>
     <tabbox vflex="true" hflex="true">
         <tabs>
             <tab label="Outline" selected="true"/>
@@ -20,7 +22,7 @@
                     color: #FFF;
                     }
                 </style>
-                <button label="Button*-"></button>
+                <button label="Button*-"/>
             </tabpanel>
             <tabpanel>
                 <button label="Button**"/>

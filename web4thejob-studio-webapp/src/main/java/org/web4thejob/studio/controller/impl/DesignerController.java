@@ -31,12 +31,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     public static final String PARAM_XPATH = "w4tjstudio_xpath";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -50,6 +50,7 @@ public class DesignerController extends AbstractController {
 
     private Element selection;
     private Menupopup actionsPopup;
+    private Menupopup parsePopup;
 
     @Override
     public ControllerEnum getId() {
@@ -66,6 +67,48 @@ public class DesignerController extends AbstractController {
         } catch (Exception e) {
             publish(COMPONENT_SELECTED);
         }
+    }
+
+    @Listen("onParseZulDropdownClicked=#designer")
+    public void onParseZulDropdownClicked(Event event) {
+        if (parsePopup == null) {
+            parsePopup = new Menupopup();
+            parsePopup.setId("parseMenupopup");
+            parsePopup.setMold("w4tjstudio");
+            parsePopup.setSclass("custom-menupopup");
+            parsePopup.setPage(event.getTarget().getPage());
+        } else {
+            parsePopup.getChildren().clear();
+        }
+
+        int x = Integer.valueOf(((Map) event.getData()).get("right").toString());
+        parsePopup.open("auto", ((Map) event.getData()).get("top").toString() + "px");
+        parsePopup.setStyle("right:" + x + "px");
+
+        final Menuitem returntoCanavs = new Menuitem("Always return to canvas");
+        returntoCanavs.setParent(parsePopup);
+        returntoCanavs.setCheckmark(true);
+        returntoCanavs.setAutocheck(true);
+        returntoCanavs.setChecked(getConfiguration().isAlwaysReturnToCanvas());
+        returntoCanavs.addEventListener(Events.ON_CHECK, new EventListener<CheckEvent>() {
+            @Override
+            public void onEvent(CheckEvent event) throws Exception {
+                getConfiguration().setAlwaysReturnToCanvas(event.isChecked());
+            }
+        });
+
+        new Menuseparator().setParent(parsePopup);
+
+        final Menuitem download = new Menuitem("Download source");
+        download.setParent(parsePopup);
+        download.setIconSclass("z-icon-download");
+        download.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                publish(DOWNLOAD_REQUESTED);
+            }
+        });
+
     }
 
     @Listen("onActionsClicked=#designer")
@@ -225,6 +268,13 @@ public class DesignerController extends AbstractController {
                 case EVALUATE_ZUL:
                     data.remove(PARAM_MESSAGE);
                     publish(ZUL_EVAL_SUCCEEDED, data);
+
+                    if (getConfiguration().isAlwaysReturnToCanvas()) {
+                        if (!canvasView.isSelected()) {
+                            canvasView.setSelected(true);
+                        }
+                    }
+
                     break;
             }
         }
@@ -375,13 +425,14 @@ public class DesignerController extends AbstractController {
         canvasHolder.setAttribute("src", event.getURI());
     }
 
-    private String getCanvasHolderURI() {
+    public String getCanvasHolderURI() {
         String src = (String) canvasHolder.getAttribute("src");
         if (src == null) {
             src = canvasHolder.getSrc();
         }
 
         try {
+            //clean the uri from studio related params
             src = Encodes.removeFromQueryString(src, PARAM_MESSAGE);
             src = Encodes.removeFromQueryString(src, PARAM_HINT);
             src = Encodes.removeFromQueryString(src, PARAM_WORK_FILE);

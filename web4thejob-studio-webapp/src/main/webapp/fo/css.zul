@@ -4,6 +4,11 @@
 <zk>
     <borderlayout>
         <north size="25%" splittable="true" collapsible="true">
+            <attribute name="onOpen">
+                <![CDATA[
+                    h
+                ]]>
+            </attribute>
             <groupbox>
                 <button label="Button"/>
                 <style>
