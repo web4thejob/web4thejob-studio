@@ -19,6 +19,7 @@ public class StudioRichlet extends GenericRichlet {
     public void service(Page page) throws Exception {
         String uri;
 
+        page.setTitle("Web4thejob Studio - " + Executions.getCurrent().getDesktop().getWebApp().getAppName());
         switch (page.getRequestPath()) {
             case "/":
                 uri = "~./designer.zul";

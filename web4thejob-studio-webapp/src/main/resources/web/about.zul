@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="About Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
-<?link rel="shortcut icon" type="image/x-icon" href="favicon.ico"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
 
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>

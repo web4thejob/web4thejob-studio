@@ -408,6 +408,9 @@ public abstract class StudioUtil {
             } else if (line.startsWith("<?script") && line.endsWith("?>")) {
                 sb.append("<script type=\"text/javascript\" src=\"").append(extractValue(line, "src",
                         true)).append("\" charset=\"UTF-8\"></script>\n");
+            } else if (line.startsWith("<?link") && line.contains("rel=\"shortcut icon\"") && line.endsWith("?>")) {
+                sb.append("<link rel=\"shortcut icon\" type=\"").append(extractValue(line, "type", false)).append("\"  href=\"").append(extractValue(line, "href",
+                        true)).append("\" </link>\n");
             } else if (line.startsWith("<zk")) {
                 break;
             }
