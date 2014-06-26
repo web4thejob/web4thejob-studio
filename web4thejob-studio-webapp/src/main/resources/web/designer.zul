@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?page title="Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
 
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
@@ -60,7 +59,7 @@
 
             </center>
             <east id="propertyeditor" width="300px" splittable="true" collapsible="true">
-            <include src="~./include/propertyeditor.zul"/>
+                <include src="~./include/propertyeditor.zul"/>
             </east>
         </borderlayout>
     </window>
@@ -128,7 +127,6 @@
         .w4tjstudio-designer .designer-toolbar {z-index: 1;}
         .w4tjstudio-designer .z-tab {z-index: 1;}
         /* ---------------------------------------------------------- */
-
 
 
         .z-tab:hover, .z-tab-selected {

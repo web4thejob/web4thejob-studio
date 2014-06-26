@@ -22,7 +22,7 @@
                     <ul class="nav navbar-nav">
 
                         <li id="nav-designer">
-                            <a href="designer" title="Home">Designer</a>
+                            <a href="dashboard" title="Home">Dashboard</a>
                         </li>
 
                         <li id="nav-about">

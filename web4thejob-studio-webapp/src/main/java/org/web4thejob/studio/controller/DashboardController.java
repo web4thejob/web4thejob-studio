@@ -5,7 +5,6 @@ import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
@@ -26,16 +25,28 @@ public class DashboardController extends AbstractController {
     private static OnlyDirs ONLY_FILES = new OnlyDirs(false);
     private static FileComparator FILE_SORTER = new FileComparator();
     private static onTreeitemOpen ON_OPEN_HANDLER = new onTreeitemOpen();
-    private static onTreeitemClick ON_CLICK_HANDLER = new onTreeitemClick();
 
     @Wire
     private Tree projectTree;
+
+    private static String buildPath(Component target) {
+        String path = "";
+        while (!target.hasAttribute("root")) {
+            if (target instanceof Treeitem) {
+                if (path.length() > 0) path = "/" + path;
+                path = target.getAttribute("filename") + path;
+            }
+            target = target.getParent();
+        }
+
+        return "/" + path;
+
+    }
 
     @Override
     public ControllerEnum getId() {
         return DASHBOARD_CONTROLLER;
     }
-
 
     @Override
     protected void init() throws Exception {
@@ -85,6 +96,7 @@ public class DashboardController extends AbstractController {
 
     private Treeitem buildTreeitem(Treeitem parent, File file) {
         Treeitem treeitem = new Treeitem();
+        treeitem.setAttribute("filename", file.getName());
         Treerow treerow = new Treerow();
         treerow.setParent(treeitem);
         Treecell cellName = new Treecell(file.getName());
@@ -103,6 +115,11 @@ public class DashboardController extends AbstractController {
         cellLastMod.setStyle("text-align: center;");
         cellLastMod.setParent(treerow);
 
+        if (parent != null) {
+            if (parent.getTreechildren() == null) new Treechildren().setParent(parent);
+            treeitem.setParent(parent.getTreechildren());
+        }
+
         if (file.isDirectory()) {
             treeitem.addEventListener(Events.ON_OPEN, ON_OPEN_HANDLER);
             if (parent != null) {
@@ -114,16 +131,16 @@ public class DashboardController extends AbstractController {
             }
         } else {
             if (file.getName().endsWith(".zul")) {
-                cellName.setIconSclass("z-icon-file");
-                cellName.setSclass("zulfile");
-                cellName.addEventListener(Events.ON_CLICK, ON_CLICK_HANDLER);
+                cellName.setLabel("");
+                A link = new A(file.getName());
+                link.setSclass("zulfile");
+                link.setTarget("_blank");
+                link.setParent(cellName);
+                link.setIconSclass("z-icon-file");
+                link.setHref(buildPath(link));
             } else {
                 cellName.setIconSclass("z-icon-file-o");
             }
-        }
-        if (parent != null) {
-            if (parent.getTreechildren() == null) new Treechildren().setParent(parent);
-            treeitem.setParent(parent.getTreechildren());
         }
 
         return treeitem;
@@ -150,13 +167,12 @@ public class DashboardController extends AbstractController {
         return contents;
     }
 
-
     private static class OnlyDirs implements FileFilter {
-        private boolean onlyDirs;
-
         public OnlyDirs(boolean onlyDirs) {
             this.onlyDirs = onlyDirs;
         }
+
+        private boolean onlyDirs;
 
         @Override
         public boolean accept(File f) {
@@ -180,24 +196,5 @@ public class DashboardController extends AbstractController {
         }
     }
 
-    private static class onTreeitemClick implements org.zkoss.zk.ui.event.EventListener<MouseEvent> {
-
-        @Override
-        public void onEvent(MouseEvent event) throws Exception {
-//            Clients.alert(event.getTarget().toString());
-
-            String path = "";
-            Component target = event.getTarget();
-            while (!target.hasAttribute("root")) {
-                if (target instanceof Treeitem) {
-                    if (path.length() > 0) path = "/" + path;
-                    path = ((Treecell) ((Treeitem) target).getTreerow().getFirstChild()).getLabel() + path;
-                }
-                target = target.getParent();
-            }
-
-            Executions.sendRedirect("/" + path);
-        }
-    }
 
 }

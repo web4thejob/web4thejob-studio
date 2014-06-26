@@ -22,7 +22,10 @@ public class StudioRichlet extends GenericRichlet {
         page.setTitle("Web4thejob Studio - " + Executions.getCurrent().getDesktop().getWebApp().getAppName());
         switch (page.getRequestPath()) {
             case "/":
-                uri = "~./designer.zul";
+                uri = "~./dashboard.zul";
+                break;
+            case "/dashboard":
+                uri = "~./dashboard.zul";
                 break;
             case "/designer":
                 uri = "~./designer.zul";
