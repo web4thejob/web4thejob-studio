@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<zk xmlns:n="native" xmlns="http://www.zkoss.org/2005/zul">
+    <panel vflex="true" hflex="true" apply="org.web4thejob.studio.controller.DashboardController">
+        <panelchildren style="margin:20px">
+            <n:div class="page-header">
+                <n:h1>${desktop.webApp.appName}
+                    <n:small>Dashboard</n:small>
+                </n:h1>
+            </n:div>
+            <tree id="projectTree" vflex="true" style="margin: 20px">
+                <treecols sizable="true">
+                    <treecol label="File Name" align="center"/>
+                    <treecol align="center" label="Writable" width="80px"/>
+                    <treecol align="center" label="Size" width="200px"/>
+                    <treecol label="Last Modified" align="center" width="200px"/>
+                </treecols>
+                <treechildren>
+                    <treeitem>
+                        <treerow>
+                            <treecell label="Home" iconSclass="z-icon-home"/>
+                        </treerow>
+                        <treechildren>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="WEB-INF" iconSclass="z-icon-folder"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="img" iconSclass="z-icon-folder"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="includes" iconSclass="z-icon-folder-open"/>
+                                </treerow>
+                                <treechildren>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="MyJava.java" iconSclass="z-icon-file-o"/>
+                                        </treerow>
+                                    </treeitem>
+                                    <treeitem>
+                                        <treerow>
+                                            <treecell label="about.zul" iconSclass="z-icon-file" sclass="zulfile"/>
+                                        </treerow>
+                                    </treeitem>
+                                </treechildren>
+                            </treeitem>
+                        </treechildren>
+                    </treeitem>
+                </treechildren>
+            </tree>
+        </panelchildren>
+    </panel>
+    <style>
+        .z-tree-body tr {
+        height: 30px;
+        }
+        .z-treecell-content {
+        font-size: 14px !important
+        }
+        .zulfile .z-treecell-content {
+        color: #428bca !important
+        }
+        .zulfile .z-treecell-content:hover {
+        color: #428bca !important;
+        }
+        .zulfile .z-treecell-content:hover:after {
+        font-family: FontAwesome;
+        content: "\f0a9";
+        margin-left: 5px;
+        }
+    </style>
+</zk>

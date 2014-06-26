@@ -201,6 +201,7 @@ public class CodeController extends AbstractController {
                 reset((String) message.getData(DesignerController.PARAM_WORK_FILE));
                 break;
             case ZUL_EVAL_FAILED:
+                changed = true;
                 print();
                 break;
             case ATTRIBUTE_CHANGED:

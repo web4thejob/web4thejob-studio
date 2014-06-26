@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
-    <menu label="Menu"/>
-    <menu label="Menu"/>
     <tabbox vflex="true" hflex="true">
         <tabs>
             <tab label="Outline" selected="true"/>
@@ -25,9 +23,35 @@
                 <button label="Button*-"/>
             </tabpanel>
             <tabpanel>
-                <button label="Button**"/>
-                <textbox multiline="true"/>
-                <button label="Button**"/>
+                <tree>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Node 1"/>
+                            </treerow>
+                            <treechildren>
+                                <treeitem>
+                                    <treerow>
+                                        <treecell label="Subnode 1"/>
+                                    </treerow>
+                                </treeitem>
+                                <treeitem>
+                                    <treerow>
+                                        <treecell label="Subnode 2"/>
+                                    </treerow>
+                                </treeitem>
+                                <treeitem>
+                                    <treerow>
+                                        <treecell label="Subnode 3"/>
+                                    </treerow>
+                                </treeitem>
+                            </treechildren>
+                        </treeitem>
+                    </treechildren>
+                    <treecols>
+                        <treecol label="Column X"/>
+                    </treecols>
+                </tree>
             </tabpanel>
         </tabpanels>
     </tabbox>
