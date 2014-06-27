@@ -28,8 +28,11 @@ public class NodeFactory extends nu.xom.NodeFactory {
 
     public NodeFactory() {
         try {
+            m.invoke(cache, "zk");
+            m.invoke(cache, "zul");
             m.invoke(cache, "native");
             m.invoke(cache, "client");
+            m.invoke(cache, "client/attribute");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -2,27 +2,52 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
-<zk xmlns:n="native" xmlns="http://www.zkoss.org/2005/zul">
+<zk xmlns:n="native">
     <include src="~./include/topbar.zul"/>
     <div class="container" vflex="true" style="margin-bottom:20px">
         <panel vflex="true" hflex="true">
             <panelchildren>
                 <vbox vflex="true" hflex="true">
                     <div sclass="page-header">
-                        <n:h1>${desktop.webApp.appName}
+                        <n:h1>${desktop.webApp.appName} 
                             <n:small>Dashboard</n:small>
                         </n:h1>
                     </div>
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
-                            <tab iconSclass="z-icon-home"/>
                             <tab iconSclass="z-icon-info"/>
+                            <tab iconSclass="z-icon-folder"/>
                         </tabs>
                         <tabpanels>
                             <tabpanel>
+                                <grid style="border:0px" oddRowSclass="nooddrowclass">
+                                    <columns>
+                                        <column width="150px"/>
+                                        <column hflex="true"/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <label value="Project Name"/>
+                                            <label value="${desktop.webApp.appName}"/>
+                                        </row>
+                                        <row>
+                                            <label value="Webapp location"/>
+                                            <label value="${desktop.webApp.getRealPath('/')}"/>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </tabpanel>
+                            <tabpanel>
+                                <hbox align="center" pack="center" width="100%">
+                                    <html style="color:rgb(99, 99, 99);">
+                                        <![CDATA[
+                                            This is the structure of your webapp folder. Click on a zul file to start editing.
+                                        ]]>
+                                    </html>
+                                </hbox>
                                 <tree id="projectTree" vflex="true"
                                       apply="org.web4thejob.studio.controller.DashboardController">
-                                    <treecols sizable="true">
+                                <treecols sizable="true">
                                         <treecol label="File Name" align="center"/>
                                         <treecol align="center" label="Writable" width="80px"/>
                                         <treecol align="center" label="Size" width="200px"/>
@@ -31,7 +56,6 @@
                                     <treechildren/>
                                 </tree>
                             </tabpanel>
-                            <tabpanel/>
                         </tabpanels>
                     </tabbox>
                 </vbox>

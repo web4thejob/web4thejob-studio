@@ -599,4 +599,37 @@ public abstract class StudioUtil {
         String ns = element.getNamespaceURI();
         return "native".equals(ns) || LanguageDefinition.NATIVE_NAMESPACE.equals(ns) || element.getQualifiedName().startsWith(LanguageDefinition.NATIVE_NAMESPACE_PREFIX);
     }
+
+    public static boolean isCodeValid() {
+        try {
+            getCode();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean addNamespaceToCode(String preffix, String nsURI) {
+        if (!isCodeValid()) return false;
+
+        Element root = getCode().getRootElement();
+        root.addNamespaceDeclaration(preffix, nsURI);
+        return true;
+    }
+
+    public static boolean removeNamespaceFromCode(String preffix) {
+        if (!isCodeValid()) return false;
+
+        Element root = getCode().getRootElement();
+        root.removeNamespaceDeclaration(preffix);
+        return true;
+    }
+
+    public static boolean namespaceExistsInCode(String preffix) {
+        if (!isCodeValid()) return false;
+
+        Element root = getCode().getRootElement();
+        return root.getNamespaceURI(preffix) != null;
+    }
+
 }

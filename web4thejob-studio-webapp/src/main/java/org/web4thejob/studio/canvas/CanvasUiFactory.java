@@ -56,7 +56,7 @@ public class CanvasUiFactory extends SimpleUiFactory {
             try {
                 //I use here the zk Document so that I will not have to parse twice the document
                 //in order to remove the uuids and then feed it to the getPageDefinitionDirectly.
-                //Alternatively I could do the uuid discarding wiht regex replace?!?
+                //Alternatively I could do the uuid discarding with regex replace?!?
                 Document document = new SAXBuilder(true, false, true).build(new FileReader(file, "UTF-8"));
                 cleanUUIDs(document);
                 return super.getPageDefinitionDirectly(ri, document, "zul");

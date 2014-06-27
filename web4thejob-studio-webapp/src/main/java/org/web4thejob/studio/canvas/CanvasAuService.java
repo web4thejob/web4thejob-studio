@@ -139,6 +139,7 @@ public class CanvasAuService implements AuService {
         final Desktop canvas = Executions.getCurrent().getDesktop();
         Document document = StudioUtil.buildDocument(new FileInputStream(src));
         if (document.getRootElement() == null) return document;
+        cleanUUIDs(document.getRootElement());
 
         Map<String, Object> params = new HashMap<>();
         traverseChildren(document.getRootElement(), params, new ChildDelegate<Element>() {
@@ -174,6 +175,7 @@ public class CanvasAuService implements AuService {
                                 child.addAttribute(new Attribute("uuid", comp.getUuid()));
                                 break;
                             }
+
                         }
                     }
                 }
@@ -202,9 +204,9 @@ public class CanvasAuService implements AuService {
         if (!match) return false;
 
         if (component instanceof HtmlNativeComponent) {
-            return ((HtmlNativeComponent) component).getTag().equals(element.getLocalName());
+            return element.getLocalName().equals(((HtmlNativeComponent) component).getTag()) && isNative(element);
         } else {
-            return component.getDefinition().getName().equals(element.getLocalName());
+            return element.getLocalName().equals(component.getDefinition().getName());
         }
     }
 

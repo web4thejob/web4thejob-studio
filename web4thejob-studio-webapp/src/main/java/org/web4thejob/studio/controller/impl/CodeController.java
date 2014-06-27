@@ -62,7 +62,7 @@ public class CodeController extends AbstractController {
     public Document getCode() {
         if (changed) {
             document = StudioUtil.buildDocument(zulBox.getValue());
-            changed = false;
+//            changed = false;
         }
         return document;
     }
@@ -199,6 +199,7 @@ public class CodeController extends AbstractController {
                 break;
             case ZUL_EVAL_SUCCEEDED:
                 reset((String) message.getData(DesignerController.PARAM_WORK_FILE));
+                changed = false;
                 break;
             case ZUL_EVAL_FAILED:
                 changed = true;

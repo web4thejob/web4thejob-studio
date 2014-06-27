@@ -15,10 +15,11 @@
                     </div>
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
-                            <tab iconSclass="z-icon-folder"/>
                             <tab iconSclass="z-icon-info"/>
+                            <tab iconSclass="z-icon-folder"/>
                         </tabs>
                         <tabpanels>
+                            <tabpanel></tabpanel>
                             <tabpanel>
                                 <tree id="projectTree" vflex="true"
                                       apply="org.web4thejob.studio.controller.DashboardController">
@@ -31,7 +32,6 @@
                                     <treechildren/>
                                 </tree>
                             </tabpanel>
-                            <tabpanel/>
                         </tabpanels>
                     </tabbox>
                 </vbox>

@@ -85,15 +85,73 @@ public class DesignerController extends AbstractController {
         parsePopup.open("auto", ((Map) event.getData()).get("top").toString() + "px");
         parsePopup.setStyle("right:" + x + "px");
 
-        final Menuitem returntoCanavs = new Menuitem("Always return to canvas");
-        returntoCanavs.setParent(parsePopup);
-        returntoCanavs.setCheckmark(true);
-        returntoCanavs.setAutocheck(true);
-        returntoCanavs.setChecked(getConfiguration().isAlwaysReturnToCanvas());
-        returntoCanavs.addEventListener(Events.ON_CHECK, new EventListener<CheckEvent>() {
+        final Menuitem returntoCanvas = new Menuitem("Always return to canvas");
+        returntoCanvas.setParent(parsePopup);
+        returntoCanvas.setCheckmark(true);
+        returntoCanvas.setAutocheck(true);
+        returntoCanvas.setChecked(getConfiguration().isAlwaysReturnToCanvas());
+        returntoCanvas.addEventListener(Events.ON_CHECK, new EventListener<CheckEvent>() {
             @Override
             public void onEvent(CheckEvent event) throws Exception {
                 getConfiguration().setAlwaysReturnToCanvas(event.isChecked());
+            }
+        });
+
+        new Menuseparator().setParent(parsePopup);
+
+        boolean codeValid = isCodeValid();
+
+        final Menuitem nativeNS = new Menuitem("Native namespace");
+        nativeNS.setDisabled(!codeValid);
+        nativeNS.setParent(parsePopup);
+        nativeNS.setCheckmark(true);
+        nativeNS.setAutocheck(true);
+        nativeNS.setChecked(namespaceExistsInCode("n"));
+        nativeNS.addEventListener(Events.ON_CHECK, new EventListener<CheckEvent>() {
+            @Override
+            public void onEvent(CheckEvent event) throws Exception {
+                if (event.isChecked()) {
+                    addNamespaceToCode("n", "native");
+                } else {
+                    removeNamespaceFromCode("n");
+                }
+                publish(EVALUATE_XML);
+            }
+        });
+
+        final Menuitem clientNS = new Menuitem("Client namespace");
+        clientNS.setDisabled(!codeValid);
+        clientNS.setParent(parsePopup);
+        clientNS.setCheckmark(true);
+        clientNS.setAutocheck(true);
+        clientNS.setChecked(namespaceExistsInCode("c"));
+        clientNS.addEventListener(Events.ON_CHECK, new EventListener<CheckEvent>() {
+            @Override
+            public void onEvent(CheckEvent event) throws Exception {
+                if (event.isChecked()) {
+                    addNamespaceToCode("c", "client");
+                } else {
+                    removeNamespaceFromCode("c");
+                }
+                publish(EVALUATE_XML);
+            }
+        });
+
+        final Menuitem clientAttrNS = new Menuitem("Client/Attribute namespace");
+        clientAttrNS.setDisabled(!codeValid);
+        clientAttrNS.setParent(parsePopup);
+        clientAttrNS.setCheckmark(true);
+        clientAttrNS.setAutocheck(true);
+        clientAttrNS.setChecked(namespaceExistsInCode("ca"));
+        clientAttrNS.addEventListener(Events.ON_CHECK, new EventListener<CheckEvent>() {
+            @Override
+            public void onEvent(CheckEvent event) throws Exception {
+                if (event.isChecked()) {
+                    addNamespaceToCode("ca", "client/attribute");
+                } else {
+                    removeNamespaceFromCode("ca");
+                }
+                publish(EVALUATE_XML);
             }
         });
 

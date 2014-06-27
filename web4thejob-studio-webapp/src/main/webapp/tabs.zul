@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns:n="native">
     <n:div class="container">
-        <button label="OK"/>
+        <n:div class="container">
+            <button label="OK"/>
+        </n:div>
     </n:div>
     <button label="Button"/>
+    <label value="New Label"/>
 </zk>

@@ -1,6 +1,5 @@
 package org.web4thejob.studio.controller;
 
-import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.Component;
@@ -54,15 +53,6 @@ public class DashboardController extends AbstractController {
     protected void init() throws Exception {
         super.init();
         buildTree();
-    }
-
-    @Override
-    public void process(Message message) {
-        switch (message.getId()) {
-            case RESET:
-                buildTree();
-                break;
-        }
     }
 
     private void buildTree() {
