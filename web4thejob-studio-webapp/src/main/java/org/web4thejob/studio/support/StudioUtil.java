@@ -260,7 +260,7 @@ public abstract class StudioUtil {
         }
 
 
-        sb.append(element.getLocalName()).append(" [");
+        sb.append((element.getNamespacePrefix() != "" ? element.getNamespacePrefix() + ":" : "")).append(element.getLocalName()).append(" [");
         if (!script) {
             if (element.getAttributeValue("id") != null) {
                 sb.append(element.getAttributeValue("id"));
@@ -593,5 +593,10 @@ public abstract class StudioUtil {
 
     public static String getCanvasURI() {
         return ((DesignerController) getController(DESIGNER_CONTROLLER)).getCanvasHolderURI();
+    }
+
+    public static boolean isNative(Element element) {
+        String ns = element.getNamespaceURI();
+        return "native".equals(ns) || LanguageDefinition.NATIVE_NAMESPACE.equals(ns) || element.getQualifiedName().startsWith(LanguageDefinition.NATIVE_NAMESPACE_PREFIX);
     }
 }

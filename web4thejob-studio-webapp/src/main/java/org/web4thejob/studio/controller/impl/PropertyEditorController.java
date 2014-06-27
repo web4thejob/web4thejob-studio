@@ -169,7 +169,7 @@ public class PropertyEditorController extends AbstractController {
             data.put("mode", "text/x-java");
             Executions.getCurrent().createComponents("~./include/codemirror.zul", source, data);
 
-        } else if (!isBaseGroupElement(selection)) {
+        } else if (!isBaseGroupElement(selection) && !isNative(selection)) {
             properties.getLinkedTab().setVisible(true);
             events.getLinkedTab().setVisible(true);
             source.getLinkedTab().setVisible(false);
@@ -205,6 +205,9 @@ public class PropertyEditorController extends AbstractController {
             if (tab == null || (tab.isSelected() && !tab.isVisible()))
                 properties.getLinkedTab().setSelected(true);
 
+        } else {
+            clear();
+            editorSelection.setContent(describeElement(selection));
         }
 
 

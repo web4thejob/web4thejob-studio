@@ -7,10 +7,7 @@ import org.web4thejob.studio.support.CodeFormatter;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.au.AuRequest;
 import org.zkoss.zk.au.AuService;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Desktop;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Page;
+import org.zkoss.zk.ui.*;
 import org.zkoss.zk.ui.sys.DesktopCtrl;
 import org.zkoss.zk.ui.util.Clients;
 
@@ -200,9 +197,15 @@ public class CanvasAuService implements AuService {
 
     private static boolean doMatch(Element element, Component component) {
         boolean match;
-        match = isAvailable(element.getDocument().getRootElement(), component.getUuid()) && component.getDefinition()
-                .getName().equals(element.getLocalName());
-        return match;
+        match = isAvailable(element.getDocument().getRootElement(), component.getUuid());
+
+        if (!match) return false;
+
+        if (component instanceof HtmlNativeComponent) {
+            return ((HtmlNativeComponent) component).getTag().equals(element.getLocalName());
+        } else {
+            return component.getDefinition().getName().equals(element.getLocalName());
+        }
     }
 
     private static boolean isAvailable(Element root, String uuid) {

@@ -124,7 +124,7 @@ public class DashboardController extends AbstractController {
 
         if (file.isDirectory()) {
             treeitem.addEventListener(Events.ON_OPEN, ON_OPEN_HANDLER);
-            cellName.setIconSclass("z-icon-folder");
+            cellName.setIconSclass("z-icon-folder" + (parent == null ? "-open" : ""));
             treeitem.setOpen(parent == null);
         } else {
             if (file.getName().endsWith(".zul")) {
