@@ -17,24 +17,32 @@ public class StudioRichlet extends GenericRichlet {
 
     @Override
     public void service(Page page) throws Exception {
-        String uri;
+        String uri, title = null;
 
-        page.setTitle("Web4thejob Studio - " + Executions.getCurrent().getDesktop().getWebApp().getAppName());
         switch (page.getRequestPath()) {
             case "/":
                 uri = "~./dashboard.zul";
+                title = "Dashboard";
                 break;
             case "/dashboard":
                 uri = "~./dashboard.zul";
+                title = "Dashboard";
                 break;
             case "/designer":
                 uri = "~./designer.zul";
+                String z = Executions.getCurrent().getParameter("z");
+                if (z != null) {
+                    String[] temp = z.split("/");
+                    title = temp[temp.length - 1];
+                }
                 break;
             case "/about":
                 uri = "~./about.zul";
+                title = "About";
                 break;
             case "/discussion":
                 uri = "~./discussion.zul";
+                title = "Discussion";
                 break;
             case "/exception":
                 Execution execution = Executions.getCurrent();
@@ -44,7 +52,11 @@ public class StudioRichlet extends GenericRichlet {
                 return;
             default:
                 uri = "~." + page.getRequestPath();
+                title = "";
         }
+
+        page.setTitle("Web4thejob Studio - " + title);
+
 
         //Hackish but there is no other way to load the styles in the head section of the page,
         //which IMHO is a pretty legitimate request in the context of a Richlet.

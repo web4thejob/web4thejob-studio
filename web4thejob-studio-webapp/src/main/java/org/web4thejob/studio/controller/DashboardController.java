@@ -2,6 +2,7 @@ package org.web4thejob.studio.controller;
 
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.StudioUtil;
+import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
@@ -11,6 +12,7 @@ import org.zkoss.zul.*;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -122,13 +124,8 @@ public class DashboardController extends AbstractController {
 
         if (file.isDirectory()) {
             treeitem.addEventListener(Events.ON_OPEN, ON_OPEN_HANDLER);
-            if (parent != null) {
-                cellName.setIconSclass("z-icon-folder");
-                treeitem.setOpen(false);
-            } else {
-                cellName.setIconSclass("z-icon-home");
-                treeitem.setOpen(true);
-            }
+            cellName.setIconSclass("z-icon-folder");
+            treeitem.setOpen(parent == null);
         } else {
             if (file.getName().endsWith(".zul")) {
                 cellName.setLabel("");
@@ -137,7 +134,12 @@ public class DashboardController extends AbstractController {
                 link.setTarget("_blank");
                 link.setParent(cellName);
                 link.setIconSclass("z-icon-file");
-                link.setHref(buildPath(link));
+                try {
+                    link.setHref(Encodes.addToQueryString(new StringBuffer("/w4tjstudio/designer"), "z", buildPath(link)).toString());
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    StudioUtil.showError(e);
+                }
             } else {
                 cellName.setIconSclass("z-icon-file-o");
             }
@@ -168,11 +170,11 @@ public class DashboardController extends AbstractController {
     }
 
     private static class OnlyDirs implements FileFilter {
+        private boolean onlyDirs;
+
         public OnlyDirs(boolean onlyDirs) {
             this.onlyDirs = onlyDirs;
         }
-
-        private boolean onlyDirs;
 
         @Override
         public boolean accept(File f) {

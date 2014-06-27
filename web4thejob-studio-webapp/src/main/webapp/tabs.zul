@@ -1,58 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zk>
-    <tabbox vflex="true" hflex="true">
-        <tabs>
-            <tab label="Outline" selected="true"/>
-            <tab label="Tab" tooltiptext="aaa"/>
-        </tabs>
-        <tabpanels>
-            <tabpanel>
-                <button label="Button*"/>
-                <style>
-                    dropdown-menu>li>a:hover,
-                    .dropdown-menu>li>a:focus {
-                    background-image: -webkit-linear-gradient(top, #E597E5 0, #FF37FF 100%);
-                    background-image: linear-gradient(to bottom, #E597E5 0, #FF37FF 100%);
-                    background-repeat: repeat-x;
-                    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#E597E5', endColorstr='#FF37FF',
-                    GradientType=0);
-                    background-color: #FF37FF;
-                    color: #FFF;
-                    }
-                </style>
-                <button label="Button*-"/>
-            </tabpanel>
-            <tabpanel>
-                <tree>
-                    <treechildren>
-                        <treeitem>
-                            <treerow>
-                                <treecell label="Node 1"/>
-                            </treerow>
-                            <treechildren>
-                                <treeitem>
-                                    <treerow>
-                                        <treecell label="Subnode 1"/>
-                                    </treerow>
-                                </treeitem>
-                                <treeitem>
-                                    <treerow>
-                                        <treecell label="Subnode 2"/>
-                                    </treerow>
-                                </treeitem>
-                                <treeitem>
-                                    <treerow>
-                                        <treecell label="Subnode 3"/>
-                                    </treerow>
-                                </treeitem>
-                            </treechildren>
-                        </treeitem>
-                    </treechildren>
-                    <treecols>
-                        <treecol label="Column X"/>
-                    </treecols>
-                </tree>
-            </tabpanel>
-        </tabpanels>
-    </tabbox>
+<zk xmlns:n="native">
+    <n:div class="container">
+        <button label="OK"/>
+    </n:div>
 </zk>

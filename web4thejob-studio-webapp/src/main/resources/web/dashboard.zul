@@ -15,7 +15,7 @@
                     </div>
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
-                            <tab iconSclass="z-icon-home"/>
+                            <tab iconSclass="z-icon-folder"/>
                             <tab iconSclass="z-icon-info"/>
                         </tabs>
                         <tabpanels>

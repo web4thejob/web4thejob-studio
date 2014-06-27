@@ -126,7 +126,7 @@
                             <combobutton label="Combobutton"/>
                             <bandbox/>
                             <combobutton label="Combobutton"/>
-                            <combobutton label="Combobutton"/>
+                            <combobutton label="Combobutton" width="20px" height="15px"/>
                             <textbox type="password"/>
                             <combobox/>
                             <combobox/>
