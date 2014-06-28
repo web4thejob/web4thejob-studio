@@ -2,6 +2,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<?xel-method prefix="java" name="getProperty" class="java.lang.System" signature="java.lang.String getProperty(java.lang.String property)"?>
 <zk xmlns:n="native">
     <include src="~./include/topbar.zul"/>
     <div class="container" vflex="true" style="margin-bottom:20px">
@@ -9,9 +10,7 @@
             <panelchildren>
                 <vbox vflex="true" hflex="true">
                     <div sclass="page-header">
-                        <n:h1>${desktop.webApp.appName} 
-                            <n:small>Dashboard</n:small>
-                        </n:h1>
+                        <n:h1>Dashboard</n:h1>
                     </div>
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
@@ -22,17 +21,64 @@
                             <tabpanel>
                                 <grid style="border:0px" oddRowSclass="nooddrowclass">
                                     <columns>
-                                        <column width="150px"/>
+                                        <column width="200px"/>
                                         <column hflex="true"/>
                                     </columns>
                                     <rows>
                                         <row>
-                                            <label value="Project Name"/>
-                                            <label value="${desktop.webApp.appName}"/>
+                                            <cell align="right">
+                                                <n:h4>Project Name:</n:h4>
+                                            </cell>
+                                            <n:span class="label label-primary"
+                                                    style="font-family:monospace;font-size:16px">
+                                                ${desktop.webApp.appName}
+                                            </n:span>
                                         </row>
                                         <row>
-                                            <label value="Webapp location"/>
-                                            <label value="${desktop.webApp.getRealPath('/')}"/>
+                                            <cell align="right">
+                                                <n:h4>Webapp location:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${desktop.webApp.getRealPath('/')}
+                                            </n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                                <n:h4>Browser:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${execution.getBrowser()}</n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                                <n:h4>Java version:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${java:getProperty('java.version')}
+                                            </n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                                <n:h4>Java vendor:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${java:getProperty('java.vendor')}
+                                            </n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                                <n:h4>OS architecture:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${java:getProperty('os.arch')}</n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                                <n:h4>OS name:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${java:getProperty('os.name')}</n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                                <n:h4>OS version:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${java:getProperty('os.version')}
+                                            </n:h4>
                                         </row>
                                     </rows>
                                 </grid>
@@ -47,8 +93,8 @@
                                 </hbox>
                                 <tree id="projectTree" vflex="true"
                                       apply="org.web4thejob.studio.controller.DashboardController">
-                                <treecols sizable="true">
-                                        <treecol label="File Name" align="center"/>
+                                    <treecols sizable="true">
+                                    <treecol label="File Name" align="center"/>
                                         <treecol align="center" label="Writable" width="80px"/>
                                         <treecol align="center" label="Size" width="200px"/>
                                         <treecol label="Last Modified" align="center" width="200px"/>

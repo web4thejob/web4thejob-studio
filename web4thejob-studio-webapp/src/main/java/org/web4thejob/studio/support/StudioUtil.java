@@ -38,13 +38,13 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 9/5/2014.
  */
 public abstract class StudioUtil {
+    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     public static final String ATTR_CANVAS_DESKTOP = "i-am-the-canvas-desktop";
     public static final String ATTR_PAIRED_DESKTOP = "paired-desktop-id";
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
     public static final String ATTR_WORK_FILE = "work-file";
-    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -57,6 +57,10 @@ public abstract class StudioUtil {
      */
     public static Component getComponentByUuid(String uuid) {
         return Executions.getCurrent().getDesktop().getComponentByUuid(uuid);
+    }
+
+    public static Component getComponentByUuidIfAny(String uuid) {
+        return Executions.getCurrent().getDesktop().getComponentByUuidIfAny(uuid);
     }
 
     /**
@@ -596,6 +600,7 @@ public abstract class StudioUtil {
     }
 
     public static boolean isNative(Element element) {
+        if (element == null) return false;
         String ns = element.getNamespaceURI();
         return "native".equals(ns) || LanguageDefinition.NATIVE_NAMESPACE.equals(ns) || element.getQualifiedName().startsWith(LanguageDefinition.NATIVE_NAMESPACE_PREFIX);
     }

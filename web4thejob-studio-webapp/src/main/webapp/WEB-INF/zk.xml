@@ -23,4 +23,9 @@
     <client-config>
         <debug-js>true</debug-js>
     </client-config>
+
+    <preference>
+        <name>org.zkoss.zk.ui.WebApp.name</name>
+        <value>My Killer Webapp</value>
+    </preference>
 </zk>

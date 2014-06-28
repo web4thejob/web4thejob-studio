@@ -153,10 +153,15 @@ public class CanvasAuService implements AuService {
                 }
                 if ("zk".equals(child.getLocalName()))
                     return;
-                else if ("zscript".equals(child.getLocalName()))
+                else if ("zscript".equals(child.getLocalName())) {
                     //although zscripts are not components I assign a fake uuid so that their handling is
                     //similar as much as possible with that of regular components.
-                    child.addAttribute(new Attribute("uuid", ((DesktopCtrl) Executions.getCurrent().getDesktop()).getNextUuid(canvas.getFirstPage())));
+                    child.addAttribute(new Attribute("uuid", "zscript_" + getNextUuid()));
+                    return;
+                } else if ((isNative(child) && isNative((Element) child.getParent())) && (!hasNonNativeSiblings(child) || child.getChildElements().size() == 0)) {
+                    child.addAttribute(new Attribute("uuid", "native_" + getNextUuid()));
+                    return;
+                }
 
                 Element parent = getParent(child);
                 if (parent == null) {
@@ -167,9 +172,18 @@ public class CanvasAuService implements AuService {
                         }
                     }
                 } else {
-                    if (parent.getAttributeValue("uuid") != null) {
-                        Collection<Component> children = getComponentByUuid(parent.getAttributeValue("uuid"))
-                                .getChildren();
+                    String uuid = parent.getAttributeValue("uuid");
+                    if (uuid != null) {
+
+                        if (uuid.startsWith("native_")) {
+                            parent = (Element) parent.getParent();
+                            while (parent.getAttributeValue("uuid").startsWith("native_")) {
+                                parent = (Element) parent.getParent();
+                            }
+                            uuid = parent.getAttributeValue("uuid");
+                        }
+
+                        Collection<Component> children = getComponentByUuid(uuid).getChildren();
                         for (Component comp : children) {
                             if (doMatch(child, comp)) {
                                 child.addAttribute(new Attribute("uuid", comp.getUuid()));
@@ -182,7 +196,38 @@ public class CanvasAuService implements AuService {
             }
         });
 
+
+//        for (Component component : Executions.getCurrent().getDesktop().getComponents()) {
+//            if (isAvailable(document.getRootElement(), component.getUuid())) {
+//
+//            }
+//        }
+
         return document;
+    }
+
+    private static boolean hasNonNativeSiblings(Element element) {
+        Node parent = element.getParent();
+        if (!(parent instanceof Element)) return false;
+
+        for (int i = 0; i < ((Element) parent).getChildElements().size(); i++) {
+            Element child = ((Element) parent).getChildElements().get(i);
+            if (!child.equals(element) && !isNative(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void identifyDirectNativeDescendenats(Element element) {
+        for (int i = 0; i < element.getChildElements().size(); i++) {
+            Element child = element.getChildElements().get(i);
+            if (isNative(child)) {
+                child.addAttribute(new Attribute("uuid", getNextUuid()));
+                identifyDirectNativeDescendenats(child);
+            }
+        }
+
     }
 
     private static Element getParent(Element element) {
@@ -263,6 +308,10 @@ public class CanvasAuService implements AuService {
 
         }
         return e;
+    }
+
+    private static String getNextUuid() {
+        return ((DesktopCtrl) Executions.getCurrent().getDesktop()).getNextUuid(Executions.getCurrent().getDesktop().getFirstPage());
     }
 
     @Override

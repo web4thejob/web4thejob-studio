@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns:n="native">
-    <n:div class="container">
-        <n:div class="container">
-            <button label="OK"/>
-        </n:div>
-    </n:div>
     <button label="Button"/>
     <label value="New Label"/>
+    <window title="Window" vflex="true">
+        <n:div class="container">
+            <n:span class="1">
+                <button label="OK**9"></button>
+                <n:span class="2"/>
+            </n:span>
+            <groupbox/>
+        </n:div>
+    </window>
 </zk>
