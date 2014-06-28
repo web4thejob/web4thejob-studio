@@ -93,8 +93,8 @@
                                 </hbox>
                                 <tree id="projectTree" vflex="true"
                                       apply="org.web4thejob.studio.controller.DashboardController">
-                                <treecols sizable="true">
-                                        <treecol label="File Name" align="center"/>
+                                    <treecols sizable="true">
+                                    <treecol label="File Name" align="center"/>
                                         <treecol align="center" label="Writable" width="80px"/>
                                         <treecol align="center" label="Size" width="200px"/>
                                         <treecol label="Last Modified" align="center" width="200px"/>
