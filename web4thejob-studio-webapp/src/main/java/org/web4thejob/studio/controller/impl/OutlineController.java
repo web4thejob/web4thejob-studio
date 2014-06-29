@@ -198,7 +198,7 @@ public class OutlineController extends AbstractController {
         @Override
         public void onEvent(MouseEvent event) throws Exception {
             Element element = ((Treeitem) event.getTarget()).getValue();
-            if (element.getAttributeValue("uuid") != null)
+            if (element.getAttributeValue("uuid") != null || "attribute".equals(element.getLocalName()))
                 publish(COMPONENT_SELECTED, element);
             else
                 publish(COMPONENT_SELECTED);
