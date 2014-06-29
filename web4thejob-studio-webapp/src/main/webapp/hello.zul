@@ -101,7 +101,7 @@
                 </menupopup>
             </menu>
         </menubar>
-        <panel vflex="true" title="A666" floatable="true" movable="true" closable="true" left="160px">
+        <panel vflex="true" title="Aaaa" floatable="true" movable="true" closable="true" left="160px">
             <panelchildren>
                 <attribute c:name="onCtrlKey">
                     <![CDATA[
@@ -122,7 +122,7 @@
                             <combobox/>
                             <textbox/>
                             <combobox/>
-                            <button label="Button"/>
+                            <button label="Button+++"/>
                             <combobutton label="Combobutton"/>
                             <bandbox/>
                             <combobutton label="Combobutton"/>

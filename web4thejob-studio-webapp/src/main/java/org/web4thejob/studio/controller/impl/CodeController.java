@@ -244,7 +244,7 @@ public class CodeController extends AbstractController {
 
         int lineNo = -1, charNo = -1;
         Pattern pattern;
-        String regex, tag = selection.getLocalName(), uuid = selection.getAttributeValue("uuid");
+        String regex, tag = selection.getQualifiedName(), uuid = selection.getAttributeValue("uuid");
         if (!"attribute".equals(tag)) {
             regex = "(^\\s*)(<" + tag + "\\s{1,1})(.*)(\\s*uuid=\"" + uuid + "\")";
         } else {

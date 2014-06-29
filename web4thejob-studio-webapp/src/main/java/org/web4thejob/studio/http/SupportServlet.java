@@ -8,6 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.zkoss.util.resource.Locators;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -24,7 +25,8 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "w4tjstudio", urlPatterns = {"/w4tjstudio-support/img",
         "/w4tjstudio-support/designer/scripts", "/w4tjstudio-support/designer/styles",
-        "/w4tjstudio-support/canvas/scripts", "/w4tjstudio-support/canvas/styles"})
+        "/w4tjstudio-support/canvas/scripts", "/w4tjstudio-support/canvas/styles",
+        "/w4tjstudio-support/fonts/*"})
 public class SupportServlet extends HttpServlet {
     private static final String IMG_PATH_PREFFIX = "org/web4thejob/studio/support/img/";
     private static StringBuffer DESIGNER_SCRIPTS_CONTENT;
@@ -89,25 +91,7 @@ public class SupportServlet extends HttpServlet {
         }
 
         String path = request.getServletPath();
-        if (!path.equals("/w4tjstudio-support/img")) {
-            try (PrintWriter out = response.getWriter()) {
-                if (path.equals("/w4tjstudio-support/designer/scripts")) {
-                    response.setContentType("text/javascript; charset=utf-8");
-                    out.print(DESIGNER_SCRIPTS_CONTENT.toString());
-                } else if (path.equals("/w4tjstudio-support/designer/styles")) {
-                    response.setContentType("text/css; charset=utf-8");
-                    out.print(DESIGNER_STYLES_CONTENT.toString());
-                } else if (path.equals("/w4tjstudio-support/canvas/scripts")) {
-                    response.setContentType("text/javascript; charset=utf-8");
-                    out.print(CANVAS_SCRIPTS_CONTENT.toString());
-                } else if (path.equals("/w4tjstudio-support/canvas/styles")) {
-                    response.setContentType("text/css; charset=utf-8");
-                    out.print(CANVAS_STYLES_CONTENT.toString());
-                } else {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                }
-            }
-        } else {
+        if (path.equals("/w4tjstudio-support/img")) {
             String f = request.getParameter("f");
             if (f == null || f.trim().length() == 0) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -129,6 +113,37 @@ public class SupportServlet extends HttpServlet {
                 response.setContentLength(raw.length);
                 out.write(raw);
             }
+        } else if (path.equals("/w4tjstudio-support/fonts")) {
+            int dot = request.getRequestURI().lastIndexOf(".");
+            String ext = request.getRequestURI().substring(dot);
+            String font = "org/web4thejob/studio/support/js/font-awesome/fonts/fontawesome-webfont" + ext;
+
+            try (ServletOutputStream outraw = response.getOutputStream()) {
+                byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(font));
+                response.setContentType("font/opentype");
+                response.setContentLength(raw.length);
+                outraw.write(raw);
+            }
+
+        } else {
+            try (PrintWriter out = response.getWriter()) {
+                if (path.equals("/w4tjstudio-support/designer/scripts")) {
+                    response.setContentType("text/javascript; charset=utf-8");
+                    out.print(DESIGNER_SCRIPTS_CONTENT.toString());
+                } else if (path.equals("/w4tjstudio-support/designer/styles")) {
+                    response.setContentType("text/css; charset=utf-8");
+                    out.print(DESIGNER_STYLES_CONTENT.toString());
+                } else if (path.equals("/w4tjstudio-support/canvas/scripts")) {
+                    response.setContentType("text/javascript; charset=utf-8");
+                    out.print(CANVAS_SCRIPTS_CONTENT.toString());
+                } else if (path.equals("/w4tjstudio-support/canvas/styles")) {
+                    response.setContentType("text/css; charset=utf-8");
+                    out.print(CANVAS_STYLES_CONTENT.toString());
+                } else {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
+            }
+
         }
     }
 

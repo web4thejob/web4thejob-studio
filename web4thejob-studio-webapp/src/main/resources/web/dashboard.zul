@@ -15,7 +15,8 @@
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
                             <tab iconSclass="z-icon-info"/>
-                            <tab iconSclass="z-icon-folder"/>
+                            <tab iconSclass="z-icon-folder-open"/>
+                            <tab iconSclass="fa fa-database"/>
                         </tabs>
                         <tabpanels>
                             <tabpanel>
@@ -29,8 +30,7 @@
                                             <cell align="right">
                                                 <n:h4>Project Name:</n:h4>
                                             </cell>
-                                            <n:span class="label label-primary"
-                                                    style="font-family:monospace;font-size:16px">
+                                            <n:span class="label label-primary" style="font-size:16px">
                                                 ${desktop.webApp.appName}
                                             </n:span>
                                         </row>
@@ -43,13 +43,19 @@
                                         </row>
                                         <row>
                                             <cell align="right">
-                                                <n:h4>Browser:</n:h4>
+                                                <n:h4>Browser family:</n:h4>
                                             </cell>
                                             <n:h4 style="font-family: monospace">${execution.getBrowser()}</n:h4>
                                         </row>
                                         <row>
                                             <cell align="right">
-                                                <n:h4>Java version:</n:h4>
+                                                <n:h4>Server name:</n:h4>
+                                            </cell>
+                                            <n:h4 style="font-family: monospace">${execution.getServerName()}</n:h4>
+                                        </row>
+                                        <row>
+                                            <cell align="right">
+                                            <n:h4>Java version:</n:h4>
                                             </cell>
                                             <n:h4 style="font-family: monospace">${java:getProperty('java.version')}
                                             </n:h4>
@@ -84,17 +90,10 @@
                                 </grid>
                             </tabpanel>
                             <tabpanel>
-                                <hbox align="center" pack="center" width="100%">
-                                    <html style="color:rgb(99, 99, 99);">
-                                        <![CDATA[
-                                            This is the structure of your webapp folder. Click on a zul file to start editing.
-                                        ]]>
-                                    </html>
-                                </hbox>
                                 <tree id="projectTree" vflex="true"
                                       apply="org.web4thejob.studio.controller.DashboardController">
                                     <treecols sizable="true">
-                                    <treecol label="File Name" align="center"/>
+                                        <treecol label="File Name" align="center"/>
                                         <treecol align="center" label="Writable" width="80px"/>
                                         <treecol align="center" label="Size" width="200px"/>
                                         <treecol label="Last Modified" align="center" width="200px"/>
@@ -102,6 +101,7 @@
                                     <treechildren/>
                                 </tree>
                             </tabpanel>
+                            <tabpanel/>
                         </tabpanels>
                     </tabbox>
                 </vbox>

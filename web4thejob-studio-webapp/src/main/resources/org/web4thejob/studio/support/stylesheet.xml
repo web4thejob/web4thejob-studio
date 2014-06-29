@@ -12,5 +12,11 @@
     *************************************************-->
     <stylesheet src="bootstrap/css/bootstrap.min.css"/>
     <stylesheet src="bootstrap/css/bootstrap-theme.min.css"/>
+
+    <!--***********************************************
+    * Font Awesome
+    *************************************************-->
+    <stylesheet src="font-awesome/css/font-awesome.min.css"/>
+
 </browser>
 
