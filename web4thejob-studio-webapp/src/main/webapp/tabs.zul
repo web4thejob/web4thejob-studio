@@ -5,10 +5,12 @@
     <window title="Window" vflex="true">
         <n:div class="container">
             <n:span class="1">
-                <button label="OK**9"></button>
+                <button label="OK**9"/>
                 <n:span class="2"/>
             </n:span>
-            <groupbox/>
+            <groupbox>
+                <button label="Button"/>
+            </groupbox>
         </n:div>
     </window>
 </zk>

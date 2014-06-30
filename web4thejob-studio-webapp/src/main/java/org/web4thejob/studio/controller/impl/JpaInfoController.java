@@ -3,19 +3,20 @@ package org.web4thejob.studio.controller.impl;
 import nu.xom.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
@@ -25,7 +26,7 @@ import java.util.*;
 /**
  * Created by e36132 on 16/4/2014.
  */
-public class JpaInfoController {
+public class JpaInfoController extends SelectorComposer<Component> {
     private static AttributeComparator attributeComparator = new AttributeComparator();
     private static EntityComparator entityComparator = new EntityComparator();
 
@@ -36,8 +37,8 @@ public class JpaInfoController {
     @Wire
     Listbox managedList;
 
-    private static SortedMap<String, EntityManagerFactory> getPersistenceUnitNames() {
-        SortedMap<String, EntityManagerFactory> names = new TreeMap<>();
+    private static SortedMap<String, Map<String, String>> getPersistenceUnitNames() {
+        SortedMap<String, Map<String, String>> names = new TreeMap<>();
 
 
         try {
@@ -49,16 +50,31 @@ public class JpaInfoController {
                 Nodes nodes = document.query("p:persistence/p:persistence-unit", ctx);
                 if (nodes.size() == 1) {
                     String name = ((Element) nodes.get(0)).getAttributeValue("name");
-                    EntityManagerFactory emf = Persistence.createEntityManagerFactory(name);
-                    names.put(name + "|" + resource.getURL(), emf);
+                    //EntityManagerFactory emf = Persistence.createEntityManagerFactory(name);
+                    //names.put(name + "|" + resource.getURL(), emf);
+
+                    Map<String, String> properties = new HashMap<>();
+                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@p:name='javax.persistence.jdbc.driver']", ctx);
+                    if (nodes.size() == 1) {
+                        properties.put("javax.persistence.jdbc.driver", ((Element) nodes.get(0)).getAttributeValue("name"));
+                    }
+
+
+                    names.put(name + "|" + resource.getURL(), properties);
                 }
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            StudioUtil.showError(e);
         }
 
         return names;
+    }
+
+    @Override
+    public void doAfterCompose(Component comp) throws Exception {
+        super.doAfterCompose(comp);
+        init();
     }
 
     protected void init() {
@@ -98,8 +114,13 @@ public class JpaInfoController {
         punitList.getItems().clear();
         managedList.getItems().clear();
         Clients.evalJavaScript("jq('$jpacontroller .badge').remove()");
+        Clients.clearBusy();
 
-        SortedMap<String, EntityManagerFactory> units = getPersistenceUnitNames();
+        SortedMap<String, Map<String, String>> units = getPersistenceUnitNames();
+        if (units.isEmpty()) {
+            StudioUtil.showNotification("warning", "No JPA", "Sorry but your project does not contain any JPA persistence units.", true);
+            return;
+        }
         for (String unit : units.keySet()) {
             String name = unit.split("\\|")[0];
             String url = unit.split("\\|")[1];
@@ -107,6 +128,20 @@ public class JpaInfoController {
             Listitem listitem = new Listitem();
             listitem.setAttribute("emf", units.get(unit));
             new Listcell(name).setParent(listitem);
+
+            Listcell cell = new Listcell();
+            cell.setParent(listitem);
+            cell.setStyle("text-align:center");
+            if (units.get(unit).size() == 0) {
+                cell.setIconSclass("z-icon-check");
+                A a = new A("Change?");
+                a.setParent(cell);
+            } else {
+                A a = new A("Configure");
+                a.setParent(cell);
+            }
+
+
             new Listcell(url).setParent(listitem);
 
             listitem.setParent(punitList);

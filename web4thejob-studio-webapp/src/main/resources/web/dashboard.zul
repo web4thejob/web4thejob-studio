@@ -121,7 +121,47 @@
                                 </panel>
                             </tabpanel>
                             <tabpanel>
-                                <include src="/jpa.zul"/>
+                                <div id="jpacontroller" vflex="true"
+                                     apply="org.web4thejob.studio.controller.impl.JpaInfoController">
+                                    <panel id="jpaPanel" vflex="true" mold="w4tjstudio">
+                                        <caption id="jpaCaption" label="JPA Persistence Units   "/>
+                                        <panelchildren>
+                                            <borderlayout style="border:0px">
+                                                <north height="25%" size="25%" splittable="true" border="none">
+                                                    <listbox id="punitList" height="300px"
+                                                             oddRowSclass="oddRowSclass-none"
+                                                             emptyMessage="Click scan now to discover your project's JPA persistence units, if any"
+                                                             style="border:0px">
+                                                        <listhead sizable="true">
+                                                            <listheader label="Unit Name" width="100px"/>
+                                                            <listheader label="Descriptor Url" hflex="true"/>
+                                                        </listhead>
+                                                    </listbox>
+                                                </north>
+                                                <center title="Managed Classes" border="none">
+                                                    <listbox id="managedList" vflex="true"
+                                                             oddRowSclass="oddRowSclass-none"
+                                                             emptyMessage="Select a persistence unit to view it's contents"
+                                                             style="border:0px">
+                                                        <listhead visible="false">
+                                                            <listheader/>
+                                                        </listhead>
+                                                    </listbox>
+                                                </center>
+                                            </borderlayout>
+                                        </panelchildren>
+                                    </panel>
+                                </div>
+                                <script type="text/javascript" defer="true">
+                                    <![CDATA[
+                                        jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-success btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
+                                        jq("#jpascan").click(function() {
+                                          //send event
+                                          zAu.cmd0.showBusy();
+                                          zAu.send(new zk.Event(zk("$jpacontroller").$(), "onJpaScan", {}));
+                                        });
+                                    ]]>
+                                </script>
                             </tabpanel>
                         </tabpanels>
                     </tabbox>
@@ -138,6 +178,9 @@
         text-decoration: none !important;
         font-size: 14px !important
         }
+        .z-caption-content {
+        font-size: 16px
+        }
         .zulfile:hover:after {
         font-family: FontAwesome;
         content: "\f0a9";
@@ -151,6 +194,24 @@
         }
         .panel-body {
         padding: 0px;
+        }
+        .z-listheader-content,
+        .z-center-header {
+        font-size: 14px;
+        font-weight: normal;
+        }
+        .z-listbox-emptybody td {
+        font-size: 14px
+        }
+        .z-center-header {
+        border: 1px solid #CFCFCF;
+        border-bottom: 0px
+        }
+        .z-tab:hover,
+        .z-tab-selected {
+        border-left-width: 3px !important;
+        border-left-color: orange;
+        padding-left: 0px;
         }
     </style>
 </zk>

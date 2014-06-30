@@ -23,6 +23,12 @@
             <artifactId>web4thejob-studio-lib</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.web4thejob</groupId>
+            <artifactId>test-joblet</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

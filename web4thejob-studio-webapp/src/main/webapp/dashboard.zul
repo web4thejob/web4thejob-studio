@@ -121,9 +121,10 @@
                                 </panel>
                             </tabpanel>
                             <tabpanel>
-                                <div id="jpacontroller" vflex="true">
+                                <div id="jpacontroller" vflex="true"
+                                     apply="org.web4thejob.studio.controller.impl.JpaInfoController">
                                     <panel id="jpaPanel" vflex="true" mold="w4tjstudio">
-                                        <caption id="jpaCaption" label="JPA Persistence Units   " sclass="panel-title"/>
+                                        <caption id="jpaCaption" label="JPA Persistence Units   "/>
                                         <panelchildren>
                                             <borderlayout style="border:0px">
                                                 <north height="25%" size="25%" splittable="true" border="none">
@@ -133,6 +134,7 @@
                                                              style="border:0px">
                                                         <listhead sizable="true">
                                                             <listheader label="Unit Name" width="100px"/>
+                                                            <listheader label="Connection Info" hflex="min"/>
                                                             <listheader label="Descriptor Url" hflex="true"/>
                                                         </listhead>
                                                     </listbox>
@@ -156,6 +158,7 @@
                                         jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-success btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
                                         jq("#jpascan").click(function() {
                                           //send event
+                                          zAu.cmd0.showBusy();
                                           zAu.send(new zk.Event(zk("$jpacontroller").$(), "onJpaScan", {}));
                                         });
                                     ]]>
@@ -175,6 +178,9 @@
         a {
         text-decoration: none !important;
         font-size: 14px !important
+        }
+        .z-caption-content {
+        font-size: 16px
         }
         .zulfile:hover:after {
         font-family: FontAwesome;
@@ -201,6 +207,12 @@
         .z-center-header {
         border: 1px solid #CFCFCF;
         border-bottom: 0px
+        }
+        .z-tab:hover,
+        .z-tab-selected {
+        border-left-width: 3px !important;
+        border-left-color: orange;
+        padding-left: 0px;
         }
     </style>
 </zk>

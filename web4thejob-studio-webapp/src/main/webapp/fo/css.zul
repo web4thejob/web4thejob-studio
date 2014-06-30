@@ -24,7 +24,7 @@
             </groupbox>
         </north>
         <east size="25%" splittable="true" collapsible="true">
-            <button label="Button"/>
+            <button label="Button/"/>
         </east>
         <center>
             <button label="Button"/>
