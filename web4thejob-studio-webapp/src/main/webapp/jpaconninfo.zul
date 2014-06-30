@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk xmlns:c="client">
+    <panel mold="w4tjstudio" title="JPA Connection Configuration" closable="true" width="500px" id="jpaConnPanel"
+           floatable="true" movable="true">
+        <panelchildren>
+            <vbox vflex="true" sclass="jpa-conn-info">
+                <grid oddRowSclass="none" style="border:0px">
+                    <columns visible="false">
+                        <column label="Col 1" width="100px"/>
+                        <column label="Col 2"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="Driver"/>
+                            <textbox sclass="form-control" id="txtDriver" focus="true">
+                                <attribute c:name="onChanging">
+                                    <![CDATA[
+                                        zk("$btnSave").$().setDisabled(false);
+                                    ]]>
+                                </attribute>
+                            </textbox>
+                        </row>
+                        <row>
+                            <label value="Url"/>
+                            <textbox sclass="form-control" id="txtUrl">
+                                <attribute c:name="onChanging">
+                                    <![CDATA[
+                                        zk("$btnSave").$().setDisabled(false);
+                                    ]]>
+                                </attribute>
+                            </textbox>
+                        </row>
+                        <row>
+                            <label value="User"/>
+                            <textbox sclass="form-control" id="txtUser">
+                                <attribute c:name="onChanging">
+                                    <![CDATA[
+                                        zk("$btnSave").$().setDisabled(false);
+                                    ]]>
+                                </attribute>
+                            </textbox>
+                        </row>
+                        <row>
+                            <label value="Password"/>
+                            <textbox sclass="form-control" type="password" id="txtPassword">
+                                <attribute c:name="onChanging">
+                                    <![CDATA[
+                                        zk("$btnSave").$().setDisabled(false);
+                                    ]]>
+                                </attribute>
+                            </textbox>
+                        </row>
+                    </rows>
+                </grid>
+                <hbox hflex="true" style="margin-top:6px" spacing="10px">
+                    <hbox hflex="true" pack="start" align="end" style="margin-left:5px" vflex="true">
+                        <checkbox label="Show password">
+                            <attribute c:name="onCheck">
+                                <![CDATA[
+                                    if (event.data)
+                                      zk("$txtPassword").$().setType("normal");
+                                    else
+                                      zk("$txtPassword").$().setType("password");
+                                ]]>
+                            </attribute>
+                        </checkbox>
+                    </hbox>
+                    <hbox hflex="true" pack="end">
+                        <button label="Cancel" mold="w4tjstudio">
+                            <attribute name="onClick">
+                                <![CDATA[
+                                    jpaConnPanel.detach();
+                                ]]>
+                            </attribute>
+                        </button>
+                        <button label="Save" mold="w4tjstudio" sclass="btn-primary" iconSclass="z-icon-save"
+                                id="btnSave" disabled="true"/>
+                    </hbox>
+                </hbox>
+            </vbox>
+        </panelchildren>
+    </panel>
+    <style>
+        input[type=radio],
+        input[type=checkbox] {
+        margin: 0px 5px 0 0;
+        }
+        .z-label,
+        .z-radio-content,
+        .z-checkbox-content,
+        .z-loading {
+        font-size: 14px;
+        }
+    </style>
+</zk>

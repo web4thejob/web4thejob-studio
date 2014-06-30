@@ -122,7 +122,7 @@
                             </tabpanel>
                             <tabpanel>
                                 <div id="jpacontroller" vflex="true"
-                                     apply="org.web4thejob.studio.controller.impl.JpaInfoController">
+                                     apply="org.web4thejob.studio.controller.impl.JpaInfoController" sclass="jpa">
                                     <panel id="jpaPanel" vflex="true" mold="w4tjstudio">
                                         <caption id="jpaCaption" label="JPA Persistence Units   "/>
                                         <panelchildren>
@@ -197,6 +197,7 @@
         padding: 0px;
         }
         .z-listheader-content,
+        .z-listcell-content,
         .z-center-header {
         font-size: 14px;
         font-weight: normal;
@@ -213,6 +214,9 @@
         border-left-width: 3px !important;
         border-left-color: orange;
         padding-left: 0px;
+        }
+        .jpa a:hover {
+        text-decoration: underline !important
         }
     </style>
 </zk>

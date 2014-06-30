@@ -22,6 +22,8 @@ import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import java.util.*;
 
+import static org.zkoss.lang.Generics.cast;
+
 
 /**
  * Created by e36132 on 16/4/2014.
@@ -125,20 +127,23 @@ public class JpaInfoController extends SelectorComposer<Component> {
             String name = unit.split("\\|")[0];
             String url = unit.split("\\|")[1];
 
+            Map<String, String> properties = units.get(unit);
+
             Listitem listitem = new Listitem();
-            listitem.setAttribute("emf", units.get(unit));
             new Listcell(name).setParent(listitem);
 
             Listcell cell = new Listcell();
             cell.setParent(listitem);
             cell.setStyle("text-align:center");
-            if (units.get(unit).size() == 0) {
-                cell.setIconSclass("z-icon-check");
-                A a = new A("Change?");
-                a.setParent(cell);
+
+            A a = new A();
+            a.setAttribute("properties", properties);
+            a.addEventListener(Events.ON_CLICK, new ConnInfoConfigClickHandler());
+            a.setParent(cell);
+            if (units.get(unit).size() == 4) {
+                a.setLabel("Done");
             } else {
-                A a = new A("Configure");
-                a.setParent(cell);
+                a.setLabel("Pending");
             }
 
 
@@ -148,7 +153,6 @@ public class JpaInfoController extends SelectorComposer<Component> {
 
         }
     }
-
 
     private static class ManagedClassClickHandler implements EventListener<MouseEvent> {
 
@@ -257,6 +261,17 @@ public class JpaInfoController extends SelectorComposer<Component> {
         @Override
         public int compare(EntityType o1, EntityType o2) {
             return o1.getJavaType().getCanonicalName().compareTo(o2.getJavaType().getCanonicalName());
+        }
+    }
+
+    private class ConnInfoConfigClickHandler implements EventListener<MouseEvent> {
+
+        @Override
+        public void onEvent(MouseEvent event) throws Exception {
+
+
+            Map<String, String> properties = cast(event.getTarget().getAttribute("properties"));
+
         }
     }
 
