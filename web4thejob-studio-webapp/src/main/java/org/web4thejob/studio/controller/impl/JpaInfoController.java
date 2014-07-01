@@ -17,6 +17,7 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
@@ -56,9 +57,23 @@ public class JpaInfoController extends SelectorComposer<Component> {
                     //names.put(name + "|" + resource.getURL(), emf);
 
                     Map<String, String> properties = new HashMap<>();
-                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@p:name='javax.persistence.jdbc.driver']", ctx);
+                    properties.put("name", name);
+
+                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.driver']", ctx);
                     if (nodes.size() == 1) {
-                        properties.put("javax.persistence.jdbc.driver", ((Element) nodes.get(0)).getAttributeValue("name"));
+                        properties.put("driver", ((Element) nodes.get(0)).getAttributeValue("value"));
+                    }
+                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.url']", ctx);
+                    if (nodes.size() == 1) {
+                        properties.put("url", ((Element) nodes.get(0)).getAttributeValue("value"));
+                    }
+                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.user']", ctx);
+                    if (nodes.size() == 1) {
+                        properties.put("user", ((Element) nodes.get(0)).getAttributeValue("value"));
+                    }
+                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.password']", ctx);
+                    if (nodes.size() == 1) {
+                        properties.put("password", ((Element) nodes.get(0)).getAttributeValue("value"));
                     }
 
 
@@ -87,7 +102,21 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 managedList.getItems().clear();
                 Clients.evalJavaScript("jq('$jpacontroller .badge').remove()");
 
-                EntityManagerFactory emf = (EntityManagerFactory) event.getSelectedItems().iterator().next().getAttribute("emf");
+                Listitem selectedItem = event.getSelectedItems().iterator().next();
+                Map<String, String> properties = cast(((Component) selectedItem.getAttribute("properties-holder")).getAttribute("properties"));
+                String name = properties.get("name");
+                String driver = properties.get("driver");
+                String url = properties.get("url");
+                String user = properties.get("user");
+                String password = properties.get("password");
+                if (name == null || driver == null || url == null | user == null) return;
+
+                Map props = new HashMap();
+                props.put("javax.persistence.jdbc.driver", driver);
+                props.put("javax.persistence.jdbc.url", url);
+                props.put("javax.persistence.jdbc.user", user);
+                props.put("javax.persistence.jdbc.password", password);
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory(name, props);
                 Metamodel metamodel = emf.getMetamodel();
 
                 SortedSet<EntityType> entitiesSortedSet = new TreeSet<>(entityComparator);
@@ -128,6 +157,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
             String url = unit.split("\\|")[1];
 
             Map<String, String> properties = units.get(unit);
+            properties.put("name", name);
 
             Listitem listitem = new Listitem();
             new Listcell(name).setParent(listitem);
@@ -137,13 +167,15 @@ public class JpaInfoController extends SelectorComposer<Component> {
             cell.setStyle("text-align:center");
 
             A a = new A();
+            listitem.setAttribute("properties-holder", a);
             a.setAttribute("properties", properties);
             a.addEventListener(Events.ON_CLICK, new ConnInfoConfigClickHandler());
             a.setParent(cell);
-            if (units.get(unit).size() == 4) {
-                a.setLabel("Done");
+            if (units.get(unit).size() >= 4) {
+                a.setLabel("Complete");
             } else {
-                a.setLabel("Pending");
+                a.setLabel("Missing");
+                a.setStyle("color:red");
             }
 
 
@@ -268,13 +300,10 @@ public class JpaInfoController extends SelectorComposer<Component> {
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
-
-
             Map<String, String> properties = cast(event.getTarget().getAttribute("properties"));
 
-
             Panel panel = (Panel) Executions.getCurrent().createComponents("/jpaconninfo.zul", null, properties);
-//            panel.setVisible(false);
+            panel.setAttribute("target", event.getTarget());
             Clients.evalJavaScript("showInPopover('" + event.getTarget().getUuid() + "','" + panel.getUuid() + "')");
 
         }

@@ -2,7 +2,8 @@
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <zk xmlns:c="client">
-    <panel closable="true" id="jpaConnPanel" width="300px">
+    <panel closable="true" id="jpaConnPanel" width="300px"
+           apply="org.web4thejob.studio.controller.impl.JpaConnectionConfigController">
         <panelchildren>
             <vbox vflex="true" sclass="jpa-conn-info">
                 <grid oddRowSclass="none" style="border:0px">
@@ -13,8 +14,8 @@
                     <rows>
                         <row>
                             <label value="Driver"/>
-                            <textbox id="txtDriver" focus="true" hflex="true">
-                            <attribute c:name="onChanging">
+                            <textbox id="txtDriver" focus="true" hflex="true" value="${arg.driver}">
+                                <attribute c:name="onChanging">
                                     <![CDATA[
                                         zk("$btnSave").$().setDisabled(false);
                                     ]]>
@@ -23,8 +24,8 @@
                         </row>
                         <row>
                             <label value="Url"/>
-                            <textbox id="txtUrl" hflex="true">
-                            <attribute c:name="onChanging">
+                            <textbox id="txtUrl" hflex="true" value="${arg.url}">
+                                <attribute c:name="onChanging">
                                     <![CDATA[
                                         zk("$btnSave").$().setDisabled(false);
                                     ]]>
@@ -33,8 +34,8 @@
                         </row>
                         <row>
                             <label value="User"/>
-                            <textbox id="txtUser" hflex="true">
-                            <attribute c:name="onChanging">
+                            <textbox id="txtUser" hflex="true" value="${arg.user}">
+                                <attribute c:name="onChanging">
                                     <![CDATA[
                                         zk("$btnSave").$().setDisabled(false);
                                     ]]>
@@ -43,8 +44,8 @@
                         </row>
                         <row>
                             <label value="Password"/>
-                            <textbox type="password" id="txtPassword" hflex="true">
-                            <attribute c:name="onChanging">
+                            <textbox type="password" id="txtPassword" hflex="true" value="${arg.password}">
+                                <attribute c:name="onChanging">
                                     <![CDATA[
                                         zk("$btnSave").$().setDisabled(false);
                                     ]]>
@@ -55,8 +56,8 @@
                 </grid>
                 <hbox hflex="true" style="margin-top:6px;margin-bottom:3px" spacing="10px">
                     <hbox hflex="true" pack="start" align="end" style="margin-left:5px" vflex="true">
-                        <checkbox label="Show password" style="font-size:10px">
-                        <attribute c:name="onCheck">
+                        <checkbox label="Show password">
+                            <attribute c:name="onCheck">
                                 <![CDATA[
                                     if (event.data)
                                       zk("$txtPassword").$().setType("normal");
@@ -67,7 +68,7 @@
                         </checkbox>
                     </hbox>
                     <hbox hflex="true" pack="end" style="margin-right:5px">
-                        <button label="Cancel" mold="w4tjstudio" sclass="btn-default btn-xs">
+                        <button label="Cancel" mold="w4tjstudio" sclass="btn-default btn-xs" id="btnCancel">
                             <attribute c:name="onClick">
                                 <![CDATA[
                                     jq(jq(this).parents('.popover').data('element')).popover('destroy');
@@ -80,7 +81,18 @@
                             </attribute>
                         </button>
                         <button label="Save" mold="w4tjstudio" sclass="btn-primary btn-xs" iconSclass="z-icon-save"
-                                id="btnSave" disabled="true"/>
+                                id="btnSave" disabled="true">
+                            <attribute c:name="onClick">
+                                <![CDATA[
+                                    jq(jq(this).parents('.popover').data('element')).popover('destroy');
+                                ]]>
+                            </attribute>
+                            <attribute name="onClick">
+                                <![CDATA[
+                                    jpaConnPanel.detach();
+                                ]]>
+                            </attribute>
+                        </button>
                     </hbox>
                 </hbox>
             </vbox>
