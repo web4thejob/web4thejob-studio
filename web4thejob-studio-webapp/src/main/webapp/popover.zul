@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk xmlns:c="client">
+    <script>
+        <![CDATA[
+            function showPopover(id, text, sclass) {
+              //    this.hidePopovers();
+              jq(id).popover({
+                placement: "auto bottom",
+                content: text,
+                container: "body",
+                trigger: "manual",
+                html: true
+              });
+              var p = jq(id).popover("show");
+              if (sclass) {
+                p.data("bs.popover").$tip.addClass(sclass);
+              }
+              setTimeout(function() {
+                jq(id).popover("destroy")
+              }, 5000);
+            };
+        ]]>
+    </script>
+    <button label="Button">
+        <attribute c:name="onClick">
+            <![CDATA[
+                showPopover('#' + this.uuid, 'hello!');
+            ]]>
+        </attribute>
+    </button>
+</zk>

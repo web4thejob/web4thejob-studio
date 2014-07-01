@@ -272,6 +272,11 @@ public class JpaInfoController extends SelectorComposer<Component> {
 
             Map<String, String> properties = cast(event.getTarget().getAttribute("properties"));
 
+
+            Panel panel = (Panel) Executions.getCurrent().createComponents("/jpaconninfo.zul", null, properties);
+//            panel.setVisible(false);
+            Clients.evalJavaScript("showInPopover('" + event.getTarget().getUuid() + "','" + panel.getUuid() + "')");
+
         }
     }
 

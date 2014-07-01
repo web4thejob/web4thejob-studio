@@ -5,6 +5,22 @@
 <?xel-method prefix="java" name="getProperty" class="java.lang.System" signature="java.lang.String getProperty(java.lang.String property)"?>
 <zk xmlns:n="native">
     <include src="~./include/topbar.zul"/>
+    <script>
+        <![CDATA[
+            function showInPopover(target, content) {
+              var cwgt = zk(content).$();
+              jq('#' + target).popover({
+                placement: "auto right",
+                content: cwgt.$n(),
+                container: "body",
+                html: true,
+                trigger: "manual"
+              });
+              var e = jq('#' + target).popover("show");
+              jq(jq(e).data("bs.popover").$tip).data('element', e);
+            };
+        ]]>
+    </script>
     <div class="container" vflex="true" style="margin-bottom:20px">
         <panel vflex="true" hflex="true">
             <panelchildren>
@@ -16,7 +32,7 @@
                         <tabs>
                             <tab iconSclass="z-icon-info"/>
                             <tab iconSclass="z-icon-folder-open"/>
-                            <tab iconSclass="fa fa-database"/>
+                            <tab iconSclass="fa fa-database" selected="true"/>
                         </tabs>
                         <tabpanels>
                             <tabpanel>
@@ -217,6 +233,9 @@
         }
         .jpa a:hover {
         text-decoration: underline !important
+        }
+        .popover {
+        max-width: none
         }
     </style>
 </zk>

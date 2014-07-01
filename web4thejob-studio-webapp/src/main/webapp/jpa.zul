@@ -10,7 +10,7 @@
                     <north height="25%" size="25%" splittable="true" border="none">
                         <listbox id="punitList" height="300px" oddRowSclass="oddRowSclass-none"
                                  emptyMessage="Click scan now to discover your project's JPA persistence units, if any">
-                            <listhead sizable="true">
+                        <listhead sizable="true">
                                 <listheader label="Unit Name" width="100px"/>
                                 <listheader label="Descriptor Url"/>
                             </listhead>
@@ -19,7 +19,7 @@
                     <center title="Managed Classes" border="none">
                         <listbox id="managedList" vflex="true" oddRowSclass="oddRowSclass-none"
                                  emptyMessage="Select a persistence unit to view it's contents">
-                            <listhead visible="false">
+                        <listhead visible="false">
                                 <listheader/>
                             </listhead>
                         </listbox>
