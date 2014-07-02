@@ -5,6 +5,22 @@
 <?xel-method prefix="java" name="getProperty" class="java.lang.System" signature="java.lang.String getProperty(java.lang.String property)"?>
 <zk xmlns:n="native">
     <include src="~./include/topbar.zul"/>
+    <script>
+        <![CDATA[
+            function showInPopover(target, content) {
+              var cwgt = zk(content).$();
+              jq('#' + target).popover({
+                placement: "auto right",
+                content: cwgt.$n(),
+                container: "body",
+                html: true,
+                trigger: "manual"
+              });
+              var e = jq('#' + target).popover("show");
+              jq(jq(e).data("bs.popover").$tip).data('element', e);
+            };
+        ]]>
+    </script>
     <div class="container" vflex="true" style="margin-bottom:20px">
         <panel vflex="true" hflex="true">
             <panelchildren>
@@ -109,7 +125,7 @@
                                         <tree id="projectTree" vflex="true"
                                               apply="org.web4thejob.studio.controller.DashboardController"
                                               style="border:0px">
-                                            <treecols sizable="true">
+                                        <treecols sizable="true">
                                                 <treecol label="File Name" align="center"/>
                                                 <treecol align="center" label="Writable" width="80px"/>
                                                 <treecol align="center" label="Size" width="200px"/>
@@ -122,7 +138,7 @@
                             </tabpanel>
                             <tabpanel>
                                 <div id="jpacontroller" vflex="true"
-                                     apply="org.web4thejob.studio.controller.impl.JpaInfoController">
+                                     apply="org.web4thejob.studio.controller.impl.JpaInfoController" sclass="jpa">
                                     <panel id="jpaPanel" vflex="true" mold="w4tjstudio">
                                         <caption id="jpaCaption" label="JPA Persistence Units   "/>
                                         <panelchildren>
@@ -134,6 +150,9 @@
                                                              style="border:0px">
                                                         <listhead sizable="true">
                                                             <listheader label="Unit Name" width="100px"/>
+                                                            <listheader label="Connection Info" hflex="min"
+                                                                        align="center"/>
+                                                            <listheader label="State" width="150px" align="center"/>
                                                             <listheader label="Descriptor Url" hflex="true"/>
                                                         </listhead>
                                                     </listbox>
@@ -141,9 +160,9 @@
                                                 <center title="Managed Classes" border="none">
                                                     <listbox id="managedList" vflex="true"
                                                              oddRowSclass="oddRowSclass-none"
-                                                             emptyMessage="Select a persistence unit to view it's contents"
+                                                             emptyMessage="Select a started persistence unit to view it's contents"
                                                              style="border:0px">
-                                                        <listhead visible="false">
+                                                    <listhead visible="false">
                                                             <listheader/>
                                                         </listhead>
                                                     </listbox>
@@ -154,7 +173,7 @@
                                 </div>
                                 <script type="text/javascript" defer="true">
                                     <![CDATA[
-                                        jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-success btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
+                                        jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-primary btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
                                         jq("#jpascan").click(function() {
                                           //send event
                                           zAu.cmd0.showBusy();
@@ -174,6 +193,7 @@
         height: 30px;
         }
         .z-treecell-content,
+        .z-label,
         a {
         text-decoration: none !important;
         font-size: 14px !important
@@ -196,6 +216,7 @@
         padding: 0px;
         }
         .z-listheader-content,
+        .z-listcell-content,
         .z-center-header {
         font-size: 14px;
         font-weight: normal;
@@ -212,6 +233,12 @@
         border-left-width: 3px !important;
         border-left-color: orange;
         padding-left: 0px;
+        }
+        .jpa a:hover {
+        text-decoration: underline !important
+        }
+        .popover {
+        max-width: none
         }
     </style>
 </zk>

@@ -32,7 +32,7 @@
                         <tabs>
                             <tab iconSclass="z-icon-info"/>
                             <tab iconSclass="z-icon-folder-open"/>
-                            <tab iconSclass="fa fa-database" selected="true"/>
+                            <tab iconSclass="fa fa-database"/>
                         </tabs>
                         <tabpanels>
                             <tabpanel>
@@ -125,7 +125,7 @@
                                         <tree id="projectTree" vflex="true"
                                               apply="org.web4thejob.studio.controller.DashboardController"
                                               style="border:0px">
-                                            <treecols sizable="true">
+                                        <treecols sizable="true">
                                                 <treecol label="File Name" align="center"/>
                                                 <treecol align="center" label="Writable" width="80px"/>
                                                 <treecol align="center" label="Size" width="200px"/>
@@ -150,7 +150,9 @@
                                                              style="border:0px">
                                                         <listhead sizable="true">
                                                             <listheader label="Unit Name" width="100px"/>
-                                                            <listheader label="Connection Info" hflex="min"/>
+                                                            <listheader label="Connection Info" hflex="min"
+                                                                        align="center"/>
+                                                            <listheader label="State" width="150px" align="center"/>
                                                             <listheader label="Descriptor Url" hflex="true"/>
                                                         </listhead>
                                                     </listbox>
@@ -158,9 +160,9 @@
                                                 <center title="Managed Classes" border="none">
                                                     <listbox id="managedList" vflex="true"
                                                              oddRowSclass="oddRowSclass-none"
-                                                             emptyMessage="Select a persistence unit to view it's contents"
+                                                             emptyMessage="Select a started persistence unit to view it's contents"
                                                              style="border:0px">
-                                                        <listhead visible="false">
+                                                    <listhead visible="false">
                                                             <listheader/>
                                                         </listhead>
                                                     </listbox>
@@ -171,7 +173,7 @@
                                 </div>
                                 <script type="text/javascript" defer="true">
                                     <![CDATA[
-                                        jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-success btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
+                                        jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-primary btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
                                         jq("#jpascan").click(function() {
                                           //send event
                                           zAu.cmd0.showBusy();
@@ -191,6 +193,7 @@
         height: 30px;
         }
         .z-treecell-content,
+        .z-label,
         a {
         text-decoration: none !important;
         font-size: 14px !important

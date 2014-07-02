@@ -12,5 +12,6 @@
                 <button label="Button"/>
             </groupbox>
         </n:div>
+        <hlayout/>
     </window>
 </zk>

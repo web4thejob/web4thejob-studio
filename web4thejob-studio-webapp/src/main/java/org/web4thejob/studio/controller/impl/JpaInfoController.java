@@ -6,10 +6,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.event.*;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zk.ui.event.MouseEvent;
-import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -32,13 +31,13 @@ import static org.zkoss.lang.Generics.cast;
 public class JpaInfoController extends SelectorComposer<Component> {
     private static AttributeComparator attributeComparator = new AttributeComparator();
     private static EntityComparator entityComparator = new EntityComparator();
-
     @Wire
     Div jpacontroller;
     @Wire
     Listbox punitList;
     @Wire
     Listbox managedList;
+
 
     private static SortedMap<String, Map<String, String>> getPersistenceUnitNames() {
         SortedMap<String, Map<String, String>> names = new TreeMap<>();
@@ -53,31 +52,33 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 Nodes nodes = document.query("p:persistence/p:persistence-unit", ctx);
                 if (nodes.size() == 1) {
                     String name = ((Element) nodes.get(0)).getAttributeValue("name");
-                    //EntityManagerFactory emf = Persistence.createEntityManagerFactory(name);
-                    //names.put(name + "|" + resource.getURL(), emf);
 
-                    Map<String, String> properties = new HashMap<>();
-                    properties.put("name", name);
+                    Map<String, String> properties = getConnectionProperties(name);
+                    if (properties == null) {
+                        properties = new HashMap<>();
+                        setConnectionProperties(name, properties);
+                        properties.put("name", name);
 
-                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.driver']", ctx);
-                    if (nodes.size() == 1) {
-                        properties.put("driver", ((Element) nodes.get(0)).getAttributeValue("value"));
+                        nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.driver']", ctx);
+                        if (nodes.size() == 1) {
+                            properties.put("driver", ((Element) nodes.get(0)).getAttributeValue("value"));
+                        }
+                        nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.url']", ctx);
+                        if (nodes.size() == 1) {
+                            properties.put("url", ((Element) nodes.get(0)).getAttributeValue("value"));
+                        }
+                        nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.user']", ctx);
+                        if (nodes.size() == 1) {
+                            properties.put("user", ((Element) nodes.get(0)).getAttributeValue("value"));
+                        }
+                        nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.password']", ctx);
+                        if (nodes.size() == 1) {
+                            properties.put("password", ((Element) nodes.get(0)).getAttributeValue("value"));
+                        }
                     }
-                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.url']", ctx);
-                    if (nodes.size() == 1) {
-                        properties.put("url", ((Element) nodes.get(0)).getAttributeValue("value"));
-                    }
-                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.user']", ctx);
-                    if (nodes.size() == 1) {
-                        properties.put("user", ((Element) nodes.get(0)).getAttributeValue("value"));
-                    }
-                    nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.password']", ctx);
-                    if (nodes.size() == 1) {
-                        properties.put("password", ((Element) nodes.get(0)).getAttributeValue("value"));
-                    }
-
 
                     names.put(name + "|" + resource.getURL(), properties);
+
                 }
             }
 
@@ -88,60 +89,126 @@ public class JpaInfoController extends SelectorComposer<Component> {
         return names;
     }
 
-    @Override
-    public void doAfterCompose(Component comp) throws Exception {
-        super.doAfterCompose(comp);
-        init();
+    public static synchronized EntityManagerFactory getEntityManagerFactory(String name) {
+        Session session = Executions.getCurrent().getSession();
+        Map<String, EntityManagerFactory> emfs = cast(session.getAttribute("w4tjstudio-emfs"));
+        if (emfs != null) {
+            return emfs.get(name);
+        }
+        return null;
     }
 
-    protected void init() {
+    public static synchronized void removeEntityManagerFactory(String name) {
+        Session session = Executions.getCurrent().getSession();
+        Map<String, EntityManagerFactory> emfs = cast(session.getAttribute("w4tjstudio-emfs"));
+        if (emfs != null) {
+            emfs.remove(name);
+        }
+    }
 
-        punitList.addEventListener(Events.ON_SELECT, new EventListener<SelectEvent<Listitem, Listitem>>() {
-            @Override
-            public void onEvent(SelectEvent<Listitem, Listitem> event) throws Exception {
-                managedList.getItems().clear();
-                Clients.evalJavaScript("jq('$jpacontroller .badge').remove()");
+    public static synchronized void setEntityManagerFactory(String name, EntityManagerFactory emf) {
+        Session session = Executions.getCurrent().getSession();
+        Map<String, EntityManagerFactory> emfs = cast(session.getAttribute("w4tjstudio-emfs"));
+        if (emfs == null) {
+            emfs = new HashMap<>();
+            session.setAttribute("w4tjstudio-emfs", emfs);
+        }
+        emfs.put(name, emf);
+    }
 
-                Listitem selectedItem = event.getSelectedItems().iterator().next();
-                Map<String, String> properties = cast(((Component) selectedItem.getAttribute("properties-holder")).getAttribute("properties"));
-                String name = properties.get("name");
-                String driver = properties.get("driver");
-                String url = properties.get("url");
-                String user = properties.get("user");
-                String password = properties.get("password");
-                if (name == null || driver == null || url == null | user == null) return;
+    public static synchronized Map<String, String> getConnectionProperties(String name) {
+        Session session = Executions.getCurrent().getSession();
+        Map<String, Map<String, String>> properties = cast(session.getAttribute("w4tjstudio-properties"));
+        if (properties != null) {
+            return properties.get(name);
+        }
+        return null;
+    }
 
-                Map props = new HashMap();
-                props.put("javax.persistence.jdbc.driver", driver);
-                props.put("javax.persistence.jdbc.url", url);
-                props.put("javax.persistence.jdbc.user", user);
-                props.put("javax.persistence.jdbc.password", password);
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory(name, props);
-                Metamodel metamodel = emf.getMetamodel();
+    public static synchronized void setConnectionProperties(String name, Map<String, String> prop) {
+        Session session = Executions.getCurrent().getSession();
+        Map<String, Map<String, String>> properties = cast(session.getAttribute("w4tjstudio-properties"));
+        if (properties == null) {
+            properties = new HashMap<>();
+            session.setAttribute("w4tjstudio-properties", properties);
+        }
+        properties.put(name, prop);
+    }
 
-                SortedSet<EntityType> entitiesSortedSet = new TreeSet<>(entityComparator);
-                entitiesSortedSet.addAll(metamodel.getEntities());
-                for (EntityType<?> entityType : entitiesSortedSet) {
-                    Listitem listitem = new Listitem();
-                    listitem.setParent(managedList);
+    private static boolean isComplete(Map<String, String> properties) {
+        return !(properties.get("name") == null || properties.get("driver") == null || properties.get("url") == null | properties.get("user") == null);
+    }
 
-                    Listcell listcell = new Listcell();
-                    listcell.setParent(listitem);
+    private static void renderConfigLink(A a, Map<String, String> properties) {
+        if (isComplete(properties)) {
+            a.setLabel("Complete");
+            a.setStyle("color:#419641");
+        } else {
+            a.setLabel("Missing");
+            a.setStyle("color:red");
+        }
+    }
 
-                    A a = new A(entityType.getJavaType().getCanonicalName());
-                    a.setParent(listcell);
-                    a.setAttribute("entityType", entityType);
-                    a.setSclass("jpa-managed-class");
+    private static void renderManagedClasses(String name, Listbox punitList, Listbox managedList) {
+        punitList.clearSelection();
+        managedList.getItems().clear();
+        Clients.evalJavaScript("jq('$jpacontroller .badge').remove()");
+
+        EntityManagerFactory emf = getEntityManagerFactory(name);
+        if (emf == null) return;
+
+        Metamodel metamodel = emf.getMetamodel();
+        SortedSet<EntityType> entitiesSortedSet = new TreeSet<>(entityComparator);
+        entitiesSortedSet.addAll(metamodel.getEntities());
+        for (EntityType<?> entityType : entitiesSortedSet) {
+            Listitem listitem = new Listitem();
+            listitem.setParent(managedList);
+
+            Listcell listcell = new Listcell(entityType.getJavaType().getCanonicalName());
+            listcell.setParent(listitem);
+
+//                A a = new A(entityType.getJavaType().getCanonicalName());
+//                a.setParent(listcell);
+//                a.setAttribute("entityType", entityType);
+//                a.setSclass("jpa-managed-class");
 //                    a.addEventListener(Events.ON_CLICK, managedClassClickHandler);
-                }
+        }
 
-                Clients.evalJavaScript("jq(\"$jpacontroller .z-center-header\").append('<span class=\"badge\" style=\"margin-left:10px\">" + metamodel.getEntities().size() + "</span>')");
+        for (Listitem item : punitList.getItems()) {
+            if (name.equals(item.getAttribute("name"))) {
+                item.setSelected(true);
             }
-        });
+        }
+
+        Clients.evalJavaScript("jq(\"$jpacontroller .z-center-header\").append('<span class=\"badge\" style=\"margin-left:10px\">" + metamodel.getEntities().size() + "</span>')");
+    }
+
+    private void renderState(String name, Hlayout hlayout) {
+        hlayout.getChildren().clear();
+        boolean started = getEntityManagerFactory(name) != null;
+        Label state = new Label(started ? "Started" : "Stopped");
+        state.setSclass("label label-" + (started ? "success" : "default"));
+        state.setParent(hlayout);
+        if (!started) {
+            A a = new A("Start?");
+            a.setParent(hlayout);
+            a.addEventListener(Events.ON_CLICK, new StartStopEMFHandler(name, hlayout, true));
+            a.setWidgetListener(Events.ON_CLICK, "zAu.cmd0.showBusy();");
+        } else {
+            A a = new A("Stop?");
+            a.setParent(hlayout);
+            a.addEventListener(Events.ON_CLICK, new StartStopEMFHandler(name, hlayout, false));
+            a.setWidgetListener(Events.ON_CLICK, "zAu.cmd0.showBusy();");
+        }
+        renderManagedClasses(name, punitList, managedList);
     }
 
     @Listen("onJpaScan=#jpacontroller")
     public void onJpaScan() {
+        if (!punitList.getEventListeners(Events.ON_SELECT).iterator().hasNext()) {
+            punitList.addEventListener(Events.ON_SELECT, new OnPunitSelectedHandler());
+        }
+
         punitList.getItems().clear();
         managedList.getItems().clear();
         Clients.evalJavaScript("jq('$jpacontroller .badge').remove()");
@@ -156,29 +223,25 @@ public class JpaInfoController extends SelectorComposer<Component> {
             String name = unit.split("\\|")[0];
             String url = unit.split("\\|")[1];
 
-            Map<String, String> properties = units.get(unit);
-            properties.put("name", name);
-
             Listitem listitem = new Listitem();
+            listitem.setAttribute("name", name);
             new Listcell(name).setParent(listitem);
 
             Listcell cell = new Listcell();
             cell.setParent(listitem);
             cell.setStyle("text-align:center");
-
             A a = new A();
-            listitem.setAttribute("properties-holder", a);
-            a.setAttribute("properties", properties);
-            a.addEventListener(Events.ON_CLICK, new ConnInfoConfigClickHandler());
+            a.addEventListener(Events.ON_CLICK, new ConnInfoConfigClickHandler(name));
             a.setParent(cell);
-            if (units.get(unit).size() >= 4) {
-                a.setLabel("Complete");
-            } else {
-                a.setLabel("Missing");
-                a.setStyle("color:red");
-            }
+            renderConfigLink(a, units.get(unit));
 
-
+            cell = new Listcell();
+            cell.setParent(listitem);
+            cell.setStyle("text-align:center");
+            Hlayout hlayout = new Hlayout();
+            hlayout.setParent(cell);
+            hlayout.setSpacing("5px");
+            renderState(name, hlayout);
             new Listcell(url).setParent(listitem);
 
             listitem.setParent(punitList);
@@ -296,17 +359,90 @@ public class JpaInfoController extends SelectorComposer<Component> {
         }
     }
 
-    private class ConnInfoConfigClickHandler implements EventListener<MouseEvent> {
+    private class StartStopEMFHandler implements EventListener<MouseEvent> {
+        private String name;
+        private Hlayout hlayout;
+        private boolean start;
+
+
+        public StartStopEMFHandler(String name, Hlayout hlayout, boolean start) {
+            this.name = name;
+            this.hlayout = hlayout;
+            this.start = start;
+        }
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
-            Map<String, String> properties = cast(event.getTarget().getAttribute("properties"));
+            Clients.clearBusy();
+            if (start) {
+                Map<String, String> properties = getConnectionProperties(name);
+                if (!isComplete(properties)) {
+                    StudioUtil.showNotification("warning", "Incomplete connection info.", "Fill in the connection info to continue.", true);
+                    return;
+                }
 
-            Panel panel = (Panel) Executions.getCurrent().createComponents("/jpaconninfo.zul", null, properties);
-            panel.setAttribute("target", event.getTarget());
-            Clients.evalJavaScript("showInPopover('" + event.getTarget().getUuid() + "','" + panel.getUuid() + "')");
-
+                Map<String, String> props = new HashMap<>();
+                props.put("javax.persistence.jdbc.driver", properties.get("driver"));
+                props.put("javax.persistence.jdbc.url", properties.get("url"));
+                props.put("javax.persistence.jdbc.user", properties.get("user"));
+                props.put("javax.persistence.jdbc.password", properties.get("password"));
+                try {
+                    EntityManagerFactory emf = Persistence.createEntityManagerFactory(name, props);
+                    setEntityManagerFactory(name, emf);
+                    renderState(name, hlayout);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    StudioUtil.showError(e);
+                }
+            } else {
+                EntityManagerFactory emf = getEntityManagerFactory(name);
+                if (emf != null && emf.isOpen()) {
+                    emf.close();
+                    removeEntityManagerFactory(name);
+                    renderState(name, hlayout);
+                }
+            }
         }
     }
 
+    private class ConnInfoConfigClickHandler implements EventListener<Event> {
+        private String name;
+
+        public ConnInfoConfigClickHandler(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void onEvent(Event event) throws Exception {
+            A a = (A) event.getTarget();
+            Map<String, String> properties = getConnectionProperties(name);
+
+            if ("onConfigChanged".equals(event.getName())) {
+                renderConfigLink(a, properties);
+            } else {
+                Panel panel;
+                try {
+                    panel = (Panel) Executions.getCurrent().createComponents("~./include/jpaconninfo.zul", null, properties);
+                } catch (Exception e) {
+                    //this will happen if the user clicks on the link while another popover is open, ignore.
+                    return;
+                }
+                panel.setAttribute("name", name);
+                panel.setAttribute("target", a);
+                panel.setAttribute("callback", this);
+                Clients.evalJavaScript("showInPopover('" + a.getUuid() + "','" + panel.getUuid() + "')");
+
+            }
+        }
+    }
+
+    private class OnPunitSelectedHandler implements EventListener<SelectEvent<Listitem, ?>> {
+
+        @Override
+        public void onEvent(SelectEvent<Listitem, ?> event) throws Exception {
+            Listitem selectedItem = event.getSelectedItems().iterator().next();
+            String name = selectedItem.getAttribute("name").toString();
+            renderManagedClasses(name, punitList, managedList);
+        }
+    }
 }
