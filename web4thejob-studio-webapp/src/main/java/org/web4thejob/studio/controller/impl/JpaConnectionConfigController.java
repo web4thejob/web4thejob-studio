@@ -1,5 +1,6 @@
 package org.web4thejob.studio.controller.impl;
 
+import org.web4thejob.studio.support.JpaUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -44,7 +45,7 @@ public class JpaConnectionConfigController extends SelectorComposer<Component> {
     public void onSaveClicked() throws Exception {
         A a = (A) jpaConnPanel.getAttribute("target");
 
-        Map<String, String> properties = JpaInfoController.getConnectionProperties(name);
+        Map<String, String> properties = JpaUtil.getConnectionProperties(name);
         properties.clear();
         properties.put("name", name);
 

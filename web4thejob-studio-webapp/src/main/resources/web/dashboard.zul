@@ -26,7 +26,7 @@
             <panelchildren>
                 <vbox vflex="true" hflex="true">
                     <div sclass="page-header">
-                        <n:h1>Dashboard</n:h1>
+                        <n:h1>Project Dashboard</n:h1>
                     </div>
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>

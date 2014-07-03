@@ -26,7 +26,7 @@
             <panelchildren>
                 <vbox vflex="true" hflex="true">
                     <div sclass="page-header">
-                        <n:h1>Dashboard</n:h1>
+                        <n:h1>Project Dashboard</n:h1>
                     </div>
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
@@ -125,7 +125,7 @@
                                         <tree id="projectTree" vflex="true"
                                               apply="org.web4thejob.studio.controller.DashboardController"
                                               style="border:0px">
-                                        <treecols sizable="true">
+                                            <treecols sizable="true">
                                                 <treecol label="File Name" align="center"/>
                                                 <treecol align="center" label="Writable" width="80px"/>
                                                 <treecol align="center" label="Size" width="200px"/>
@@ -162,7 +162,7 @@
                                                              oddRowSclass="oddRowSclass-none"
                                                              emptyMessage="Select a started persistence unit to view it's contents"
                                                              style="border:0px">
-                                                    <listhead visible="false">
+                                                        <listhead visible="false">
                                                             <listheader/>
                                                         </listhead>
                                                     </listbox>

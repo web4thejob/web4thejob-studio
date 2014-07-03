@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
-
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
-
-<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:c="http://www.zkoss.org/2005/zk/client"
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.zkoss.org/2005/zk/client"
     xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute"
-    xmlns="http://www.zkoss.org/2005/zul"
-    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
+    xmlns="http://www.zkoss.org/2005/zul">
     <include src="~./include/topbar.zul"/>
-
     <window id="designer" sclass="w4tjstudio-designer" vflex="true"
-            apply="org.web4thejob.studio.controller.impl.DesignerController"
-            contentStyle="overflow:visible">
+            apply="org.web4thejob.studio.controller.impl.DesignerController" contentStyle="overflow:visible">
         <borderlayout vflex="true">
             <west width="200px" splittable="true" collapsible="true">
                 <tabbox vflex="true">
                     <tabs>
-                        <tab label="" iconSclass="z-icon-leaf"/>
-                        <tab label="" iconSclass="fa fa-database"/>
+                        <tab label="Widgets" iconSclass="z-icon-leaf"/>
+                        <tab label="JPA Entities" iconSclass="fa fa-database"/>
                     </tabs>
                     <tabpanels>
                         <tabpanel style="overflow:auto">
                             <include src="~./include/templates.zul"/>
+                        </tabpanel>
+                        <tabpanel>
+                            <include src="~./include/outline.zul"/>
                         </tabpanel>
                     </tabpanels>
                 </tabbox>
@@ -34,10 +31,18 @@
                     <tabs>
                         <tab id="canvasView" label="Canvas" iconSclass="z-icon-coffee"/>
                         <tab id="outlineView" label="Outline" iconSclass="z-icon-sitemap">
-                            <attribute c:name="onSelect">w4tjStudioDesigner.centerOutlineSelection();</attribute>
+                            <attribute c:name="onSelect">
+                                <![CDATA[
+                                    w4tjStudioDesigner.centerOutlineSelection();
+                                ]]>
+                            </attribute>
                         </tab>
                         <tab id="codeView" label="ZUL" iconSclass="z-icon-code">
-                            <attribute c:name="onSelect">w4tjStudioDesigner.refreshCode();</attribute>
+                            <attribute c:name="onSelect">
+                                <![CDATA[
+                                    w4tjStudioDesigner.refreshCode();
+                                ]]>
+                            </attribute>
                         </tab>
                     </tabs>
                     <tabpanels>
@@ -45,9 +50,8 @@
                             <div vflex="true" hflex="true"
                                  style="margin:1px;padding:8px;box-shadow:inset 0 0 7px gray;">
                                 <iframe id="canvasHolder" name="canvasHolder" scrolling="false"
-                                        src="${execution.getParameter('z')}"
-                                        vflex="true" hflex="true" style="box-shadow: 0 0 5px black;"
-                                        ca:onload="w4tjStudioDesigner.hookCanvas()"/>
+                                        src="${execution.getParameter('z')}" vflex="true" hflex="true"
+                                        style="box-shadow: 0 0 5px black;" ca:onload="w4tjStudioDesigner.hookCanvas()"/>
                             </div>
                         </tabpanel>
                         <tabpanel>
@@ -58,38 +62,47 @@
                         </tabpanel>
                     </tabpanels>
                 </tabbox>
-
             </center>
             <east id="propertyeditor" width="300px" splittable="true" collapsible="true">
                 <include src="~./include/propertyeditor.zul"/>
             </east>
         </borderlayout>
     </window>
-
     <script type="text/javascript" defer="true">
-        w4tjStudioDesigner.init();
+        <![CDATA[
+            w4tjStudioDesigner.init();
+        ]]>
     </script>
-
     <style>
-        .mono {font-family: monospace, Courier, Courier New; font-style:normal}
-        .w4tjstudio-designer * {font-size:14px !important;}
-        .w4tjstudio-designer a {text-decoration: none !important}
-
-        .w4tjstudio-hovered {border: 1px solid orange !important;}
-        .w4tjstudio-element-hidden {color:rgb(167, 167, 167) !important;}
-        .w4tjstudio-element-skipped {color:rgb(167, 167, 167) !important; text-decoration:line-through}
-
+        .mono {
+        font-family: monospace, Courier, Courier New;
+        font-style: normal
+        }
+        .w4tjstudio-designer * {
+        font-size: 14px !important;
+        }
+        .w4tjstudio-designer a {
+        text-decoration: none !important
+        }
+        .w4tjstudio-hovered {
+        border: 1px solid orange !important;
+        }
+        .w4tjstudio-element-hidden {
+        color: rgb(167, 167, 167) !important;
+        }
+        .w4tjstudio-element-skipped {
+        color: rgb(167, 167, 167) !important;
+        text-decoration: line-through
+        }
         .mild-shadow {
         -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
         }
-
         .designer-toolbar {
         position: absolute;
         top: 3px;
         right: 0px;
         }
-
         /* --------------------------------------------------
         File name
         ----------------------------------------------------- */
@@ -102,7 +115,6 @@
         left: 0px;
         font-family: monospace
         }
-
         .designer-file > .label {
         border-radius: 0.75em;
         font-weight: 100;
@@ -110,43 +122,47 @@
         -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         .designer-file a {
-        color:white;
+        color: white;
         margin-left: 5px;
         margin-right: 5px;
         }
         .designer-file a:hover {
-        color:white;
+        color: white;
         text-decoration: underline !important;
         }
-
         .designer-file .dot {
         font-family: FontAwesome;
         font-size: 5px !important;
         vertical-align: middle;
         }
-
-        .w4tjstudio-designer .designer-file {z-index: 0;}
-        .w4tjstudio-designer .designer-toolbar {z-index: 1;}
-        .w4tjstudio-designer .z-tab {z-index: 1;}
+        .w4tjstudio-designer .designer-file {
+        z-index: 0;
+        }
+        .w4tjstudio-designer .designer-toolbar {
+        z-index: 1;
+        }
+        .w4tjstudio-designer .z-tab {
+        z-index: 1;
+        }
         /* ---------------------------------------------------------- */
-
-
-        .z-tab:hover, .z-tab-selected {
+        .z-tab:hover,
+        .z-tab-selected {
         border-top-width: 2px;
         border-top-color: orange;
         padding-top: 0px;
         }
-
-        .custom-menupopup {left:auto !important;}
-
+        .custom-menupopup {
+        left: auto !important;
+        }
         /* ff bug */
-        .designer-toolbar .btn {height: 26px}
-
+        .designer-toolbar .btn {
+        height: 26px
+        }
         .code-succeeded-effect {
-        vertical-align:middle;
+        vertical-align: middle;
         font-size: 1px;
         opacity: 0.1;
-        background-color:transparent;
+        background-color: transparent;
         font-family: FontAwesome;
         color: rgb(0, 190, 23);
         position: absolute;
@@ -159,8 +175,6 @@
         z-index: 10000;
         text-shadow: 0 0px 150px rgba(235, 255, 0, 0.7)
         }
-
-
         .dropdown-menu>li>a:hover,
         .dropdown-menu>li>a:focus {
         background-image: -webkit-linear-gradient(top, #F8E5FB 0, #FFBAFF 100%);
@@ -170,6 +184,5 @@
         GradientType=0);
         background-color: #FFBAFF;
         }
-
     </style>
 </zk>

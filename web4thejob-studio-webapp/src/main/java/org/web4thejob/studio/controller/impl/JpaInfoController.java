@@ -3,10 +3,10 @@ package org.web4thejob.studio.controller.impl;
 import nu.xom.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.web4thejob.studio.support.JpaUtil;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.event.*;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -22,7 +22,7 @@ import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import java.util.*;
 
-import static org.zkoss.lang.Generics.cast;
+import static org.web4thejob.studio.support.JpaUtil.ENTITY_SORTER_INSTANCE;
 
 
 /**
@@ -30,7 +30,6 @@ import static org.zkoss.lang.Generics.cast;
  */
 public class JpaInfoController extends SelectorComposer<Component> {
     private static AttributeComparator attributeComparator = new AttributeComparator();
-    private static EntityComparator entityComparator = new EntityComparator();
     @Wire
     Div jpacontroller;
     @Wire
@@ -53,10 +52,10 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 if (nodes.size() == 1) {
                     String name = ((Element) nodes.get(0)).getAttributeValue("name");
 
-                    Map<String, String> properties = getConnectionProperties(name);
+                    Map<String, String> properties = JpaUtil.getConnectionProperties(name);
                     if (properties == null) {
                         properties = new HashMap<>();
-                        setConnectionProperties(name, properties);
+                        JpaUtil.setConnectionProperties(name, properties);
                         properties.put("name", name);
 
                         nodes = document.query("p:persistence/p:persistence-unit/p:properties/p:property[@name='javax.persistence.jdbc.driver']", ctx);
@@ -89,52 +88,6 @@ public class JpaInfoController extends SelectorComposer<Component> {
         return names;
     }
 
-    public static synchronized EntityManagerFactory getEntityManagerFactory(String name) {
-        Session session = Executions.getCurrent().getSession();
-        Map<String, EntityManagerFactory> emfs = cast(session.getAttribute("w4tjstudio-emfs"));
-        if (emfs != null) {
-            return emfs.get(name);
-        }
-        return null;
-    }
-
-    public static synchronized void removeEntityManagerFactory(String name) {
-        Session session = Executions.getCurrent().getSession();
-        Map<String, EntityManagerFactory> emfs = cast(session.getAttribute("w4tjstudio-emfs"));
-        if (emfs != null) {
-            emfs.remove(name);
-        }
-    }
-
-    public static synchronized void setEntityManagerFactory(String name, EntityManagerFactory emf) {
-        Session session = Executions.getCurrent().getSession();
-        Map<String, EntityManagerFactory> emfs = cast(session.getAttribute("w4tjstudio-emfs"));
-        if (emfs == null) {
-            emfs = new HashMap<>();
-            session.setAttribute("w4tjstudio-emfs", emfs);
-        }
-        emfs.put(name, emf);
-    }
-
-    public static synchronized Map<String, String> getConnectionProperties(String name) {
-        Session session = Executions.getCurrent().getSession();
-        Map<String, Map<String, String>> properties = cast(session.getAttribute("w4tjstudio-properties"));
-        if (properties != null) {
-            return properties.get(name);
-        }
-        return null;
-    }
-
-    public static synchronized void setConnectionProperties(String name, Map<String, String> prop) {
-        Session session = Executions.getCurrent().getSession();
-        Map<String, Map<String, String>> properties = cast(session.getAttribute("w4tjstudio-properties"));
-        if (properties == null) {
-            properties = new HashMap<>();
-            session.setAttribute("w4tjstudio-properties", properties);
-        }
-        properties.put(name, prop);
-    }
-
     private static boolean isComplete(Map<String, String> properties) {
         return !(properties.get("name") == null || properties.get("driver") == null || properties.get("url") == null | properties.get("user") == null);
     }
@@ -154,11 +107,11 @@ public class JpaInfoController extends SelectorComposer<Component> {
         managedList.getItems().clear();
         Clients.evalJavaScript("jq('$jpacontroller .badge').remove()");
 
-        EntityManagerFactory emf = getEntityManagerFactory(name);
+        EntityManagerFactory emf = JpaUtil.getEntityManagerFactory(name);
         if (emf == null) return;
 
         Metamodel metamodel = emf.getMetamodel();
-        SortedSet<EntityType> entitiesSortedSet = new TreeSet<>(entityComparator);
+        SortedSet<EntityType> entitiesSortedSet = new TreeSet<>(ENTITY_SORTER_INSTANCE);
         entitiesSortedSet.addAll(metamodel.getEntities());
         for (EntityType<?> entityType : entitiesSortedSet) {
             Listitem listitem = new Listitem();
@@ -185,7 +138,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
 
     private void renderState(String name, Hlayout hlayout) {
         hlayout.getChildren().clear();
-        boolean started = getEntityManagerFactory(name) != null;
+        boolean started = JpaUtil.getEntityManagerFactory(name) != null;
         Label state = new Label(started ? "Started" : "Stopped");
         state.setSclass("label label-" + (started ? "success" : "default"));
         state.setParent(hlayout);
@@ -351,14 +304,6 @@ public class JpaInfoController extends SelectorComposer<Component> {
         }
     }
 
-    public static class EntityComparator implements Comparator<EntityType> {
-
-        @Override
-        public int compare(EntityType o1, EntityType o2) {
-            return o1.getJavaType().getCanonicalName().compareTo(o2.getJavaType().getCanonicalName());
-        }
-    }
-
     private class StartStopEMFHandler implements EventListener<MouseEvent> {
         private String name;
         private Hlayout hlayout;
@@ -375,7 +320,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
         public void onEvent(MouseEvent event) throws Exception {
             Clients.clearBusy();
             if (start) {
-                Map<String, String> properties = getConnectionProperties(name);
+                Map<String, String> properties = JpaUtil.getConnectionProperties(name);
                 if (!isComplete(properties)) {
                     StudioUtil.showNotification("warning", "Incomplete connection info.", "Fill in the connection info to continue.", true);
                     return;
@@ -388,17 +333,17 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 props.put("javax.persistence.jdbc.password", properties.get("password"));
                 try {
                     EntityManagerFactory emf = Persistence.createEntityManagerFactory(name, props);
-                    setEntityManagerFactory(name, emf);
+                    JpaUtil.setEntityManagerFactory(name, emf);
                     renderState(name, hlayout);
                 } catch (Exception e) {
                     e.printStackTrace();
                     StudioUtil.showError(e);
                 }
             } else {
-                EntityManagerFactory emf = getEntityManagerFactory(name);
+                EntityManagerFactory emf = JpaUtil.getEntityManagerFactory(name);
                 if (emf != null && emf.isOpen()) {
                     emf.close();
-                    removeEntityManagerFactory(name);
+                    JpaUtil.removeEntityManagerFactory(name);
                     renderState(name, hlayout);
                 }
             }
@@ -415,7 +360,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
         @Override
         public void onEvent(Event event) throws Exception {
             A a = (A) event.getTarget();
-            Map<String, String> properties = getConnectionProperties(name);
+            Map<String, String> properties = JpaUtil.getConnectionProperties(name);
 
             if ("onConfigChanged".equals(event.getName())) {
                 renderConfigLink(a, properties);
