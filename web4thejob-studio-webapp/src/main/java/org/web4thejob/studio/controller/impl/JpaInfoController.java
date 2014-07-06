@@ -98,7 +98,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
             a.setStyle("color:#419641");
         } else {
             a.setLabel("Missing");
-            a.setStyle("color:red");
+            a.setStyle("color:#b94a48");
         }
     }
 
@@ -136,7 +136,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
         Clients.evalJavaScript("jq(\"$jpacontroller .z-center-header\").append('<span class=\"badge\" style=\"margin-left:10px\">" + metamodel.getEntities().size() + "</span>')");
     }
 
-    private void renderState(String name, Hlayout hlayout) {
+    private void renderState(String name, Hlayout hlayout, A configLink) {
         hlayout.getChildren().clear();
         boolean started = JpaUtil.getEntityManagerFactory(name) != null;
         Label state = new Label(started ? "Started" : "Stopped");
@@ -145,12 +145,12 @@ public class JpaInfoController extends SelectorComposer<Component> {
         if (!started) {
             A a = new A("Start?");
             a.setParent(hlayout);
-            a.addEventListener(Events.ON_CLICK, new StartStopEMFHandler(name, hlayout, true));
+            a.addEventListener(Events.ON_CLICK, new StartStopEMFHandler(name, hlayout, true, configLink));
             a.setWidgetListener(Events.ON_CLICK, "zAu.cmd0.showBusy();");
         } else {
             A a = new A("Stop?");
             a.setParent(hlayout);
-            a.addEventListener(Events.ON_CLICK, new StartStopEMFHandler(name, hlayout, false));
+            a.addEventListener(Events.ON_CLICK, new StartStopEMFHandler(name, hlayout, false, configLink));
             a.setWidgetListener(Events.ON_CLICK, "zAu.cmd0.showBusy();");
         }
         renderManagedClasses(name, punitList, managedList);
@@ -194,7 +194,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
             Hlayout hlayout = new Hlayout();
             hlayout.setParent(cell);
             hlayout.setSpacing("5px");
-            renderState(name, hlayout);
+            renderState(name, hlayout, a);
             new Listcell(url).setParent(listitem);
 
             listitem.setParent(punitList);
@@ -305,16 +305,16 @@ public class JpaInfoController extends SelectorComposer<Component> {
     }
 
     private class StartStopEMFHandler implements EventListener<MouseEvent> {
-        private String name;
-        private Hlayout hlayout;
-        private boolean start;
-
-
-        public StartStopEMFHandler(String name, Hlayout hlayout, boolean start) {
+        public StartStopEMFHandler(String name, Hlayout hlayout, boolean start, A configLink) {
             this.name = name;
             this.hlayout = hlayout;
             this.start = start;
+            this.configLink = configLink;
         }
+        private String name;
+        private Hlayout hlayout;
+        private boolean start;
+        private A configLink;
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
@@ -322,7 +322,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
             if (start) {
                 Map<String, String> properties = JpaUtil.getConnectionProperties(name);
                 if (!isComplete(properties)) {
-                    StudioUtil.showNotification("warning", "Incomplete connection info.", "Fill in the connection info to continue.", true);
+                    StudioUtil.showPopover(configLink.getUuid(), "error", "<strong>Incomplete connection info.</strong> Fill in the connection info to continue.", false);
                     return;
                 }
 
@@ -334,7 +334,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 try {
                     EntityManagerFactory emf = Persistence.createEntityManagerFactory(name, props);
                     JpaUtil.setEntityManagerFactory(name, emf);
-                    renderState(name, hlayout);
+                    renderState(name, hlayout, configLink);
                 } catch (Exception e) {
                     e.printStackTrace();
                     StudioUtil.showError(e);
@@ -344,18 +344,18 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 if (emf != null && emf.isOpen()) {
                     emf.close();
                     JpaUtil.removeEntityManagerFactory(name);
-                    renderState(name, hlayout);
+                    renderState(name, hlayout, configLink);
                 }
             }
         }
     }
 
     private class ConnInfoConfigClickHandler implements EventListener<Event> {
-        private String name;
-
         public ConnInfoConfigClickHandler(String name) {
             this.name = name;
         }
+
+        private String name;
 
         @Override
         public void onEvent(Event event) throws Exception {

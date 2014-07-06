@@ -360,6 +360,24 @@ var w4tjStudioDesigner = {
       anchor: r,
       message: 'Refreshing...'
     });
+  },
+
+  showPopover: function(id,text,sclass,autoclose) {
+      this.hidePopovers();
+      jq(id).popover({placement: "auto bottom",content:text,container: "body",trigger:"manual",html:true});
+      var p=jq(id).popover("show");
+
+      if (sclass){
+          p.data("bs.popover").$tip.addClass(sclass);
+      }
+
+      if (autoclose)
+        setTimeout(function(){jq(id).popover("destroy")},5000);
+  },
+
+  hidePopovers: function() {
+      jq(".popover").remove();
   }
+
 
 }

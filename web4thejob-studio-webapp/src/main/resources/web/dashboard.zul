@@ -9,6 +9,7 @@
         <![CDATA[
             function showInPopover(target, content) {
               var cwgt = zk(content).$();
+              jq('#' + target).popover("destroy");
               jq('#' + target).popover({
                 placement: "auto right",
                 content: cwgt.$n(),
@@ -240,5 +241,33 @@
         .popover {
         max-width: none
         }
+
+        .popover.error {background-color: #b94a48}
+        .popover.error>.popover-content {color:#f2dede}
+        .popover.bottom.error>.arrow:after {border-bottom-color: #b94a48;}
+        .popover.top.error>.arrow:after {border-top-color: #b94a48;}
+        .popover.left.error>.arrow:after {border-left-color: #b94a48;}
+        .popover.right.error>.arrow:after {border-right-color: #b94a48;}
+
+        .popover.success {background-color: #dff0d8}
+        .popover.success>.popover-content {color:#468847}
+        .popover.bottom.success>.arrow:after {border-bottom-color: #dff0d8;}
+        .popover.top.success>.arrow:after {border-top-color: #dff0d8;}
+        .popover.left.success>.arrow:after {border-left-color: #dff0d8;}
+        .popover.right.error>.arrow:after {border-right-color: #dff0d8;}
+
+        .popover.info {background-color: #d9edf7}
+        .popover.info>.popover-content {color:#3a87ad}
+        .popover.bottom.info>.arrow:after {border-bottom-color: #d9edf7;}
+        .popover.top.info>.arrow:after {border-top-color: #d9edf7;}
+        .popover.left.info>.arrow:after {border-left-color: #d9edf7;}
+        .popover.right.info>.arrow:after {border-right-color: #d9edf7;}
+
+        .popover.warning {background-color: #f0ad4e}
+        .popover.warning>.popover-content {color:#fff}
+        .popover.bottom.warning>.arrow:after {border-bottom-color: #f0ad4e;}
+        .popover.top.warning>.arrow:after {border-top-color: #f0ad4e;}
+        .popover.left.warning>.arrow:after {border-left-color: #f0ad4e;}
+        .popover.right.warning>.arrow:after {border-right-color: #f0ad4e;}
     </style>
 </zk>

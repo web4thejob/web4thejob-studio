@@ -8,7 +8,7 @@
             <vbox vflex="true" sclass="jpa-conn-info">
                 <grid oddRowSclass="none" style="border:0px">
                     <columns visible="false">
-                        <column label="Col 1" width="60px"/>
+                        <column label="Col 1" width="70px"/>
                         <column label="Col 2"/>
                     </columns>
                     <rows>

@@ -72,11 +72,17 @@ public abstract class StudioUtil {
     }
 
 
-    public static void showNotification(String clazz, String title, String message, boolean autoclose) {
+    public static void showNotification(String sclass, String title, String message, boolean autoclose) {
         String m = message.replaceAll("'", "\"");
-        Clients.evalJavaScript("top.w4tjStudioDesigner.alert('" + clazz + "','" + title +
+        Clients.evalJavaScript("top.w4tjStudioDesigner.alert('" + sclass + "','" + title +
                 "','" + m + "'," + Boolean.valueOf(autoclose).toString() + ")");
 
+    }
+
+    public static void showPopover(String uuid, String sclass, String message, boolean autoclose) {
+        String m = message.replaceAll("'", "\"");
+        Clients.evalJavaScript("top.w4tjStudioDesigner.showPopover('#" + uuid + "','" + m +
+                "','" + sclass + "'," + Boolean.valueOf(autoclose).toString() + ")");
     }
 
     public static void clearCanvasBusy(String uuid) {
