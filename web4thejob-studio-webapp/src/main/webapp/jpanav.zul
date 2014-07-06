@@ -4,7 +4,7 @@
 <zk>
     <tree id="entityTree" vflex="true" apply="org.web4thejob.studio.controller.impl.JpaNavigatorController"
           sclass="jpanav">
-        <treechildren></treechildren>
+        <treechildren/>
     </tree>
     <style>
         .jpanav a:hover:after {
@@ -20,7 +20,7 @@
         }
         .jpanav .punit .z-treecell-text {
         color: #999;
-        font-size: 18px !important;
+        font-size: 14px !important;
         }
     </style>
 </zk>
