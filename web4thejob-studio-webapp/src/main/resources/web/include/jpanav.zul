@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk>
+    <tree id="entityTree" vflex="true" apply="org.web4thejob.studio.controller.impl.JpaNavigatorController"
+          sclass="jpanav">
+        <treechildren/>
+    </tree>
+    <style>
+        .jpanav a:hover:after {
+        font-family: FontAwesome;
+        content: "\f08e";
+        margin-left: 5px;
+        }
+        .z-treecell-text,
+        .z-label,
+        a {
+        text-decoration: none !important;
+        font-size: 14px !important
+        }
+        .jpanav .punit .z-treecell-text {
+        color: #999;
+        font-size: 14px !important;
+        }
+    </style>
+</zk>

@@ -19,7 +19,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-import javax.persistence.metamodel.SingularAttribute;
 import java.util.*;
 
 import static org.web4thejob.studio.support.JpaUtil.ENTITY_SORTER_INSTANCE;
@@ -29,7 +28,6 @@ import static org.web4thejob.studio.support.JpaUtil.ENTITY_SORTER_INSTANCE;
  * Created by e36132 on 16/4/2014.
  */
 public class JpaInfoController extends SelectorComposer<Component> {
-    private static AttributeComparator attributeComparator = new AttributeComparator();
     @Wire
     Div jpacontroller;
     @Wire
@@ -202,108 +200,6 @@ public class JpaInfoController extends SelectorComposer<Component> {
         }
     }
 
-    private static class ManagedClassClickHandler implements EventListener<MouseEvent> {
-
-        @Override
-        public void onEvent(MouseEvent event) throws Exception {
-            EntityType<?> entityType = (EntityType<?>) event.getTarget().getAttribute("entityType");
-            SingularAttribute key = null;
-            if (entityType.hasSingleIdAttribute()) {
-                key = entityType.getId(entityType.getIdType().getJavaType());
-            }
-
-            String id = "jpa-" + entityType.getJavaType().getCanonicalName();
-            id = id.replaceAll("\\.", "");
-            Component comp = null;
-            for (Component c : Executions.getCurrent().getDesktop().getComponents()) {
-                if (id.equals(c.getId())) {
-                    comp = c;
-                    break;
-                }
-            }
-            if (comp != null) comp.detach();
-
-            Map<String, Object> args = new HashMap<>();
-            args.put("id", id);
-            args.put("name", entityType.getName());
-            args.put("attrsize", entityType.getAttributes().size());
-            Window window = (Window) Executions.getCurrent().createComponents("/includes/data.zul", null, args);
-
-            Tree tree = (Tree) window.getFirstChild().getFellow("entityAttributesTree");
-            tree.getTreechildren().getChildren().clear();
-
-            SortedSet<javax.persistence.metamodel.Attribute> attributeSortedSet = new TreeSet<>(attributeComparator);
-            attributeSortedSet.addAll(entityType.getAttributes());
-            for (javax.persistence.metamodel.Attribute attribute : attributeSortedSet) {
-
-                Treeitem treeitem = new Treeitem();
-                treeitem.setParent(tree.getTreechildren());
-                Treerow treerow = new Treerow();
-                treerow.setParent(treeitem);
-                Treecell treecell = new Treecell();
-                treecell.setAttribute("attribute", attribute);
-                treecell.setSclass("jpa-attribute");
-                treecell.setParent(treerow);
-                Html html = new Html();
-                html.setContent("<span class=\"label label-primary\">" + attribute.getName() + "</span>");
-                html.setParent(treecell);
-
-                if (!attribute.equals(key)) {
-                    new Treecell().setParent(treerow);
-                } else {
-                    Treecell keycell = new Treecell();
-                    keycell.setParent(treerow);
-                    keycell.setIconSclass("z-icon-key");
-                }
-
-                new Treecell(attribute.getJavaType().getName()).setParent(treerow);
-
-                new Treechildren().setParent(treeitem);
-                treeitem.setOpen(false);
-                for (int i = 1; i <= 3; i++) {
-                    String bindType = "";
-                    switch (i) {
-                        case 1:
-                            bindType = "@load";
-                            break;
-                        case 2:
-                            bindType = "@save";
-                            break;
-                        case 3:
-                            bindType = "@bind";
-                            break;
-                    }
-
-                    Treeitem binditem = new Treeitem();
-                    binditem.setParent(treeitem.getTreechildren());
-                    treerow = new Treerow();
-                    treerow.setParent(binditem);
-                    treecell = new Treecell();
-                    treecell.setAttribute("attribute", attribute);
-                    treecell.setAttribute("bindType", bindType);
-                    treecell.setSclass("jpa-bindtype");
-                    treecell.setParent(treerow);
-                    html = new Html("<span class=\"label label-success\">" + bindType + "</span>");
-                    html.setParent(treecell);
-
-                    new Treecell().setParent(treerow);
-                    new Treecell().setParent(treerow);
-                }
-
-            }
-
-            Clients.evalJavaScript("prepareDataToolbox('" + id + "')");
-        }
-    }
-
-    public static class AttributeComparator implements Comparator<javax.persistence.metamodel.Attribute> {
-
-        @Override
-        public int compare(javax.persistence.metamodel.Attribute o1, javax.persistence.metamodel.Attribute o2) {
-            return o1.getName().compareTo(o2.getName());
-        }
-    }
-
     private class StartStopEMFHandler implements EventListener<MouseEvent> {
         public StartStopEMFHandler(String name, Hlayout hlayout, boolean start, A configLink) {
             this.name = name;
@@ -311,6 +207,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
             this.start = start;
             this.configLink = configLink;
         }
+
         private String name;
         private Hlayout hlayout;
         private boolean start;

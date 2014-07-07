@@ -398,10 +398,10 @@ var w4tjStudioDesigner = {
     e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
     e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
     e.find('.toolbox-close').click(function() {
+//      zAu.send(new zk.Event(wgt, "onToolboxClose", {
+//        target: wgt.uuid
+//      }));
       wgt.detach();
-      zAu.send(new zk.Event(zk(e).$(), "onToolboxClose", {
-        target: zk(e).$().uuid
-      }));
     });
     e.find('.toolbox-roll').click(function() {
       var rollbtn = e.find(".toolbox-roll");

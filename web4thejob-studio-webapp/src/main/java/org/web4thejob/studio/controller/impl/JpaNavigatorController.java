@@ -1,13 +1,13 @@
 package org.web4thejob.studio.controller.impl;
 
 import org.web4thejob.studio.support.JpaUtil;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import javax.persistence.EntityManagerFactory;
@@ -77,6 +77,7 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
         treerow.setParent(treeitem);
         Treecell treecell = new Treecell();
         treecell.setParent(treerow);
+        treecell.setStyle("white-space:nowrap");
         A a = new A(entityType.getJavaType().getCanonicalName());
         a.setParent(treecell);
         a.setAttribute("entityType", entityType);
@@ -93,11 +94,20 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
 
             String id = "jpa-" + entityType.getJavaType().getCanonicalName();
             id = id.replaceAll("\\.", "");
+            Component comp = null;
+            for (Component c : Executions.getCurrent().getDesktop().getComponents()) {
+                if (id.equals(c.getId())) {
+                    comp = c;
+                    break;
+                }
+            }
+            if (comp != null) comp.detach();
 
-            Panel panel = (Panel) Executions.createComponents("/jpaentitybox.zul", null, null);
-            panel.setId(id);
-            panel.setTitle(entityType.getJavaType().getSimpleName());
-            Clients.evalJavaScript("top.w4tjStudioDesigner.prepareEntityToolbox('" + id + "')");
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", id);
+            data.put("entityType", entityType);
+            Executions.createComponents("/jpaentitybox.zul", null, data);
         }
     }
 }
+

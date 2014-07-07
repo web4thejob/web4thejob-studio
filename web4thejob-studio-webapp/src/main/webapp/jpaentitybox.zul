@@ -4,110 +4,32 @@
 <zk>
     <panel mold="w4tjstudio" title="Entity Toolbox" movable="true" border="normal"
            sclass="panel-default mild-shadow jpaentitybox" style="min-width:200px" floatable="true" width="300px"
-           top="30%" left="30%">
-    <panelchildren>
-            <tree id="entityAttributesTree" vflex="true" hflex="true">
+           top="30%" left="30%" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController" id="${arg.id}">
+        <panelchildren>
+            <tree vflex="true" hflex="true" style="border:0px">
                 <treecols>
                     <treecol/>
+                    <treecol width="50px" align="center"/>
                     <treecol/>
                 </treecols>
-                <treechildren>
-                    <treeitem>
-                        <treerow>
-                            <treecell>
-                                <html>
-                                    <![CDATA[
-                                         <span class="label label-default">Customer</span>
-                                    ]]>
-                                </html>
-                            </treecell>
-                            <treecell label="Belongs to 'test' joblet"/>
-                        </treerow>
-                        <treechildren>
-                            <treeitem>
-                                <treerow>
-                                    <treecell>
-                                        <html>
-                                            <![CDATA[
-                                                 <span class="label label-primary">First Name</span>
-                                            ]]>
-                                        </html>
-                                    </treecell>
-                                    <treecell label="String"/>
-                                </treerow>
-                                <treechildren>
-                                    <treeitem>
-                                        <treerow>
-                                            <treecell>
-                                                <html>
-                                                    <![CDATA[
-                                                         <span class="label label-success">@bind</span>
-                                                    ]]>
-                                                </html>
-                                            </treecell>
-                                        </treerow>
-                                    </treeitem>
-                                    <treeitem>
-                                        <treerow>
-                                            <treecell>
-                                                <html>
-                                                    <![CDATA[
-                                                         <span class="label label-success">@load</span>
-                                                    ]]>
-                                                </html>
-                                            </treecell>
-                                        </treerow>
-                                    </treeitem>
-                                    <treeitem>
-                                        <treerow>
-                                            <treecell>
-                                                <html>
-                                                    <![CDATA[
-                                                         <span class="label label-success">@save</span>
-                                                    ]]>
-                                                </html>
-                                            </treecell>
-                                        </treerow>
-                                    </treeitem>
-                                </treechildren>
-                            </treeitem>
-                            <treeitem>
-                                <treerow>
-                                    <treecell>
-                                        <html>
-                                            <![CDATA[
-                                                 <span class="label label-primary">Last Name</span>
-                                            ]]>
-                                        </html>
-                                    </treecell>
-                                    <treecell label="String"/>
-                                </treerow>
-                            </treeitem>
-                            <treeitem>
-                                <treerow>
-                                    <treecell>
-                                        <html>
-                                            <![CDATA[
-                                                 <span class="label label-primary">Birth Date</span>
-                                            ]]>
-                                        </html>
-                                    </treecell>
-                                    <treecell label="Date"/>
-                                </treerow>
-                            </treeitem>
-                        </treechildren>
-                    </treeitem>
-                </treechildren>
+                <treechildren></treechildren>
             </tree>
         </panelchildren>
     </panel>
     <style>
+        .jpaentitybox.panel-default>.panel-heading {
+        background-image: -webkit-linear-gradient(top, #f5f5f5 0, #e8e8e8 100%);
+        background-image: linear-gradient(to bottom, #363636 0, #696868 100%);
+        background-repeat: repeat-x;
+        filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8',
+        GradientType=0);
+        }
         .jpaentitybox {
-        border: 1px solid #A0A0A0;
+        border: 2px solid #363636;
         }
         .jpaentitybox .panel-title,
         .jpaentitybox .btn-group {
-        color: #838383;
+        color: #f0ad4e;
         font-size: 14px;
         font-weight: 600;
         font-family: monospace;
@@ -134,6 +56,7 @@
     <script defer="true">
         <![CDATA[
             function prepareEntityToolbox(id) {
+              alert(id);
               var e = jq('$' + id);
               var wgt = zk(e).$();
               e.resizable({
@@ -144,10 +67,10 @@
               e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
               e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
               e.find('.toolbox-close').click(function() {
-                wgt.detach();
-                zAu.send(new zk.Event(zk(e).$(), "onToolboxClose", {
-                  target: zk(e).$().uuid
+                zAu.send(new zk.Event(wgt, "onToolboxClose", {
+                  target: wgt.uuid
                 }));
+                wgt.detach();
               });
               e.find('.toolbox-roll').click(function() {
                 var rollbtn = e.find(".toolbox-roll");
@@ -165,8 +88,8 @@
                 }
               });
             };
-            //alert(zk('$entityBox').$().uuid);
-            prepareEntityToolbox('entityBox');
+            //alert(wgt.uuid);
+            //prepareEntityToolbox('entityBox');
         ]]>
     </script>
 </zk>

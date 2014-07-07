@@ -26,7 +26,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "w4tjstudio", urlPatterns = {"/w4tjstudio-support/img",
         "/w4tjstudio-support/designer/scripts", "/w4tjstudio-support/designer/styles",
         "/w4tjstudio-support/canvas/scripts", "/w4tjstudio-support/canvas/styles",
-        "/w4tjstudio-support/fonts/*"})
+        "/w4tjstudio-support/fonts/*", "/w4tjstudio-support/designer/images/*"})
 public class SupportServlet extends HttpServlet {
     private static final String IMG_PATH_PREFFIX = "org/web4thejob/studio/support/img/";
     private static StringBuffer DESIGNER_SCRIPTS_CONTENT;
@@ -121,6 +121,20 @@ public class SupportServlet extends HttpServlet {
             try (ServletOutputStream outraw = response.getOutputStream()) {
                 byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(font));
                 response.setContentType("font/opentype");
+                response.setContentLength(raw.length);
+                outraw.write(raw);
+            }
+        } else if (path.equals("/w4tjstudio-support/designer/images")) {
+            String dir = "org/web4thejob/studio/support/js/jquery-ui/images/";
+            int slash = request.getRequestURI().lastIndexOf("/");
+            String file = request.getRequestURI().substring(slash + 1);
+
+            int dot = file.lastIndexOf(".");
+            String ext = file.substring(dot + 1);
+
+            try (ServletOutputStream outraw = response.getOutputStream()) {
+                byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(dir + file));
+                response.setContentType("image/" + ext);
                 response.setContentLength(raw.length);
                 outraw.write(raw);
             }

@@ -10,7 +10,7 @@
     <!--***********************************************
     * JQuery UI
     *************************************************-->
-    <stylesheet src="jquery-ui/jquery-ui.css"/>
+    <stylesheet src="jquery-ui/jquery-ui.min.css"/>
 
     <!--***********************************************
     * Bootstrap

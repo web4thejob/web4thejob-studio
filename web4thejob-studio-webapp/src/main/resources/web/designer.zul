@@ -26,6 +26,9 @@
                         <tabpanel style="overflow:auto">
                             <include src="~./include/templates.zul"/>
                         </tabpanel>
+                        <tabpanel style="overflow:auto">
+                            <include src="~./include/jpanav.zul"/>
+                        </tabpanel>
                     </tabpanels>
                 </tabbox>
             </west>
