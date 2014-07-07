@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?style type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"?>
-<?script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <zk>
     <panel mold="w4tjstudio" title="Entity Toolbox" movable="true" border="normal"
-           sclass="panel-default mild-shadow jpaentitybox" style="min-width:200px" id="entityBox" floatable="true"
-           width="300px">
-        <panelchildren>
+           sclass="panel-default mild-shadow jpaentitybox" style="min-width:200px" floatable="true" width="300px"
+           top="30%" left="30%">
+    <panelchildren>
             <tree id="entityAttributesTree" vflex="true" hflex="true">
                 <treecols>
                     <treecol/>

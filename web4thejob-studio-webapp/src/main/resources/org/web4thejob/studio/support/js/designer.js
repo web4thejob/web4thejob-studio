@@ -362,21 +362,62 @@ var w4tjStudioDesigner = {
     });
   },
 
-  showPopover: function(id,text,sclass,autoclose) {
-      this.hidePopovers();
-      jq(id).popover({placement: "auto bottom",content:text,container: "body",trigger:"manual",html:true});
-      var p=jq(id).popover("show");
+  showPopover: function(id, text, sclass, autoclose) {
+    this.hidePopovers();
+    jq(id).popover({
+      placement: "auto bottom",
+      content: text,
+      container: "body",
+      trigger: "manual",
+      html: true
+    });
+    var p = jq(id).popover("show");
 
-      if (sclass){
-          p.data("bs.popover").$tip.addClass(sclass);
-      }
+    if (sclass) {
+      p.data("bs.popover").$tip.addClass(sclass);
+    }
 
-      if (autoclose)
-        setTimeout(function(){jq(id).popover("destroy")},5000);
+    if (autoclose)
+      setTimeout(function() {
+        jq(id).popover("destroy")
+      }, 5000);
   },
 
   hidePopovers: function() {
-      jq(".popover").remove();
+    jq(".popover").remove();
+  },
+
+  prepareEntityToolbox: function(id) {
+    var e = jq('$' + id);
+    var wgt = zk(e).$();
+    e.resizable({
+      stop: function(event, ui) {
+        wgt.setHeight(Math.round(ui.size.height) + "px")
+      }
+    });
+    e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
+    e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
+    e.find('.toolbox-close').click(function() {
+      wgt.detach();
+      zAu.send(new zk.Event(zk(e).$(), "onToolboxClose", {
+        target: zk(e).$().uuid
+      }));
+    });
+    e.find('.toolbox-roll').click(function() {
+      var rollbtn = e.find(".toolbox-roll");
+      if (wgt.isOpen()) {
+        e.resizable('disable');
+        wgt.setHeight();
+        wgt.setOpen(false);
+        rollbtn.removeClass("z-icon-caret-up");
+        rollbtn.addClass("z-icon-caret-down")
+      } else {
+        e.resizable('enable');
+        wgt.setOpen(true);
+        rollbtn.removeClass("z-icon-caret-down");
+        rollbtn.addClass("z-icon-caret-up")
+      }
+    });
   }
 
 

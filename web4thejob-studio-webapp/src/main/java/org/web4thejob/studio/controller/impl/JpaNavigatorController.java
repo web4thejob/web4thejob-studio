@@ -1,11 +1,13 @@
 package org.web4thejob.studio.controller.impl;
 
 import org.web4thejob.studio.support.JpaUtil;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +21,7 @@ import static org.web4thejob.studio.support.JpaUtil.ENTITY_SORTER_INSTANCE;
  * Created by e36132 on 3/7/2014.
  */
 public class JpaNavigatorController extends SelectorComposer<Tree> {
-    private static ManagedClassClickHandler manegedClassClick = new ManagedClassClickHandler();
+    private static ManagedClassClickHandler managedClassClick = new ManagedClassClickHandler();
     @Wire
     private Tree entityTree;
 
@@ -78,7 +80,7 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
         A a = new A(entityType.getJavaType().getCanonicalName());
         a.setParent(treecell);
         a.setAttribute("entityType", entityType);
-        a.addEventListener(Events.ON_CLICK, manegedClassClick);
+        a.addEventListener(Events.ON_CLICK, managedClassClick);
 
     }
 
@@ -86,7 +88,16 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
+            EntityType<?> entityType = (EntityType<?>) event.getTarget().getAttribute("entityType");
+            if (entityType == null) return;
 
+            String id = "jpa-" + entityType.getJavaType().getCanonicalName();
+            id = id.replaceAll("\\.", "");
+
+            Panel panel = (Panel) Executions.createComponents("/jpaentitybox.zul", null, null);
+            panel.setId(id);
+            panel.setTitle(entityType.getJavaType().getSimpleName());
+            Clients.evalJavaScript("top.w4tjStudioDesigner.prepareEntityToolbox('" + id + "')");
         }
     }
 }

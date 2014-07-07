@@ -8,6 +8,11 @@
     <stylesheet src="codemirror/addon/fold/foldgutter.css"/>
 
     <!--***********************************************
+    * JQuery UI
+    *************************************************-->
+    <stylesheet src="jquery-ui/jquery-ui.css"/>
+
+    <!--***********************************************
     * Bootstrap
     *************************************************-->
     <stylesheet src="bootstrap/css/bootstrap.min.css"/>
