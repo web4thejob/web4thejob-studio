@@ -2055,6 +2055,14 @@
         <xs:attribute name="movable" type="booleanType" use="optional"/>
         <xs:attribute name="open" type="booleanType" use="optional"/>
         <xs:attribute name="title" type="xs:string" use="optional"/>
+        <!--Start: Added by me-->
+        <xs:attribute name="onMove" type="xs:string" use="optional"/>
+        <xs:attribute name="onSize" type="xs:string" use="optional"/>
+        <xs:attribute name="onOpen" type="xs:string" use="optional"/>
+        <xs:attribute name="onClose" type="xs:string" use="optional"/>
+        <xs:attribute name="onMaximize" type="xs:string" use="optional"/>
+        <xs:attribute name="onMinimize" type="xs:string" use="optional"/>
+        <!--End: Added by me-->
     </xs:complexType>
     <xs:simpleType name="panelBorderAttrType">
         <xs:union>
