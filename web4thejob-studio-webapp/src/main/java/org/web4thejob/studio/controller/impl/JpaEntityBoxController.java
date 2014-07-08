@@ -53,10 +53,10 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
             treerow.setParent(treeitem);
             Treecell treecell = new Treecell();
             treecell.setAttribute("attribute", attribute);
-            treecell.setSclass("jpa-attribute");
+//            treecell.setSclass("jpa-attribute");
             treecell.setParent(treerow);
             Html html = new Html();
-            html.setContent("<span class=\"label label-warning\">" + attribute.getName() + "</span>");
+            html.setContent("<span class=\"jpa-attribute label label-default\">" + attribute.getName() + "</span>");
             html.setParent(treecell);
 
             if (!attribute.equals(key)) {
@@ -76,13 +76,13 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
                 String bindType = "";
                 switch (i) {
                     case 1:
-                        bindType = "@load";
+                        bindType = "@bind";
                         break;
                     case 2:
-                        bindType = "@save";
+                        bindType = "@load";
                         break;
                     case 3:
-                        bindType = "@bind";
+                        bindType = "@save";
                         break;
                 }
 
@@ -93,9 +93,10 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
                 treecell = new Treecell();
                 treecell.setAttribute("attribute", attribute);
                 treecell.setAttribute("bindType", bindType);
-                treecell.setSclass("jpa-bindtype");
+                treecell.setSclass("");
+                treecell.setWidgetAttribute("bind-data", bindType + "(vm." + attribute.getName() + ")");
                 treecell.setParent(treerow);
-                html = new Html("<span class=\"label label-success\">" + bindType + "</span>");
+                html = new Html("<span class=\"jpa-bindtype label label-default\"><i class=\"fa fa-hand-o-right\" style=\"margin-right:3px\"/>" + bindType + "</span>");
                 html.setParent(treecell);
 
                 new Treecell().setParent(treerow);

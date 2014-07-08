@@ -12,11 +12,34 @@
                     <treecol width="50px" align="center"/>
                     <treecol/>
                 </treecols>
-                <treechildren></treechildren>
+                <treechildren/>
             </tree>
         </panelchildren>
     </panel>
     <style>
+        .jpaentitybox .jpa-bindtype:hover {
+        margin-left: 3px;
+        background-color: #FAC8FF;
+        }
+        .jpaentitybox .jpa-bindtype {
+        font-family: monospace;
+        font-size: 12px;
+        font-weight: normal;
+        background-color: #FCDDFF;
+        color: #636363;
+        border: 1px solid #636363;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        .jpaentitybox .jpa-attribute {
+        font-size: 12px;
+        font-weight: 600;
+        background-color: #DDE5FF;
+        color: #636363;
+        border: 1px solid #636363;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
         .jpaentitybox.panel-default>.panel-heading {
         background-image: -webkit-linear-gradient(top, #f5f5f5 0, #e8e8e8 100%);
         background-image: linear-gradient(to bottom, #363636 0, #696868 100%);
@@ -27,9 +50,12 @@
         .jpaentitybox {
         border: 2px solid #363636;
         }
+        .jpaentitybox .z-treerow {
+        height: 30px;
+        }
         .jpaentitybox .panel-title,
         .jpaentitybox .btn-group {
-        color: #f0ad4e;
+        color: white;
         font-size: 14px;
         font-weight: 600;
         font-family: monospace;
@@ -40,6 +66,8 @@
         padding-top: 5px;
         padding-bottom: 0px;
         cursor: move;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
         }
         .jpaentitybox.mild-shadow {
         -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
@@ -51,6 +79,9 @@
         }
         .jpaentitybox .panel-body {
         padding: 3px
+        }
+        .jpaentitybox .jpa-bindtype .label {
+        font-weight: normal
         }
     </style>
     <script defer="true">

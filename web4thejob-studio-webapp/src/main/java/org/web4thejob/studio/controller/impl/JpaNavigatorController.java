@@ -50,12 +50,11 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
         treerow.setParent(treeitem);
         Treecell treecell = new Treecell();
         treecell.setSclass("punit");
-        treecell.setIconSclass("fa fa-database");
         treecell.setParent(treerow);
-        Label label = new Label(name);
-        label.setParent(treecell);
-        label.setSclass("label label-default");
-        label.setStyle("margin-left: 5px");
+        Html html = new Html();
+        html.setParent(treecell);
+        html.setContent("<span class=\"jpa-joblet label label-default\"><i class=\"fa fa-database\" style=\"margin-right:3px\"/>" + name + "</span>");
+        //html.setStyle("margin-left: 5px");
 
         Metamodel metamodel = emf.getMetamodel();
         SortedSet<EntityType> entitiesSortedSet = new TreeSet<>(ENTITY_SORTER_INSTANCE);

@@ -78,7 +78,7 @@
         .w4tjstudio-designer * {font-size:14px !important;}
         .w4tjstudio-designer a {text-decoration: none !important}
 
-        .w4tjstudio-hovered {border: 1px solid orange !important;}
+        .w4tjstudio-hovered {border: 2px solid orange !important;}
         .w4tjstudio-element-hidden {color:rgb(167, 167, 167) !important;}
         .w4tjstudio-element-skipped {color:rgb(167, 167, 167) !important; text-decoration:line-through}
 

@@ -418,7 +418,49 @@ var w4tjStudioDesigner = {
         rollbtn.addClass("z-icon-caret-up")
       }
     });
-  }
+
+    //draggable bind types
+    e.find('.jpa-bindtype').attr('draggable', 'true')
+          .on('dragstart', function(e) {
+            e.originalEvent.dataTransfer.setData('text', $(this).attr('bind-data'));
+                jq('$properties').find('.z-row').each(function() {
+                    w4tjStudioDesigner.prepareForBindingDrop(this);
+                });
+          })
+          .on('dragend', function(e) {
+            e.preventDefault()
+          });
+  },
+
+   prepareForBindingDrop: function(target) {
+       if (w4tjStudioDesigner.hasHandler(target, 'drop')) return;
+
+       jq(target).on('drop', function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+
+           var dragged = e.originalEvent.dataTransfer.getData('text');
+           var dropped = jq(target);
+
+           if (dragged && dropped) {
+//             w4tjStudioDesigner.getCanvasFrame().zAu.send(new zk.Event(zk("$canvas").$(), "onTemplateDropped", {
+//               template: dragged,
+//               parent: dropped.attr('canvas-uuid')
+//             }));
+            alert('ok');
+           }
+         })
+         .on('dragover', function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+           jq(target).addClass("w4tjstudio-hovered");
+         })
+         .on('dragleave', function(e) {
+           jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+         });
+   }
 
 
 }

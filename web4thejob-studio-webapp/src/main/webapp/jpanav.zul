@@ -7,6 +7,15 @@
         <treechildren/>
     </tree>
     <style>
+        .jpanav .jpa-joblet {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #DDE5FF;
+        color: #636363;
+        border: 1px solid #636363;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
         .jpanav a:hover:after {
         font-family: FontAwesome;
         content: "\f08e";
