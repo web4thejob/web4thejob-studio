@@ -53,7 +53,7 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
         treecell.setParent(treerow);
         Html html = new Html();
         html.setParent(treecell);
-        html.setContent("<span class=\"jpa-joblet label label-default\"><i class=\"fa fa-database\" style=\"margin-right:3px\"/>" + name + "</span>");
+        html.setContent("<span class=\"jpa-joblet label label-default\"><i class=\"fa fa-database\" style=\"margin-right:5px\"></i>" + name + "</span>");
         //html.setStyle("margin-left: 5px");
 
         Metamodel metamodel = emf.getMetamodel();
@@ -77,7 +77,8 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
         Treecell treecell = new Treecell();
         treecell.setParent(treerow);
         treecell.setStyle("white-space:nowrap");
-        A a = new A(entityType.getJavaType().getCanonicalName());
+        A a = new A(entityType.getJavaType().getSimpleName());
+        a.setTooltiptext(entityType.getJavaType().getCanonicalName());
         a.setParent(treecell);
         a.setAttribute("entityType", entityType);
         a.addEventListener(Events.ON_CLICK, managedClassClick);
@@ -105,7 +106,7 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
             Map<String, Object> data = new HashMap<>();
             data.put("id", id);
             data.put("entityType", entityType);
-            Executions.createComponents("/jpaentitybox.zul", null, data);
+            Executions.createComponents("~./include/jpaentitybox.zul", null, data);
         }
     }
 }

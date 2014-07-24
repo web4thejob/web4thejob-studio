@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk>
+    <panel mold="w4tjstudio" title="Entity Toolbox" movable="true" border="normal"
+           sclass="panel-default mild-shadow jpaentitybox" style="min-width:200px" floatable="true" width="300px"
+           top="30%" left="30%" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController" id="${arg.id}">
+        <panelchildren>
+            <tree vflex="true" hflex="true" style="border:0px">
+                <treecols>
+                    <treecol/>
+                    <treecol width="50px" align="center"/>
+                    <treecol/>
+                </treecols>
+                <treechildren/>
+            </tree>
+        </panelchildren>
+    </panel>
+    <style>
+        .jpaentitybox .jpa-bindtype:hover {
+        margin-left: 3px;
+        background-color: #FAC8FF;
+        }
+        .jpaentitybox .jpa-bindtype {
+        font-family: monospace;
+        font-size: 12px;
+        font-weight: normal;
+        background-color: #FCDDFF;
+        color: #636363;
+        border: 1px solid #636363;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        .jpaentitybox .jpa-attribute {
+        font-size: 12px;
+        font-weight: 600;
+        background-color: #DDE5FF;
+        color: #636363;
+        border: 1px solid #636363;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        .jpaentitybox.panel-default>.panel-heading {
+        background-image: -webkit-linear-gradient(top, #f5f5f5 0, #e8e8e8 100%);
+        background-image: linear-gradient(to bottom, #363636 0, #696868 100%);
+        background-repeat: repeat-x;
+        filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8',
+        GradientType=0);
+        }
+        .jpaentitybox {
+        border: 2px solid #363636;
+        }
+        .jpaentitybox .z-treerow {
+        height: 30px;
+        }
+        .jpaentitybox .panel-title,
+        .jpaentitybox .btn-group {
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: monospace;
+        }
+        .jpaentitybox .panel-heading {
+        padding-left: 10px;
+        padding-right: 5px;
+        padding-top: 5px;
+        padding-bottom: 0px;
+        cursor: move;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        }
+        .jpaentitybox.mild-shadow {
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        .jpaentitybox .toolbox-roll,
+        .jpaentitybox .toolbox-close {
+        cursor: pointer;
+        }
+        .jpaentitybox .panel-body {
+        padding: 3px
+        }
+        .jpaentitybox .jpa-bindtype .label {
+        font-weight: normal
+        }
+    </style>
+    <script defer="true">
+        <![CDATA[
+            function prepareEntityToolbox(id) {
+              alert(id);
+              var e = jq('$' + id);
+              var wgt = zk(e).$();
+              e.resizable({
+                stop: function(event, ui) {
+                  wgt.setHeight(Math.round(ui.size.height) + "px")
+                }
+              });
+              e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
+              e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
+              e.find('.toolbox-close').click(function() {
+                zAu.send(new zk.Event(wgt, "onToolboxClose", {
+                  target: wgt.uuid
+                }));
+                wgt.detach();
+              });
+              e.find('.toolbox-roll').click(function() {
+                var rollbtn = e.find(".toolbox-roll");
+                if (wgt.isOpen()) {
+                  e.resizable('disable');
+                  wgt.setHeight();
+                  wgt.setOpen(false);
+                  rollbtn.removeClass("z-icon-caret-up");
+                  rollbtn.addClass("z-icon-caret-down")
+                } else {
+                  e.resizable('enable');
+                  wgt.setOpen(true);
+                  rollbtn.removeClass("z-icon-caret-down");
+                  rollbtn.addClass("z-icon-caret-up")
+                }
+              });
+            };
+            //alert(wgt.uuid);
+            //prepareEntityToolbox('entityBox');
+        ]]>
+    </script>
+</zk>

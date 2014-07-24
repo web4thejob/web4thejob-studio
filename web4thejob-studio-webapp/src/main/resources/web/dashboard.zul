@@ -32,8 +32,8 @@
                     <tabbox hflex="true" vflex="1" orient="left">
                         <tabs>
                             <tab iconSclass="z-icon-info"/>
-                            <tab iconSclass="z-icon-folder-open"/>
                             <tab iconSclass="fa fa-database"/>
+                            <tab iconSclass="z-icon-folder-open"/>
                         </tabs>
                         <tabpanels>
                             <tabpanel>
@@ -121,23 +121,6 @@
                                 </panel>
                             </tabpanel>
                             <tabpanel>
-                                <panel mold="w4tjstudio" vflex="true" title="Webapp Page Navigator">
-                                    <panelchildren>
-                                        <tree id="projectTree" vflex="true"
-                                              apply="org.web4thejob.studio.controller.DashboardController"
-                                              style="border:0px">
-                                        <treecols sizable="true">
-                                                <treecol label="File Name" align="center"/>
-                                                <treecol align="center" label="Writable" width="80px"/>
-                                                <treecol align="center" label="Size" width="200px"/>
-                                                <treecol label="Last Modified" align="center" width="200px"/>
-                                            </treecols>
-                                            <treechildren/>
-                                        </tree>
-                                    </panelchildren>
-                                </panel>
-                            </tabpanel>
-                            <tabpanel>
                                 <div id="jpacontroller" vflex="true"
                                      apply="org.web4thejob.studio.controller.impl.JpaInfoController" sclass="jpa">
                                     <panel id="jpaPanel" vflex="true" mold="w4tjstudio">
@@ -163,7 +146,7 @@
                                                              oddRowSclass="oddRowSclass-none"
                                                              emptyMessage="Select a started persistence unit to view it's contents"
                                                              style="border:0px">
-                                                    <listhead visible="false">
+                                                        <listhead visible="false">
                                                             <listheader/>
                                                         </listhead>
                                                     </listbox>
@@ -182,6 +165,23 @@
                                         });
                                     ]]>
                                 </script>
+                            </tabpanel>
+                            <tabpanel>
+                            <panel mold="w4tjstudio" vflex="true" title="Webapp Page Navigator">
+                                    <panelchildren>
+                                        <tree id="projectTree" vflex="true"
+                                              apply="org.web4thejob.studio.controller.DashboardController"
+                                              style="border:0px">
+                                        <treecols sizable="true">
+                                                <treecol label="File Name" align="center"/>
+                                                <treecol align="center" label="Writable" width="80px"/>
+                                                <treecol align="center" label="Size" width="200px"/>
+                                                <treecol label="Last Modified" align="center" width="200px"/>
+                                            </treecols>
+                                            <treechildren/>
+                                        </tree>
+                                    </panelchildren>
+                                </panel>
                             </tabpanel>
                         </tabpanels>
                     </tabbox>
