@@ -347,6 +347,7 @@ public class PropertyEditorController extends AbstractController {
                 if (editor == null) {
                     row = new Row();
                     row.setAttribute("property", propertyName);
+                    row.setWidgetAttribute("w4tjstudio-property", propertyName);
                     row.setParent(grid.getRows());
 
                     Label name = new Label(propertyName);
@@ -401,6 +402,9 @@ public class PropertyEditorController extends AbstractController {
             for (Row row : bindings) {
                 row.setParent(grid.getRows());
             }
+        } else {
+            Groupbox groupbox = findGroup("bindings");
+            if (groupbox != null) groupbox.detach();
         }
 
         Clients.evalJavaScript("w4tjStudioDesigner.decoratePropertyCaptions();");

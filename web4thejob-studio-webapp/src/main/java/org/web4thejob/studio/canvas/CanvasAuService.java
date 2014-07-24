@@ -102,6 +102,28 @@ public class CanvasAuService implements AuService {
         String parentUuid = (String) ((Map) event.getData()).get("parent");
         notNull(parentUuid);
 
+
+        if (template.startsWith("@")) {
+            Component target = getComponentByUuid(parentUuid);
+            String property = StudioUtil.getDefaultBindingProperty(target.getDefinition());
+            if (property != null) {
+                Map<String, String> data = new HashMap<>();
+                data.put("target", parentUuid);
+                data.put("binding", template);
+                data.put("property", property);
+
+                sendToDesigner("onBindingDroppped", data);
+
+//                ComponentDefinition def = (ComponentDefinition) target.getDefinition().clone();
+//                def.addProperty(property, template);
+//                def.applyProperties(target);
+            }
+
+
+            return;
+        }
+
+
         if (Executions.getCurrent().getDesktop().getPageIfAny(parentUuid) != null) {
             parentUuid = "_canvas_";
         }
@@ -124,8 +146,9 @@ public class CanvasAuService implements AuService {
                     return;
                 }
             }
-
             sendToDesigner("onCanvasAddition", data);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Clients.evalJavaScript("top.zAu.cmd0.clearBusy()");
@@ -219,16 +242,16 @@ public class CanvasAuService implements AuService {
         return false;
     }
 
-    private static void identifyDirectNativeDescendenats(Element element) {
-        for (int i = 0; i < element.getChildElements().size(); i++) {
-            Element child = element.getChildElements().get(i);
-            if (isNative(child)) {
-                child.addAttribute(new Attribute("uuid", getNextUuid()));
-                identifyDirectNativeDescendenats(child);
-            }
-        }
-
-    }
+//    private static void identifyDirectNativeDescendenats(Element element) {
+//        for (int i = 0; i < element.getChildElements().size(); i++) {
+//            Element child = element.getChildElements().get(i);
+//            if (isNative(child)) {
+//                child.addAttribute(new Attribute("uuid", getNextUuid()));
+//                identifyDirectNativeDescendenats(child);
+//            }
+//        }
+//
+//    }
 
     private static Element getParent(Element element) {
         Node parent = element.getParent();

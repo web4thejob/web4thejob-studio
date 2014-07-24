@@ -38,13 +38,13 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 9/5/2014.
  */
 public abstract class StudioUtil {
-    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     public static final String ATTR_CANVAS_DESKTOP = "i-am-the-canvas-desktop";
     public static final String ATTR_PAIRED_DESKTOP = "paired-desktop-id";
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
     public static final String ATTR_WORK_FILE = "work-file";
+    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -643,4 +643,15 @@ public abstract class StudioUtil {
         return root.getNamespaceURI(preffix) != null;
     }
 
+    public static String getDefaultBindingProperty(ComponentDefinition def) {
+        if (def.getAnnotationMap() != null) {
+            List<String> properties = def.getAnnotationMap().getAnnotatedPropertiesBy("ZKBIND");
+            for (String p : properties) {
+                if (!"errorMessage".equals(p) && !"model".equals(p)) { //bind to first not errorMessage/model property
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
 }

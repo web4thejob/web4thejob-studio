@@ -444,11 +444,10 @@ var w4tjStudioDesigner = {
            var dropped = jq(target);
 
            if (dragged && dropped) {
-//             w4tjStudioDesigner.getCanvasFrame().zAu.send(new zk.Event(zk("$canvas").$(), "onTemplateDropped", {
-//               template: dragged,
-//               parent: dropped.attr('canvas-uuid')
-//             }));
-            alert('ok');
+                zAu.send(new zk.Event(zk("$designer").$(), "onBindingDroppped", {
+                   binding: dragged,
+                   property: dropped.attr('w4tjstudio-property')
+               }));
            }
          })
          .on('dragover', function(e) {

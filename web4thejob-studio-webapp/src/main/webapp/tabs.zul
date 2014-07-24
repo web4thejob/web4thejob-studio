@@ -5,13 +5,15 @@
     <window title="Window" vflex="true">
         <n:div class="container">
             <n:span class="1">
-                <button label="OK**9"/>
+                <button label="OK**9" value="@load(vm.FirstName)"/>
                 <n:span class="2"/>
             </n:span>
             <groupbox>
-                <button label="Button"/>
+                <button label="@bind(vm.LastName)" type="@save(vm.LastName)"/>
+                <combobutton label="@load(vm.FirstName)"/>
             </groupbox>
         </n:div>
         <hlayout/>
+        <textbox value="@bind(vm.Birthdate)"/>
     </window>
 </zk>

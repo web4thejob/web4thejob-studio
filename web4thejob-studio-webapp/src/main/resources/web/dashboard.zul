@@ -167,12 +167,12 @@
                                 </script>
                             </tabpanel>
                             <tabpanel>
-                            <panel mold="w4tjstudio" vflex="true" title="Webapp Page Navigator">
+                                <panel mold="w4tjstudio" vflex="true" title="Webapp Page Navigator">
                                     <panelchildren>
                                         <tree id="projectTree" vflex="true"
-                                              apply="org.web4thejob.studio.controller.DashboardController"
+                                              apply="org.web4thejob.studio.controller.impl.DashboardController"
                                               style="border:0px">
-                                        <treecols sizable="true">
+                                            <treecols sizable="true">
                                                 <treecol label="File Name" align="center"/>
                                                 <treecol align="center" label="Writable" width="80px"/>
                                                 <treecol align="center" label="Size" width="200px"/>

@@ -1,5 +1,6 @@
 package org.web4thejob.studio.controller.impl;
 
+import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.XPathContext;
@@ -526,5 +527,33 @@ public class DesignerController extends AbstractController {
             publish(CODE_ACTIVATED);
         }
 
+    }
+
+    @Listen("onBindingDroppped=#designer")
+    public void onBindingDroppped(Event e) {
+        Element target;
+        String targetId = ((Map) e.getData()).get("target").toString();
+        if (targetId != null) {
+            target = getElementByUuid(targetId);
+        } else {
+            target = selection;
+        }
+
+
+        if (target == null) return;
+
+        String binding = ((Map) e.getData()).get("binding").toString();
+        String property = ((Map) e.getData()).get("property").toString();
+        if (binding == null || property == null) return;
+
+        Attribute attr = target.getAttribute(property);
+        if (attr == null) {
+            attr = new Attribute(property, binding);
+            target.addAttribute(attr);
+        } else
+            attr.setValue(binding);
+
+        publish(ATTRIBUTE_CHANGED);
+        publish(COMPONENT_SELECTED, target);
     }
 }

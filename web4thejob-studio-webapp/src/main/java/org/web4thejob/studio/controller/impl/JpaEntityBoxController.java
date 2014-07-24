@@ -94,9 +94,9 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
                 treecell.setAttribute("attribute", attribute);
                 treecell.setAttribute("bindType", bindType);
                 treecell.setSclass("");
-                treecell.setWidgetAttribute("bind-data", bindType + "(vm." + attribute.getName() + ")");
                 treecell.setParent(treerow);
-                html = new Html("<span class=\"jpa-bindtype label label-default\"><i class=\"fa fa-hand-o-right\" style=\"margin-right:3px\"/>" + bindType + "</span>");
+                String vm = bindType + "(vm." + attribute.getName() + ")";
+                html = new Html("<span bind-data=\"" + vm + "\" class=\"jpa-bindtype label label-default\"><i class=\"fa fa-hand-o-right\" style=\"margin-right:3px\"/>" + bindType + "</span>");
                 html.setParent(treecell);
 
                 new Treecell().setParent(treerow);
