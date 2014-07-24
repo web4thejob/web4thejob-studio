@@ -4,8 +4,8 @@
 <zk>
     <panel mold="w4tjstudio" title="Entity Toolbox" movable="true" border="normal"
            sclass="panel-default mild-shadow jpaentitybox" style="min-width:200px" floatable="true" width="300px"
-           top="30%" left="30%" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController" id="${arg.id}">
-        <panelchildren>
+           top="30%" left="30%" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController" id="aaa">
+    <panelchildren>
             <tree vflex="true" hflex="true" style="border:0px">
                 <treecols>
                     <treecol/>
@@ -91,8 +91,12 @@
               var e = jq('$' + id);
               var wgt = zk(e).$();
               e.resizable({
+                start: function() {
+                  top.zAu.cmd0.showBusy(top.zk("$canvasHolder").$().parent.uuid, "...");
+                },
                 stop: function(event, ui) {
                   wgt.setHeight(Math.round(ui.size.height) + "px")
+                    //zAu.cmd0.clearBusy(zk("$canvasHolder").$().parent.uuid);
                 }
               });
               e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
@@ -120,7 +124,7 @@
               });
             };
             //alert(wgt.uuid);
-            //prepareEntityToolbox('entityBox');
+            prepareEntityToolbox('aaa');
         ]]>
     </script>
 </zk>

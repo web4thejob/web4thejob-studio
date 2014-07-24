@@ -26,12 +26,10 @@
         <east size="25%" splittable="true" collapsible="true">
             <button label="Button/"/>
         </east>
-        <center>
-            <button label="Button"/>
+        <center title="@save(vm.FirstName)" flex="@bind(vm.Birthdate)">
+            <textbox value="@save(vm.FirstName)"/>
         </center>
-        <south size="25%" splittable="true" collapsible="true">
-            <textbox/>
-        </south>
+        <south size="25%" splittable="true" collapsible="true"></south>
         <west size="25%" splittable="true" collapsible="true"/>
     </borderlayout>
 </zk>
