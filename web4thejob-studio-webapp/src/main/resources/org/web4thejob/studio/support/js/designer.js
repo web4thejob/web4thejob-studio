@@ -391,8 +391,12 @@ var w4tjStudioDesigner = {
     var e = jq('$' + id);
     var wgt = zk(e).$();
     e.resizable({
+      start: function() {
+         zAu.cmd0.showBusy(zk("$canvasHolder").$().parent.uuid,"...");
+      },
       stop: function(event, ui) {
         wgt.setHeight(Math.round(ui.size.height) + "px")
+        zAu.cmd0.clearBusy(zk("$canvasHolder").$().parent.uuid);
       }
     });
     e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');

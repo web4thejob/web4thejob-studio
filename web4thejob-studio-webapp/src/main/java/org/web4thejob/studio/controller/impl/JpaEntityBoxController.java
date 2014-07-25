@@ -52,23 +52,25 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
             Treerow treerow = new Treerow();
             treerow.setParent(treeitem);
             Treecell treecell = new Treecell();
+            treecell.setTooltiptext(attribute.getJavaType().getName());
             treecell.setAttribute("attribute", attribute);
-//            treecell.setSclass("jpa-attribute");
+            treecell.setStyle("white-space:nowrap;");
             treecell.setParent(treerow);
             Html html = new Html();
-            html.setContent("<span class=\"jpa-attribute label label-default\">" + attribute.getName() + "</span>");
+            String keyHtml = attribute.equals(key) ? "&nbsp;&nbsp;&nbsp;<i class=\"fa fa-key\" style=\"margin-left:0px\"></i>" : "";
+            html.setContent("<span class=\"jpa-attribute label label-default\">" + attribute.getName() + keyHtml + "</span>");
             html.setParent(treecell);
 
-            if (!attribute.equals(key)) {
-                new Treecell().setParent(treerow);
-            } else {
-                Treecell keycell = new Treecell();
-                keycell.setParent(treerow);
-                keycell.setIconSclass("z-icon-key");
-                keycell.setStyle("text-align:center");
-            }
+//            if (!attribute.equals(key)) {
+//                new Treecell().setParent(treerow);
+//            } else {
+//                Treecell keycell = new Treecell();
+//                keycell.setParent(treerow);
+//                keycell.setIconSclass("z-icon-key");
+//                keycell.setStyle("text-align:center");
+//            }
 
-            new Treecell(attribute.getJavaType().getName()).setParent(treerow);
+//            new Treecell(attribute.getJavaType().getName()).setParent(treerow);
 
             new Treechildren().setParent(treeitem);
             treeitem.setOpen(false);
@@ -99,8 +101,8 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
                 html = new Html("<span bind-data=\"" + vm + "\" class=\"jpa-bindtype label label-default\"><i class=\"fa fa-hand-o-right\" style=\"margin-right:3px\"/>" + bindType + "</span>");
                 html.setParent(treecell);
 
-                new Treecell().setParent(treerow);
-                new Treecell().setParent(treerow);
+//                new Treecell().setParent(treerow);
+//                new Treecell().setParent(treerow);
             }
 
         }

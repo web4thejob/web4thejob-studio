@@ -113,13 +113,9 @@ public class CanvasAuService implements AuService {
                 data.put("property", property);
 
                 sendToDesigner("onBindingDroppped", data);
-
-//                ComponentDefinition def = (ComponentDefinition) target.getDefinition().clone();
-//                def.addProperty(property, template);
-//                def.applyProperties(target);
+            } else {
+                StudioUtil.showNotification("warning", "Not quite", "This component does not declare a default binding property.</br>Drop the binding on a Property Editor row directly to resolve.", true, true);
             }
-
-
             return;
         }
 

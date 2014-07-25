@@ -10,10 +10,10 @@
             </n:span>
             <groupbox>
                 <button label="@bind(vm.LastName)" type="@save(vm.LastName)"/>
-                <combobutton label="@load(vm.FirstName)"/>
+                <combobutton label="@load(vm.FirstName)" open="@bind(vm.FirstName)"/>
             </groupbox>
         </n:div>
         <hlayout/>
-        <textbox value="@bind(vm.Birthdate)"/>
+        <textbox value="@bind(vm.FirstName)"/>
     </window>
 </zk>

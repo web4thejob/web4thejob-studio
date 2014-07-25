@@ -73,9 +73,13 @@ public abstract class StudioUtil {
 
 
     public static void showNotification(String sclass, String title, String message, boolean autoclose) {
+        showNotification(sclass, title, message, autoclose, false);
+    }
+
+    public static void showNotification(String sclass, String title, String message, boolean autoclose, boolean encoded) {
         String m = message.replaceAll("'", "\"");
         Clients.evalJavaScript("top.w4tjStudioDesigner.alert('" + sclass + "','" + title +
-                "','" + m + "'," + Boolean.valueOf(autoclose).toString() + ")");
+                "','" + m + "'," + Boolean.valueOf(autoclose).toString() + "," + Boolean.valueOf(encoded).toString() + ")");
 
     }
 

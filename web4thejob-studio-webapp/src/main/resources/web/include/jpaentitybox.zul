@@ -3,14 +3,14 @@
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <zk>
     <panel mold="w4tjstudio" title="Entity Toolbox" movable="true" border="normal"
-           sclass="panel-default mild-shadow jpaentitybox" style="min-width:200px" floatable="true" width="300px"
-           top="30%" left="30%" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController" id="${arg.id}">
+           sclass="panel-default mild-shadow jpaentitybox" style="min-width:100px" floatable="true" width="150px"
+           top="30%" left="50px" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController" id="${arg.id}">
         <panelchildren>
             <tree vflex="true" hflex="true" style="border:0px">
                 <treecols>
                     <treecol/>
-                    <treecol width="50px" align="center"/>
-                    <treecol/>
+                    <!--<treecol width="50px" align="center"/>-->
+                    <!--<treecol/>-->
                 </treecols>
                 <treechildren/>
             </tree>
@@ -84,49 +84,4 @@
         font-weight: normal
         }
     </style>
-    <script defer="true">
-        <![CDATA[
-            function prepareEntityToolbox(id) {
-              alert(id);
-              var e = jq('$' + id);
-              var wgt = zk(e).$();
-              e.resizable({
-                start: function() {
-                    console.log("aaa");
-                   zAu.cmd0.showBusy(zk("$canvasHolder").$().parent.uuid,"...");
-
-                },
-                stop: function(event, ui) {
-                  wgt.setHeight(Math.round(ui.size.height) + "px")
-                  zAu.cmd0.clearBusy(zk("$canvasHolder").$().parent.uuid);
-                }
-              });
-              e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
-              e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
-              e.find('.toolbox-close').click(function() {
-                zAu.send(new zk.Event(wgt, "onToolboxClose", {
-                  target: wgt.uuid
-                }));
-                wgt.detach();
-              });
-              e.find('.toolbox-roll').click(function() {
-                var rollbtn = e.find(".toolbox-roll");
-                if (wgt.isOpen()) {
-                  e.resizable('disable');
-                  wgt.setHeight();
-                  wgt.setOpen(false);
-                  rollbtn.removeClass("z-icon-caret-up");
-                  rollbtn.addClass("z-icon-caret-down")
-                } else {
-                  e.resizable('enable');
-                  wgt.setOpen(true);
-                  rollbtn.removeClass("z-icon-caret-down");
-                  rollbtn.addClass("z-icon-caret-up")
-                }
-              });
-            };
-            //alert(wgt.uuid);
-            //prepareEntityToolbox('entityBox');
-        ]]>
-    </script>
 </zk>
