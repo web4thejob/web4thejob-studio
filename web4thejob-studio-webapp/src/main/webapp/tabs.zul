@@ -2,7 +2,7 @@
 <zk xmlns:n="native">
     <button label="Button"/>
     <label value="New Label"/>
-    <window title="Window" vflex="true">
+    <window title="Window" vflex="true" maximized="@bind(vm.Birthdate)">
         <n:div class="container">
             <n:span class="1">
                 <button label="OK**9" value="@load(vm.FirstName)"/>
@@ -13,7 +13,12 @@
                 <combobutton label="@load(vm.FirstName)" open="@bind(vm.FirstName)"/>
             </groupbox>
         </n:div>
-        <hlayout/>
-        <textbox value="@bind(vm.FirstName)"/>
+        <hlayout>
+            <textbox value="@bind(vm.Birthdate)"/>
+            <textbox value="@bind(vm.FirstName)" rows="10" tabbable="true" draggable="true" style="eee" sclass="ggg"
+                     focus="true" multiline="@load(vm.Birthdate)"/>
+            <button label="Button"/>
+            <textbox value="@bind(vm.Birthdate)"/>
+        </hlayout>
     </window>
 </zk>

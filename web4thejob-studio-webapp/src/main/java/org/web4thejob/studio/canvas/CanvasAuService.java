@@ -4,7 +4,6 @@ import nu.xom.*;
 import org.apache.commons.io.FileUtils;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.CodeFormatter;
-import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.zk.au.AuRequest;
 import org.zkoss.zk.au.AuService;
 import org.zkoss.zk.ui.*;
@@ -73,13 +72,13 @@ public class CanvasAuService implements AuService {
                     FileUtils.writeStringToFile(new File(workFile), CodeFormatter.formatXML(document), "UTF-8");
 
                     //update production file without uuids
-                    StudioUtil.cleanUUIDs(document.getRootElement());
+                    cleanUUIDs(document.getRootElement());
                     File fileProd = new File(prodFile);
                     if (fileProd.exists() && fileProd.canWrite()) {
                         FileUtils.writeStringToFile(fileProd, CodeFormatter.formatXML(document), "UTF-8");
                     }
                 } else {
-                    workFile = StudioUtil.buildWorkingFile(document).getAbsolutePath();
+                    workFile = buildWorkingFile(document).getAbsolutePath();
                     data.put(PARAM_WORK_FILE, workFile);
                 }
             } else {
@@ -105,16 +104,16 @@ public class CanvasAuService implements AuService {
 
         if (template.startsWith("@")) {
             Component target = getComponentByUuid(parentUuid);
-            String property = StudioUtil.getDefaultBindingProperty(target.getDefinition());
+            String property = getDefaultBindingProperty(target.getDefinition());
             if (property != null) {
                 Map<String, String> data = new HashMap<>();
                 data.put("target", parentUuid);
                 data.put("binding", template);
                 data.put("property", property);
 
-                sendToDesigner("onBindingDroppped", data);
+                sendToDesigner("onBindingDropped", data);
             } else {
-                StudioUtil.showNotification("warning", "Not quite", "This component does not declare a default binding property.</br>Drop the binding on a Property Editor row directly to resolve.", true, true);
+                showNotification("warning", "Not quite", "This component does not declare a default binding property.</br>Drop the binding on a Property Editor row directly to resolve.", true, true);
             }
             return;
         }
@@ -156,7 +155,7 @@ public class CanvasAuService implements AuService {
 
     private static Document mapZulToComponents(String src) throws IOException, ParsingException {
         final Desktop canvas = Executions.getCurrent().getDesktop();
-        Document document = StudioUtil.buildDocument(new FileInputStream(src));
+        Document document = buildDocument(new FileInputStream(src));
         if (document.getRootElement() == null) return document;
         cleanUUIDs(document.getRootElement());
 

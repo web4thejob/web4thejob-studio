@@ -257,7 +257,6 @@ var w4tjStudioDesigner = {
           var dropped = jq(this);
 
           if (dragged && dropped) {
-            //                        zAu.cmd0.showBusy();
             w4tjStudioDesigner.getCanvasFrame().zAu.send(new zk.Event(zk("$canvas").$(), "onTemplateDropped", {
               template: dragged,
               parent: dropped.attr('canvas-uuid')
@@ -392,7 +391,7 @@ var w4tjStudioDesigner = {
     var wgt = zk(e).$();
     e.resizable({
       start: function() {
-         zAu.cmd0.showBusy(zk("$canvasHolder").$().parent.uuid,"...");
+        zAu.cmd0.showBusy(zk("$canvasHolder").$().parent.uuid, "...");
       },
       stop: function(event, ui) {
         wgt.setHeight(Math.round(ui.size.height) + "px")
@@ -402,9 +401,9 @@ var w4tjStudioDesigner = {
     e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
     e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
     e.find('.toolbox-close').click(function() {
-//      zAu.send(new zk.Event(wgt, "onToolboxClose", {
-//        target: wgt.uuid
-//      }));
+      //      zAu.send(new zk.Event(wgt, "onToolboxClose", {
+      //        target: wgt.uuid
+      //      }));
       wgt.detach();
     });
     e.find('.toolbox-roll').click(function() {
@@ -425,45 +424,50 @@ var w4tjStudioDesigner = {
 
     //draggable bind types
     e.find('.jpa-bindtype').attr('draggable', 'true')
-          .on('dragstart', function(e) {
-            e.originalEvent.dataTransfer.setData('text', $(this).attr('bind-data'));
-                jq('$properties').find('.z-row').each(function() {
-                    w4tjStudioDesigner.prepareForBindingDrop(this);
-                });
-          })
-          .on('dragend', function(e) {
-            e.preventDefault()
-          });
+      .on('dragstart', function(e) {
+        e.originalEvent.dataTransfer.setData('text', $(this).attr('bind-data'));
+        jq('$properties').find('.z-row').each(function() {
+          w4tjStudioDesigner.prepareForBindingDrop(this);
+        });
+        w4tjStudioDesigner.makeOutlineDroppable();
+      })
+      .on('dragend', function(e) {
+        e.preventDefault()
+      });
   },
 
-   prepareForBindingDrop: function(target) {
-       if (w4tjStudioDesigner.hasHandler(target, 'drop')) return;
+  prepareForBindingDrop: function(target) {
+    if (w4tjStudioDesigner.hasHandler(target, 'drop')) return;
 
-       jq(target).on('drop', function(e) {
-           e.stopPropagation();
-           e.preventDefault();
-           jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+    jq(target).on('drop', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
 
-           var dragged = e.originalEvent.dataTransfer.getData('text');
-           var dropped = jq(target);
+        var dragged = e.originalEvent.dataTransfer.getData('text');
+        var dropped = jq(target);
 
-           if (dragged && dropped) {
-                zAu.send(new zk.Event(zk("$designer").$(), "onBindingDroppped", {
-                   binding: dragged,
-                   property: dropped.attr('w4tjstudio-property')
-               }));
-           }
-         })
-         .on('dragover', function(e) {
-           e.stopPropagation();
-           e.preventDefault();
-           jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
-           jq(target).addClass("w4tjstudio-hovered");
-         })
-         .on('dragleave', function(e) {
-           jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
-         });
-   }
+        if (dragged && dropped) {
+          zAu.send(new zk.Event(zk("$designer").$(), "onBindingDropped", {
+            binding: dragged,
+            property: dropped.attr('w4tjstudio-property')
+          }));
+        }
+      })
+      .on('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+        jq(target).addClass("w4tjstudio-hovered");
+      })
+      .on('dragleave', function(e) {
+        jq("[class~=w4tjstudio-hovered]").removeClass("w4tjstudio-hovered");
+      });
+  },
+
+  highlight: function (uuid) {
+      jq("#" + uuid + " [class~=z-row-inner]").effect("highlight", {}, 1000, null);
+  },
 
 
 }

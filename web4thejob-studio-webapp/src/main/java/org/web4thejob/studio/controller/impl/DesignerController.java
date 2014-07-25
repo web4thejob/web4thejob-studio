@@ -32,12 +32,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     public static final String PARAM_XPATH = "w4tjstudio_xpath";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -529,8 +529,8 @@ public class DesignerController extends AbstractController {
 
     }
 
-    @Listen("onBindingDroppped=#designer")
-    public void onBindingDroppped(Event e) {
+    @Listen("onBindingDropped=#designer")
+    public void onBindingDropped(Event e) {
         Element target;
         String targetId = (String) ((Map) e.getData()).get("target");
         if (targetId != null) {

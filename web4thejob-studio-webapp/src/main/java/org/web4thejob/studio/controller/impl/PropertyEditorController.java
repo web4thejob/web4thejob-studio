@@ -560,10 +560,9 @@ public class PropertyEditorController extends AbstractController {
                 }
             }
 
-            publish(ATTRIBUTE_CHANGED);
+            Clients.evalJavaScript("w4tjStudioDesigner.highlight('" + event.getTarget().getParent().getUuid() + "');");
 
-//            Clients.evalJavaScript("w4tjDesigner.highlight('" + event.getTarget().getParent().getUuid() + "');" +
-//                    "decoratePropertyCaptions();");
+            publish(ATTRIBUTE_CHANGED);
 
         }
     }

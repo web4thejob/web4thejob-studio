@@ -119,9 +119,9 @@
                         <tabpanel>
                             <n:h1>Wowww</n:h1>
                             <button label="Button"/>
-                            <combobox/>
-                            <textbox/>
-                            <combobox/>
+                            <combobox selectedItem="@bind(vm.Birthdate)"/>
+                            <textbox value="@bind(vm.FirstName)"/>
+                            <combobox selectedItem="@bind(vm.LastName)"/>
                             <button label="Button+++"/>
                             <combobutton label="Combobutton"/>
                             <bandbox/>
