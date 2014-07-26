@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:n="native"
+    xmlns:c="client"
+    xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <vlayout id="propeditor" vflex="true" apply="org.web4thejob.studio.controller.impl.PropertyEditorController">
+        <custom-attributes properties="/properties"/>
+
+        <n:div n:class="well well-sm bs-adaptor"
+               style="margin-bottom:1px;padding:8px;min-height:31px;border-radius:0px;white-space: nowrap;">
+            <html id="editorSelection" zclass="z-label" style="font-size:14px"/>
+        </n:div>
+
+        <tabbox vflex="true" hflex="true" sclass="bs-adaptor">
+            <tabs>
+                <tab label="" iconSclass="z-icon-tags" sclass="bs-fonts"/>
+                <tab label="" iconSclass="z-icon-bolt" sclass="bs-fonts"/>
+                <tab label="" iconSclass="z-icon-code" sclass="bs-fonts">
+                    <attribute c:name="onSelect">
+                        var cm=zk('$editor').$().get('codemirror');
+                        if (cm){
+                        cm.refresh();
+                        cm.focus();
+                        }
+                    </attribute>
+                </tab>
+            </tabs>
+            <tabpanels>
+                <tabpanel id="properties" style="overflow:auto"/>
+                <tabpanel id="events" style="overflow:auto"/>
+                <tabpanel id="source" style="padding-bottom:0px;margin-bottom:0px;"/>
+            </tabpanels>
+        </tabbox>
+    </vlayout>
+
+    <style>
+        .badge-caption {float: right; margin-top: 4px;}
+        code {background-color:transparent}
+        .z-row .z-label {font-family: monospace}
+    </style>
+
+</zk>

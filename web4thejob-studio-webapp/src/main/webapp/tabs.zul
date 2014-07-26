@@ -15,10 +15,14 @@
         </n:div>
         <hlayout>
             <textbox value="@bind(vm.Birthdate)"/>
-            <textbox value="@bind(vm.FirstName)" rows="10" tabbable="true" draggable="true" style="eee" sclass="ggg"
-                     focus="true" multiline="@load(vm.Birthdate)"/>
-            <button label="Button"/>
+            <textbox value="@save(vm.Birthdate)" rows="10" tabbable="true" draggable="true" style="eee" sclass="ggg"
+                     focus="true"/>
+            <button label="Button" orient="vertical"/>
             <textbox value="@bind(vm.Birthdate)"/>
+            <combobutton label="Combobutton"/>
+            <combobutton label="Combobutton"/>
+            <intbox/>
         </hlayout>
+        <textbox type="password" value="@bind(vm.Birthdate)" rows="@load(vm.Birthdate)"/>
     </window>
 </zk>
