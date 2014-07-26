@@ -60,7 +60,7 @@
                         </p>
 
                         <p class="navbar-text navbar-right">
-                            <small>v0.0.1 using ZK CE ${desktop.webApp.version}</small>
+                            <small>v1.0 using ZK CE ${desktop.webApp.version}</small>
                         </p>
                     </ul>
                 </div>

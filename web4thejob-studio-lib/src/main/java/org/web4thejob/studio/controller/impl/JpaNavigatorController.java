@@ -32,10 +32,14 @@ public class JpaNavigatorController extends SelectorComposer<Tree> {
     }
 
     private void populate() {
-        entityTree.clear();
         Map<String, EntityManagerFactory> emfs = JpaUtil.getEntityManagerFactories();
-        if (emfs == null) return;
+        if (emfs == null) {
+            Executions.createComponents("~./include/nojpa.zul", entityTree.getParent(), null);
+            entityTree.detach();
+            return;
+        }
 
+        entityTree.clear();
         List<String> names = new ArrayList<>(emfs.keySet());
         Collections.sort(names);
         for (String name : names) {

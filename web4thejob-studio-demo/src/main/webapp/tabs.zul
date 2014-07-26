@@ -29,11 +29,11 @@
             <textbox value="@save(vm.Birthdate)" rows="10" tabbable="true" draggable="true" style="eee" sclass="ggg"
                      focus="true"/>
             <button label="Button" orient="vertical"/>
-            <textbox value="@bind(vm.Birthdate)"/>
+            <textbox value="@load(vm.FirstName)"/>
             <combobutton label="Combobutton"/>
             <combobutton label="Combobutton"/>
             <intbox/>
         </hlayout>
-        <textbox type="password" value="@bind(vm.Birthdate)" rows="@load(vm.Birthdate)"/>
+        <textbox type="password" value="@bind(vm.FirstName)" rows="@load(vm.Birthdate)"/>
     </window>
 </zk>

@@ -39,14 +39,21 @@
                 <li>By dragging &amp; dropping widgets on the outline tree</li>
                 <li>By editing the zul code directly</li>
             </ol>
-            <p>When you are done designing your page you can copy/paste the zul code to your project for further
-                development. Alternatively you can proceed to
-                <a href="http://zkfiddle.org/">ZK Fiddler</a>
-                to experiment some more.
+
+            <p>Any change you made to the page is saved automatically by Web4thejob Studio to the web server's webapp
+                directory.
+                Hence, if you are running directly from the sources (i.e. unassembled webapp), you can push your changes
+                to your SCM right after! Check out
+                <code>jetty:run</code>
+                maven goal for more info on this.
             </p>
+
             <h2 id="about_features">Features</h2>
             <div class="icon-list">
                 <p><i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets on Canvas or Outline tabs
+                </p>
+                <p><i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop attributes of JPA managed classes on
+                    widgets or on the property editor to bind them instantly
                 </p>
                 <p><i class="z-icon-check-square-o icon-margin"/>Edit zul manually in ZUL tab with auto-complete support
                 </p>
@@ -56,48 +63,56 @@
                 <p><i class="z-icon-check-square-o icon-margin"/>Edit the server and client side events of widgets with
                     syntax highlighting
                 </p>
-                <p><i class="z-icon-check-square-o icon-margin"/>Double-click on widgets containing captions and labels
-                    to
-                    edit their values directly
-                </p>
-                <p><i class="z-icon-check-square-o icon-margin"/>Right-click on widgets to get a context-menu
-                </p>
+                <!--
+                                <p><i class="z-icon-check-square-o icon-margin"/>Double-click on widgets containing captions and labels
+                                    to
+                                    edit their values directly
+                                </p>
+                -->
+                <!--
+                                <p><i class="z-icon-check-square-o icon-margin"/>Right-click on widgets to get a context-menu
+                                </p>
+                -->
                 <p><i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets in Outline tab to rearrange
                     them
                 </p>
-                <p><i class="z-icon-check-square-o icon-margin"/>Use the BACK and FORWARD buttons of your browser to
-                    traverse the development timeline
-                </p>
+                <!--
+                                <p><i class="z-icon-check-square-o icon-margin"/>Use the BACK and FORWARD buttons of your browser to
+                                    traverse the development timeline
+                                </p>
+                -->
                 <p><i class="z-icon-check-square-o icon-margin"/>Use Bootstrap v3 classes
                     <a target="_blank" href="http://www.zkoss.org/zk-bootstrap/">
                         <i class="z-icon-arrow-circle-right"></i>
                     </a>
                 </p>
-                <p><i class="z-icon-check-square-o icon-margin"/>Position widgets absolutely by dragging them
-                    <small>
-                        <ol>
-                            <li>Set
-                                <code>position:absolute</code>
-                                in
-                                <span class="mono">style</span>
-                                attribute
-                            </li>
-                            <li>Ctrl+Click once on the widget and release</li>
-                            <li>Click and drag to the desired position</li>
-                            <li>Repeat steps 2 and 3 for moving again</li>
-                        </ol>
-                        <p>Alternatively, you can (a) do step 1 and then set
-                            <span class="mono">top</span>
-                            and
-                            <span class="mono">left</span>
-                            attributes (e.g. 20px and 130px respectively), or (b) forget all the above and use the
-                            <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Layouts/Absolutelayout">
-                                Absolutelayout
-                            </a>
-                            widget.
-                        </p>
-                    </small>
-                </p>
+                <!--
+                                <p><i class="z-icon-check-square-o icon-margin"/>Position widgets absolutely by dragging them
+                                    <small>
+                                        <ol>
+                                            <li>Set
+                                                <code>position:absolute</code>
+                                                in
+                                                <span class="mono">style</span>
+                                                attribute
+                                            </li>
+                                            <li>Ctrl+Click once on the widget and release</li>
+                                            <li>Click and drag to the desired position</li>
+                                            <li>Repeat steps 2 and 3 for moving again</li>
+                                        </ol>
+                                        <p>Alternatively, you can (a) do step 1 and then set
+                                            <span class="mono">top</span>
+                                            and
+                                            <span class="mono">left</span>
+                                            attributes (e.g. 20px and 130px respectively), or (b) forget all the above and use the
+                                            <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Layouts/Absolutelayout">
+                                                Absolutelayout
+                                            </a>
+                                            widget.
+                                        </p>
+                                    </small>
+                                </p>
+                -->
             </div>
             <h2 id="about_credits">Credits</h2>
             <p>Web4thejob Studio has been designed and developed by
