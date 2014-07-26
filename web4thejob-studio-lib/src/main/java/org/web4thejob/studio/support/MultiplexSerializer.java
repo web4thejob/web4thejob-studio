@@ -52,7 +52,6 @@ public class MultiplexSerializer extends Serializer {
     static {
         try {
             escaper = FieldUtils.getField(Serializer.class, "escaper", true);
-            escaper.setAccessible(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

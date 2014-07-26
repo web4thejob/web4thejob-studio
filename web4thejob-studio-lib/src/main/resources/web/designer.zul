@@ -19,8 +19,8 @@
             <west width="200px" splittable="true" collapsible="true">
                 <tabbox vflex="true">
                     <tabs>
-                        <tab label="" iconSclass="z-icon-leaf"/>
-                        <tab label="" iconSclass="fa fa-database"/>
+                        <tab label="" iconSclass="z-icon-leaf" sclass="tooltip-right" tooltiptext="Widgets"/>
+                        <tab label="" iconSclass="fa fa-database" sclass="tooltip-right" tooltiptext="JPA Classes"/>
                     </tabs>
                     <tabpanels>
                         <tabpanel style="overflow:auto">
@@ -173,6 +173,8 @@
         GradientType=0);
         background-color: #FFBAFF;
         }
+
+        .tooltip {z-index:1000}
 
     </style>
 </zk>

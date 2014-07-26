@@ -10,27 +10,15 @@
     <modules>
         <module>test-joblet</module>
         <module>web4thejob-studio-lib</module>
-        <module>web4thejob-studio-webapp</module>
+        <module>web4thejob-studio-demo</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.zkoss.version>7.0.2</org.zkoss.version>
-        <org.springframework.version>4.0.0.RELEASE</org.springframework.version>
-        <org.hibernate.version>4.3.5.Final</org.hibernate.version>
+        <org.hibernate.version>4.3.6.Final</org.hibernate.version>
     </properties>
-
-    <dependencies>
-
-        <!-- TODO remove after tests-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>

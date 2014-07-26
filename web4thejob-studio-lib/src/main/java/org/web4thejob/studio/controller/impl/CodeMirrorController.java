@@ -96,7 +96,7 @@ public class CodeMirrorController extends AbstractController {
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
-            if (!StringUtils.isBlank(editor.getValue())) {
+            if (StringUtils.isBlank(editor.getValue())) {
                 if (codeBlock != null) codeBlock.detach();
             } else {
 

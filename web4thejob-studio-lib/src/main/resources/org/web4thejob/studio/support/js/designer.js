@@ -24,6 +24,9 @@ var w4tjStudioDesigner = {
     this.buildToolbar();
     this.fileName = 'Untitled';
 
+    jq(".tooltip-left[title]:not([title='']").attr("data-toggle","tooltip").attr("data-placement","left").tooltip({container: 'body'});
+    jq(".tooltip-right[title]:not([title='']").attr("data-toggle","tooltip").attr("data-placement","right").tooltip({container: 'body'});
+
     //sends busy when outline item is selected
     zk.override(zul.sel.Treeitem.prototype, 'doSelect_', function() {
       if (this.getTree().id === 'outline') {

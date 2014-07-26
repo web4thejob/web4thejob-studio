@@ -1,8 +1,8 @@
 package org.web4thejob.studio.dom;
 
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.web4thejob.studio.support.StudioUtil;
-import sun.reflect.misc.FieldUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -29,8 +29,7 @@ public class NodeFactory extends nu.xom.NodeFactory {
     static {
         try {
             Class v = Class.forName("nu.xom.Verifier");
-            Field f = FieldUtil.getField(v, "cache");
-            f.setAccessible(true);
+            Field f = FieldUtils.getField(v, "cache", true);
             cache = f.get(null);
             m = StudioUtil.findMethod(cache.getClass(), "put", String.class);
             m.setAccessible(true);

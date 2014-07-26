@@ -3,6 +3,11 @@
     <button label="Button"/>
     <label value="New Label"/>
     <window title="Window" vflex="true" maximized="@bind(vm.Birthdate)">
+        <attribute name="onCreate">
+            <![CDATA[
+                sss
+            ]]>
+        </attribute>
         <n:div class="container">
             <n:span class="1">
                 <button label="OK**9" value="@load(vm.FirstName)"/>
@@ -14,7 +19,13 @@
             </groupbox>
         </n:div>
         <hlayout>
-            <textbox value="@bind(vm.Birthdate)"/>
+            <textbox value="@bind(vm.Birthdate)">
+                <attribute name="onBookmarkChange">
+                    <![CDATA[
+                        ggg
+                    ]]>
+                </attribute>
+            </textbox>
             <textbox value="@save(vm.Birthdate)" rows="10" tabbable="true" draggable="true" style="eee" sclass="ggg"
                      focus="true"/>
             <button label="Button" orient="vertical"/>
