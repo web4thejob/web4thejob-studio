@@ -20,6 +20,25 @@
     </modules>
     <packaging>pom</packaging>
 
+    <developers>
+        <developer>
+            <id>bissaias</id>
+            <name>Veniamin Isaias</name>
+            <email>bissaias@hotmail.com</email>
+            <roles>
+                <role>Creator</role>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>git://github.com/web4thejob/web4thejob-studio.git</url>
+        <connection>scm:git:git://github.com/web4thejob/web4thejob-studio.git</connection>
+        <developerConnection>scm:git:https://github.com/web4thejob/web4thejob-studio.git</developerConnection>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.zkoss.version>7.0.2</org.zkoss.version>
