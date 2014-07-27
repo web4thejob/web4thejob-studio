@@ -19,7 +19,7 @@
                 <tab label="" iconSclass="z-icon-tags" sclass="tooltip-left" tooltiptext="Property Editor"/>
                 <tab label="" iconSclass="z-icon-bolt" sclass="tooltip-left" tooltiptext="Event Editor"/>
                 <tab label="" iconSclass="z-icon-code" sclass="tooltip-left" tooltiptext="Code Editor">
-                <attribute c:name="onSelect">
+                    <attribute c:name="onSelect">
                         var cm=zk('$editor').$().get('codemirror');
                         if (cm){
                         cm.refresh();
