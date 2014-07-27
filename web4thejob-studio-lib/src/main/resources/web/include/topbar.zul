@@ -12,8 +12,8 @@
 
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand logo-nav" href="designer">
-                        Web4thejob Studio
+                    <a class="navbar-brand logo-nav" href="logo">
+                    Web4thejob Studio
                     </a>
                 </div>
 
@@ -81,6 +81,11 @@
         jq("#nav-top-navbar a").attr("data-toggle","tooltip").attr("data-placement","bottom").tooltip();
 
         jq('#nav-top-navbar li').removeClass('active');
+
+        if (window.location.pathname.indexOf('logo')>0) {
+        jq('.navbar-brand').addClass('active');
+        return;
+        }
 
         if (window.location.pathname.indexOf('about')>0) {
         jq('#nav-about').addClass('active');

@@ -24,6 +24,10 @@ public class StudioRichlet extends GenericRichlet {
                 uri = "~./dashboard.zul";
                 title = "Dashboard";
                 break;
+            case "/logo":
+                uri = "~./logo.zul";
+                title = "Logo";
+                break;
             case "/dashboard":
                 uri = "~./dashboard.zul";
                 title = "Dashboard";

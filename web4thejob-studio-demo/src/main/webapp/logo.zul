@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk>
+    <include src="~./include/topbar.zul"></include>
+    <div id="wrapper">
+        <image src="/w4tjstudio-support/img?f=logo.png" id="logo" sclass="logo-image"/>
+        <image src="/w4tjstudio-support/img?f=logo2.png" id="text1" sclass="logo-text1"/>
+        <image src="/w4tjstudio-support/img?f=logo3.png" id="text2" sclass="logo-text2"/>
+        <html content="Your HTML here">
+            <![CDATA[
+                <div class="signature">
+                  <p>
+                    Copyright &copy; 2014 <a href="http://gr.linkedin.com/in/veniaminisaias/">Veniamin Isaias</a>
+                  </p>
+                  <p>
+                    Some rights reserved.
+                  </p>
+                </div>
+            ]]>
+        </html>
+    </div>
+    <script defer="true">
+        <![CDATA[
+            var img = jq('$logo');
+            var txt1 = jq('$text1');
+            var txt2 = jq('$text2');
+            var txt3 = jq('.signature');
+            function rotate() {
+              var dim = jq(window).outerWidth() / 2 - 175;
+              img.animate({
+                rotate: '360',
+                left: dim
+              }, 1000, 'linear', function() {
+                slidein1();
+              });
+            }
+            function slidein1() {
+              var dim = img.offset().left - 120;
+              txt1.animate({
+                left: dim
+              }, 500, 'linear', function() {
+                slidein2();
+              });
+            }
+            function slidein2() {
+              var leftdim = txt1.offset().left + txt1.outerWidth() + 10 + 'px';
+              txt2.animate({
+                left: leftdim
+              }, 500, 'linear', function() {
+                slidein3();
+              });
+            }
+            function slidein3() {
+              var topdim = txt2.offset().top + txt2.outerHeight() + 10 + 'px';
+              txt3.animate({
+                top: topdim
+              }, 500, 'linear');
+            }
+            rotate();
+        ]]>
+    </script>
+    <style>
+        .logo-image {
+        position: absolute;
+        left: -200px;
+        top: 150px;
+        }
+        .logo-text1 {
+        position: absolute;
+        left: -500px;
+        top: 530px;
+        }
+        .logo-text2 {
+        position: absolute;
+        left: 100%;
+        top: 480px;
+        }
+        .signature {
+        position: absolute;
+        width: 100%;
+        top: 110%;
+        text-align: center;
+        }
+        .signature p {
+        font-size: 22px;
+        color: red;
+        }
+    </style>
+</zk>
