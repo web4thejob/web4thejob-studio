@@ -30,6 +30,15 @@
                 free
                 service to all ZK developers and enthusiasts.
             </p>
+            <h2>Installation</h2>
+            <p>Installing Web4thejob Studio is as easy as adding a few configuration lines in your
+                <code>web.xml</code>
+                and
+                <code>zk.xml</code>
+                as below:
+            </p>
+            <h3>web.xml</h3>
+            <h3>zk.xml</h3>
             <h2>Usage</h2>
             <p>Using Web4thejob Studio is pretty straightforward: you create and modify zul pages
                 seamlessly by using three supplementary ways:
@@ -40,10 +49,12 @@
                 <li>By editing the zul code directly</li>
             </ol>
 
-            <p>Any change you made to the page is saved automatically by Web4thejob Studio to the web server's webapp
-                directory.
-                Hence, if you are running directly from the sources (i.e. unassembled webapp), you can push your changes
-                to your SCM right after! Check out
+            <p>Every time you hit the
+                <span class="label label-primary">Parse zul</span>
+                button Web4thejob Studio is saving automatically to the webapp
+                directory all the pending changes of the zul page under design.
+                Thus, if you are running directly from the sources (i.e. unassembled webapp), you can push your changes
+                to your preferred SCM without loosing any more time! Check out
                 <code>jetty:run</code>
                 maven goal for more info on this.
             </p>

@@ -1,39 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zk xmlns:n="native">
-    <button label="Button"/>
-    <label value="New Label"/>
-    <window title="Window" vflex="true" maximized="@bind(vm.Birthdate)">
-        <attribute name="onCreate">
-            <![CDATA[
-                sss
-            ]]>
-        </attribute>
-        <n:div class="container">
-            <n:span class="1">
-                <button label="OK**9" value="@load(vm.FirstName)"/>
-                <n:span class="2"/>
-            </n:span>
-            <groupbox>
-                <button label="@bind(vm.LastName)" type="@save(vm.LastName)"/>
-                <combobutton label="@load(vm.FirstName)" open="@bind(vm.FirstName)"/>
-            </groupbox>
-        </n:div>
-        <hlayout>
-            <textbox value="@bind(vm.Birthdate)">
-                <attribute name="onBookmarkChange">
-                    <![CDATA[
-                        ggg
-                    ]]>
-                </attribute>
-            </textbox>
-            <textbox value="@save(vm.Birthdate)" rows="10" tabbable="true" draggable="true" style="eee" sclass="ggg"
-                     focus="true"/>
-            <button label="Button" orient="vertical"/>
-            <textbox value="@load(vm.FirstName)"/>
-            <combobutton label="Combobutton"/>
-            <combobutton label="Combobutton"/>
-            <intbox/>
-        </hlayout>
-        <textbox type="password" value="@bind(vm.FirstName)" rows="@load(vm.Birthdate)"/>
-    </window>
+<?page title="About Web4thejob Studio" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <include src="~./include/topbar.zul"/>
+    <zk xmlns="http://www.zkoss.org/2005/zk/native">
+        <style>
+            .new-feature {
+            font-size: 9px;
+            color: red;
+            }
+            .icon-margin {
+            margin-right: 5px;
+            color: #428bca;
+            }
+            .icon-list {
+            padding-left: 20px
+            }
+            .code {
+            font-family: monospace
+            }
+        </style>
+        <div class="container">
+            <h2 id="about_about">About</h2>
+            <p>Web4thejob Studio has been initially incepted as an add-on for
+                <a href="http://web4thejob.org">Web4thejob Framework CE</a>. It's mission was to provide web4thejob
+                developers with an easy and visually-driven way to design custom panels on top of the
+                <a href="http://wiki.web4thejob.org/miscel/why_web4thejob#the_agile_development_lifecycle">automated UI
+                    /UX engine of the framework</a>.
+            </p>
+            <p>Going forward though, Web4thejob Studio has gradually evolved to a stand-alone product useful not only to
+                web4thejob developers but to any member of the ZK community. Therefore, we decided to open up the
+                product as a free service to all ZK developers and enthusiasts.
+            </p>
+            <h2>Installation</h2>
+            <p>Installing Web4thejob Studio is as easy as adding a few configuration lines to the files below:
+                <ol>
+                    <li>
+                        <a href="" target="_blank">web.xml</a>
+                    </li>
+                    <li>
+                        <a href="" target="_blank">zk.xml</a>
+                    </li>
+                    <li>
+                        <a href="" target="_blank">pom.xml</a>
+                    </li>
+                </ol>
+            </p>
+            <h2>Running</h2>
+            <p>In order to launch Web4thejob Studio in your browser you should visit the address
+                <kbd>http://server:port/context/w4tjstudio/</kbd>
+            </p>
+            <p>For example, if you are using a local jetty server and your context path is
+                <var>myapp</var>, you can launch Web4thejob Studio by typing
+                <kbd>http://localhost:8080/myapp/w4tjstudio/</kbd>. Please mind the trailing
+                <kbd>/</kbd>.
+            </p>
+            <h2>Limitations</h2>
+            <h2>Usage</h2>
+            <p>Using Web4thejob Studio is pretty straightforward: you create and modify zul pages seamlessly by using
+                three supplementary ways:
+            </p>
+            <ol>
+                <li>By dragging &amp; dropping widgets on the canvas</li>
+                <li>By dragging &amp; dropping widgets on the outline tree</li>
+                <li>By editing the zul code directly</li>
+            </ol>
+            <p>Every time you hit the
+                <span class="label label-primary">
+                    <i class="z-icon-refresh"/>   Parse zul
+                </span>
+                button Web4thejob Studio is saving automatically to the webapp directory all the pending changes of the
+                zul page under design. Thus, if you are running directly from the sources (i.e. unassembled webapp), you
+                can push your changes to your preferred SCM without loosing any more time! Check out
+                <code>jetty:run</code>
+                maven goal for more info on this.
+            </p>
+            <h2 id="about_features">Features</h2>
+            <div class="icon-list">
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets on Canvas or Outline tabs
+                </p>
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop attributes of JPA managed classes on
+                    widgets or on the property editor to bind them instantly
+                </p>
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Edit zul manually in ZUL tab with auto-complete
+                    support
+                </p>
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Edit the attributes of widgets using drop-down lists,
+                    literals or EL expressions
+                </p>
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Edit the server and client side events of widgets with
+                    syntax highlighting
+                </p>
+                <!-- <p><i class="z-icon-check-square-o icon-margin"/>Double-click on widgets containing captions and labels to edit their values directly </p> -->
+                <!-- <p><i class="z-icon-check-square-o icon-margin"/>Right-click on widgets to get a context-menu </p> -->
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets in Outline tab to rearrange
+                    them
+                </p>
+                <!-- <p><i class="z-icon-check-square-o icon-margin"/>Use the BACK and FORWARD buttons of your browser to traverse the development timeline </p> -->
+                <p>
+                    <i class="z-icon-check-square-o icon-margin"/>Use Bootstrap v3 classes
+                    <a target="_blank" href="http://www.zkoss.org/zk-bootstrap/">
+                        <i class="z-icon-arrow-circle-right"/>
+                    </a>
+                </p>
+                <!-- <p><i class="z-icon-check-square-o icon-margin"/>Position widgets absolutely by dragging them <small> <ol> <li>Set <code>position:absolute</code> in <span class="mono">style</span> attribute </li> <li>Ctrl+Click once on the widget and release</li> <li>Click and drag to the desired position</li> <li>Repeat steps 2 and 3 for moving again</li> </ol> <p>Alternatively, you can (a) do step 1 and then set <span class="mono">top</span> and <span class="mono">left</span> attributes (e.g. 20px and 130px respectively), or (b) forget all the above and use the <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Layouts/Absolutelayout"> Absolutelayout </a> widget. </p> </small> </p> -->
+            </div>
+            <h2 id="about_credits">Credits</h2>
+            <p>Web4thejob Studio has been designed and developed by
+                <strong>Veniamin Isaias</strong>
+                (
+                <a href="http://gr.linkedin.com/in/veniaminisaias/">
+                    <i class="z-icon-linkedin"/>
+                </a>
+                <a href="https://twitter.com/bissaias">
+                    <i class="z-icon-twitter"/>
+                </a>
+                ) and
+                <strong>George Tetzaloglou</strong>
+                (
+                <a href="http://gr.linkedin.com/pub/george-tetzaloglou/6/58a/bab">
+                    <i class="z-icon-linkedin"/>
+                </a>
+                ). Feel free to contact us should you have any request or business idea.
+            </p>
+            <p>Apart from
+                <a target="_blank" href="http://www.zkoss.org/">ZK</a>, our work has been greatly assisted by the
+                following amazing projects:
+            </p>
+            <ul>
+                <li>
+                    <a target="_blank" href="http://jquery.com/">JQuery</a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://jqueryui.com/">JQuery UI</a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://codemirror.net/">Codemirror</a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>
+                </li>
+            </ul>
+            <h2 id="about_license">License</h2>
+            <p>This work is licensed under a
+                <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons
+                    Attribution-NoDerivatives 4.0 International License</a>.
+            </p>
+            <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">
+                <img alt="Creative Commons License" style="border-width:0"
+                     src="http://i.creativecommons.org/l/by-nd/4.0/88x31.png"/>
+            </a>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    </zk>
 </zk>
