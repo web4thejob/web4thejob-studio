@@ -2,6 +2,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<?xel-method prefix="java" name="getVersion" class="org.web4thejob.studio.Version" signature="java.lang.String getVersion()"?>
 <zk>
     <include src="~./include/topbar.zul"></include>
     <div id="wrapper">
@@ -11,11 +12,14 @@
         <html content="Your HTML here">
             <![CDATA[
                 <div class="signature">
+                <p>
+                   <strong>v${java:getVersion()}</strong>
+                </p>
                   <p>
                     Copyright &copy; 2014 <a href="http://gr.linkedin.com/in/veniaminisaias/">Veniamin Isaias</a>
                   </p>
                   <p>
-                    Some rights reserved.
+                    <small>Some rights reserved.</small>
                   </p>
                 </div>
             ]]>
