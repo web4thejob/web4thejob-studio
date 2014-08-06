@@ -127,7 +127,7 @@
                     <stopPort>8181</stopPort>
                     <webApp>
                         <!-- Use a context path or skip to run the webapp under root context -->
-                        <contextPath>/test</contextPath>
+                        <contextPath>/demo</contextPath>
                     </webApp>
                 </configuration>
             </plugin>

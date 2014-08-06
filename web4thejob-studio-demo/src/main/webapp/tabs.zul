@@ -23,7 +23,7 @@
             }
         </style>
         <div class="container">
-            <h2 id="about_about">About</h2>
+            <h2 id="about_about">Abstract</h2>
             <p>Web4thejob Studio has been initially incepted as an add-on for
                 <a href="http://web4thejob.org">Web4thejob Framework CE</a>. It's mission was to provide web4thejob
                 developers with an easy and visually-driven way to design custom panels on top of the
@@ -34,22 +34,47 @@
                 web4thejob developers but to any member of the ZK community. Therefore, we decided to open up the
                 product as a free service to all ZK developers and enthusiasts.
             </p>
-            <h2>Sources</h2>
-            <p>The sources of the project live in
-                <a href="https://github.com/web4thejob/web4thejob-studio" target="_blank">Github</a>.
-            </p>
             <h2>Prerequisites</h2>
             <ul>
+                <li>Git client</li>
                 <li>Java 7 or higher</li>
                 <li>Servlet Container 3+</li>
                 <li>ZK 7+</li>
+                <li>Maven 3+ (optional but think twice before omitting)</li>
                 <li>JPA 2.1 (optional)</li>
             </ul>
             <p>It is highly recommended to use the
                 <code>jetty-maven-plugin</code>
-                if it is applicable in your project thanks to it's ability to run unassembled webapps. See the Usage
+                if possible in your project mainly because of it's ability to run unassembled webapps. See the Usage
                 section below for more info.
             </p>
+            <h2>Sources</h2>
+            <p>The sources of the project live in
+                <a href="https://github.com/web4thejob/web4thejob-studio" target="_blank">Github</a>.
+            </p>
+            <p>In order to compile and run Web4thejob Studio from the sources do the following:</p>
+            <ol>
+                <li>Clone the project from Github to a local directory, let's say
+                    <var>web4thejob-studio-parent</var>.
+                </li>
+                <li>Open a terminal window and navigate to the
+                    <var>web4thejob-studio-parent</var>
+                    directory.
+                </li>
+                <li>Type
+                    <kbd>mvn install</kbd>. This will compile and install everything to your local repo.
+                </li>
+                <li>Type
+                    <kbd>cd web4thejob-studio-demo-webapp</kbd>
+                </li>
+                <li>Type
+                    <kbd>mvn jetty:run</kbd>.
+                </li>
+                <li>Finally, open your browser and navigate to
+                    <kbd>http://localhost:8080/demo/w4tjstudio/</kbd>.
+                </li>
+                <li>Read the Usage section below for everything else.</li>
+            </ol>
             <h2>Installation</h2>
             <p>Web4thejob Studio is built with maven and published in Maven Central for your convinience. Therefore,
                 installing Web4thejob Studio in your web application is as easy as adding a few configuration lines to
@@ -81,37 +106,102 @@
                 environment. It goes without saying that none of them should be used in a production environment.
             </p>
             <h2>Running</h2>
-            <p>In order to launch Web4thejob Studio in your browser you should visit the address
+            <p>In order to launch Web4thejob Studio in your browser you should visit the address 
                 <kbd>http://server:port/context/w4tjstudio/</kbd>
             </p>
             <p>For example, if you are using a local jetty server and your context path is
                 <var>myapp</var>, you can launch Web4thejob Studio by typing
                 <kbd>http://localhost:8080/myapp/w4tjstudio/</kbd>. Please mind the trailing
-                <kbd>/</kbd>.
+                <kbd>/</kbd>. 
             </p>
             <h2>Usage</h2>
-            <p>Using Web4thejob Studio is pretty straightforward: you create and modify zul pages seamlessly by using
-                three supplementary ways:
+            <p>You can use Web4thejob Studio to edit any
+                <strong>existing</strong>
+                zul page under
+                <code>src/main/webapp/**</code>
+                directory of your web project.
+            </p>
+            <p>In order to add new pages you should use your preferred IDE (Eclipse, IntelliJ IDEA etc). That means that
+                you should first create a new zul page with the
+                <a href="https://github.com/web4thejob/web4thejob-studio/blob/master/web4thejob-studio-demo/src/main/webapp/empty.zul"
+                   target="_blank">minimum required zul xml
+                </a>
+                somewhere under
+                <code>src/main/webapp</code>. Then do the following:
             </p>
             <ol>
-                <li>By dragging &amp; dropping widgets on the canvas</li>
-                <li>By dragging &amp; dropping widgets on the outline tree</li>
-                <li>By editing the zul code directly or through the Property and Event editors</li>
+                <li>Launch Web4thejob Studio as described in the previous section.</li>
+                <li>Select the
+                    <i class="z-icon-folder-open" style="color:black"/>
+                    <strong>Webapp Page Navigator</strong>
+                    tab.
+                </li>
+                <li>Find your zul page and click on it. This will launch the
+                    <var>Web4thejob Studio Designer</var>
+                    for you.
+                </li>
             </ol>
-            <p>Every time you hit the
+            <p>From that point on using the
+                <var>Web4thejob Studio Designer</var>
+                is pretty straightforward: you develop zul pages seamlessly by using three supplementary ways:
+            </p>
+            <ol>
+                <li>By dragging &amp; dropping widgets from the
+                    <i class="z-icon-leaf" style="color:black"/>
+                    <strong>Widget</strong>
+                    side bar to the
+                    <i class="z-icon-coffee" style="color:black"/>
+                    <strong>Canvas</strong>
+                    view.
+                </li>
+                <li>By dragging &amp; dropping widgets from the
+                    <i class="z-icon-leaf" style="color:black"/>
+                    <strong>Widget</strong>
+                    side bar to the
+                    <i class="z-icon-sitemap" style="color:black"/>
+                    <strong>Outline</strong>
+                    view.
+                </li>
+                <li>By dragging &amp; dropping properties from the
+                    <i class="fa fa-database" style="color:black"/>
+                    <strong>JPA Classes</strong>
+                    side bar to components in the
+                    <i class="z-icon-coffee" style="color:black"/>
+                    <strong>Canvas</strong>
+                    and
+                    <i class="z-icon-sitemap" style="color:black"/>
+                    <strong>Outline</strong>
+                    views or to the
+                    <i class="z-icon-tags" style="color:black"/>
+                    <strong>Property Editor</strong>
+                    side bar.
+                </li>
+                <li>By editing the code directly in
+                    <i class="z-icon-code" style="color:black"/>
+                    <strong>ZUL</strong>
+                    view or through the
+                    <i class="z-icon-tags" style="color:black"/>
+                    <strong>Property</strong>
+                    and
+                    <i class="z-icon-bolt" style="color:black"/>
+                    <strong>Event Editors</strong>
+                    side bars.
+                </li>
+            </ol>
+            <p>Every time you hit the 
                 <span class="label label-primary">
-                    <i class="z-icon-refresh"/>   Parse zul
+                    <i class="z-icon-refresh"/> Parse zul
                 </span>
-                button Web4thejob Studio is saving automatically to the webapp directory all the pending changes of the
-                zul page under design. Thus, if you are running directly from the sources (i.e. unassembled webapp),
-                when you are done editing you can push your changes to your preferred SCM instantly! Check out
+                button Web4thejob Studio is saving to disk automatically all pending changes of the zul page under
+                design. Thus, if you are running directly from the sources (i.e. unassembled webapp), you can push your
+                changes to your preferred SCM instantly when you are done designing. Check out the
                 <code>jetty:run</code>
                 maven goal for more info on this.
             </p>
             <h2 id="about_features">Features</h2>
             <div class="icon-list">
                 <p>
-                    <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets on Canvas or Outline tabs
+                    <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop widgets on Canvas or Outline tabs 
                 </p>
                 <p>
                     <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop attributes of JPA managed classes on
@@ -137,7 +227,7 @@
                 </p>
                 <!-- <p><i class="z-icon-check-square-o icon-margin"/>Use the BACK and FORWARD buttons of your browser to traverse the development timeline </p> -->
                 <p>
-                    <i class="z-icon-check-square-o icon-margin"/>Use Bootstrap v3 classes
+                    <i class="z-icon-check-square-o icon-margin"/>Use Bootstrap v3 classes 
                     <a target="_blank" href="http://www.zkoss.org/zk-bootstrap/">
                         <i class="z-icon-arrow-circle-right"/>
                     </a>
@@ -145,6 +235,22 @@
                 <!-- <p><i class="z-icon-check-square-o icon-margin"/>Position widgets absolutely by dragging them <small> <ol> <li>Set <code>position:absolute</code> in <span class="mono">style</span> attribute </li> <li>Ctrl+Click once on the widget and release</li> <li>Click and drag to the desired position</li> <li>Repeat steps 2 and 3 for moving again</li> </ol> <p>Alternatively, you can (a) do step 1 and then set <span class="mono">top</span> and <span class="mono">left</span> attributes (e.g. 20px and 130px respectively), or (b) forget all the above and use the <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Layouts/Absolutelayout"> Absolutelayout </a> widget. </p> </small> </p> -->
             </div>
             <h2>Limitations</h2>
+            <p>Web4thejob Studio cannot be used in full when at least one of the following conditions apply:</p>
+            <ol>
+                <li>Your zul files are stored in the classpath and not under
+                    <code>src/main/webapp</code>.
+                </li>
+                <li>Your webapp needs to hook for itself the
+                    <code>ui-factory-class</code>
+                    system configuration in
+                    <code>zk.xml</code>.
+                </li>
+            </ol>
+            <p>In any case you may be able to partially use the design features of Web4thejob Studio by creating an
+                independent project relieved from the aforementioned limitations. You can use it to design your zul
+                pages and once you are done, you can copy/paste the generated zul code to the appropriate location
+                manually.
+            </p>
             <h2 id="about_credits">Credits</h2>
             <p>Web4thejob Studio has been designed and developed by
                 <strong>Veniamin Isaias</strong>

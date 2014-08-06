@@ -34,22 +34,47 @@
                 web4thejob developers but to any member of the ZK community. Therefore, we decided to open up the
                 product as a free service to all ZK developers and enthusiasts.
             </p>
-            <h2>Sources</h2>
-            <p>The sources of the project live in
-                <a href="https://github.com/web4thejob/web4thejob-studio" target="_blank">Github</a>.
-            </p>
             <h2>Prerequisites</h2>
             <ul>
+                <li>Git client</li>
                 <li>Java 7 or higher</li>
                 <li>Servlet Container 3+</li>
                 <li>ZK 7+</li>
+                <li>Maven 3+ (optional but think twice before omitting)</li>
                 <li>JPA 2.1 (optional)</li>
             </ul>
             <p>It is highly recommended to use the
                 <code>jetty-maven-plugin</code>
-                if it is applicable in your project thanks to it's ability to run unassembled webapps. See the Usage
+                if possible in your project mainly because of it's ability to run unassembled webapps. See the Usage
                 section below for more info.
             </p>
+            <h2>Sources</h2>
+            <p>The sources of the project live in
+                <a href="https://github.com/web4thejob/web4thejob-studio" target="_blank">Github</a>.
+            </p>
+            <p>In order to compile and run Web4thejob Studio from the sources do the following:</p>
+            <ol>
+                <li>Clone the project from Github to a local directory, let's say
+                    <var>web4thejob-studio-parent</var>.
+                </li>
+                <li>Open a terminal window and navigate to the
+                    <var>web4thejob-studio-parent</var>
+                    directory.
+                </li>
+                <li>Type
+                    <kbd>mvn install</kbd>. This will compile and install everything to your local repo.
+                </li>
+                <li>Type
+                    <kbd>cd web4thejob-studio-demo-webapp</kbd>
+                </li>
+                <li>Type
+                    <kbd>mvn jetty:run</kbd>.
+                </li>
+                <li>Finally, open your browser and navigate to
+                    <kbd>http://localhost:8080/demo/w4tjstudio/</kbd>.
+                </li>
+                <li>Read the Usage section below for everything else.</li>
+            </ol>
             <h2>Installation</h2>
             <p>Web4thejob Studio is built with maven and published in Maven Central for your convinience. Therefore,
                 installing Web4thejob Studio in your web application is as easy as adding a few configuration lines to
@@ -118,7 +143,7 @@
             </ol>
             <p>From that point on using the
                 <var>Web4thejob Studio Designer</var>
-                is pretty straightforward: you modify zul pages seamlessly by using three supplementary ways:
+                is pretty straightforward: you develop zul pages seamlessly by using three supplementary ways:
             </p>
             <ol>
                 <li>By dragging &amp; dropping widgets from the
@@ -160,7 +185,7 @@
                     and
                     <i class="z-icon-bolt" style="color:black"/>
                     <strong>Event Editors</strong>
-                    side bar.
+                    side bars.
                 </li>
             </ol>
             <p>Every time you hit the
