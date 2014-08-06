@@ -34,19 +34,51 @@
                 web4thejob developers but to any member of the ZK community. Therefore, we decided to open up the
                 product as a free service to all ZK developers and enthusiasts.
             </p>
+            <h2>Sources</h2>
+            <p>The sources of the project live in
+                <a href="https://github.com/web4thejob/web4thejob-studio" target="_blank">Github</a>.
+            </p>
+            <h2>Prerequisites</h2>
+            <ul>
+                <li>Java 7 or higher</li>
+                <li>Servlet Container 3+</li>
+                <li>ZK 7+</li>
+                <li>JPA 2.1 (optional)</li>
+            </ul>
+            <p>It is highly recommended to use the
+                <code>jetty-maven-plugin</code>
+                if it is applicable in your project thanks to it's ability to run unassembled webapps. See the Usage
+                section below for more info.
+            </p>
             <h2>Installation</h2>
-            <p>Installing Web4thejob Studio is as easy as adding a few configuration lines to the files below:
+            <p>Web4thejob Studio is built with maven and published in Maven Central for your convinience. Therefore,
+                installing Web4thejob Studio in your web application is as easy as adding a few configuration lines to
+                the files listed below. Follow the links to the respective files of
+                <a href="https://github.com/web4thejob/web4thejob-studio/tree/master/web4thejob-studio-demo"
+                   target="_blank">web4thejob-studio-demo
+                </a>
+                web application; a webapp in Github that demonstrates configuration and basic usage of Web4thejob
+                Studio.
                 <ol>
                     <li>
-                        <a href="" target="_blank">web.xml</a>
+                        <a href="https://github.com/web4thejob/web4thejob-studio/blob/master/web4thejob-studio-demo/pom.xml"
+                           target="_blank">pom.xml
+                        </a>
                     </li>
                     <li>
-                        <a href="" target="_blank">zk.xml</a>
+                        <a href="https://github.com/web4thejob/web4thejob-studio/blob/master/web4thejob-studio-demo/src/main/webapp/WEB-INF/web.xml"
+                           target="_blank">web.xml
+                        </a>
                     </li>
                     <li>
-                        <a href="" target="_blank">pom.xml</a>
+                        <a href="https://github.com/web4thejob/web4thejob-studio/blob/master/web4thejob-studio-demo/src/main/webapp/WEB-INF/zk.xml"
+                           target="_blank">zk.xml
+                        </a>
                     </li>
                 </ol>
+            </p>
+            <p>All settings in the files above are required to install Web4thejob Studio in your development
+                environment. It goes without saying that none of them should be used in a production environment.
             </p>
             <h2>Running</h2>
             <p>In order to launch Web4thejob Studio in your browser you should visit the address
@@ -57,7 +89,6 @@
                 <kbd>http://localhost:8080/myapp/w4tjstudio/</kbd>. Please mind the trailing
                 <kbd>/</kbd>.
             </p>
-            <h2>Limitations</h2>
             <h2>Usage</h2>
             <p>Using Web4thejob Studio is pretty straightforward: you create and modify zul pages seamlessly by using
                 three supplementary ways:
@@ -65,15 +96,15 @@
             <ol>
                 <li>By dragging &amp; dropping widgets on the canvas</li>
                 <li>By dragging &amp; dropping widgets on the outline tree</li>
-                <li>By editing the zul code directly</li>
+                <li>By editing the zul code directly or through the Property and Event editors</li>
             </ol>
             <p>Every time you hit the
                 <span class="label label-primary">
                     <i class="z-icon-refresh"/>   Parse zul
                 </span>
                 button Web4thejob Studio is saving automatically to the webapp directory all the pending changes of the
-                zul page under design. Thus, if you are running directly from the sources (i.e. unassembled webapp), you
-                can push your changes to your preferred SCM without loosing any more time! Check out
+                zul page under design. Thus, if you are running directly from the sources (i.e. unassembled webapp),
+                when you are done editing you can push your changes to your preferred SCM instantly! Check out
                 <code>jetty:run</code>
                 maven goal for more info on this.
             </p>
@@ -113,6 +144,7 @@
                 </p>
                 <!-- <p><i class="z-icon-check-square-o icon-margin"/>Position widgets absolutely by dragging them <small> <ol> <li>Set <code>position:absolute</code> in <span class="mono">style</span> attribute </li> <li>Ctrl+Click once on the widget and release</li> <li>Click and drag to the desired position</li> <li>Repeat steps 2 and 3 for moving again</li> </ol> <p>Alternatively, you can (a) do step 1 and then set <span class="mono">top</span> and <span class="mono">left</span> attributes (e.g. 20px and 130px respectively), or (b) forget all the above and use the <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Layouts/Absolutelayout"> Absolutelayout </a> widget. </p> </small> </p> -->
             </div>
+            <h2>Limitations</h2>
             <h2 id="about_credits">Credits</h2>
             <p>Web4thejob Studio has been designed and developed by
                 <strong>Veniamin Isaias</strong>

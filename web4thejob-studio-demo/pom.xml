@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>web4thejob-studio-parent</artifactId>
         <groupId>org.web4thejob</groupId>
@@ -17,52 +18,91 @@
     </properties>
 
     <dependencies>
+        <!--
+        - See below what are the mandatory/optional dependencies
+        - that you should define in your webapp's pom.xml
+        -->
+
+        <!--
+        - MANDATORY
+        - This is the Web4thejob Studio jar
+        -->
         <dependency>
             <groupId>org.web4thejob</groupId>
             <artifactId>web4thejob-studio-lib</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.web4thejob</groupId>
-            <artifactId>test-joblet</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
+        <!--
+        - MANDATORY
+        - You should define a 7+ version of ZK
+        -->
         <dependency>
             <groupId>org.zkoss.zk</groupId>
             <artifactId>zk</artifactId>
             <version>${org.zkoss.version}</version>
         </dependency>
+        <!--
+        - MANDATORY
+        - You should define a 7+ version of ZK
+        -->
         <dependency>
             <groupId>org.zkoss.zk</groupId>
             <artifactId>zul</artifactId>
             <version>${org.zkoss.version}</version>
         </dependency>
+        <!--
+        - OPTIONAL
+        - You need this only if you are using the binding mechanism of ZK 7 in your project
+        -->
         <dependency>
             <groupId>org.zkoss.zk</groupId>
             <artifactId>zkbind</artifactId>
             <version>${org.zkoss.version}</version>
         </dependency>
+        <!--
+        - OPTIONAL
+        - You need this only if you are using the Calendars component.
+        - Select any version that suits your needs.
+        -->
         <dependency>
             <groupId>org.zkoss.calendar</groupId>
             <artifactId>calendar</artifactId>
             <version>2.1.3</version>
         </dependency>
+        <!--
+        - OPTIONAL
+        - You need this only if you are using the CKEditor component
+        - Select any version that suits your needs.
+        -->
         <dependency>
             <groupId>org.zkoss.zkforge</groupId>
             <artifactId>ckez</artifactId>
             <version>4.3.3.0</version>
         </dependency>
-
+        <!--
+        - OPTIONAL
+        - You need this only if you are using JPA 2.1 in your project.
+        - Replace this dependency with the appropriate one
+        - if you are not using the Hibernate implementation (e.g. OpenJPA, EclipseLink etc)
+        -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${org.hibernate.version}</version>
         </dependency>
 
-
+        <!--
+        - IGNORE
+        - The remaining 2 dependencies are used for reasons internal to this web application.
+        - You can ignore them safely.
+        -->
         <dependency>
-            <groupId>com.h2database</groupId>
+            <groupId>org.web4thejob</groupId>
+            <artifactId>test-joblet</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+        <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.3.172</version>
             <!--<scope>test</scope>-->
@@ -72,6 +112,31 @@
 
     <build>
         <plugins>
+            <!--
+            - RECOMMENDED
+            - Use the jetty's web server jetty:run goal to run and test your webapp if possible.
+            - Thanks to it's ability to run a webapp as unassembled,
+            - your changes are persisted under src/main/webapp directory directly.
+            -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.0.RC0</version>
+                <configuration>
+                    <stopKey>my-stop-key</stopKey>
+                    <stopPort>8181</stopPort>
+                    <webApp>
+                        <!-- Use a context path or skip to run the webapp under root context -->
+                        <contextPath>/test</contextPath>
+                    </webApp>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.1.Final</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -79,26 +144,6 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-            </plugin>
-
-            <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.0.RC0</version>
-                <configuration>
-                    <!--<useTestClasspath>true</useTestClasspath>-->
-                    <stopKey>my-stop-key</stopKey>
-                    <stopPort>8181</stopPort>
-                    <webApp>
-                        <contextPath>/test</contextPath>
-                    </webApp>
-
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.1.Final</version>
             </plugin>
         </plugins>
     </build>

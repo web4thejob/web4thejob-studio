@@ -3,6 +3,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <!--
+    - MANDATORY
+    - You need this to activate the Web4thejob Studio Richlet
+    - http://books.zkoss.org/wiki/ZK_Developer's_Reference/UI_Composing/Richlet
+    -->
     <servlet>
         <description>ZK loader for evaluating ZUML pages</description>
         <servlet-name>zkLoader</servlet-name>
@@ -15,18 +20,24 @@
         <!-- MUST -->
     </servlet>
 
+    <!--
+    - MANDATORY
+    - You need this to activate the Web4thejob Studio Richlet
+    -->
     <servlet-mapping>
         <servlet-name>zkLoader</servlet-name>
         <url-pattern>/w4tjstudio/*</url-pattern>
     </servlet-mapping>
+
+    <!--
+    - OPTIONAL/RECOMMENDED
+    - You need this to have Web4thejob Studio handle errors gracefully.
+    - If this setting is reserved for other purposes in your project you can omit it.
+    - However, you may experience odd behavior when your servlet container throws exceptions.
+    -->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/w4tjstudio/exception</location>
     </error-page>
-
-
-    <!--<welcome-file-list>
-        <welcome-file>designer.zul</welcome-file>
-    </welcome-file-list>-->
 
 </web-app>
