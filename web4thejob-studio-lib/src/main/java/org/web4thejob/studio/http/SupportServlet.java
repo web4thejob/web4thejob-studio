@@ -103,7 +103,10 @@ public class SupportServlet extends HttpServlet {
 
             try (ServletOutputStream out = response.getOutputStream()) {
                 byte[] raw = IOUtils.toByteArray(img);
-                response.setContentType("image/" + FilenameUtils.getExtension(fileName));
+                String extension = FilenameUtils.getExtension(fileName);
+                if (extension.equals("ico")) extension = "x-icon";
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("image/" + extension);
                 response.setContentLength(raw.length);
                 out.write(raw);
             }
@@ -114,6 +117,7 @@ public class SupportServlet extends HttpServlet {
 
             try (ServletOutputStream outraw = response.getOutputStream()) {
                 byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(font));
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("font/opentype");
                 response.setContentLength(raw.length);
                 outraw.write(raw);
@@ -128,6 +132,7 @@ public class SupportServlet extends HttpServlet {
 
             try (ServletOutputStream outraw = response.getOutputStream()) {
                 byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(dir + file));
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("image/" + ext);
                 response.setContentLength(raw.length);
                 outraw.write(raw);
@@ -136,15 +141,19 @@ public class SupportServlet extends HttpServlet {
         } else {
             try (PrintWriter out = response.getWriter()) {
                 if (path.equals("/w4tjstudio-support/designer/scripts")) {
+                    response.setStatus(HttpServletResponse.SC_OK);
                     response.setContentType("text/javascript; charset=utf-8");
                     out.print(DESIGNER_SCRIPTS_CONTENT.toString());
                 } else if (path.equals("/w4tjstudio-support/designer/styles")) {
+                    response.setStatus(HttpServletResponse.SC_OK);
                     response.setContentType("text/css; charset=utf-8");
                     out.print(DESIGNER_STYLES_CONTENT.toString());
                 } else if (path.equals("/w4tjstudio-support/canvas/scripts")) {
+                    response.setStatus(HttpServletResponse.SC_OK);
                     response.setContentType("text/javascript; charset=utf-8");
                     out.print(CANVAS_SCRIPTS_CONTENT.toString());
                 } else if (path.equals("/w4tjstudio-support/canvas/styles")) {
+                    response.setStatus(HttpServletResponse.SC_OK);
                     response.setContentType("text/css; charset=utf-8");
                     out.print(CANVAS_STYLES_CONTENT.toString());
                 } else {
