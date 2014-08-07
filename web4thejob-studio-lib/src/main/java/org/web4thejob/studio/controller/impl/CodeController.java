@@ -20,10 +20,7 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Textbox;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,7 +162,9 @@ public class CodeController extends AbstractController {
 
                 Element toSelect = null;
                 try {
-                    Element target = StudioUtil.buildDocument(Locators.getDefault().getResourceAsStream(template)).getRootElement();
+                    InputStream is = Locators.getDefault().getResourceAsStream(template);
+                    Element target = StudioUtil.buildDocument(is).getRootElement();
+                    IOUtils.closeQuietly(is);
                     if ("zk".equals(target.getLocalName())) {
                         for (int i = 0; i < target.getChildCount(); i++) {
                             Element clone = (Element) target.getChild(i).copy();

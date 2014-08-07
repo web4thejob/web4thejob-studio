@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.ico"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.png"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <?xel-method prefix="java" name="getVersion" class="org.web4thejob.studio.Version" signature="java.lang.String getVersion()"?>

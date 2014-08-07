@@ -38,15 +38,23 @@ public class SupportServlet extends HttpServlet {
         String JS_PATH_PREFFIX = "org/web4thejob/studio/support/js/";
         Builder parser = new Builder(false);
         try {
-            Document scriptsDoc = parser.build(Locators.getDefault().getResourceAsStream("org/web4thejob/studio/support/script.xml"));
-            Document stylesheetsDoc = parser.build(Locators.getDefault().getResourceAsStream("org/web4thejob/studio/support/stylesheet.xml"));
+            InputStream is;
+
+            is = Locators.getDefault().getResourceAsStream("org/web4thejob/studio/support/script.xml");
+            Document scriptsDoc = parser.build(is);
+            is.close();
+
+            is = Locators.getDefault().getResourceAsStream("org/web4thejob/studio/support/stylesheet.xml");
+            Document stylesheetsDoc = parser.build(is);
+            is.close();
 
             DESIGNER_STYLES_CONTENT = new StringBuffer();
             for (int i = 0; i < stylesheetsDoc.getRootElement().getChildCount(); i++) {
                 Node child = stylesheetsDoc.getRootElement().getChild(i);
                 if (child instanceof Element && ((Element) child).getLocalName().equals("stylesheet")) {
-                    DESIGNER_STYLES_CONTENT.append(IOUtils.toString(Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + ((Element) child).getAttributeValue
-                            ("src"))));
+                    is = Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + ((Element) child).getAttributeValue("src"));
+                    DESIGNER_STYLES_CONTENT.append(IOUtils.toString(is));
+                    is.close();
                 }
             }
 
@@ -54,16 +62,21 @@ public class SupportServlet extends HttpServlet {
             for (int i = 0; i < scriptsDoc.getRootElement().getChildCount(); i++) {
                 Node child = scriptsDoc.getRootElement().getChild(i);
                 if (child instanceof Element && ((Element) child).getLocalName().equals("script")) {
-                    DESIGNER_SCRIPTS_CONTENT.append(IOUtils.toString(Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + ((Element) child).getAttributeValue
-                            ("src"))));
+                    is = Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + ((Element) child).getAttributeValue("src"));
+                    DESIGNER_SCRIPTS_CONTENT.append(IOUtils.toString(is));
+                    is.close();
                 }
             }
 
             CANVAS_SCRIPTS_CONTENT = new StringBuffer();
-            CANVAS_SCRIPTS_CONTENT.append(IOUtils.toString(Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + "canvas.js")));
+            is = Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + "canvas.js");
+            CANVAS_SCRIPTS_CONTENT.append(IOUtils.toString(is));
+            is.close();
 
             CANVAS_STYLES_CONTENT = new StringBuffer();
-            CANVAS_STYLES_CONTENT.append(IOUtils.toString(Locators.getDefault().getResourceAsStream(CSS_PATH_PREFFIX + "canvas.css")));
+            is = Locators.getDefault().getResourceAsStream(CSS_PATH_PREFFIX + "canvas.css");
+            CANVAS_STYLES_CONTENT.append(IOUtils.toString(is));
+            is.close();
 
 
         } catch (Exception e) {
@@ -103,8 +116,8 @@ public class SupportServlet extends HttpServlet {
 
             try (ServletOutputStream out = response.getOutputStream()) {
                 byte[] raw = IOUtils.toByteArray(img);
+                img.close();
                 String extension = FilenameUtils.getExtension(fileName);
-                if (extension.equals("ico")) extension = "x-icon";
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("image/" + extension);
                 response.setContentLength(raw.length);
@@ -116,7 +129,9 @@ public class SupportServlet extends HttpServlet {
             String font = "org/web4thejob/studio/support/js/font-awesome/fonts/fontawesome-webfont" + ext;
 
             try (ServletOutputStream outraw = response.getOutputStream()) {
-                byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(font));
+                InputStream is = Locators.getDefault().getResourceAsStream(font);
+                byte[] raw = IOUtils.toByteArray(is);
+                is.close();
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("font/opentype");
                 response.setContentLength(raw.length);
@@ -131,7 +146,9 @@ public class SupportServlet extends HttpServlet {
             String ext = file.substring(dot + 1);
 
             try (ServletOutputStream outraw = response.getOutputStream()) {
-                byte[] raw = IOUtils.toByteArray(Locators.getDefault().getResourceAsStream(dir + file));
+                InputStream is = Locators.getDefault().getResourceAsStream(dir + file);
+                byte[] raw = IOUtils.toByteArray(is);
+                is.close();
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("image/" + ext);
                 response.setContentLength(raw.length);

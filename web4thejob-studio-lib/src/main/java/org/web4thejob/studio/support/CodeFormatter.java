@@ -11,6 +11,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.StringTokenizer;
 
 /**
@@ -33,9 +34,19 @@ public abstract class CodeFormatter {
 
         try {
             String basePath = "org/web4thejob/studio/support/js/beautify/";
-            engine.eval(IOUtils.toString(Locators.getDefault().getResourceAsStream(basePath + "beautify.js")));
-            engine.eval(IOUtils.toString(Locators.getDefault().getResourceAsStream(basePath + "beautify-css.js")));
-            engine.eval(IOUtils.toString(Locators.getDefault().getResourceAsStream(basePath + "beautify-html.js")));
+            InputStream is;
+
+            is = Locators.getDefault().getResourceAsStream(basePath + "beautify.js");
+            engine.eval(IOUtils.toString(is));
+            is.close();
+
+            is = Locators.getDefault().getResourceAsStream(basePath + "beautify-css.js");
+            engine.eval(IOUtils.toString(is));
+            is.close();
+
+            is = Locators.getDefault().getResourceAsStream(basePath + "beautify-html.js");
+            engine.eval(IOUtils.toString(is));
+            is.close();
 
             invocable = (Invocable) engine;
             Object json = engine.eval("JSON");
