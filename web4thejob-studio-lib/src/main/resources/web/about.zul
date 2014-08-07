@@ -65,7 +65,7 @@
                     <kbd>mvn install</kbd>. This will compile and install everything to your local repo.
                 </li>
                 <li>Type
-                    <kbd>cd web4thejob-studio-demo-webapp</kbd>
+                    <kbd>cd web4thejob-studio-demo</kbd>
                 </li>
                 <li>Type
                     <kbd>mvn jetty:run</kbd>.

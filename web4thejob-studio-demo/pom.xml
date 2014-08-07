@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
 
-    <artifactId>web4thejob-studio-demo-webapp</artifactId>
+    <artifactId>web4thejob-studio-demo</artifactId>
     <name>Demo web application</name>
     <description>A demo web application for understanding Web4thejob Studio features</description>
 
