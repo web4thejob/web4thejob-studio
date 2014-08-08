@@ -77,16 +77,16 @@
                     <toolbarbutton label="Tabbox" hflex="true" image="/w4tjstudio-support/img?f=tabbox.png"
                                    ca:template="tabbox.zul"/>
                     <toolbarbutton label="Tab" hflex="true" image="/w4tjstudio-support/img?f=tab.png"
-                                   ca:template="tab.zul/"/>
+                                   ca:template="tab.zul"/>
                     <toolbarbutton label="Tabpanel" hflex="true" image="/w4tjstudio-support/img?f=tabpanel.png"
-                                   ca:template="tabpanel.zul/"/>
+                                   ca:template="tabpanel.zul"/>
                     <separator bar="true"/>
                     <toolbarbutton label="Caption" hflex="true" image="/w4tjstudio-support/img?f=caption.png"
                                    ca:template="caption.zul"/>
                     <toolbarbutton label="Groupbox" hflex="true" image="/w4tjstudio-support/img?f=groupbox.png"
                                    ca:template="groupbox.zul"/>
                     <toolbarbutton label="Div" hflex="true" image="/w4tjstudio-support/img?f=div.png"
-                                   ca:template="div.zul/"/>
+                                   ca:template="div.zul"/>
                     <toolbarbutton label="Span" hflex="true" image="/w4tjstudio-support/img?f=span.png"
                                    ca:template="span.zul"/>
                     <toolbarbutton label="Idspace" hflex="true" image="/w4tjstudio-support/img?f=zk.png"

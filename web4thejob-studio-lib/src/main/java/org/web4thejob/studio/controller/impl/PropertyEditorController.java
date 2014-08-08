@@ -372,8 +372,7 @@ public class PropertyEditorController extends AbstractController {
                     Label name = new Label(propertyName);
                     name.setParent(row);
 
-                    name.setValue(propertyName + (hasProperty(clazz, propertyName, isBoolean) ? "" : "*")); //indicates
-                    // attribute that needs code evaluation
+                    name.setValue(propertyName);
 
                     editor = createEditor(componentDefinition, property, val);
                     editor.setAttribute("property", propertyName);

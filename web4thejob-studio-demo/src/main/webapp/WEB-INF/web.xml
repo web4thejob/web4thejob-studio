@@ -40,4 +40,9 @@
         <location>/w4tjstudio/exception</location>
     </error-page>
 
+    <welcome-file-list>
+        <welcome-file>welcome.zul</welcome-file>
+    </welcome-file-list>
+
+
 </web-app>

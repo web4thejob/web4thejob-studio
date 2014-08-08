@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
+<zk xmlns:c="client">
+    <window title="ZK Window" vflex="true" hflex="true">
+        <menubar>
+            <menu label="Events demo">
+                <menupopup>
+                    <menuitem label="Say hello with JS!">
+                        <attribute c:name="onClick">
+                            <![CDATA[
+                                alert('Hello there, writing JS events with Web4thejob Studio is fun!');
+                            ]]>
+                        </attribute>
+                    </menuitem>
+                    <menuseparator/>
+                    <menuitem label="Say hello with Java!">
+                        <attribute name="onClick">
+                            <![CDATA[
+                                Clients.showNotification("Hello there, writing Java events with Web4thejob Studio is fun!", true);
+                            ]]>
+                        </attribute>
+                    </menuitem>
+                </menupopup>
+            </menu>
+            <menu label="Links demo">
+                <menupopup>
+                    <menuitem label="Go to other page" href="somepage.zul"/>
+                </menupopup>
+            </menu>
+        </menubar>
+        <borderlayout vflex="true">
+            <center>
+                <vlayout vflex="true" hflex="true" style="padding:10px">
+                    <html>
+                        <![CDATA[
+                             <h1>Welcome to Web4thejob Studio demo application!</h1>
+                        ]]>
+                    </html>
+                    <vbox hflex="true" align="center">
+                        <button label="Launch Web4thejob Studio Now!" zclass="btn btn-success"
+                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket"></button>
+                    </vbox>
+                </vlayout>
+            </center>
+            <west size="25%" splittable="true" collapsible="true" width="220px">
+                <tabbox width="true" vflex="true">
+                    <tabs>
+                        <tab label="Tab 1" closable="true"/>
+                        <tab label="Tab 2" closable="true"/>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel>
+                            <vbox vflex="true" hflex="true" spacing="10px">
+                                <textbox/>
+                                <combobox>
+                                    <comboitem label="Option 1"/>
+                                    <comboitem label="Option 2"/>
+                                    <comboitem label="Option 3"/>
+                                </combobox>
+                                <combobutton label="Combobutton"/>
+                                <bandbox>
+                                    <bandpopup>
+                                        <grid height="200px" width="350px">
+                                            <columns>
+                                                <column label="Col 1"/>
+                                                <column label="Col 2"/>
+                                                <column label="Col 3"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <label value="Value 1"/>
+                                                    <label value="Value 2"/>
+                                                    <label value="Value 3"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </bandpopup>
+                                </bandbox>
+                                <intbox/>
+                                <longbox/>
+                                <doublebox/>
+                                <decimalbox/>
+                                <checkbox label="Check"/>
+                                <radiogroup>
+                                    <radio label="1"/>
+                                    <radio label="2"/>
+                                    <radio label="3"/>
+                                </radiogroup>
+                                <datebox/>
+                                <doublespinner/>
+                                <spinner/>
+                                <slider curpos="20"/>
+                            </vbox>
+                        </tabpanel>
+                        <tabpanel>
+                            <vlayout spacing="15px">
+                                <label value="Nothing important here... sorry :-&gt;" sclass="tilt"/>
+                                <label value="Why don't you just drop some widgets yourself?" sclass="tilt"/>
+                            </vlayout>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+            </west>
+        </borderlayout>
+        <style>
+            .tilt {
+            font-style: italic;
+            font-size: 120%;
+            color: gray;
+            }
+        </style>
+    </window>
+</zk>
