@@ -3,6 +3,25 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.png"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<!--
+  ~ Copyright 2014 Veniamin Isaias
+  ~
+  ~ This file is part of Web4thejob Studio.
+  ~
+  ~ Web4thejob Studio is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Web4thejob Studio is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with Web4thejob Studio.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <include src="~./include/topbar.zul"/>
     <zk xmlns="http://www.zkoss.org/2005/zk/native">
@@ -34,13 +53,17 @@
                 web4thejob developers but to any member of the ZK community. Therefore, we decided to open up the
                 product as a free service to all ZK developers and enthusiasts.
             </p>
+            <h2 id="about_license">License</h2>
+            <p>This work is licensed under the
+                <a rel="license" href="https://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License v3</a>
+            </p>
             <h2>Prerequisites</h2>
             <ul>
                 <li>Git client</li>
                 <li>Java 7 or higher</li>
                 <li>Servlet Container 3+</li>
                 <li>ZK 7+</li>
-                <li>Maven 3+ (optional but think twice before omitting)</li>
+                <li>Maven 3+</li>
                 <li>JPA 2.1 (optional)</li>
             </ul>
             <p>It is highly recommended to use the
@@ -290,15 +313,6 @@
                     <a target="_blank" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>
                 </li>
             </ul>
-            <h2 id="about_license">License</h2>
-            <p>This work is licensed under a
-                <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons
-                    Attribution-NoDerivatives 4.0 International License</a>.
-            </p>
-            <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">
-                <img alt="Creative Commons License" style="border-width:0"
-                     src="http://i.creativecommons.org/l/by-nd/4.0/88x31.png"/>
-            </a>
             <br/>
             <br/>
             <br/>
