@@ -68,20 +68,23 @@ public class CanvasUiFactory extends SimpleUiFactory {
     @Override
     public PageDefinition getPageDefinition(RequestInfo ri, String path) {
         ServletRequest request = (ServletRequest) ri.getNativeRequest();
-        String file = request.getParameter(DesignerController.PARAM_WORK_FILE);
-        if (file == null || path.startsWith("~")) {
+        String prodFile = request.getParameter(DesignerController.PARAM_PRODUCTION_FILE);
+        String workFile = request.getParameter(DesignerController.PARAM_WORK_FILE);
+        if (workFile == null || prodFile == null || path.startsWith("~")) {
             return super.getPageDefinition(ri, path);
-        } else {
+        } else if (prodFile.startsWith(path)) {
             try {
                 //I use here the zk Document so that I will not have to parse twice the document
                 //in order to remove the uuids and then feed it to the getPageDefinitionDirectly.
                 //Alternatively I could do the uuid discarding with regex replace?!?
-                Document document = new SAXBuilder(true, false, true).build(new FileReader(file, "UTF-8"));
+                Document document = new SAXBuilder(true, false, true).build(new FileReader(workFile, "UTF-8"));
                 cleanUUIDs(document);
                 return super.getPageDefinitionDirectly(ri, document, "zul");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        } else {
+            return super.getPageDefinition(ri, path);
         }
     }
 

@@ -51,12 +51,12 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 10/5/2014.
  */
 public class DesignerController extends AbstractController {
-    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     public static final String PARAM_HINT = "w4tjstudio_hint";
     public static final String PARAM_MESSAGE = "w4tjstudio_message";
     public static final String PARAM_WORK_FILE = "w4tjstudio_workfile";
     public static final String PARAM_PRODUCTION_FILE = "w4tjstudio_prodfile";
     public static final String PARAM_XPATH = "w4tjstudio_xpath";
+    private static final String PARAM_TIMESTAMP = "w4tjstudio_timestamp";
     @Wire
     private Iframe canvasHolder;
     @Wire
@@ -409,6 +409,8 @@ public class DesignerController extends AbstractController {
                 params.put(PARAM_WORK_FILE, StudioUtil.buildWorkingFile(StudioUtil.getCode()).getAbsolutePath());
                 try {
                     String src = getCanvasHolderURI();
+                    //5. Production file
+                    params.put(PARAM_PRODUCTION_FILE, src);
                     canvasHolder.removeAttribute("src");
                     canvasHolder.setSrc(Encodes.setToQueryString(new StringBuffer(src), params).toString());
                     Clients.evalJavaScript("w4tjStudioDesigner.monitorCanvasHealth()");

@@ -99,13 +99,13 @@
                 <li>Read the Usage section below for everything else.</li>
             </ol>
             <h2>Installation</h2>
-            <p>Web4thejob Studio is built with maven and published in Maven Central for your convinience. Therefore,
+            <p>Web4thejob Studio is built with maven and published in Maven Central for your convenience. Therefore,
                 installing Web4thejob Studio in your web application is as easy as adding a few configuration lines to
                 the files listed below. Follow the links to the respective files of
                 <a href="https://github.com/web4thejob/web4thejob-studio/tree/master/web4thejob-studio-demo"
                    target="_blank">web4thejob-studio-demo
                 </a>
-                web application; a webapp in Github that demonstrates configuration and basic usage of Web4thejob
+                web application - a webapp in Github that demonstrates configuration and basic usage of Web4thejob
                 Studio.
                 <ol>
                     <li>

@@ -69,7 +69,7 @@ public class StudioRichlet extends GenericRichlet {
                 break;
             case "/exception":
                 Execution execution = Executions.getCurrent();
-                Exception e = (Exception) ((HttpServletRequest) execution.getNativeRequest()).getAttribute("javax.servlet.error.exception");
+                Throwable e = (Throwable) ((HttpServletRequest) execution.getNativeRequest()).getAttribute("javax.servlet.error.exception");
                 page.setAttribute("javax.servlet.error.exception", e);
                 page.setTitle("+++Error+++");
                 return;

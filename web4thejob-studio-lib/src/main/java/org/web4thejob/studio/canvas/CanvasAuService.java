@@ -66,7 +66,7 @@ public class CanvasAuService implements AuService {
         String result = "onCanvasSucceeded";
         try {
 
-            Exception e = getExceptionIfAny();
+            Throwable e = getExceptionIfAny();
 
             if (e == null) {
                 Document document = mapZulToComponents(workFile != null ? workFile : prodFile);
@@ -319,11 +319,11 @@ public class CanvasAuService implements AuService {
         return null;
     }
 
-    private static Exception getExceptionIfAny() {
-        Exception e = null;
+    private static Throwable getExceptionIfAny() {
+        Throwable e = null;
         for (Page page : Executions.getCurrent().getDesktop().getPages()) {
             if (page.hasAttribute("javax.servlet.error.exception")) {
-                e = (Exception) page.getAttribute("javax.servlet.error.exception");
+                e = (Throwable) page.getAttribute("javax.servlet.error.exception");
                 break;
             }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
+<?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
 <zk xmlns:c="client">
     <window title="ZK Window" vflex="true" hflex="true">
         <menubar>
@@ -33,12 +34,28 @@
                 <vlayout vflex="true" hflex="true" style="padding:10px">
                     <html>
                         <![CDATA[
-                             <h1>Welcome to Web4thejob Studio demo application!</h1>
+                             <h2>Welcome to Web4thejob Studio demo application!</h2>
+                            <p>
+                              What you see here is a typical zul page. It contains a variety of zk components that is frequently used in most zk web applications. If you were to create a page like this you would have to <strong>write and test more than 100 lines of cumbersome xml</strong> code
+                              before going into the real context of your application. Web4thejob Studio is here to eliminate this <strong>inefficiency</strong> for you!</p>
+                            <p>
+                              Web4thejob Studio is a web based IDE for building ZK web applications. It brings the <strong>convenience</strong> of a Swing or .NET GUI Builder right into your browser. In fact it does more than this by letting the developer design and debug the GUI
+                              of the application while it's executing. That means that you don't have to design and then run your application in order to interact with it. Web4thejob Studio facilitates both in one pass!
+                            </p>
+                            <p>
+                              Web4thejob Studio comes with three views (Canvas, Outline and ZUL) highly interconnected to each other. This means that when you select a widget from one view the other two will focus on your selection automatically. Extra care has been given to the code
+                              editor of the ZUL view. On top of <strong>syntax highlighting</strong> and elegant <strong>code formatting</strong> for all supported languages in a zul page (xml, javascript, zscript, html and css) you have <strong>autocomplete support</strong> for all
+                              zk widgets and their attributes. Should you want to view your page outside the IDE you can click the gray address bar at the top at any point in time.
+                            </p>
+                            <p>
+                              For more information including downloading and installing Web4thejob Studio in your project you are welcome to read the <a href="w4tjstudio/about.zul" target="_blank">About</a> page. In case you want to have a test drive before reading further, you can
+                              click the button below to play around with the page you are currently reading.
+                            </p>
                         ]]>
                     </html>
-                    <vbox hflex="true" align="center">
-                        <button label="Launch Web4thejob Studio Now!" zclass="btn btn-success"
-                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket"></button>
+                    <vbox hflex="true" align="center" style="margin-top:20px;">
+                        <button label="Launch this page in Web4thejob Studio Now!" zclass="btn btn-success"
+                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket"/>
                     </vbox>
                 </vlayout>
             </center>
@@ -57,7 +74,12 @@
                                     <comboitem label="Option 2"/>
                                     <comboitem label="Option 3"/>
                                 </combobox>
-                                <combobutton label="Combobutton"/>
+                                <combobutton label="Combobutton">
+                                    <menupopup>
+                                        <menuitem label="Foo"/>
+                                        <menuitem label="Bar"/>
+                                    </menupopup>
+                                </combobutton>
                                 <bandbox>
                                     <bandpopup>
                                         <grid height="200px" width="350px">
@@ -80,16 +102,17 @@
                                 <longbox/>
                                 <doublebox/>
                                 <decimalbox/>
-                                <checkbox label="Check"/>
+                                <checkbox label="Check" checked="true"/>
                                 <radiogroup>
                                     <radio label="1"/>
-                                    <radio label="2"/>
+                                    <radio label="2" checked="true"/>
                                     <radio label="3"/>
                                 </radiogroup>
                                 <datebox/>
                                 <doublespinner/>
                                 <spinner/>
                                 <slider curpos="20"/>
+                                <button label="Button"/>
                             </vbox>
                         </tabpanel>
                         <tabpanel>
@@ -107,6 +130,20 @@
             font-style: italic;
             font-size: 120%;
             color: gray;
+            }
+            p {
+            font: normal 110%/1.4 Arial, sans-serif;
+            }
+            /* fixes some zk+bs issues */
+            input[type=radio],
+            input[type=checkbox] {
+            margin: 0px 2px 2px 2px;
+            }
+            a:hover {
+            text-decoration: none !important;
+            }
+            .z-a:hover {
+            text-decoration: underline !important;
             }
         </style>
     </window>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groupbox id="gb" mold="3d" width="240px" closable="false">
+    <style>
+        .desc {
+        color: #008bb6;
+        font-weight: bold;
+        font-family: Times New Roman;
+        }
+        .pic {
+        width: 100px;
+        height: 100px;
+        }
+    </style>
+    <caption label="${empty arg.title ? 'Product Title Template': arg.title}"/>
+    <hlayout>
+        <label class="desc" value="${empty arg.desc ? 'This product has no descriptions.': arg.desc}"/>
+        <image class="pic" src="${arg.img}"/>
+    </hlayout>
+</groupbox>
