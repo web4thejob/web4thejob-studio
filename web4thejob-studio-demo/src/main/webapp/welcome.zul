@@ -2,7 +2,7 @@
 <?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
 <?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
 <zk xmlns:c="client">
-    <window title="ZK Window" vflex="true" hflex="true">
+    <window title="ZK Window" hflex="true" vflex="true">
         <menubar>
             <menu label="Events demo">
                 <menupopup>
@@ -39,8 +39,8 @@
                               What you see here is a typical zul page. It contains a variety of zk components that is frequently used in most zk web applications. If you were to create a page like this you would have to <strong>write and test more than 100 lines of cumbersome xml</strong> code
                               before going into the real context of your application. Web4thejob Studio is here to eliminate this <strong>inefficiency</strong> for you!</p>
                             <p>
-                              Web4thejob Studio is a web based IDE for building ZK web applications. It brings the <strong>convenience</strong> of a Swing or .NET GUI Builder right into your browser. In fact it does more than this by letting the developer design and debug the GUI
-                              of the application while it's executing. That means that you don't have to design and then run your application in order to interact with it. Web4thejob Studio facilitates both in one pass!
+                              Web4thejob Studio is a <strong>web based IDE</strong> for building ZK web applications. It brings the <strong>convenience</strong> of a Swing or .NET GUI Builder right into your browser. In fact it does more than this by letting the developer design and
+                              debug the GUI of the application while it's executing. That means that you don't have to design and then run your application in order to interact with it. Web4thejob Studio facilitates both in one pass!
                             </p>
                             <p>
                               Web4thejob Studio comes with three views (Canvas, Outline and ZUL) highly interconnected to each other. This means that when you select a widget from one view the other two will focus on your selection automatically. Extra care has been given to the code
@@ -55,7 +55,8 @@
                     </html>
                     <vbox hflex="true" align="center" style="margin-top:20px;">
                         <button label="Launch this page in Web4thejob Studio Now!" zclass="btn btn-success"
-                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket"/>
+                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket"
+                                id="btnLaunch"></button>
                     </vbox>
                 </vlayout>
             </center>
@@ -147,4 +148,13 @@
             }
         </style>
     </window>
+    <script defer="true">
+        <![CDATA[
+            //Launching Web4thejob Studio recursively is not supported and will lead
+            //to a fatal exception. This disables the button if running within the Designer.
+            if (typeof top.w4tjStudioDesigner === "object") {
+              zk("$btnLaunch").$().setDisabled(true);
+            }
+        ]]>
+    </script>
 </zk>

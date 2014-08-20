@@ -114,6 +114,7 @@ public class SupportServlet extends HttpServlet {
             return;
         }
 
+        response.setHeader("Access-Control-Allow-Origin", "*");
         String path = request.getServletPath();
         if (path.equals("/w4tjstudio-support/img")) {
             String f = request.getParameter("f");
@@ -152,7 +153,8 @@ public class SupportServlet extends HttpServlet {
                 byte[] raw = IOUtils.toByteArray(is);
                 is.close();
                 response.setStatus(HttpServletResponse.SC_OK);
-                response.setContentType("font/opentype");
+//                response.setContentType("font/opentype");
+                response.setContentType("application/octet-stream");
                 response.setContentLength(raw.length);
                 outraw.write(raw);
             }
@@ -198,6 +200,8 @@ public class SupportServlet extends HttpServlet {
             }
 
         }
+
+        response.flushBuffer();
     }
 
     @Override

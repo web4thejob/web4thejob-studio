@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
 <?component name="newProduct" macroURI="/macro.zul"?>
-<zk>
-    <newProduct/>
-    <separator height="30px"/>
-    <hlayout>
-        <newProduct title="Monitor" desc="The new HDMI monitor"
-                    img="http://www.zkoss.org/zkdemo/widgets/composite/macro_component/img/item1.jpg"/>
-        <newProduct title="Cell" desc="This is zPhone"
-                    img="http://www.zkoss.org/zkdemo/widgets/composite/macro_component/img/item2.jpg"/>
-    </hlayout>
+<zk xmlns:n="native">
+    <vlayout>
+        <n:h2>Macro Components</n:h2>
+        <n:p>This page is copied from</n:p>
+        <separator height="30px"/>
+        <newProduct/>
+        <separator height="30px"/>
+        <hlayout>
+            <newProduct title="Monitor" desc="The new HDMI monitor"
+                        img="http://www.zkoss.org/zkdemo/widgets/composite/macro_component/img/item1.jpg"/>
+            <newProduct title="Cell" desc="This is zPhone"
+                        img="http://www.zkoss.org/zkdemo/widgets/composite/macro_component/img/item2.jpg"/>
+        </hlayout>
+    </vlayout>
 </zk>
