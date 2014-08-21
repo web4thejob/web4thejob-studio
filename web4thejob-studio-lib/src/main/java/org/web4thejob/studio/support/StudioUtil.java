@@ -40,7 +40,6 @@ import org.zkoss.zk.ui.metainfo.ComponentDefinition;
 import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,13 +56,13 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 9/5/2014.
  */
 public abstract class StudioUtil {
-    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     public static final String ATTR_CANVAS_DESKTOP = "i-am-the-canvas-desktop";
     public static final String ATTR_PAIRED_DESKTOP = "paired-desktop-id";
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
     public static final String ATTR_WORK_FILE = "work-file";
+    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -463,29 +462,6 @@ public abstract class StudioUtil {
         return value;
     }
 
-
-    public static File getCanvasFile() {
-        Desktop desktop = (isCanvasDesktop() ? Executions.getCurrent().getDesktop() : getPairedDesktop());
-        return new File((String) desktop.getAttribute(ATTR_CANVAS_FILE));
-    }
-
-    public static String beautifyXml2(Document document) {
-        cleanWellKnownErrors(document);
-        final Serializer serializer;
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            serializer = new MultiplexSerializer(out);
-            serializer.setIndent(2);
-            serializer.write(document);
-//            serializer.setMaxLength(120);
-            serializer.flush();
-
-            String zul = out.toString("UTF-8");
-            zul = zul.replaceAll(" xmlns=\"\"", "");//xom bug?
-            return zul;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private static void cleanWellKnownErrors(Document document) {
         XPathContext xpathContext = XPathContext.makeNamespaceContext(document.getRootElement());

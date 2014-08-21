@@ -55,8 +55,7 @@
                     </html>
                     <vbox hflex="true" align="center" style="margin-top:20px;">
                         <button label="Launch this page in Web4thejob Studio Now!" zclass="btn btn-success"
-                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket"
-                                id="btnLaunch"></button>
+                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket" id="btnLaunch"/>
                     </vbox>
                 </vlayout>
             </center>

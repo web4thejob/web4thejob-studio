@@ -1,33 +1,37 @@
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.codec.Charsets;
 import org.junit.Test;
-import org.zkoss.io.Files;
-import org.zkoss.util.resource.Locators;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IOTests {
+    private String JS_PATH_PREFFIX = "org/web4thejob/studio/support/js/";
 
     @Test
     public void testFonts() throws IOException {
-
-//        String font = "org/web4thejob/studio/support/js/font-awesome/fonts/fontawesome-webfont.woff";
-        String font = "web/font/fontawesome-webfont.woff";
-
-        InputStream is = Locators.getDefault().getResourceAsStream(font);
-
-        byte[] raw = Files.readAll(is);
-        System.out.println(raw.length);
-
-        File f = new File("c:\\Documents and Settings\\e36132\\IdeaProjects\\web4thejob-studio\\web4thejob-studio-lib\\src\\main\\resources\\org\\web4thejob\\studio\\support\\js\\font-awesome\\fonts\\fontawesome-webfont.woff");
-        System.out.println(f.length());
-
-        FileInputStream fin = new FileInputStream(f);
-        byte[] raw2 = IOUtils.toByteArray(fin);
-        System.out.println(raw2.length);
+        java.nio.file.Files.readAllLines(Paths.get(""), Charsets.UTF_8);
 
 
     }
+
+    public List<String> readAllLines(InputStream is) {
+        BufferedReader r = new BufferedReader(new InputStreamReader(is));
+        List<String> list = new ArrayList<>();
+        String line;
+        try {
+            while ((line = r.readLine()) != null) {
+                list.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(new Error());
+        }
+        return list;
+    }
+
 }

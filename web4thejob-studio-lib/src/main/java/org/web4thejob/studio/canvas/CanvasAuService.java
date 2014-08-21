@@ -282,20 +282,6 @@ public class CanvasAuService implements AuService {
         return nodes.size() == 0;
     }
 
-    private static void updateProductionFile(String src, String dest) {
-        File srcFile = new File(src);
-        File destFile = new File(dest);
-        if (srcFile.exists() && destFile.exists()) {
-            try {
-                FileUtils.copyFile(srcFile, destFile);
-                srcFile.delete();
-            } catch (IOException e) {
-                e.printStackTrace();
-                showError(e, false);
-            }
-        }
-    }
-
     private static String getQueryParam(String queryString, String param) {
         if (queryString == null) return null;
 

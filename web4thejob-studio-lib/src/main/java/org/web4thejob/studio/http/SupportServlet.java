@@ -23,9 +23,10 @@ import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.codec.Charsets;
+import org.zkoss.io.Files;
 import org.zkoss.util.resource.Locators;
+import org.zkoss.web.servlet.Servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -72,7 +73,7 @@ public class SupportServlet extends HttpServlet {
                 Node child = stylesheetsDoc.getRootElement().getChild(i);
                 if (child instanceof Element && ((Element) child).getLocalName().equals("stylesheet")) {
                     is = Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + ((Element) child).getAttributeValue("src"));
-                    DESIGNER_STYLES_CONTENT.append(IOUtils.toString(is));
+                    DESIGNER_STYLES_CONTENT.append(new String(Files.readAll(is), Charsets.UTF_8));
                     is.close();
                 }
             }
@@ -82,19 +83,19 @@ public class SupportServlet extends HttpServlet {
                 Node child = scriptsDoc.getRootElement().getChild(i);
                 if (child instanceof Element && ((Element) child).getLocalName().equals("script")) {
                     is = Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + ((Element) child).getAttributeValue("src"));
-                    DESIGNER_SCRIPTS_CONTENT.append(IOUtils.toString(is));
+                    DESIGNER_SCRIPTS_CONTENT.append(new String(Files.readAll(is), Charsets.UTF_8));
                     is.close();
                 }
             }
 
             CANVAS_SCRIPTS_CONTENT = new StringBuffer();
             is = Locators.getDefault().getResourceAsStream(JS_PATH_PREFFIX + "canvas.js");
-            CANVAS_SCRIPTS_CONTENT.append(IOUtils.toString(is));
+            CANVAS_SCRIPTS_CONTENT.append(new String(Files.readAll(is), Charsets.UTF_8));
             is.close();
 
             CANVAS_STYLES_CONTENT = new StringBuffer();
             is = Locators.getDefault().getResourceAsStream(CSS_PATH_PREFFIX + "canvas.css");
-            CANVAS_STYLES_CONTENT.append(IOUtils.toString(is));
+            CANVAS_STYLES_CONTENT.append(new String(Files.readAll(is), Charsets.UTF_8));
             is.close();
 
 
@@ -135,9 +136,9 @@ public class SupportServlet extends HttpServlet {
             }
 
             try (ServletOutputStream out = response.getOutputStream()) {
-                byte[] raw = IOUtils.toByteArray(img);
+                byte[] raw = Files.readAll(img);
                 img.close();
-                String extension = FilenameUtils.getExtension(fileName);
+                String extension = Servlets.getExtension(fileName);
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("image/" + extension);
                 response.setContentLength(raw.length);
@@ -150,10 +151,9 @@ public class SupportServlet extends HttpServlet {
 
             try (ServletOutputStream outraw = response.getOutputStream()) {
                 InputStream is = Locators.getDefault().getResourceAsStream(font);
-                byte[] raw = IOUtils.toByteArray(is);
+                byte[] raw = Files.readAll(is);
                 is.close();
                 response.setStatus(HttpServletResponse.SC_OK);
-//                response.setContentType("font/opentype");
                 response.setContentType("application/octet-stream");
                 response.setContentLength(raw.length);
                 outraw.write(raw);
@@ -168,7 +168,7 @@ public class SupportServlet extends HttpServlet {
 
             try (ServletOutputStream outraw = response.getOutputStream()) {
                 InputStream is = Locators.getDefault().getResourceAsStream(dir + file);
-                byte[] raw = IOUtils.toByteArray(is);
+                byte[] raw = Files.readAll(is);
                 is.close();
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentType("image/" + ext);

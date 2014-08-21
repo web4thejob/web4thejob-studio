@@ -21,8 +21,9 @@ package org.web4thejob.studio.support;
 
 import nu.xom.Document;
 import nu.xom.Serializer;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.lang3.StringUtils;
+import org.zkoss.io.Files;
 import org.zkoss.util.resource.Locators;
 
 import javax.script.Invocable;
@@ -56,15 +57,15 @@ public abstract class CodeFormatter {
             InputStream is;
 
             is = Locators.getDefault().getResourceAsStream(basePath + "beautify.js");
-            engine.eval(IOUtils.toString(is));
+            engine.eval(new String(Files.readAll(is), Charsets.UTF_8));
             is.close();
 
             is = Locators.getDefault().getResourceAsStream(basePath + "beautify-css.js");
-            engine.eval(IOUtils.toString(is));
+            engine.eval(new String(Files.readAll(is), Charsets.UTF_8));
             is.close();
 
             is = Locators.getDefault().getResourceAsStream(basePath + "beautify-html.js");
-            engine.eval(IOUtils.toString(is));
+            engine.eval(new String(Files.readAll(is), Charsets.UTF_8));
             is.close();
 
             invocable = (Invocable) engine;
