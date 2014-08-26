@@ -20,9 +20,9 @@
 package org.web4thejob.studio.canvas;
 
 import nu.xom.*;
-import org.apache.commons.io.FileUtils;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.CodeFormatter;
+import org.web4thejob.studio.support.FileUtils;
 import org.zkoss.zk.au.AuRequest;
 import org.zkoss.zk.au.AuService;
 import org.zkoss.zk.ui.*;

@@ -22,14 +22,15 @@ package org.web4thejob.studio.controller.impl;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
-import org.apache.commons.io.IOUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
 import org.web4thejob.studio.support.CodeFormatter;
+import org.web4thejob.studio.support.FileUtils;
 import org.web4thejob.studio.support.StudioUtil;
 import org.web4thejob.studio.support.ZulXsdUtil;
 import org.zkoss.io.FileReader;
+import org.zkoss.io.Files;
 import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Locators;
 import org.zkoss.zk.ui.event.Event;
@@ -183,7 +184,7 @@ public class CodeController extends AbstractController {
                 try {
                     InputStream is = Locators.getDefault().getResourceAsStream(template);
                     Element target = StudioUtil.buildDocument(is).getRootElement();
-                    IOUtils.closeQuietly(is);
+                    Files.close(is);
                     if ("zk".equals(target.getLocalName())) {
                         for (int i = 0; i < target.getChildCount(); i++) {
                             Element clone = (Element) target.getChild(i).copy();
@@ -254,7 +255,7 @@ public class CodeController extends AbstractController {
         try {
             File workFile = new File(getWorkFile());
             if (!workFile.exists()) return;
-            lines = IOUtils.readLines(new FileReader(workFile, "UTF-8"));
+            lines = FileUtils.readAllLines(new FileReader(workFile, "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -311,7 +312,7 @@ public class CodeController extends AbstractController {
         try {
             File workFile = new File(getWorkFile());
             if (!workFile.exists()) return;
-            lines = IOUtils.readLines(new FileReader(workFile, "UTF-8"));
+            lines = FileUtils.readAllLines(new FileReader(workFile, "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
             return;

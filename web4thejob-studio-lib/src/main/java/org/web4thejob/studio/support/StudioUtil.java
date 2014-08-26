@@ -20,8 +20,6 @@
 package org.web4thejob.studio.support;
 
 import nu.xom.*;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -56,13 +54,13 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 9/5/2014.
  */
 public abstract class StudioUtil {
+    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     public static final String ATTR_CANVAS_DESKTOP = "i-am-the-canvas-desktop";
     public static final String ATTR_PAIRED_DESKTOP = "paired-desktop-id";
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
     public static final String ATTR_WORK_FILE = "work-file";
-    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -410,7 +408,7 @@ public abstract class StudioUtil {
         InputStream inputStream = Locators.getDefault().getResourceAsStream(uri);
         if (inputStream == null) return null;
 
-        return processProcessingInstructions(IOUtils.readLines(inputStream));
+        return processProcessingInstructions(FileUtils.readAllLines(inputStream));
     }
 
     public static String processProcessingInstructions(String[] lines) {
