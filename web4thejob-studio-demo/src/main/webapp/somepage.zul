@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
+<?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
 <?component name="newProduct" macroURI="/macro.zul"?>
-<zk xmlns:n="native">
+<zk>
     <vlayout>
-        <n:h2>Macro Components</n:h2>
-        <n:p>This page is copied from</n:p>
+        <html>
+            <![CDATA[
+                 <h2>Macro Components</h2>
+                <p>This page is copied from the
+                  <a href="http://www.zkoss.org/zkdemo/composite/macro_component" target="_blank">ZK Live Demo</a> application and it demonstrates how to handle macro components.
+                </p>
+                <p>You will notice that you cannot edit the contents of the macro component in this page directly. This makes absolute sence since the macro components are defined in a seperate zul page, namely in <code>macro.zul</code>.</p>
+                <p>Hence, in order to change the macro components you should go to <var>Project Dashboard -> Webapp Page Navigator</var> and click on <code>macro.zul</code>. Do your changes in the new window and then return here and press <strong>Parse zul</strong> to see them
+                  in action.
+                </p>
+                <p>The same stands for all embedeed zul pages like the <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Essential_Components/Include" target="_blank">Include component.</a>
+                </p>
+            ]]>
+        </html>
         <separator height="30px"/>
         <newProduct/>
         <separator height="30px"/>
@@ -14,5 +27,12 @@
             <newProduct title="Cell" desc="This is zPhone"
                         img="http://www.zkoss.org/zkdemo/widgets/composite/macro_component/img/item2.jpg"/>
         </hlayout>
+        <separator height="30px" bar="true"/>
+        <button label="Hey, unlike macros you can interact with me"/>
     </vlayout>
+    <style>
+        p {
+        font: normal 110%/1.4 Arial, sans-serif;
+        }
+    </style>
 </zk>

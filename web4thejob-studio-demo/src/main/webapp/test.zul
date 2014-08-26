@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--<?style type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"?>-->
-<zk>
-    <button label="Button" iconSclass="z-icon-leaf"/>
-    <!--<span sclass="fa fa-database">DB</span>-->
-</zk>
