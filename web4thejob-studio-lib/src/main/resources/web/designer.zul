@@ -196,4 +196,6 @@
         .tooltip {z-index:1000}
 
     </style>
+
+    <include src="~./include/analytics.zul"/>
 </zk>

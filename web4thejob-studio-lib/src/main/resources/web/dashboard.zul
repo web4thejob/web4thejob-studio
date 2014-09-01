@@ -289,4 +289,6 @@
         .popover.left.warning>.arrow:after {border-left-color: #f0ad4e;}
         .popover.right.warning>.arrow:after {border-right-color: #f0ad4e;}
     </style>
+
+    <include src="~./include/analytics.zul"/>
 </zk>

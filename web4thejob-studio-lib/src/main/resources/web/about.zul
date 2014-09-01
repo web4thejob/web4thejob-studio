@@ -321,4 +321,5 @@
             <br/>
         </div>
     </zk>
+    <include src="~./include/analytics.zul"/>
 </zk>
