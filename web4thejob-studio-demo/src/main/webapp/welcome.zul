@@ -31,7 +31,7 @@
         </menubar>
         <borderlayout vflex="true">
             <center>
-                <vlayout vflex="true" hflex="true" style="padding:10px">
+                <vlayout vflex="true" hflex="true" style="padding:10px;overflow:auto">
                     <html>
                         <![CDATA[
                              <h2>Welcome to Web4thejob Studio demo application!</h2>
@@ -54,8 +54,7 @@
                         ]]>
                     </html>
                     <vbox hflex="true" align="center" style="margin-top:20px;">
-                        <button label="Launch this page in Web4thejob Studio Now!" zclass="btn btn-success"
-                                href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket" id="btnLaunch"/>
+                        <button label="Launch this page in Web4thejob Studio Now!" zclass="btn btn-success" href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket" id="btnLaunch"/>
                     </vbox>
                 </vlayout>
             </center>
@@ -127,23 +126,23 @@
         </borderlayout>
         <style>
             .tilt {
-            font-style: italic;
-            font-size: 120%;
-            color: gray;
+              font-style: italic;
+              font-size: 120%;
+              color: gray;
             }
             p {
-            font: normal 110%/1.4 Arial, sans-serif;
+              font: normal 110%/1.4 Arial, sans-serif;
             }
             /* fixes some zk+bs issues */
             input[type=radio],
             input[type=checkbox] {
-            margin: 0px 2px 2px 2px;
+              margin: 0px 2px 2px 2px;
             }
             a:hover {
-            text-decoration: none !important;
+              text-decoration: none !important;
             }
             .z-a:hover {
-            text-decoration: underline !important;
+              text-decoration: underline !important;
             }
         </style>
     </window>
