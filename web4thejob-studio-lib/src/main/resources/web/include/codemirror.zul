@@ -84,8 +84,8 @@
         </center>
         <south size="50px" border="none">
             <hlayout hflex="true" vflex="true">
-                <hbox hflex="true" height="300px" vflex="true" align="center" pack="start">
-                    <button id="btnDialog" mold="w4tjstudio" sclass="dummy-btndialog btn-default btn-${arg.size}"
+                <hbox hflex="true" vflex="true" align="center" pack="start">
+                <button id="btnDialog" mold="w4tjstudio" sclass="dummy-btndialog btn-default btn-${arg.size}"
                             iconSclass="z-icon-external-link" if="${arg.size=='xs'}"/>
                 </hbox>
                 <hbox hflex="true" pack="end" align="center" vflex="true" spacing="10px">
