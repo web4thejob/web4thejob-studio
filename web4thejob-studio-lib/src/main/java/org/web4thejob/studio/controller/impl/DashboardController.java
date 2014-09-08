@@ -27,7 +27,9 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.OpenEvent;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import java.io.File;
@@ -76,7 +78,30 @@ public class DashboardController extends AbstractController {
         buildTree();
     }
 
-    private void buildTree() {
+    public void buildTree(String focusPath) {
+        buildTree();
+
+        if (focusPath == null) return;
+        for (Treeitem item : projectTree.getItems()) {
+            if (focusPath.equals(item.getAttribute("fullpath"))) {
+                item.setSelected(true);
+                item.setOpen(true);
+
+                Component parent = item.getParent();
+                while (!parent.equals(projectTree)) {
+                    if (parent instanceof Treeitem) {
+                        ((Treeitem) parent).setOpen(true);
+                    }
+                    parent = parent.getParent();
+                }
+
+                Clients.scrollIntoView(item);
+                return;
+            }
+        }
+    }
+
+    public void buildTree() {
         projectTree.getTreechildren().getChildren().clear();
 
         File homeDir = new File(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/"));
@@ -110,6 +135,7 @@ public class DashboardController extends AbstractController {
     private Treeitem buildTreeitem(Treeitem parent, File file) {
         Treeitem treeitem = new Treeitem();
         treeitem.setAttribute("filename", file.getName());
+        treeitem.setAttribute("fullpath", file.getAbsolutePath());
         Treerow treerow = new Treerow();
         treerow.setParent(treeitem);
         Treecell cellName = new Treecell(file.getName());
@@ -134,6 +160,7 @@ public class DashboardController extends AbstractController {
         }
 
         if (file.isDirectory()) {
+            treeitem.setAttribute("dir", true);
             treeitem.addEventListener(Events.ON_OPEN, ON_OPEN_HANDLER);
             cellName.setIconSclass("z-icon-folder" + (parent == null ? "-open" : ""));
             treeitem.setOpen(parent == null);
@@ -180,12 +207,43 @@ public class DashboardController extends AbstractController {
         return contents;
     }
 
+    @Listen("onProjectNavRefresh=#projectTree")
+    public void onProjectNavRefresh() {
+        Clients.clearBusy();
+        StudioUtil.clearAlerts();
+
+        String selpath = null;
+        Treeitem selection = projectTree.getSelectedItem();
+        if (selection != null) {
+            selpath = (String) selection.getAttribute("fullpath");
+        }
+
+        buildTree(selpath);
+    }
+
+    @Listen("onProjectAddNew=#projectTree")
+    public void onProjectAddNew() {
+        Clients.clearBusy();
+        StudioUtil.clearAlerts();
+
+        Treeitem selection = projectTree.getSelectedItem();
+        if (selection == null || !selection.hasAttribute("dir")) {
+            StudioUtil.showError("You need to select a directory first.", true);
+            return;
+        }
+
+        Map<String, Object> args = new HashMap<>();
+        args.put("location", selection.getAttribute("fullpath"));
+        args.put("dashboardController", this);
+        Executions.getCurrent().createComponents("~./include/newfiledialog.zul", null, args);
+    }
+
     private static class OnlyDirs implements FileFilter {
+        private boolean onlyDirs;
+
         public OnlyDirs(boolean onlyDirs) {
             this.onlyDirs = onlyDirs;
         }
-
-        private boolean onlyDirs;
 
         @Override
         public boolean accept(File f) {
@@ -208,6 +266,5 @@ public class DashboardController extends AbstractController {
             ((Treecell) ((Treeitem) event.getTarget()).getTreerow().getFirstChild()).setIconSclass("z-icon-folder" + (event.isOpen() ? "-open" : ""));
         }
     }
-
 
 }

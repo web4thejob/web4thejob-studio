@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
+<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
+<zk xmlns:c="client" xmlns:n="native">
+    <window id="win" border="none" mode="modal" style="box-shadow: 0 0 7px black;" closable="true"
+            apply="org.web4thejob.studio.controller.impl.AddFileController">
+        <vbox hflex="true" vflex="true">
+            <hbox vflex="true" hflex="true" align="center">
+                <button mold="w4tjstudio" label="File" iconSclass="z-icon-level-up">
+                    <attribute c:name="onClick">
+                        <![CDATA[
+                            var done = zk("$btnDone").$();
+                            if (done.get("file") || done.get("file") == null) {
+                              done.set("file", false);
+                              this.setLabel("Directory");
+                              this.setIconSclass("z-icon-level-down");
+                              zk("$txtFilename").$().setPlaceholder("type the directory name here");
+                              zk("$txtFilename").jq.next().hide();
+                            } else {
+                              done.set("file", true);
+                              this.setLabel("File");
+                              this.setIconSclass("z-icon-level-up");
+                              zk("$txtFilename").$().setPlaceholder("type the file name here");
+                              zk("$txtFilename").jq.next().show();
+                            }
+                            zk("$txtFilename").$().focus();
+                        ]]>
+                    </attribute>
+                </button>
+                <n:div class="input-group">
+                    <textbox id="txtFilename" sclass="form-control" width="250px" placeholder="type the file name here"
+                             focus="true"/>
+                    <n:span class="input-group-addon">.zul</n:span>
+                </n:div>
+                <button id="btnDone" label="Done" mold="w4tjstudio" sclass="btn-success" iconSclass="z-icon-save">
+                    <attribute c:name="onClick">
+                        <![CDATA[
+                            var file = (this.get("file") || this.get("file") == null);
+                            zAu.send(new zk.Event(zk("$win").$(), "onDoneClicked", {
+                              "file": file
+                            }));
+                        ]]>
+                    </attribute>
+                </button>
+                <button id="btnCancel" label="Cancel" mold="w4tjstudio"/>
+            </hbox>
+        </vbox>
+    </window>
+    <style>
+        .panel-body {
+        padding-bottom: 0px;
+        padding: 0px;
+        }
+    </style>
+</zk>

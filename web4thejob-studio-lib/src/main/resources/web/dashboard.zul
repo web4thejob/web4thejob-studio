@@ -174,19 +174,10 @@
                                         </panelchildren>
                                     </panel>
                                 </div>
-                                <script type="text/javascript" defer="true">
-                                    <![CDATA[
-                                        jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-primary btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
-                                        jq("#jpascan").click(function() {
-                                          //send event
-                                          zAu.cmd0.showBusy();
-                                          zAu.send(new zk.Event(zk("$jpacontroller").$(), "onJpaScan", {}));
-                                        });
-                                    ]]>
-                                </script>
                             </tabpanel>
                             <tabpanel>
-                                <panel mold="w4tjstudio" vflex="true" title="Webapp Page Navigator">
+                                <panel mold="w4tjstudio" vflex="true">
+                                    <caption id="projectNav" label="Webapp Page Navigator   "/>
                                     <panelchildren>
                                         <tree id="projectTree" vflex="true"
                                               apply="org.web4thejob.studio.controller.impl.DashboardController"
@@ -208,6 +199,30 @@
             </panelchildren>
         </panel>
     </div>
+
+    <script type="text/javascript" defer="true">
+        <![CDATA[
+            jq("$jpaCaption").append('<div class="pull-left"><button id="jpascan" type="button" class="btn btn-primary btn-xs" style="font-size:14px"><i class="z-icon-repeat"></i>&#160;&#160;Scan now</button></div>');
+            jq("#jpascan").click(function() {
+              //send event
+              zAu.cmd0.showBusy();
+              zAu.send(new zk.Event(zk("$jpacontroller").$(), "onJpaScan", {}));
+            });
+
+            jq("$projectNav").append('<div class="pull-left">' + '<button id="navrefresh" type="button" class="btn btn-primary btn-xs" style="font-size:14px" title="Refreshes the contents of the Navigator"><i class="z-icon-repeat"></i>&#160;&#160;Refresh</button>' + '<button id="navaddnew" type="button" class="btn btn-success btn-xs" style="font-size:14px;margin-left:8px;" title="Adds new ZUL file to your project"><i class="z-icon-plus"></i>&#160;&#160;Add New</button>' + '</div>');
+            jq("#navrefresh").click(function() {
+              //send event
+              zAu.cmd0.showBusy();
+              zAu.send(new zk.Event(zk("$projectTree").$(), "onProjectNavRefresh", {}));
+            });
+            jq("#navaddnew").click(function() {
+              //send event
+              zAu.cmd0.showBusy();
+              zAu.send(new zk.Event(zk("$projectTree").$(), "onProjectAddNew", {}));
+            });
+        ]]>
+    </script>
+
     <style>
         .z-tree-body tr {
         height: 30px;
