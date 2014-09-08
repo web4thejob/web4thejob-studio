@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
-<?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <zk xmlns:c="client" xmlns:n="native">
     <window id="win" border="none" mode="modal" style="box-shadow: 0 0 7px black;" closable="true"
             apply="org.web4thejob.studio.controller.impl.AddFileController">
@@ -29,11 +27,18 @@
                 </button>
                 <n:div class="input-group">
                     <textbox id="txtFilename" sclass="form-control" width="250px" placeholder="type the file name here"
-                             focus="true"/>
+                             focus="true">
+                        <attribute c:name="onChanging">
+                            <![CDATA[
+                                zk("$btnDone").$().setDisabled(event.value == "" || event.value == null);
+                            ]]>
+                        </attribute>
+                    </textbox>
                     <n:span class="input-group-addon">.zul</n:span>
                 </n:div>
-                <button id="btnDone" label="Done" mold="w4tjstudio" sclass="btn-success" iconSclass="z-icon-save">
-                    <attribute c:name="onClick">
+                <button id="btnDone" label="Done" mold="w4tjstudio" sclass="btn-success" iconSclass="z-icon-save"
+                        disabled="true">
+                <attribute c:name="onClick">
                         <![CDATA[
                             var file = (this.get("file") || this.get("file") == null);
                             zAu.send(new zk.Event(zk("$win").$(), "onDoneClicked", {

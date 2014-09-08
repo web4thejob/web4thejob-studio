@@ -138,19 +138,15 @@
                 <kbd>/</kbd>.
             </p>
             <h2>Usage</h2>
-            <p>You can use Web4thejob Studio to edit any
-                <strong>existing</strong>
-                zul page under
+            <p>You can use Web4thejob Studio to
+                <strong>add</strong>
+                (as of version 1.0.3) or
+                <strong>edit</strong>
+                any zul page under
                 <code>src/main/webapp/**</code>
                 directory of your web project.
             </p>
-            <p>In order to add new pages you should use your preferred IDE (Eclipse, IntelliJ IDEA etc). That means that
-                you should first create a new zul page with the
-                <a href="https://github.com/web4thejob/web4thejob-studio/blob/master/web4thejob-studio-demo/src/main/webapp/empty.zul"
-                   target="_blank">minimum required zul xml
-                </a>
-                somewhere under
-                <code>src/main/webapp</code>. Then do the following:
+            <p>The process to do so is described below:
             </p>
             <ol>
                 <li>Launch Web4thejob Studio as described in the previous section.</li>
@@ -159,7 +155,14 @@
                     <strong>Webapp Page Navigator</strong>
                     tab.
                 </li>
-                <li>Find your zul page and click on it. This will launch the
+                <li>If you want to add a new zul page click on the
+                    <span class="label label-success">
+                        <i class="z-icon-plus"></i>
+                        Add New
+                    </span>
+                    button at the top. From the dialog that appears you can define the name of a new file or directory.
+                </li>
+                <li>From the project tree find your zul page and click on it. This will launch the
                     <var>Web4thejob Studio Designer</var>
                     for you.
                 </li>
