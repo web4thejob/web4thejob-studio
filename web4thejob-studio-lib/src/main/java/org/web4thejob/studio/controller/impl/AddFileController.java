@@ -59,13 +59,13 @@ public class AddFileController extends SelectorComposer<Component> {
 
     @Listen("onClick=#btnCancel;onCancel=#win")
     public void onCancel() {
+        StudioUtil.clearAlerts();
         win.detach();
     }
 
     @Listen("onDoneClicked=#win")
     public void onDone(Event event) {
-
-
+        StudioUtil.clearAlerts();
         boolean isFile = (boolean) ((Map) event.getData()).get("file");
         String name = txtFilename.getValue().trim();
         if (name.length() == 0) {
@@ -77,16 +77,15 @@ public class AddFileController extends SelectorComposer<Component> {
             if (isFile) {
                 file = new File(parentDir.getAbsolutePath() + System.getProperty("file.separator") + name + ".zul");
                 if (file.exists()) {
-                    StudioUtil.showError("File already exists", true);
+                    StudioUtil.showPopover(txtFilename.getUuid(), "error", "File already exists.", true);
                     return;
                 }
 
-                //file.createNewFile();
                 FileUtils.writeStringToFile(file, "<zk/>", "UTF-8");
             } else {
                 file = new File(parentDir.getAbsolutePath() + System.getProperty("file.separator") + name);
                 if (file.exists()) {
-                    StudioUtil.showError("Directory already exists", true);
+                    StudioUtil.showPopover(txtFilename.getUuid(), "error", "Directory already exists.", true);
                     return;
                 }
 

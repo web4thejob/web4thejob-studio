@@ -21,6 +21,7 @@ package org.web4thejob.studio.controller.impl;
 
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
+import org.web4thejob.studio.support.CookieUtil;
 import org.web4thejob.studio.support.StudioUtil;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.zk.ui.Component;
@@ -32,6 +33,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.UnsupportedEncodingException;
@@ -236,6 +238,18 @@ public class DashboardController extends AbstractController {
         args.put("location", selection.getAttribute("fullpath"));
         args.put("dashboardController", this);
         Executions.getCurrent().createComponents("~./include/newfiledialog.zul", null, args);
+    }
+
+    @Listen("onClick=#btnSourceLocChange")
+    public void SourceLocationChangeClicked() {
+        Executions.createComponents("~./include/sourcewebappdialog.zul", null, null);
+    }
+
+    @Listen("onClick=#btnSourceLocDelete")
+    public void SourceLocationDeleteClicked() {
+        String name = CookieUtil.comformCookieName(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/"));
+        CookieUtil.deleteCookie((HttpServletResponse) Executions.getCurrent().getNativeResponse(), name);
+        Executions.getCurrent().sendRedirect(null);
     }
 
     private static class OnlyDirs implements FileFilter {

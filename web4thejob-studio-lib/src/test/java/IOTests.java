@@ -1,11 +1,11 @@
 import org.apache.commons.codec.Charsets;
 import org.junit.Test;
+import org.web4thejob.studio.support.Base32;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,4 +34,17 @@ public class IOTests {
         return list;
     }
 
+    @Test
+    public void MD5() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        String val = "d:";
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] d = md.digest(val.getBytes("UTF-8"));
+
+        //System.out.println(d);
+
+        String v2 = Base32.encode(d);
+        System.out.println(v2);
+
+
+    }
 }

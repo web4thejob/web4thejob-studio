@@ -38,6 +38,7 @@ import org.zkoss.zk.ui.metainfo.ComponentDefinition;
 import org.zkoss.zk.ui.metainfo.LanguageDefinition;
 import org.zkoss.zk.ui.util.Clients;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,13 +55,13 @@ import static org.zkoss.lang.Generics.cast;
  * Created by Veniamin on 9/5/2014.
  */
 public abstract class StudioUtil {
-    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     public static final String ATTR_CANVAS_DESKTOP = "i-am-the-canvas-desktop";
     public static final String ATTR_PAIRED_DESKTOP = "paired-desktop-id";
     public static final String ATTR_STUDIO_CONTROLLERS = "studio-controllers";
     public static final String ATTR_CANVAS_UUID = "canvas-uuid";
     public static final String ATTR_CANVAS_FILE = "canvas-file";
     public static final String ATTR_WORK_FILE = "work-file";
+    private static final String ATTR_CONFIG = "w4tjstudio-configuration";
     private static Map<Class<? extends Component>, Component> defaults = cast(Collections.synchronizedMap(new
             HashMap<>()));
 
@@ -648,5 +649,17 @@ public abstract class StudioUtil {
             searchType = searchType.getSuperclass();
         }
         return null;
+    }
+
+    public static String getSourcePath() {
+        String name = CookieUtil.comformCookieName(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/"));
+        String path = CookieUtil.getCookie((HttpServletRequest) Executions.getCurrent().getNativeRequest(), name);
+
+        if (path == null) return null;
+
+        File f = new File(path);
+        if (!f.exists() || !f.isDirectory()) return null;
+
+        return f.getAbsolutePath();
     }
 }

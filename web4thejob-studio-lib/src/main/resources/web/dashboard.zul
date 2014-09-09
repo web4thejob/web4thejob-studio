@@ -3,6 +3,7 @@
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
 <?xel-method prefix="java" name="getProperty" class="java.lang.System" signature="java.lang.String getProperty(java.lang.String property)"?>
+<?xel-method prefix="studio" name="getSourcePath" class="org.web4thejob.studio.support.StudioUtil" signature="java.lang.String getSourcePath()"?>
 <!--
   ~ Copyright 2014 Veniamin Isaias
   ~
@@ -42,7 +43,7 @@
         ]]>
     </script>
     <div class="container" vflex="true" style="margin-bottom:20px">
-        <panel vflex="true" hflex="true">
+        <panel vflex="true" hflex="true" apply="org.web4thejob.studio.controller.impl.DashboardController">
             <panelchildren>
                 <vbox vflex="true" hflex="true">
                     <div sclass="page-header">
@@ -60,7 +61,7 @@
                                     <panelchildren>
                                         <grid style="border:0px" vflex="true" hflex="true">
                                             <columns>
-                                                <column width="200px"/>
+                                                <column width="250px"/>
                                                 <column hflex="true"/>
                                             </columns>
                                             <rows>
@@ -74,7 +75,7 @@
                                                 </row>
                                                 <row>
                                                     <cell align="right">
-                                                        <n:h4>Webapp location:</n:h4>
+                                                        <n:h4>Target Webapp location:</n:h4>
                                                     </cell>
                                                     <n:h4 style="font-family: monospace">
                                                         ${desktop.webApp.getRealPath('/')}
@@ -82,7 +83,20 @@
                                                 </row>
                                                 <row>
                                                     <cell align="right">
-                                                        <n:h4>Browser family:</n:h4>
+                                                        <n:h4>Source Webapp location:</n:h4>
+                                                    </cell>
+                                                    <n:h4 style="font-family: monospace">
+                                                        ${empty studio:getSourcePath() ? "Not set" : studio:getSourcePath()}
+                                                        <button id="btnSourceLocChange" label="Change" mold="w4tjstudio"
+                                                                sclass="btn-primary btn-xs"/>
+                                                        <button id="btnSourceLocDelete" label="Delete" mold="w4tjstudio"
+                                                                sclass="btn-danger btn-xs"
+                                                                if="${not empty studio:getSourcePath()}"/>
+                                                    </n:h4>
+                                                </row>
+                                                <row>
+                                                    <cell align="right">
+                                                    <n:h4>Browser family:</n:h4>
                                                     </cell>
                                                     <n:h4 style="font-family: monospace">${execution.getBrowser()}
                                                     </n:h4>
@@ -179,10 +193,8 @@
                                 <panel mold="w4tjstudio" vflex="true">
                                     <caption id="projectNav" label="Webapp Page Navigator   "/>
                                     <panelchildren>
-                                        <tree id="projectTree" vflex="true"
-                                              apply="org.web4thejob.studio.controller.impl.DashboardController"
-                                              style="border:0px">
-                                            <treecols sizable="true">
+                                        <tree id="projectTree" vflex="true" style="border:0px">
+                                        <treecols sizable="true">
                                                 <treecol label="File Name" align="center"/>
                                                 <treecol align="center" label="Writable" width="80px"/>
                                                 <treecol align="center" label="Size" width="200px"/>

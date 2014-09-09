@@ -67,6 +67,7 @@ var w4tjStudioDesigner = {
 
   clearAlerts: function() {
     jq('.alert').alert('close');
+    jq('.popover').detach();
   },
 
   alert: function(clazz, title, message, autoclosable, encoded) {
@@ -396,6 +397,7 @@ var w4tjStudioDesigner = {
 
     if (sclass) {
       p.data("bs.popover").$tip.addClass(sclass);
+      p.data("bs.popover").$tip.css("z-index","1800");
     }
 
     if (autoclose)

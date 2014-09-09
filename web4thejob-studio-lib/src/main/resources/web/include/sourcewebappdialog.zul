@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns:c="client">
+    <window id="win" border="none" mode="modal" style="box-shadow: 0 0 7px black;" closable="true" width="700px"
+            height="350px" apply="org.web4thejob.studio.controller.impl.SourceWebappController">
+        <vlayout hflex="true" vflex="true" style="margin-top:15px;margin-left:15px;;margin-right:15px;" spacing="5px">
+            <hbox vflex="3" hflex="true">
+                <html vflex="true" hflex="true">
+                    <![CDATA[
+                        <p>When it's not possible to run your webapp as unassembled (e.g. using the <code>jetty:run</code> maven goal), you can use this setting to let Web4thejob Studio know the actual location of your project's <code>src/main/webapp</code> directory.</p>
+                        <p>
+                          With this setting, every time you add or change ZUL files, your actions will be automatically performed on both locations (i.e. Target and Source Webapp locations). This way Web4thejob Studio becomes equally beneficiary even when it's used on assembled
+                          war files. Thus, you can use Web4thejob Studio with the servlet maven plugin of your choice (tomcat, wildfly, glassfish etc).
+                        </p>
+                        <p>
+                          This setting is stored in a cookie so that you will not have to set this every time you open Web4thejob Studio. The value of the cookie is the Target Webapp directory, so it's unique per project.
+                        </p>
+                        <p><span class="label label-danger">Important</span> Please make sure that Web4thejob Studio has write permissions on both Source and Target Webapp locations for this feature to work correctly.
+                        </p>
+                    ]]>
+                </html>
+            </hbox>
+            <hbox vflex="1" align="center" hflex="true">
+                <textbox id="txtPath" placeholder="Paste the source path here" focus="true" hflex="true"
+                         sclass="form-control">
+                    <attribute c:name="onOK">
+                        <![CDATA[
+                            var btnDone = zk("$btnDone").$();
+                            if (!btnDone.isDisabled()) {
+                              zk("$win").$().onOK();
+                            }
+                        ]]>
+                    </attribute>
+                    <attribute c:name="onChanging">
+                        <![CDATA[
+                            zk("$btnDone").$().setDisabled(event.value == "" || event.value == null);
+                        ]]>
+                    </attribute>
+                </textbox>
+                <button id="btnDone" label="Done" mold="w4tjstudio" sclass="btn-success" iconSclass="z-icon-save"
+                        disabled="true">
+                    <attribute c:name="onClick">
+                        <![CDATA[
+                            zk("$win").$().onOK();
+                        ]]>
+                    </attribute>
+                </button>
+                <button id="btnCancel" label="Cancel" mold="w4tjstudio"/>
+            </hbox>
+            <script defer="true">
+                <![CDATA[
+                    zk("$win").$().onOK = function() {
+                      var btnDone = zk("$btnDone").$();
+                      var file = (btnDone.get("file") || btnDone.get("file") == null);
+                      zAu.send(new zk.Event(zk("$win").$(), "onDoneClicked", {
+                        "file": file
+                      }));
+                    }
+                ]]>
+            </script>
+        </vlayout>
+    </window>
+    <style>
+        .panel-body {
+        padding-bottom: 0px;
+        padding: 0px;
+        }
+    </style>
+</zk>
