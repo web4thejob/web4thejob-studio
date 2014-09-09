@@ -28,6 +28,14 @@
                 <n:div class="input-group">
                     <textbox id="txtFilename" sclass="form-control" width="250px" placeholder="type the file name here"
                              focus="true">
+                        <attribute c:name="onOK">
+                            <![CDATA[
+                                var btnDone = zk("$btnDone").$();
+                                if (!btnDone.isDisabled()) {
+                                  zk("$win").$().onOK();
+                                }
+                            ]]>
+                        </attribute>
                         <attribute c:name="onChanging">
                             <![CDATA[
                                 zk("$btnDone").$().setDisabled(event.value == "" || event.value == null);
@@ -38,18 +46,26 @@
                 </n:div>
                 <button id="btnDone" label="Done" mold="w4tjstudio" sclass="btn-success" iconSclass="z-icon-save"
                         disabled="true">
-                <attribute c:name="onClick">
+                    <attribute c:name="onClick">
                         <![CDATA[
-                            var file = (this.get("file") || this.get("file") == null);
-                            zAu.send(new zk.Event(zk("$win").$(), "onDoneClicked", {
-                              "file": file
-                            }));
+                            zk("$win").$().onOK();
                         ]]>
                     </attribute>
                 </button>
                 <button id="btnCancel" label="Cancel" mold="w4tjstudio"/>
             </hbox>
         </vbox>
+        <script defer="true">
+            <![CDATA[
+            zk("$win").$().onOK = function() {
+              var btnDone = zk("$btnDone").$();
+              var file = (btnDone.get("file") || btnDone.get("file") == null);
+              zAu.send(new zk.Event(zk("$win").$(), "onDoneClicked", {
+                "file": file
+              }));
+            }
+        ]]>
+        </script>
     </window>
     <style>
         .panel-body {

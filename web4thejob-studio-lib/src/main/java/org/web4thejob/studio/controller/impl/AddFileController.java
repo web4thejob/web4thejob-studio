@@ -57,7 +57,7 @@ public class AddFileController extends SelectorComposer<Component> {
         Assert.assertTrue(dashboardController != null, "Attribute dashboardController is missing");
     }
 
-    @Listen("onClick=#btnCancel")
+    @Listen("onClick=#btnCancel;onCancel=#win")
     public void onCancel() {
         win.detach();
     }
