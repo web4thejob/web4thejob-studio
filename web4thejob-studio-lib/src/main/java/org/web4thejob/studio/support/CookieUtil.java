@@ -25,14 +25,19 @@ import java.security.MessageDigest;
 
 public abstract class CookieUtil {
 
-    public static void setCookie(HttpServletResponse response, String name, String value) {
+    private static Cookie newCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(60 * 60 * 24 * 30 * 12); //1Y
+        return cookie;
+    }
+
+    public static void setCookie(HttpServletResponse response, String name, String value) {
+        Cookie cookie = newCookie(name, value);
         response.addCookie(cookie);
     }
 
     public static void deleteCookie(HttpServletResponse response, String name) {
-        Cookie cookie = new Cookie(name, "");
+        Cookie cookie = newCookie(name, "");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }

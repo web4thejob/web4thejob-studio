@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns:c="client">
     <window id="win" border="none" mode="modal" style="box-shadow: 0 0 7px black;" closable="true" width="700px"
-            height="350px" apply="org.web4thejob.studio.controller.impl.SourceWebappController">
+            height="380px" apply="org.web4thejob.studio.controller.impl.SourceWebappController">
         <vlayout hflex="true" vflex="true" style="margin-top:15px;margin-left:15px;;margin-right:15px;" spacing="5px">
             <hbox vflex="3" hflex="true">
                 <html vflex="true" hflex="true">
@@ -12,7 +12,7 @@
                           war files. Thus, you can use Web4thejob Studio with the servlet maven plugin of your choice (tomcat, wildfly, glassfish etc).
                         </p>
                         <p>
-                          This setting is stored in a cookie so that you will not have to set this every time you open Web4thejob Studio. The value of the cookie is the Target Webapp directory, so it's unique per project.
+                          This setting is stored in a cookie so that you will not have to set this every time you launch Web4thejob Studio. The name of the cookie is a hashed version of the Target Webapp directory, so it's unique per project.
                         </p>
                         <p><span class="label label-danger">Important</span> Please make sure that Web4thejob Studio has write permissions on both Source and Target Webapp locations for this feature to work correctly.
                         </p>
@@ -20,7 +20,8 @@
                 </html>
             </hbox>
             <hbox vflex="1" align="center" hflex="true">
-                <textbox id="txtPath" placeholder="Paste the source path here" focus="true" hflex="true"
+                <textbox id="txtPath" placeholder="Paste the path to the source src/main/webapp directory here"
+                         focus="true" hflex="true"
                          sclass="form-control">
                     <attribute c:name="onOK">
                         <![CDATA[

@@ -85,14 +85,21 @@
                                                     <cell align="right">
                                                         <n:h4>Source Webapp location:</n:h4>
                                                     </cell>
-                                                    <n:h4 style="font-family: monospace">
+                                                    <cell>
+                                                        <n:h4 style="font-family: monospace">
                                                         ${empty studio:getSourcePath() ? "Not set" : studio:getSourcePath()}
-                                                        <button id="btnSourceLocChange" label="Change" mold="w4tjstudio"
-                                                                sclass="btn-primary btn-xs"/>
-                                                        <button id="btnSourceLocDelete" label="Delete" mold="w4tjstudio"
-                                                                sclass="btn-danger btn-xs"
-                                                                if="${not empty studio:getSourcePath()}"/>
-                                                    </n:h4>
+                                                        </n:h4>
+                                                        <hlayout spacing="10px">
+                                                            <button id="btnSourceLocChange" label="Change"
+                                                                    mold="w4tjstudio"
+                                                                    sclass="btn-primary btn-xs"
+                                                                    iconSclass="z-icon-pencil"/>
+                                                            <button id="btnSourceLocDelete" label="Delete"
+                                                                    mold="w4tjstudio"
+                                                                    sclass="btn-danger btn-xs" iconSclass="z-icon-minus"
+                                                                    if="${not empty studio:getSourcePath()}"/>
+                                                        </hlayout>
+                                                    </cell>
                                                 </row>
                                                 <row>
                                                     <cell align="right">
