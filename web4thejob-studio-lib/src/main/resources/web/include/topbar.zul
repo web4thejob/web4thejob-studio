@@ -98,7 +98,10 @@
         return;
         }
 
+        if (window.location.pathname.indexOf('dashboard')>0) {
         jq('#nav-designer').addClass('active');
+        return;
+        }
     </script>
 
     <script type="text/javascript" defer="true">

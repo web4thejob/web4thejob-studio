@@ -22,6 +22,7 @@ package org.web4thejob.studio.canvas;
 import nu.xom.*;
 import org.web4thejob.studio.support.ChildDelegate;
 import org.web4thejob.studio.support.CodeFormatter;
+import org.web4thejob.studio.support.CookieUtil;
 import org.web4thejob.studio.support.FileUtils;
 import org.zkoss.zk.au.AuRequest;
 import org.zkoss.zk.au.AuService;
@@ -29,6 +30,7 @@ import org.zkoss.zk.ui.*;
 import org.zkoss.zk.ui.sys.DesktopCtrl;
 import org.zkoss.zk.ui.util.Clients;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,6 +42,7 @@ import java.util.Map;
 
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.web4thejob.studio.controller.impl.DesignerController.*;
+import static org.web4thejob.studio.support.CookieUtil.comformCookieName;
 import static org.web4thejob.studio.support.StudioUtil.*;
 
 /**
@@ -78,7 +81,21 @@ public class CanvasAuService implements AuService {
                     cleanUUIDs(document.getRootElement());
                     File fileProd = new File(prodFile);
                     if (fileProd.exists() && fileProd.canWrite()) {
-                        FileUtils.writeStringToFile(fileProd, CodeFormatter.formatXML(document), "UTF-8");
+                        String xml = CodeFormatter.formatXML(document);
+
+                        //update target webapp production file
+                        FileUtils.writeStringToFile(fileProd, xml, "UTF-8");
+
+                        String targetWebapp = canvasDesktop.getWebApp().getRealPath("/");
+                        String sourceWebapp = CookieUtil.getCookie((HttpServletRequest) Executions.getCurrent().getNativeRequest(), comformCookieName(targetWebapp));
+                        //update source webapp production file
+                        if (sourceWebapp != null) {
+                            File fileSourceWebapp = new File(sourceWebapp);
+                            if (fileSourceWebapp.exists() && fileSourceWebapp.isDirectory() && fileSourceWebapp.canWrite()) {
+                                File fileProd2 = new File(sourceWebapp + fileProd.getAbsolutePath().substring(targetWebapp.length()));
+                                FileUtils.writeStringToFile(fileProd2, xml, "UTF-8");
+                            }
+                        }
                     }
                 } else {
                     workFile = buildWorkingFile(document).getAbsolutePath();

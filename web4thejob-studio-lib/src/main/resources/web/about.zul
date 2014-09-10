@@ -66,11 +66,6 @@
                 <li>Maven 3+</li>
                 <li>JPA 2.1 (optional)</li>
             </ul>
-            <p>It is highly recommended to use the
-                <code>jetty-maven-plugin</code>
-                if possible in your project mainly because of it's ability to run unassembled webapps. See the Usage
-                section below for more info.
-            </p>
             <h2>Sources</h2>
             <p>The sources of the project live in
                 <a href="https://github.com/web4thejob/web4thejob-studio" target="_blank">Github</a>.
@@ -218,11 +213,24 @@
                 <span class="label label-primary">
                     <i class="z-icon-refresh"/> Parse zul
                 </span>
-                button Web4thejob Studio is saving to disk automatically all pending changes of the zul page under
-                design. Thus, if you are running directly from the sources (i.e. unassembled webapp), you can push your
-                changes to your preferred SCM instantly when you are done designing. Check out the
+                button Web4thejob Studio is saving to disk all pending changes of the zul page under
+                design. If you are
+                <strong>not running directly from the sources</strong>
+                (i.e. unassembled webapp using for example the
                 <code>jetty:run</code>
-                maven goal for more info on this.
+                maven goal),
+                you should
+                <strong>set the
+                    <var>Source Webapp location</var>
+                    setting
+                </strong>
+                at
+                <var>Project Dashboard</var>
+                so that Web4thejob Studio knows
+                the actual location of your
+                <code>src/main/webapp</code>
+                directory. This way, when you are done designing, you can push your
+                changes to your preferred SCM right away.
             </p>
             <h2 id="about_features">Features</h2>
             <div class="icon-list">
