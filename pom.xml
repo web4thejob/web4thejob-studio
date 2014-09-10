@@ -10,7 +10,7 @@
 
     <groupId>org.web4thejob</groupId>
     <artifactId>web4thejob-studio-parent</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <modules>
         <module>test-joblet</module>
         <module>web4thejob-studio-lib</module>
@@ -35,7 +35,7 @@
         <url>git://github.com/web4thejob/web4thejob-studio.git</url>
         <connection>scm:git:git://github.com/web4thejob/web4thejob-studio.git</connection>
         <developerConnection>scm:git:https://github.com/web4thejob/web4thejob-studio.git</developerConnection>
-        <tag>web4thejob-studio-parent-1.1.0</tag>
+        <tag>web4thejob-studio-parent-1.0.1</tag>
     </scm>
 
     <properties>
