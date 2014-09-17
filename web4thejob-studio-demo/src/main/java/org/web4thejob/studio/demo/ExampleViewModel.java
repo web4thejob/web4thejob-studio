@@ -1,32 +1,31 @@
 package org.web4thejob.studio.demo;
 
 import com.web4thejob.jpatest.Customer;
+import org.web4thejob.studio.support.JpaUtil;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
+import static org.zkoss.lang.Generics.cast;
+
 public class ExampleViewModel {
-    private List<Customer> customerList = new ArrayList<>();
+    private List<Customer> customerList;
     private int pointer = 0;
 
     @Init
     public void init() {
-        Customer customer;
-
-        customer = new Customer();
-        customer.setId(1);
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
-        customerList.add(customer);
-
-        customer.setId(2);
-        customer = new Customer();
-        customer.setFirstName("John***");
-        customer.setLastName("Doe***");
-        customerList.add(customer);
+        EntityManager em = JpaUtil.getEntityManagerFactory("MyJoblet").createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
+        cq.from(Customer.class);
+        Query query = em.createQuery(cq);
+        customerList = cast(query.getResultList());
     }
 
     public Customer getCurrentCustomer() {
@@ -38,16 +37,26 @@ public class ExampleViewModel {
     }
 
     @Command
-    @NotifyChange({"currentCustomer", "currentIndex"})
+    @NotifyChange(".")
     public void next() {
         if (pointer < customerList.size())
             pointer++;
     }
 
     @Command
-    @NotifyChange({"currentCustomer", "currentIndex"})
+    @NotifyChange(".")
     public void prev() {
         if (pointer > 0)
             pointer--;
     }
+
+    public boolean isFirst() {
+        return pointer == 0;
+    }
+
+    public boolean isLast() {
+        return pointer + 1 == customerList.size();
+    }
+
 }
+

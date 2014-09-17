@@ -13,7 +13,7 @@
             <separator height="30px"/>
             <grid>
                 <columns>
-                    <column label="Field" width="100px"/>
+                    <column label="Field" width="200px"/>
                     <column label="Value"/>
                 </columns>
                 <rows>
@@ -33,16 +33,23 @@
                     </row>
                 </rows>
             </grid>
+            <hbox hflex="true" pack="center">
+                <label value="Random data from "/>
+                <a href="http://www.generatedata.com/" label="generatedata.com" target="_blank"/>
+            </hbox>
             <separator height="10px"/>
             <hlayout valign="middle" hflex="true">
                 <hbox hflex="true">
-                    <button label="Previous" onClick="@command('prev')" sclass="btn btn-default"/>
+                    <button label="Previous" onClick="@command('prev')" sclass="btn btn-default"
+                            disabled="@load(vm.first)" width="100px"/>
                 </hbox>
                 <label value="@load(vm.currentIndex)" sclass="label label-default"/>
                 <hbox hflex="true" pack="end">
-                    <button label="Next" onClick="@command('next')" sclass="btn btn-default"/>
+                    <button label="Next" onClick="@command('next')" sclass="btn btn-default" disabled="@load(vm.last)"
+                            width="100px"/>
                 </hbox>
             </hlayout>
+            <separator height="50px"/>
         </vlayout>
     </n:div>
     <style>
