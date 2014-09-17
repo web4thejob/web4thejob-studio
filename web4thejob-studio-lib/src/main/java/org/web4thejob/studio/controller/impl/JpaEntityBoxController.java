@@ -21,6 +21,7 @@ package org.web4thejob.studio.controller.impl;
 
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
@@ -38,13 +39,13 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
     private static AttributeComparator attributeComparator = new AttributeComparator();
 
     private Panel self;
+    @Wire
     private Tree entityAttributesTree;
 
     @Override
     public void doAfterCompose(Panel comp) throws Exception {
         super.doAfterCompose(comp);
         self = comp;
-        entityAttributesTree = (Tree) self.getPanelchildren().getFirstChild();
         entityAttributesTree.clear();
 
         EntityType entityType = (EntityType) Executions.getCurrent().getArg().get("entityType");
@@ -116,7 +117,7 @@ public class JpaEntityBoxController extends SelectorComposer<Panel> {
                 treecell.setAttribute("bindType", bindType);
                 treecell.setSclass("");
                 treecell.setParent(treerow);
-                String vm = bindType + "(vm." + attribute.getName() + ")";
+                String vm = bindType + "(?." + attribute.getName() + ")";
                 html = new Html("<span bind-data=\"" + vm + "\" class=\"jpa-bindtype label label-default\"><i class=\"fa fa-hand-o-right\" style=\"margin-right:3px\"/>" + bindType + "</span>");
                 html.setParent(treecell);
 

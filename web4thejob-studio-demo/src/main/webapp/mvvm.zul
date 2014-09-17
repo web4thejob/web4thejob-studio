@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
+<?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
+<zk xmlns:n="native">
+    <n:div class="container">
+        <vlayout vflex="true" apply="org.zkoss.bind.BindComposer"
+                 viewModel="@id('vm') @init('org.web4thejob.studio.demo.ExampleViewModel')">
+            <html>
+                <![CDATA[
+                     <h2>MVVM Example</h2>
+                ]]>
+            </html>
+            <separator height="30px"/>
+            <grid>
+                <columns>
+                    <column label="Field" width="100px"/>
+                    <column label="Value"/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="ID"/>
+                        <textbox sclass="form-control" placeholder="drop the vm.currentCustomer.id &gt; @load here"/>
+                    </row>
+                    <row>
+                        <label value="First Name"/>
+                        <textbox sclass="form-control"
+                                 placeholder="drop the vm.currentCustomer.firstName &gt; @bind here"/>
+                    </row>
+                    <row>
+                        <label value="Last Name"/>
+                        <textbox sclass="form-control"
+                                 placeholder="drop the vm.currentCustomer.lastName &gt; @bind here"/>
+                    </row>
+                </rows>
+            </grid>
+            <separator height="10px"/>
+            <hlayout valign="middle" hflex="true">
+                <hbox hflex="true">
+                    <button label="Previous" onClick="@command('prev')" sclass="btn btn-default"/>
+                </hbox>
+                <label value="@load(vm.currentIndex)" sclass="label label-default"/>
+                <hbox hflex="true" pack="end">
+                    <button label="Next" onClick="@command('next')" sclass="btn btn-default"/>
+                </hbox>
+            </hlayout>
+        </vlayout>
+    </n:div>
+    <style>
+        p {
+        font: normal 110%/1.4 Arial, sans-serif;
+        }
+    </style>
+</zk>

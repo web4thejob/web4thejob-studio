@@ -46,4 +46,8 @@
         <debug-js>true</debug-js>
     </client-config>
 
+    <!-- IGNORE -->
+    <listener>
+        <listener-class>org.web4thejob.studio.demo.DemoInitializer</listener-class>
+    </listener>
 </zk>

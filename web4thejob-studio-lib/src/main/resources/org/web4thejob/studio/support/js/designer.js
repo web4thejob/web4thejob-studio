@@ -411,9 +411,9 @@ var w4tjStudioDesigner = {
   },
 
   prepareEntityToolbox: function(id) {
-    var e = jq('$' + id);
-    var wgt = zk(e).$();
-    e.resizable({
+    var toolbox = jq('$' + id);
+    var wgt = zk(toolbox).$();
+    toolbox.resizable({
       start: function() {
         zAu.cmd0.showBusy(zk("$canvasHolder").$().parent.uuid, "...");
       },
@@ -422,24 +422,24 @@ var w4tjStudioDesigner = {
         zAu.cmd0.clearBusy(zk("$canvasHolder").$().parent.uuid);
       }
     });
-    e.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
-    e.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
-    e.find('.toolbox-close').click(function() {
+    toolbox.find('.panel-title').prepend('<i class="fa fa-database" style="margin-right:5px"></i>');
+    toolbox.find('.panel-heading .btn-group').append('<i class="toolbox-roll z-icon-caret-up"></i><i class="toolbox-close z-icon-times" style="padding-left:10px">');
+    toolbox.find('.toolbox-close').click(function() {
       //      zAu.send(new zk.Event(wgt, "onToolboxClose", {
       //        target: wgt.uuid
       //      }));
       wgt.detach();
     });
-    e.find('.toolbox-roll').click(function() {
-      var rollbtn = e.find(".toolbox-roll");
+    toolbox.find('.toolbox-roll').click(function() {
+      var rollbtn = toolbox.find(".toolbox-roll");
       if (wgt.isOpen()) {
-        e.resizable('disable');
+        toolbox.resizable('disable');
         wgt.setHeight();
         wgt.setOpen(false);
         rollbtn.removeClass("z-icon-caret-up");
         rollbtn.addClass("z-icon-caret-down")
       } else {
-        e.resizable('enable');
+        toolbox.resizable('enable');
         wgt.setOpen(true);
         rollbtn.removeClass("z-icon-caret-down");
         rollbtn.addClass("z-icon-caret-up")
@@ -447,9 +447,10 @@ var w4tjStudioDesigner = {
     });
 
     //draggable bind types
-    e.find('.jpa-bindtype').attr('draggable', 'true')
+    toolbox.find('.jpa-bindtype').attr('draggable', 'true')
       .on('dragstart', function(e) {
-        e.originalEvent.dataTransfer.setData('text', $(this).attr('bind-data'));
+        var vmpreffix = toolbox.find('.vmpreffix').val();
+        e.originalEvent.dataTransfer.setData('text', $(this).attr('bind-data').replace('?',vmpreffix));
         jq('$properties').find('.z-row').each(function() {
           w4tjStudioDesigner.prepareForBindingDrop(this);
         });
