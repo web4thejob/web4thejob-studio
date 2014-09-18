@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
+<?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"?>
 <?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
 <zk xmlns:c="client">
     <window title="ZK Window" hflex="true" vflex="true">
