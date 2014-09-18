@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?page title="Web4thejob Studio & MVVM" contentType="text/html;charset=UTF-8"?>
 <?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
 <?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"?>
-<?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.png"?>
 <zk xmlns:n="native" xmlns:c="client">
     <n:div class="container">
         <vlayout vflex="true" apply="org.zkoss.bind.BindComposer"
@@ -51,7 +52,7 @@
                             <span style="font-weight:700">Automatic binding on the Outline view with drag 'n drop</span>
                             <p>Of course you get the same behavior from the Outline view as well. Click
                               <a href="javascript();" onclick="jkpopimage('img/mvvm2.png', 1100, 650, 'Automatic binding on the Outline view with drag \'n  drop'); return false;">here</a>
-                              for the details.
+                              for the illustration.
                             </p>
                           </li>
                           <li>
@@ -68,7 +69,7 @@
                         </p>
                         <p>
                           <span class="label label-info">Tip</span>&nbsp; You can click the
-                          <image style="height: 18px;" src="img/launchbar.png"></image>&nbsp;bar at the top at any point in time to launch the page outside Web4thejob Studio.
+                          <image style="height: 20px;" src="img/launchbar.png"></image>&nbsp;bar at the top at any point in time to launch the page outside Web4thejob Studio.
                         </p>
                         <p>
                           <span class="label label-info">Tip</span>&nbsp;If you make a mistake Web4thejob Studio will break in the Code view with an error message. Should you want to roll back you can press Ctrl+Z (or Cmd+Z) to undo your changes like you do with any text editor.
@@ -123,7 +124,7 @@
                             disabled="@load(vm.last)" width="100px"/>
                 </hbox>
             </hlayout>
-            <separator height="50px"/>
+            <separator height="80px"/>
         </vlayout>
     </n:div>
     <style>
