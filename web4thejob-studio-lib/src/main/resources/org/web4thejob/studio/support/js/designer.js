@@ -146,7 +146,7 @@ var w4tjStudioDesigner = {
     </button> \
     </div> \
     <div class="btn-group btn-xs" style="padding-left:0px"> \
-    <button type="button" class="btn btn-primary btn-xs toolbar-parsezul"> \
+    <button type="button" class="btn btn-primary btn-xs toolbar-parsezul" title="Alt+1"> \
     <i class="z-icon-refresh"/> Parse zul \
     </button> \
     <button type="button" class="btn btn-primary btn-xs toolbar-parsezul-dropdown"> \

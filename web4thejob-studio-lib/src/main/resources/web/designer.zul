@@ -33,7 +33,12 @@
 
     <window id="designer" sclass="w4tjstudio-designer" vflex="true"
             apply="org.web4thejob.studio.controller.impl.DesignerController"
-            contentStyle="overflow:visible">
+            contentStyle="overflow:visible" ctrlKeys="@1">
+        <attribute c:name="onCtrlKey">
+            <![CDATA[
+                zAu.send(new zk.Event(zk('$designer').$(), 'onParseZulClicked'));
+            ]]>
+        </attribute>
         <borderlayout vflex="true">
             <west width="200px" splittable="true" collapsible="true">
                 <tabbox vflex="true">

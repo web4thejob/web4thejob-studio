@@ -1,2 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- This is the minimum valid zul file that you should create through your IDE. Simple uh? -->
-<zk/>
+<zk xmlns:c="client">
+    <button label="Button">
+        <attribute c:name="onClick">
+            <![CDATA[
+                a123456
+            ]]>
+        </attribute>
+    </button>
+    <include/>
+    <window title="Window" vflex="true">
+        <textbox/>
+        <textbox/>
+    </window>
+</zk>

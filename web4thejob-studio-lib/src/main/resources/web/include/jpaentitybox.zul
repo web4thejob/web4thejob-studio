@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?style type="text/css" href="/w4tjstudio-support/designer/styles"?>
 <?script type="text/javascript" src="/w4tjstudio-support/designer/scripts"?>
-<zk>
+<zk xmlns:c="client">
     <idspace>
         <panel mold="w4tjstudio" title="Entity Toolbox" movable="true" border="normal"
                sclass="panel-default mild-shadow jpaentitybox" style="min-width:100px" floatable="true" width="150px"
                top="30%" left="50px" apply="org.web4thejob.studio.controller.impl.JpaEntityBoxController"
-               id="${arg.id}">
+               id="${arg.id}" ctrlKeys="@1">
+            <attribute c:name="onCtrlKey">
+                <![CDATA[
+                    zAu.send(new zk.Event(zk('$designer').$(), 'onParseZulClicked'));
+                ]]>
+            </attribute>
             <panelchildren>
                 <vlayout vflex="true" hflex="true">
                     <textbox value="vm" hflex="true" sclass="vmpreffix"/>
