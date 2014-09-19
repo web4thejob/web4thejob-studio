@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?page title="Web4thejob Studio & MVVM" contentType="text/html;charset=UTF-8"?>
 <?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"?>
-<?link rel="shortcut icon" type="image/x-icon" href="http://www.zkoss.org/resource/img/favicon.ico"?>
+<?style type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/w4tjstudio-support/img?f=favicon.png"?>
 <zk xmlns:n="native" xmlns:c="client">
     <n:div class="container">
         <vlayout vflex="true" apply="org.zkoss.bind.BindComposer"
                  viewModel="@id('vm') @init('org.web4thejob.studio.demo.ExampleViewModel')">
             <html>
                 <![CDATA[
-                     <h2>MVVM Example</h2>
+                    <div class="page-header">
+                      <h1>Web4thejob Studio & MVVM <small>The drag 'n drop approach</small></h1>
+                    </div>
                 ]]>
             </html>
             <groupbox>
                 <caption label="collapse help section" style="color: #428bca;float:right;"
                          iconSclass="z-icon-hand-o-up">
-                <attribute c:name="onClick">
-                        <![CDATA[
+                    <attribute c:name="onClick">
+                    <![CDATA[
                             if (this.parent.isOpen()) {
                               this.setLabel("collapse help section");
                               this.setIconSclass("z-icon-hand-o-up");
@@ -28,48 +32,58 @@
                 <html>
                     <![CDATA[
                         <p>
-                          This example demonstrates how you can make your life easier with MVVM binding and Web4thejob Studio.
+                          This page demonstrates how Web4thejob Studio can make your life easier with <a target="_blank" href="http://books.zkoss.org/wiki/ZK_Developer's_Reference/MVVM">ZK MVVM binding</a>.
                         </p>
                         <p>
                           Let's assume you have a simple View like the one you see below and a ViewModel like <a target="_blank" href="https://github.com/web4thejob/web4thejob-studio/blob/mvvm/web4thejob-studio-demo/src/main/java/org/web4thejob/studio/demo/ExampleViewModel.java">this one</a>.
-                          Basically, the ViewModel initializes a list of Customers and provides an api for returning the current customer and moving forwards and backwards in the list. Assuming you have reached the point where you need to bind the Customer's attributes (firstName,
-                          lastName and id) to the View, find out 3 ways that Web4thejob Studio can help you out:
+                          Basically, the ViewModel selects a list of Customers from the database and provides an api for returning and traversing them. Assuming you have reached the point where you need to bind the Customer's attributes (<code>firstName</code>, <code>lastName</code> and <code>id</code>)
+                          to the View, check out 3 ways that Web4thejob Studio can help you out:
                         </p>
                         <ol>
                           <li>
-                            <span style="font-weight:700">Default property binding on the Canvas view with drag 'n drop</span>
-                            <p>
-                              <a href="javascript();" onclick="jkpopimage('img/mvvm1.png', 960, 550, 'Default property binding on the Canvas view with drag \'n  drop'); return false;">dsdsds</a>
+                            <span style="font-weight:700">Automatic binding on the Canvas view with drag 'n drop</span>
+                            <p>For those components that have a ZKBIND annotation in their definition, Web4thejob Studio can detect it and act accordingly. A prime example is the <code>textbox</code> component. Dropping an Entity's property on a textbox in the Canvas will automatically
+                              bind the textbox'es <code>value</code> attribute with the Entity's property. Click
+                              <a href="javascript();" onclick="jkpopimage('img/mvvm1.png', 1100, 650, 'Automatic binding on the Canvas view with drag \'n  drop'); return false;">here</a>
+                              for more details.
                             </p>
                           </li>
                           <li>
-                            <span style="font-weight:700">Default property binding on the Outline view with drag 'n drop</span>
-                            <p>
-                              dsdsds
+                            <span style="font-weight:700">Automatic binding on the Outline view with drag 'n drop</span>
+                            <p>Of course you get the same behavior from the Outline view as well. Click
+                              <a href="javascript();" onclick="jkpopimage('img/mvvm2.png', 1100, 650, 'Automatic binding on the Outline view with drag \'n  drop'); return false;">here</a>
+                              for the illustration.
                             </p>
                           </li>
                           <li>
-                            <span style="font-weight:700">Custom property binding on the Property Editor with drag 'n drop</span>
-                            <p>
-                              dsdsds
+                            <span style="font-weight:700">Custom binding on the Property Editor with drag 'n drop</span>
+                            <p>However not all components have the ZKBIND annotation. Take the <code>label</code> for example. Dropping a property on a label will result in an error since Web4thejob Studio cannot guess the attribute to bind to. In these cases you should drop the
+                              property on the respective attribute directly. Once more click
+                              <a href="javascript();" onclick="jkpopimage('img/mvvm3.png', 1100, 650, 'Custom binding on the Property Editor with drag \'n drop'); return false;">here</a>
+                              for the details.
                             </p>
                           </li>
                         </ol>
                         <p>
-                          So, what are you waiting for? Give it a try and then click the Next and Previous buttons to enjoy the result!
-                        </p>
-                        <p>
-                          <span class="label label-info">Tip</span>&nbsp;If you make a mistake Web4thejob Studio will break in the Code view with an error message. Should you want to roll back you can press Ctrl+Z to undo your changes like you do with any text editor. Finally,
-                          click
-                          <span class="label label-primary"><i class="z-icon-refresh"></i> Parse zul</span>&nbsp;to restore your page in the Canvas.
+                          So, what are you waiting for? Give it a try and then click the Next and Previous buttons to enjoy your work!
                         </p>
                         <p>
                           <span class="label label-info">Tip</span>&nbsp; You can click the
-                          <image style="height: 18px;" src="img/mvvm2.png"></image>&nbsp;bar at the top at any point in time to lauch the page outside Web4thejob Studio.
+                          <image style="height: 20px;" src="img/launchbar.png"></image>&nbsp;bar at the top at any point in time to launch the page outside Web4thejob Studio.
+                        </p>
+                        <p>
+                          <span class="label label-info">Tip</span>&nbsp;If you make a mistake Web4thejob Studio will break in the Code view with an error message. Should you want to roll back you can press Ctrl+Z (or Cmd+Z) to undo your changes like you do with any text editor.
+                          Finally, click
+                          <span class="label label-primary"><i class="z-icon-refresh"></i> Parse zul</span>&nbsp;to restore your page in the Canvas.
                         </p>
                     ]]>
                 </html>
             </groupbox>
+            <separator height="10px"/>
+            <hbox hflex="true" pack="center">
+                <button label="Give it a try now!" zclass="btn btn-success" href="w4tjstudio/designer?z=%2fmvvm.zul"
+                        iconSclass="z-icon-rocket" id="btnLaunch"/>
+            </hbox>
             <separator height="30px"/>
             <grid oddRowSclass="none">
                 <columns>
@@ -78,21 +92,19 @@
                 </columns>
                 <rows>
                     <row>
-                        <label value="First Name"/>
+                        <label value="First Name" style="font-size:14px"/>
                         <textbox sclass="form-control"
-                                 placeholder="drop the vm.currentCustomer.firstName &gt; @bind here"
-                                 value="@bind(vm.currentCustomer.firstName)"/>
+                                 placeholder="drop the vm.currentCustomer.firstName &gt; @bind here"/>
                     </row>
                     <row>
-                        <label value="Last Name"/>
+                        <label value="Last Name" style="font-size:14px"/>
                         <textbox sclass="form-control"
-                                 placeholder="drop the vm.currentCustomer.lastName &gt; @bind here"
-                                 value="@bind(vm.currentCustomer.lastName)"/>
+                                 placeholder="drop the vm.currentCustomer.lastName &gt; @bind here"/>
                     </row>
                     <row height="40px">
-                        <label value="ID"/>
+                        <label value="ID" style="font-size:14px"/>
                         <label style="font-size:14px;padding-left:10px;color:gray;"
-                               value="@load(vm.currentCustomer.id)"/>
+                               value="drop the vm.currentCustomer.id &gt; @load here"/>
                     </row>
                 </rows>
             </grid>
@@ -112,7 +124,7 @@
                             disabled="@load(vm.last)" width="100px"/>
                 </hbox>
             </hlayout>
-            <separator height="50px"/>
+            <separator height="80px"/>
         </vlayout>
     </n:div>
     <style>
@@ -133,6 +145,16 @@
         .z-groupbox-content {
         border-width: 0px !important;
         }
+        .studio-launch {
+        position: absolute;
+        width: 260px;
+        left: 0px;
+        right: 0px;
+        top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 10;
+        }
     </style>
     <script>
         <![CDATA[
@@ -141,7 +163,7 @@
             // for free JavaScript tutorials and scripts
             // This notice must stay intact for use
             var popbackground = "white"; //specify backcolor or background image for pop window
-            var windowtitle = "Web4thejob Studio MVVM binding steps"; //pop window title
+            var windowtitle = "Web4thejob Studio MVVM binding methods"; //pop window title
             function detectexist(obj) {
               return (typeof obj != "undefined");
             }
@@ -168,6 +190,15 @@
               jkpopwin.document.write('<html><head><title>' + windowtitle + '</title></head><body ' + bodyattribute + '><h2 style="font-family:Arial">' + textdescription + '</h2><img src="' + imgpath + '" style="margin-bottom: 0.5em"><br /></body></html>');
               jkpopwin.document.close();
               jkpopwin.focus();
+            }
+        ]]>
+    </script>
+    <script defer="true">
+        <![CDATA[
+            //Launching Web4thejob Studio recursively is not supported and will lead
+            //to a fatal exception. This disables the button if running within the Designer.
+            if (typeof top.w4tjStudioDesigner === "object") {
+              zk("$btnLaunch").$().setVisible(false);
             }
         ]]>
     </script>

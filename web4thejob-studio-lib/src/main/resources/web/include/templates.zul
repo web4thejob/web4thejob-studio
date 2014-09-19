@@ -85,6 +85,8 @@
                                    ca:template="caption.zul"/>
                     <toolbarbutton label="Groupbox" hflex="true" image="/w4tjstudio-support/img?f=groupbox.png"
                                    ca:template="groupbox.zul"/>
+                    <toolbarbutton label="Include" hflex="true" image="/w4tjstudio-support/img?f=include.png"
+                                   ca:template="include.zul"/>
                     <toolbarbutton label="Div" hflex="true" image="/w4tjstudio-support/img?f=div.png"
                                    ca:template="div.zul"/>
                     <toolbarbutton label="Span" hflex="true" image="/w4tjstudio-support/img?f=span.png"

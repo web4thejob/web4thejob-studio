@@ -79,5 +79,6 @@ public class DemoInitializer implements org.zkoss.zk.ui.util.WebAppInit {
         em.getTransaction().begin();
         em.flush();
         em.getTransaction().commit();
+        em.close();
     }
 }
