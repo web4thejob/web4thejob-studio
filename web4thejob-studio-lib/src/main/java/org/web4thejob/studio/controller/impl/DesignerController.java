@@ -105,7 +105,7 @@ public class DesignerController extends AbstractController {
         parsePopup.open("auto", ((Map) event.getData()).get("top").toString() + "px");
         parsePopup.setStyle("right:" + x + "px");
 
-        final Menuitem returntoCanvas = new Menuitem("Always return to canvas");
+        final Menuitem returntoCanvas = new Menuitem("Switch to canvas after parsing");
         returntoCanvas.setParent(parsePopup);
         returntoCanvas.setCheckmark(true);
         returntoCanvas.setAutocheck(true);
