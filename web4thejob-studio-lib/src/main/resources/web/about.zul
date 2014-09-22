@@ -213,7 +213,8 @@
                 <span class="label label-primary">
                     <i class="z-icon-refresh"/> Parse zul
                 </span>
-                button Web4thejob Studio is saving to disk all pending changes of the zul page under
+                &#160;
+                button (or press Alt+1) Web4thejob Studio is saving to disk all pending changes of the zul page under
                 design. If you are
                 <strong>not running directly from the sources</strong>
                 (i.e. unassembled webapp using for example the
@@ -239,7 +240,10 @@
                 </p>
                 <p>
                     <i class="z-icon-check-square-o icon-margin"/>Drag &amp; drop attributes of JPA managed classes on
-                    widgets or on the property editor to bind them instantly
+                    widgets to implement MVVM binding instantly
+                    <a target="_blank" href="http://sandbox.web4thejob.org/studio/mvvm.zul">
+                        <i class="z-icon-arrow-circle-right"/>
+                    </a>
                 </p>
                 <p>
                     <i class="z-icon-check-square-o icon-margin"/>Edit zul manually in ZUL tab with auto-complete

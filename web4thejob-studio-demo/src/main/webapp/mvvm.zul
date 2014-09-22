@@ -74,7 +74,7 @@
                         <p>
                           <span class="label label-info">Tip</span>&nbsp;If you make a mistake Web4thejob Studio will break in the Code view with an error message. Should you want to roll back you can press Ctrl+Z (or Cmd+Z) to undo your changes like you do with any text editor.
                           Finally, click
-                          <span class="label label-primary"><i class="z-icon-refresh"></i> Parse zul</span>&nbsp;to restore your page in the Canvas.
+                          <span class="label label-primary"><i class="z-icon-refresh"></i> Parse zul</span>&nbsp;(or press Alt+1) to restore your page in the Canvas.
                         </p>
                     ]]>
                 </html>
