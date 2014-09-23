@@ -28,32 +28,34 @@
     <include src="~./include/topbar.zul"/>
     <borderlayout vflex="true" hflex="true">
         <center border="none">
-            <vlayout class="mycontainer" vflex="true" hflex="true">
-                <n:h2>Join the discussion. Influence the development.</n:h2>
-                <n:div id="disqus_thread"/>
-                <script type="text/javascript" defer="true">
-                    <![CDATA[
-                            var disqus_shortname = 'web4thejob-studio';
-                            var disqus_identifier = 'web4thejob-studio/discussion';
-                            var disqus_title = 'Web4thejob Studio - Discussion';
-                            var disqus_url = 'http://sandbox.web4thejob.org/studio/w4tjstudio/discussion';
-                            /* * * DON'T EDIT BELOW THIS LINE * * */
-                            (function() {
-                              var dsq = document.createElement('script');
-                              dsq.type = 'text/javascript';
-                              dsq.async = true;
-                              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                            })();
-                        ]]>
-                </script>
-                <n:noscript>Please enable JavaScript to view the
-                    <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-                </n:noscript>
-                <n:a href="http://disqus.com" class="dsq-brlink">comments powered by
-                    <n:span class="logo-disqus">Disqus</n:span>
-                </n:a>
-            </vlayout>
+            <panel vflex="true" hflex="true">
+                <panelchildren style="overflow:auto" class="mycontainer">
+                    <n:h2>Join the discussion. Influence the development.</n:h2>
+                    <n:div id="disqus_thread"/>
+                    <script type="text/javascript" defer="true">
+                        <![CDATA[
+                                var disqus_shortname = 'web4thejob-studio';
+                                var disqus_identifier = 'web4thejob-studio/discussion';
+                                var disqus_title = 'Web4thejob Studio - Discussion';
+                                var disqus_url = 'http://sandbox.web4thejob.org/studio/w4tjstudio/discussion';
+                                /* * * DON'T EDIT BELOW THIS LINE * * */
+                                (function() {
+                                  var dsq = document.createElement('script');
+                                  dsq.type = 'text/javascript';
+                                  dsq.async = true;
+                                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                                })();
+                            ]]>
+                    </script>
+                    <n:noscript>Please enable JavaScript to view the
+                        <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+                    </n:noscript>
+                    <n:a href="http://disqus.com" class="dsq-brlink">comments powered by
+                        <n:span class="logo-disqus">Disqus</n:span>
+                    </n:a>
+                </panelchildren>
+            </panel>
         </center>
         <east size="350px" splittable="false" collapsible="false" border="none"
               style="border-left:1px solid rgba(0,39,59,.08);">
@@ -64,10 +66,7 @@
     <include src="~./include/analytics.zul"/>
     <style>
         .mycontainer{
-        margin-left:40px;
-        margin-right:40px;
-        padding-left:15px;
-        padding-right:15px;
+        padding:0px 60px 0px 60px;
         }
     </style>
 </zk>
