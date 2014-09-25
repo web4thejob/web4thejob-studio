@@ -7,14 +7,14 @@
         <html>
             <![CDATA[
                 <div class="page-header">
-                    <h1>Macro Components <small>Understanding the limits</small></h1>
+                  <h1>Macro Components <small>Understanding the limits</small></h1>
                 </div>
                 <p>This page is copied from the
                   <a href="http://www.zkoss.org/zkdemo/composite/macro_component" target="_blank">ZK Live Demo</a> application and it demonstrates how to handle macro components.
                 </p>
                 <p>You will notice that you cannot edit the contents of the macro component in this page directly. This makes absolute sence since the macro components are defined in a separate zul page, namely in <code>macro.zul</code>.</p>
-                <p>Hence, in order to change the macro components you should go to <var>Project Dashboard -> Webapp Page Navigator</var> and click on <code>macro.zul</code>. Do your changes in the new window and then return here and press <span class="label label-primary"><i class="z-icon-refresh"></i> Parse zul</span>&nbsp;(or press Alt+1) to see them
-                  in action.
+                <p>Hence, in order to change the macro components you should go to <var>Project Dashboard -> Webapp Page Navigator</var> and click on <code>macro.zul</code>. Do your changes in the new window and then return here and press <span class="label label-primary"><i class="z-icon-refresh"></i> Parse zul</span>&nbsp;(or
+                  press Alt+1) to see them in action.
                 </p>
                 <p>The same stands for all embedded zul pages like the <a href="http://books.zkoss.org/wiki/ZK_Component_Reference/Essential_Components/Include" target="_blank">Include component.</a>
                 </p>
@@ -30,7 +30,13 @@
                         img="http://www.zkoss.org/zkdemo/widgets/composite/macro_component/img/item2.jpg"/>
         </hlayout>
         <separator height="30px" bar="true"/>
-        <button label="Hey, unlike macros you can interact with me"/>
+        <button label="Hey, unlike macros you can interact with me">
+            <attribute name="onClick">
+                <![CDATA[
+                    Clients.showNotification("Hello!", "info", self, "after_end", 5000, true);
+                ]]>
+            </attribute>
+        </button>
     </vlayout>
     <style>
         p {
