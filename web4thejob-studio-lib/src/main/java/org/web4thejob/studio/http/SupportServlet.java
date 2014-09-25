@@ -77,6 +77,10 @@ public class SupportServlet extends HttpServlet {
                     is.close();
                 }
             }
+            is = Locators.getDefault().getResourceAsStream(CSS_PATH_PREFFIX + "designer.css");
+            DESIGNER_STYLES_CONTENT.append(new String(Files.readAll(is), Charsets.UTF_8));
+            is.close();
+
 
             DESIGNER_SCRIPTS_CONTENT = new StringBuffer();
             for (int i = 0; i < scriptsDoc.getRootElement().getChildCount(); i++) {

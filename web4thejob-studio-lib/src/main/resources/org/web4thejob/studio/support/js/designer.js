@@ -146,7 +146,7 @@ var w4tjStudioDesigner = {
     </button> \
     </div> \
     <div class="btn-group btn-xs" style="padding-left:0px"> \
-    <button type="button" class="btn btn-primary btn-xs toolbar-parsezul" title="Alt+1"> \
+    <button id="btnparsezul" type="button" class="btn btn-primary btn-xs toolbar-parsezul"> \
     <i class="z-icon-refresh"/> Parse zul \
     </button> \
     <button type="button" class="btn btn-primary btn-xs toolbar-parsezul-dropdown"> \
@@ -184,6 +184,7 @@ var w4tjStudioDesigner = {
 
     jq('.designer-toolbar .toolbar-parsezul').click(function() {
       //            zAu.cmd0.showBusy("Parsing your zul...");
+      w4tjStudioDesigner.clearAlerts();
       zAu.send(new zk.Event(zk("$designer").$(), "onParseZulClicked"));
     });
 

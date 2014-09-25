@@ -1,0 +1,120 @@
+.popover {
+max-width: none
+}
+.popover.error {
+background-color: #b94a48
+}
+.popover.error>.popover-title {
+color: #f2dede;
+background-color: #b94a48
+}
+.popover.error>.popover-content {
+color: #f2dede
+}
+.popover.bottom.error>.arrow:after {
+border-bottom-color: #b94a48;
+}
+.popover.top.error>.arrow:after {
+border-top-color: #b94a48;
+}
+.popover.left.error>.arrow:after {
+border-left-color: #b94a48;
+}
+.popover.right.error>.arrow:after {
+border-right-color: #b94a48;
+}
+.popover.success {
+background-color: #dff0d8
+}
+.popover.success>.popover-title {
+color: #468847;
+background-color: #dff0d8
+}
+.popover.success>.popover-content {
+color: #468847
+}
+.popover.bottom.success>.arrow:after {
+border-bottom-color: #dff0d8;
+}
+.popover.top.success>.arrow:after {
+border-top-color: #dff0d8;
+}
+.popover.left.success>.arrow:after {
+border-left-color: #dff0d8;
+}
+.popover.right.error>.arrow:after {
+border-right-color: #dff0d8;
+}
+.popover.info {
+background-color: #d9edf7
+}
+.popover.info>.popover-title {
+color: #3a87ad;
+background-color: #d9edf7
+}
+.popover.info>.popover-content {
+color: #3a87ad
+}
+.popover.bottom.info>.arrow:after {
+border-bottom-color: #d9edf7;
+}
+.popover.top.info>.arrow:after {
+border-top-color: #d9edf7;
+}
+.popover.left.info>.arrow:after {
+border-left-color: #d9edf7;
+}
+.popover.right.info>.arrow:after {
+border-right-color: #d9edf7;
+}
+.popover.warning {
+background-color: #f0ad4e
+}
+.popover.warning>.popover-title {
+color: #fff;
+background-color: #f0ad4e
+}
+.popover.warning>.popover-content {
+color: #fff
+}
+.popover.bottom.warning>.arrow:after {
+border-bottom-color: #f0ad4e;
+}
+.popover.top.warning>.arrow:after {
+border-top-color: #f0ad4e;
+}
+.popover.left.warning>.arrow:after {
+border-left-color: #f0ad4e;
+}
+.popover.right.warning>.arrow:after {
+border-right-color: #f0ad4e;
+}
+
+.popover.primary {
+background-color: #428bca
+}
+.popover.primary>.popover-title {
+color: #fff;
+background-color: #428bca
+}
+.popover.primary>.popover-content {
+color: #fff;
+background-image: -webkit-linear-gradient(top,#428bca 0,#2d6ca2 100%);
+background-image: linear-gradient(to bottom,#428bca 0,#2d6ca2 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+background-repeat: repeat-x;
+border-color: #2b669a;
+}
+.popover.bottom.primary>.arrow:after {
+border-bottom-color:#428bca;
+}
+.popover.top.primary>.arrow:after {
+border-top-color: #428bca;
+}
+.popover.left.primary>.arrow:after {
+border-left-color: #428bca;
+}
+.popover.right.primary>.arrow:after {
+border-right-color: #428bca;
+}

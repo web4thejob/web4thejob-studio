@@ -36,6 +36,7 @@
             contentStyle="overflow:visible" ctrlKeys="@1">
         <attribute c:name="onCtrlKey">
             <![CDATA[
+                w4tjStudioDesigner.clearAlerts();
                 zAu.send(new zk.Event(zk('$designer').$(), 'onParseZulClicked'));
             ]]>
         </attribute>
