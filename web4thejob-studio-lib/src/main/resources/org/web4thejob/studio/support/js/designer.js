@@ -390,7 +390,7 @@ var w4tjStudioDesigner = {
       placement: "auto bottom",
       content: text,
       container: "body",
-      trigger: "manual",
+      trigger: "focus",
       html: true
     });
     var p = jq(id).popover("show");
@@ -407,7 +407,7 @@ var w4tjStudioDesigner = {
   },
 
   hidePopovers: function() {
-    jq(".popover").remove();
+    jq(":data(bs.popover)").popover("destroy");
   },
 
   prepareEntityToolbox: function(id) {

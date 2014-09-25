@@ -54,7 +54,7 @@
                         <p class="navbar-text navbar-right" rel="license"
                            href="https://www.gnu.org/licenses/lgpl.html" style="margin-left:0px">
                             <a rel="license" href="https://www.gnu.org/licenses/lgpl.html">
-                            <img alt="GNU Lesser General Public License" style="border-width:0"
+                                <img alt="GNU Lesser General Public License" style="border-width:0"
                                      src="../w4tjstudio-support/img?f=lgpl_57x20.png"
                                      title="This work is licensed under the GNU Lesser General Public License v3"/>
                             </a>
@@ -66,7 +66,7 @@
                         </p>
 
                         <p class="navbar-text navbar-right">
-                            <small>v${java:getVersion()} using ZK CE ${desktop.webApp.version}</small>
+                            <small>v${java:getVersion()}</small>
                         </p>
                     </ul>
                 </div>
