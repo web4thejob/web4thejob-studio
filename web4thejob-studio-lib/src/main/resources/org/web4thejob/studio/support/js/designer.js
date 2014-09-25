@@ -67,7 +67,7 @@ var w4tjStudioDesigner = {
 
   clearAlerts: function() {
     jq('.alert').alert('close');
-    jq('.popover').detach();
+    this.hidePopovers();
   },
 
   alert: function(clazz, title, message, autoclosable, encoded) {

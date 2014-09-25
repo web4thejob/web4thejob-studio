@@ -229,16 +229,17 @@
                   var mavenVersion = result.split('|')[1];
                   var arr = new Array();
                   arr[1] = 'Version <strong>' + mavenVersion + '</strong> has been published in Maven Central.';
-                  arr[2] = '&nbsp;<a class="btn btn-primary btn-xs" target="_blank" href="http://wiki.web4thejob.org/releases/web4thejob-studio_v' + mavenVersion.replace(/\./g, '') + '">Go for it!</a>';
-                  w4tjStudioDesigner.alert('success', 'New Version', arr.join(' '), false, true);
+                  arr[2] = '&nbsp;<a target="_blank" href="http://wiki.web4thejob.org/releases/web4thejob-studio_v' + mavenVersion.replace(/\./g, '') + '"><i class="fa fa-paper-plane"></i>&nbsp;Go for it!</a>';
+                  w4tjStudioDesigner.alert('success', 'A newer version is detected', arr.join(' '), false, true);
                 }
               });
-            }, 5000);
+            }, 3000);
         ]]>
     </script>
     <script type="text/javascript">
         <![CDATA[
             function checkVersionButton() {
+                w4tjStudioDesigner.clearAlerts();
               checkVersion(
                 function(result) {
                   if (result === "error")
@@ -249,7 +250,7 @@
                     var mavenVersion = result.split('|')[1];
                     var arr = new Array();
                     arr[1] = 'Version <strong>' + mavenVersion + '</strong> has been published in Maven Central.';
-                    arr[2] = '&nbsp;<a class="btn btn-primary btn-xs" target="_blank" href="http://wiki.web4thejob.org/releases/web4thejob-studio_v' + mavenVersion.replace(/\./g, '') + '">Go for it!</a>';
+                    arr[2] = '&nbsp;<a target="_blank" href="http://wiki.web4thejob.org/releases/web4thejob-studio_v' + mavenVersion.replace(/\./g, '') + '"><i class="fa fa-paper-plane"></i>&nbsp;Go for it!</a>';
                     w4tjStudioDesigner.showPopover('#version-check', arr.join(' '), 'success', false);
                   }
                 }
