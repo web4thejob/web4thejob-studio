@@ -221,17 +221,17 @@ public class JpaInfoController extends SelectorComposer<Component> {
     }
 
     private class StartStopEMFHandler implements EventListener<MouseEvent> {
+        private String name;
+        private Hlayout hlayout;
+        private boolean start;
+        private A configLink;
+
         public StartStopEMFHandler(String name, Hlayout hlayout, boolean start, A configLink) {
             this.name = name;
             this.hlayout = hlayout;
             this.start = start;
             this.configLink = configLink;
         }
-
-        private String name;
-        private Hlayout hlayout;
-        private boolean start;
-        private A configLink;
 
         @Override
         public void onEvent(MouseEvent event) throws Exception {
@@ -260,19 +260,19 @@ public class JpaInfoController extends SelectorComposer<Component> {
                 EntityManagerFactory emf = JpaUtil.getEntityManagerFactory(name);
                 if (emf != null && emf.isOpen()) {
                     emf.close();
-                    JpaUtil.removeEntityManagerFactory(name);
-                    renderState(name, hlayout, configLink);
                 }
+                JpaUtil.removeEntityManagerFactory(name);
+                renderState(name, hlayout, configLink);
             }
         }
     }
 
     private class ConnInfoConfigClickHandler implements EventListener<Event> {
+        private String name;
+
         public ConnInfoConfigClickHandler(String name) {
             this.name = name;
         }
-
-        private String name;
 
         @Override
         public void onEvent(Event event) throws Exception {
