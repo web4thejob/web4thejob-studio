@@ -64,7 +64,12 @@
                                 var val = codeEditor.getValue();
                                 var txt = wgt.$n().value;
                                 if (val != txt) {
-                                  getClosestSaveButton(wgt).setDisabled(false);
+                                  var btn=getClosestSaveButton(wgt)
+                                  if (btn.isDisabled()){
+                                      btn.setDisabled(false);
+                                      jq(btn).effect("highlight");
+                                  }
+
                                   if (getClosestToDialogButton(wgt)) getClosestToDialogButton(wgt).setDisabled(true);
                                   wgt.$n().value = val;
                                   wgt.fire('onChange', {
@@ -93,11 +98,11 @@
             </center>
             <south size="50px" border="none">
                 <hlayout hflex="true" vflex="true">
-                    <hbox hflex="true" vflex="true" align="center" pack="start">
-                        <button id="btnDialog" mold="w4tjstudio" sclass="dummy-btndialog btn-default btn-${arg.size}"
+                    <hbox hflex="min" vflex="true" align="center" pack="start">
+                    <button id="btnDialog" mold="w4tjstudio" sclass="dummy-btndialog btn-default btn-${arg.size}"
                                 iconSclass="z-icon-external-link" if="${arg.size=='xs'}"/>
                     </hbox>
-                    <hbox hflex="true" pack="end" align="center" vflex="true" spacing="10px">
+                    <hbox hflex="true" pack="end" align="center" vflex="true" spacing="8px">
                         <button label="Beautify" mold="w4tjstudio" iconSclass="z-icon-magic"
                                 sclass="btn-default btn-${arg.size}">
                             <attribute c:name="onClick">
@@ -137,8 +142,9 @@
                             </attribute>
                         </button>
                         <button id="btnSave" label="Save" mold="w4tjstudio" iconSclass="z-icon-save"
-                                sclass="btn-primary btn-${arg.size}" disabled="true">
-                            <attribute c:name="onClick">
+                                sclass="btn-primary btn-${arg.size}" disabled="true"
+                                tooltiptext="Alt+1 may save you time">
+                        <attribute c:name="onClick">
                                 <![CDATA[
                                     this.setDisabled(true);
                                     if (getClosestToDialogButton(this)) getClosestToDialogButton(this).setDisabled(false);

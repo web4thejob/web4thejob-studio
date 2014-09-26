@@ -461,7 +461,7 @@ public class DesignerController extends AbstractController {
                 codeView.setSelected(true);
                 canvasView.setDisabled(true);
                 outlineView.setDisabled(true);
-                StudioUtil.showPopover("btnparsezul", "primary", "Click me or press Alt+1 to parse", false);
+                Clients.evalJavaScript("jq('#btnparsezul').effect('highlight')");
                 break;
             case COMPONENT_SELECTED:
                 Element newSelection = message.getData();

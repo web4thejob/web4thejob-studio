@@ -87,10 +87,14 @@ public abstract class StudioUtil {
 
     }
 
-    public static void showPopover(String uuid, String sclass, String message, boolean autoclose) {
+    public static void showPopover(String uuid, String sclass, String message, boolean autoclose, String placement) {
         String m = message.replaceAll("'", "\"");
         Clients.evalJavaScript("top.w4tjStudioDesigner.showPopover('#" + uuid + "','" + m +
-                "','" + sclass + "'," + Boolean.valueOf(autoclose).toString() + ")");
+                "','" + sclass + "'," + Boolean.valueOf(autoclose).toString() + ",'" + placement + "')");
+    }
+
+    public static void showPopover(String uuid, String sclass, String message, boolean autoclose) {
+        StudioUtil.showPopover(uuid, sclass, message, autoclose, "auto bottom");
     }
 
     public static void clearCanvasBusy(String uuid) {

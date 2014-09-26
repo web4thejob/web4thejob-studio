@@ -146,7 +146,7 @@ var w4tjStudioDesigner = {
     </button> \
     </div> \
     <div class="btn-group btn-xs" style="padding-left:0px"> \
-    <button id="btnparsezul" type="button" class="btn btn-primary btn-xs toolbar-parsezul"> \
+    <button id="btnparsezul" type="button" class="btn btn-primary btn-xs toolbar-parsezul" title="Alt+1 may save you time"> \
     <i class="z-icon-refresh"/> Parse zul \
     </button> \
     <button type="button" class="btn btn-primary btn-xs toolbar-parsezul-dropdown"> \
@@ -385,10 +385,12 @@ var w4tjStudioDesigner = {
     });
   },
 
-  showPopover: function(id, text, sclass, autoclose) {
+  showPopover: function(id, text, sclass, autoclose, placement) {
+    if (!placement) placement="auto bottom";
+
     this.hidePopovers();
     jq(id).popover({
-      placement: "auto bottom",
+      placement: placement,
       content: text,
       container: "body",
       trigger: "focus",

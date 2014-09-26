@@ -244,7 +244,7 @@
                   if (result === "error")
                     w4tjStudioDesigner.showPopover('#version-check', 'There was an error contacting Maven Central. Please try again later.', 'error', true);
                   else if (result === "uptodate")
-                    w4tjStudioDesigner.showPopover('#version-check', 'You are running the latest version.', 'info', true);
+                    w4tjStudioDesigner.showPopover('#version-check', '<i class="fa fa-check-square-o"></i>&nbsp;You are running the latest version.', 'info', true);
                   else {
                     var mavenVersion = result.split('|')[1];
                     var arr = new Array();
