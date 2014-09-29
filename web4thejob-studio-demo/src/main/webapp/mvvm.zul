@@ -35,7 +35,7 @@
                           This page demonstrates how Web4thejob Studio can make your life easier with <a target="_blank" href="http://books.zkoss.org/wiki/ZK_Developer's_Reference/MVVM">ZK MVVM binding</a>.
                         </p>
                         <p>
-                          Let's assume you have a simple View like the one you see below and a ViewModel like <a target="_blank" href="https://github.com/web4thejob/web4thejob-studio/blob/mvvm/web4thejob-studio-demo/src/main/java/org/web4thejob/studio/demo/ExampleViewModel.java">this one</a>.
+                          Let's assume you have a simple View like the one you see below and a ViewModel like <a target="_blank" href="https://github.com/web4thejob/web4thejob-studio/blob/master/web4thejob-studio-demo/src/main/java/org/web4thejob/studio/demo/ExampleViewModel.java">this one</a>.
                           Basically, the ViewModel selects a list of Customers from the database and provides an api for returning and traversing them. Assuming you have reached the point where you need to bind the Customer's attributes (<code>firstName</code>, <code>lastName</code> and <code>id</code>)
                           to the View, check out 3 ways that Web4thejob Studio can help you out:
                         </p>
