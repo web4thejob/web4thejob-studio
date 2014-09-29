@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a small example of how you can use Web4thejob Studio to write -->
+<!-- a fully functional page using only the ZUL file and no java -->
+<zk>
+    <zscript>
+        <![CDATA[
+            //this is my ZUL contained ViewModel
+            public class MyViewModel {
+              private ListModel myModel;
+              public MyViewModel() {
+                myModel = new ListModelList();
+                for (int i = 0; i < 10; i++) {
+                  myModel.add("Item " + (i + 1));
+                }
+              }
+              public ListModel getMyModel() {
+                return myModel;
+              }
+            }
+        ]]>
+    </zscript>
+    <window title="Window" vflex="true" border="normal" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('MyViewModel')">
+        <hbox hflex="true" height="300px">
+            <listbox height="360px" model="@bind(vm.myModel)" id="lstItems">
+                <attribute name="onSelect">
+                    <![CDATA[
+                        //business logic on listbox item selection
+                        txtSelected.setValue(self.getSelectedItem().getLabel());
+                    ]]>
+                </attribute>
+                <listhead>
+                    <listheader label="Items"/>
+                </listhead>
+            </listbox>
+            <vbox vflex="true" width="300px">
+                <textbox id="txtSelected"/>
+                <button label="Change">
+                    <attribute name="onClick">
+                        <![CDATA[
+                            //business logic on click
+                            int index = lstItems.getSelectedIndex();
+                            if (index < 0) return;
+                            ((ListModelList) lstItems.getModel()).set(index, txtSelected.getValue());
+                        ]]>
+                    </attribute>
+                </button>
+            </vbox>
+        </hbox>
+    </window>
+</zk>
