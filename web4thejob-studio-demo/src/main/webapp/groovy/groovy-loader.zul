@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+    <window title="Groovy Source" vflex="true" apply="org.web4thejob.studio.demo.GroovyLoader">
+        <vlayout vflex="1">
+            <textbox multiline="true" vflex="1" hflex="1" tabbable="true" id="txtSource"/>
+            <vbox hflex="1" pack="center" align="center">
+                <button id="btnCompile" label="Compile" height="50px" width="150px"/>
+            </vbox>
+        </vlayout>
+        <style>
+            .z-textbox {
+            font-size: 16px;
+            line-height: 130%;
+            }
+        </style>
+    </window>
+</zk>

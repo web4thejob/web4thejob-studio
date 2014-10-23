@@ -1,0 +1,31 @@
+package foo.bar
+
+import org.zkoss.zk.ui.select.SelectorComposer
+import org.zkoss.zk.ui.Component
+import org.zkoss.zk.ui.select.annotation.Wire
+import org.zkoss.zul.Label
+
+import org.zkoss.zk.ui.Executions
+
+class MyGroovyComposer extends SelectorComposer<Component> {
+
+	@Wire
+	Label lblHello
+
+	public void doAfterCompose(Component comp) {
+		super.doAfterCompose(comp);
+
+		lblHello.setValue(this.class.name)
+		/* or */
+		//lblHello.setValue(C2.id)
+	}
+
+}
+
+//-----------------------------------------------------------------------------------------
+
+package foo.bar
+
+class C2 {
+	static def id="123-------+++++++++++++++++++-------"
+}

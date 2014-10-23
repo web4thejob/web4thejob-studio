@@ -50,4 +50,8 @@
     <listener>
         <listener-class>org.web4thejob.studio.demo.DemoInitializer</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.web4thejob.studio.demo.GroovyInitializer</listener-class>
+    </listener>
+
 </zk>

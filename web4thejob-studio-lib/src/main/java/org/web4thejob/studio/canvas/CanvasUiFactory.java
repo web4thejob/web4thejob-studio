@@ -25,9 +25,11 @@ import org.zkoss.idom.Document;
 import org.zkoss.idom.input.SAXBuilder;
 import org.zkoss.io.FileReader;
 import org.zkoss.zk.ui.Desktop;
+import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.http.SimpleUiFactory;
 import org.zkoss.zk.ui.metainfo.PageDefinition;
 import org.zkoss.zk.ui.sys.RequestInfo;
+import org.zkoss.zk.ui.util.Composer;
 
 import javax.servlet.ServletRequest;
 import javax.xml.xpath.XPathConstants;
@@ -88,4 +90,14 @@ public class CanvasUiFactory extends SimpleUiFactory {
         }
     }
 
+    @Override
+    public Composer newComposer(Page page, String className) throws ClassNotFoundException {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        if ("groovy.lang.GroovyClassLoader".equals(loader.getClass().getCanonicalName())) {
+            //small hack so we can avoid Class.forName call and enjoy refreshable groovy classes !!!
+            return super.newComposer(page, loader.loadClass(className));
+        }
+
+        return super.newComposer(page, className);
+    }
 }
