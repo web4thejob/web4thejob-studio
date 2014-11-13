@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
-    <window title="Window" vflex="true" apply="foo.bar.MyGroovyComposer">
-    <hbox hflex="1" vflex="1" align="center" pack="center">
+    <window title="Window" vflex="true" apply="foo.bar.MyGroovyComposer" border="normal">
+        <hbox hflex="1" vflex="1" align="center" pack="center">
             <label value="New Label" style="font-size:30px" id="lblHello"/>
         </hbox>
     </window>

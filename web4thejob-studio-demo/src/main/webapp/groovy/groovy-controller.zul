@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
-    <window title="Groovy Source" vflex="true" apply="org.web4thejob.studio.demo.GroovyLoader">
+    <window title="Groovy Controller Source" vflex="true" apply="org.web4thejob.studio.demo.GroovyLoader">
         <vlayout vflex="1">
             <textbox multiline="true" vflex="1" hflex="1" tabbable="true" id="txtSource"/>
             <vbox hflex="1" pack="center" align="center">
