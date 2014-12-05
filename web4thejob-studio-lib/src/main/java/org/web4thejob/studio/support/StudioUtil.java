@@ -503,7 +503,7 @@ public abstract class StudioUtil {
         }
     }
 
-    public static void sendToDesigner(String eventName, Object data) {
+    public static void casendToDesigner(String eventName, Object data) {
         Clients.evalJavaScript("w4tjStudioCanvas.sendToDesigner('" + eventName + "'," +
                 "" + JSONValue.toJSONString(data) + ")");
     }

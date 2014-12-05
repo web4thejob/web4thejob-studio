@@ -167,7 +167,7 @@ public class DashboardController extends AbstractController {
             cellName.setIconSclass("z-icon-folder" + (parent == null ? "-open" : ""));
             treeitem.setOpen(parent == null);
         } else {
-            if (file.getName().endsWith(".zul")) {
+            if (file.getName().endsWith(".zul") || file.getName().endsWith(".xhtml")) {
                 cellName.setLabel("");
                 A link = new A(file.getName());
                 link.setSclass("zulfile");

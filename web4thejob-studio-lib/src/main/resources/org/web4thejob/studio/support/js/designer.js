@@ -305,20 +305,25 @@ var w4tjStudioDesigner = {
   },
 
   hookCanvas: function() {
-    var canvas = this.getCanvasFrame();
 
+ var d=this;
+
+  setTimeout(function(){
+    var canvas = d.getCanvasFrame();
     this.fileName = canvas.location.pathname.split('?')[0];
+/*
     if (!canvas.zk) {
       jq(".designer-toolbar button").attr("disabled", "disabled");
       zAu.send(new zk.Event(zk("$designer").$(), "onNonZKPage"));
       return;
     }
+*/
 
     zAu.cmd0.showBusy("Hooking the canvas...");
     var contextURI = zk.Desktop.$().contextURI;
     var canvasHead = jq('head', jq('$canvasHolder').contents());
 
-    this.getCanvasFrame().jq.getScript(contextURI + "/w4tjstudio-support/canvas/scripts")
+    d.getCanvasFrame().$.getScript(contextURI + "/w4tjstudio-support/canvas/scripts")
       .done(function(data, textStatus, jqxhr) {
         canvas.w4tjStudioCanvas.init();
         canvasHead.append(jq('<link rel="stylesheet" type="text/css"/>').attr('href', contextURI + '/w4tjstudio-support/canvas/styles'));
@@ -330,6 +335,7 @@ var w4tjStudioDesigner = {
         w4tjStudioDesigner.alert('danger', 'This is serious', 'Unfortunately canvas was not hooked as expected. Refreshing may fix the problem...', false);
         zAu.cmd0.showBusy("Sorry, something broke :-(");
       });
+    },1000);
   },
 
   refreshCode: function() {

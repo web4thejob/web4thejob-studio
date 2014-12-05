@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns="http://www.w3c.org/1999/xhtml">
+<h:head></h:head>
+<h:body>
+    <p:editor/>
+    <h:form>
+        <h:panelGrid columns="4" cellpadding="5">
+            <h:outputLabel for="name" value="Name:" style="font-weight:bold"/>
+            <p:inputText id="name" value="#{basicView.text}"/>
+            <p:commandButton value="Submit" update="display" icon="ui-icon-check"/>
+            <h:outputText id="display" value="#{basicView.text}"/>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>
