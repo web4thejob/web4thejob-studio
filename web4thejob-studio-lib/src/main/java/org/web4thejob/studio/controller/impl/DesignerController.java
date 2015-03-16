@@ -23,6 +23,7 @@ import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.XPathContext;
+import org.apache.commons.lang3.StringUtils;
 import org.web4thejob.studio.controller.AbstractController;
 import org.web4thejob.studio.controller.ControllerEnum;
 import org.web4thejob.studio.message.Message;
@@ -38,6 +39,7 @@ import org.zkoss.zul.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -577,5 +579,17 @@ public class DesignerController extends AbstractController {
 
         publish(ATTRIBUTE_CHANGED);
         publish(COMPONENT_SELECTED, target);
+    }
+
+    @SuppressWarnings("unused") //called from designer.zul
+    public String buildFullUriForPage() throws UnsupportedEncodingException {
+        Map<String, String[]> params = new HashMap<>(Executions.getCurrent().getParameterMap());
+        String[] canvasFile = params.get("z");
+        if (canvasFile == null || canvasFile.length == 0)
+            throw new RuntimeException("Canvas file (z param) cannot be empty");
+
+        StringBuffer uri = new StringBuffer(StringUtils.join(canvasFile, ","));
+        params.remove("z");
+        return Encodes.addToQueryString(uri, params).toString();
     }
 }

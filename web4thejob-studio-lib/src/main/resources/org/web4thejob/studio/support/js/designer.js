@@ -205,7 +205,7 @@ var w4tjStudioDesigner = {
 
     var jqo = jq(e);
     jqo.empty();
-    jqo.attr("href", this._fileName);
+    jqo.attr("href", fileName + this.getSearchParams());
 
     var s = this._fileName;
     if (s.length > 25) {
@@ -307,6 +307,7 @@ var w4tjStudioDesigner = {
   hookCanvas: function() {
     var canvas = this.getCanvasFrame();
 
+    //this.fileName = this.getParameterByName('z');
     this.fileName = canvas.location.pathname.split('?')[0];
     if (!canvas.zk) {
       jq(".designer-toolbar button").attr("disabled", "disabled");
@@ -497,5 +498,15 @@ var w4tjStudioDesigner = {
       jq("#" + uuid + " [class~=z-row-inner]").effect("highlight", {}, 1000, null);
   },
 
-
+  getSearchParams: function() {
+     var canvas = this.getCanvasFrame();
+     var a=canvas.location.search.split("&");
+     var search="", i;
+     for (i=0; i<a.length; ++i){
+        if (a[i].indexOf("w4tjstudio_")<0) { //not starts with
+            search+= (i>0? "&" : "") +  a[i];
+        }
+     }
+     return search;
+  }
 }
