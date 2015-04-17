@@ -199,7 +199,7 @@ var w4tjStudioDesigner = {
 
     var e = jq('$views').find('.designer-file .label a');
     if (!e.length) {
-      jq('$views').append('<div class="designer-file"><span class="label label-default"><span class="dot">&#xf111;</span><a target="_blank"/><span class="dot">&#xf111;</span></span></div>');
+      jq('$views').append('<div class="designer-file" title="Click to launch page separately"><span class="label label-default"><span class="dot">&#xf111;</span><a target="_blank"/><span class="dot">&#xf111;</span></span></div>');
       e = jq('$views').find('.designer-file .label a');
     }
 
@@ -307,9 +307,8 @@ var w4tjStudioDesigner = {
   hookCanvas: function() {
     var canvas = this.getCanvasFrame();
 
-    //this.fileName = this.getParameterByName('z');
     this.fileName = canvas.location.pathname.split('?')[0];
-    if (!canvas.zk) {
+    if (!this.isZul(this.fileName)) {
       jq(".designer-toolbar button").attr("disabled", "disabled");
       zAu.send(new zk.Event(zk("$designer").$(), "onNonZKPage"));
       return;
@@ -508,5 +507,9 @@ var w4tjStudioDesigner = {
         }
      }
      return search;
+  },
+
+  isZul: function(file) {
+    return file.length >= ".zul".length && file.substr(file.length - ".zul".length) == ".zul";
   }
 }

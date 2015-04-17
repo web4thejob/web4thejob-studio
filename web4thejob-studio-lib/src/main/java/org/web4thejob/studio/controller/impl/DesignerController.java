@@ -477,6 +477,7 @@ public class DesignerController extends AbstractController {
             case NON_ZK_PAGE_VISITED:
                 codeView.setDisabled(true);
                 outlineView.setDisabled(true);
+                canvasView.setSelected(true);
                 break;
             case ZK_PAGE_VISITED:
                 codeView.setDisabled(false);

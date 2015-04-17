@@ -137,14 +137,13 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
+        .designer-file > .label:hover {
+        background-color: #2884DE;
+        }
         .designer-file a {
         color:white;
         margin-left: 5px;
         margin-right: 5px;
-        }
-        .designer-file a:hover {
-        color:white;
-        text-decoration: underline !important;
         }
 
         .designer-file .dot {
