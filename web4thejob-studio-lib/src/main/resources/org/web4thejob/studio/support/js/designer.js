@@ -231,11 +231,12 @@ var w4tjStudioDesigner = {
   monitorCanvasHealth: function() {
     var f = this.getCanvasFrame();
     if (f) {
-      setTimeout(function() {
+      var t = setTimeout(function() {
         if (jq("#zk_showBusy").length) {
           var msg = 'Parsing is taking too long.</br> Are you sure your there aren\'t any javascript errors? Click <a href="javascript:;" onclick="zAu.send(new zk.Event(zk(\'$designer\').$(), \'onCanvasHang\'))">here</a> to cancel.';
           w4tjStudioDesigner.alert('warning', 'This is weird', msg, false, true);
-          //                    zAu.send(new zk.Event(zk('$designer').$(), 'onCanvasHang'));
+        } else {
+          clearTimeout(t);
         }
       }, 5000); /*5sec tolerance, TODO: make this user configured*/
     }

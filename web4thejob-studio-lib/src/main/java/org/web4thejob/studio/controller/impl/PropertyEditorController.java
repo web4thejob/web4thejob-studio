@@ -47,7 +47,6 @@ import static org.web4thejob.studio.controller.ControllerEnum.PROPERTY_EDITOR_CO
 import static org.web4thejob.studio.message.MessageEnum.ATTRIBUTE_CHANGED;
 import static org.web4thejob.studio.support.StudioUtil.*;
 import static org.web4thejob.studio.support.ZulXsdUtil.*;
-import static org.zkoss.lang.Generics.cast;
 
 /**
  * Created by e36132 on 16/5/2014.
@@ -337,7 +336,6 @@ public class PropertyEditorController extends AbstractController {
 
     private void refreshComponentProperties(SortedMap<String, SortedSet<Element>> propsMap) {
         ComponentDefinition componentDefinition = getDefinitionByTag(selection.getLocalName());
-        Class<? extends Component> clazz = cast(componentDefinition.getImplementationClass());
         List<Row> bindings = new ArrayList<>(1);
 
 
@@ -352,8 +350,6 @@ public class PropertyEditorController extends AbstractController {
             int num = 0;
             for (Element property : propsMap.get(group)) {
                 String propertyName = property.getAttributeValue("name");
-                String type = property.getAttributeValue("type");
-                boolean isBoolean = "booleanType".equals(type);
                 if (isEvent(propertyName)) continue;
 
                 Object val = null;

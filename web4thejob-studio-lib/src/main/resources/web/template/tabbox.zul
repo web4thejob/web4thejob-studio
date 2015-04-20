@@ -1,4 +1,4 @@
-<tabbox width="400px" height="250px">
+<tabbox hflex="true" vflex="true">
     <tabs>
         <tab label="Tab" closable="true"/>
     </tabs>

@@ -1,4 +1,4 @@
-<grid height="300px">
+<grid hflex="true" vflex="true">
     <columns>
         <column label="Col 1"/>
         <column label="Col 2"/>

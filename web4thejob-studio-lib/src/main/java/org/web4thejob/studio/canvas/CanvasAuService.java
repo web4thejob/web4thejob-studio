@@ -271,7 +271,7 @@ public class CanvasAuService implements AuService {
     private static Element getParent(Element element) {
         Node parent = element.getParent();
         while (parent != null) {
-            if (parent instanceof Element && !"zk".equals(((Element) parent).getLocalName())) {
+            if (parent instanceof Element && !"zk".equals(((Element) parent).getLocalName()) && !"template".equals(((Element) parent).getLocalName())) {
                 break;
             }
             parent = parent.getParent();
@@ -348,6 +348,7 @@ public class CanvasAuService implements AuService {
                 return true;
             case "onTemplateDropped":
                 onTemplateDropped(request);
+                return true;
         }
 
         return false;

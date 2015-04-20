@@ -1,4 +1,4 @@
-<listbox height="300px">
+<listbox hflex="true" vflex="true">
     <listhead>
         <listheader label="Header 1"/>
         <listheader label="Header 2"/>
