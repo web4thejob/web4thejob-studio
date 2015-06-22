@@ -59,7 +59,7 @@ public class JpaInfoController extends SelectorComposer<Component> {
 
 
         try {
-            XPathContext ctx = new XPathContext("p", "http://java.sun.com/xml/ns/persistence");
+            XPathContext ctx = new XPathContext("p", "http://xmlns.jcp.org/xml/ns/persistence");
 
             Enumeration<URL> punits = Persistence.class.getClassLoader().getResources("META-INF/persistence.xml");
             while (punits.hasMoreElements()) {
