@@ -204,7 +204,7 @@
                                     <panelchildren>
                                         <tree id="projectTree" vflex="true" style="border:0px">
                                             <treecols sizable="true">
-                                                <treecol label="File Name" align="center"/>
+                                                <treecol label="File Name" align="left"/>
                                                 <treecol align="center" label="Writable" width="80px"/>
                                                 <treecol align="center" label="Size" width="200px"/>
                                                 <treecol label="Last Modified" align="center" width="200px"/>

@@ -57,7 +57,9 @@
                     </html>
                     <vbox hflex="true" align="center" style="margin-top:20px;">
                         <button label="Launch this page in Web4thejob Studio Now!" zclass="btn btn-success" href="w4tjstudio/designer?z=%2fwelcome.zul" iconSclass="z-icon-rocket" id="btnLaunch"/>
+                        <radio/>
                     </vbox>
+                    <radio/>
                 </vlayout>
             </center>
             <west size="25%" splittable="true" collapsible="true" width="220px">
@@ -81,7 +83,7 @@
                                         <menuitem label="Bar"/>
                                     </menupopup>
                                 </combobutton>
-                                <bandbox>
+                                <bandbox value="@bind(vm.firstName)">
                                     <bandpopup>
                                         <grid height="200px" width="350px">
                                             <columns>
@@ -99,7 +101,7 @@
                                         </grid>
                                     </bandpopup>
                                 </bandbox>
-                                <intbox/>
+                                <intbox value="@load(vm.firstName)"/>
                                 <longbox/>
                                 <doublebox/>
                                 <decimalbox/>
