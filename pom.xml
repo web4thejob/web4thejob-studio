@@ -35,7 +35,7 @@
         <url>git://github.com/web4thejob/web4thejob-studio.git</url>
         <connection>scm:git:git://github.com/web4thejob/web4thejob-studio.git</connection>
         <developerConnection>scm:git:https://github.com/web4thejob/web4thejob-studio.git</developerConnection>
-        <tag>web4thejob-studio-parent-1.0.1</tag>
+        <tag>web4thejob-studio-parent-1.4.0</tag>
     </scm>
 
     <properties>
